@@ -1,5 +1,6 @@
 package poly.cinema.util;
 
+import java.net.Authenticator;
 import java.net.PasswordAuthentication;
 import java.util.Properties;
 import javax.mail.*;
