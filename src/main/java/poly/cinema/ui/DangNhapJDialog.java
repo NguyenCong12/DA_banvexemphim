@@ -273,41 +273,41 @@ public class DangNhapJDialog extends javax.swing.JDialog implements DangNhapCont
 
     @Override
     public void login() {
-        try {
-            String username = txtTenDangNhap.getText().trim();
-            String password = txtMatKhau.getText();
+//        try {
+//            String username = txtTenDangNhap.getText().trim();
+//            String password = txtMatKhau.getText();
+//
+//            if (username.isEmpty() || password.isEmpty()) {
+//                XDialog.alert("⚠️ Vui lòng nhập đầy đủ tên đăng nhập và mật khẩu!");
+//                return;
+//            }
 
-            if (username.isEmpty() || password.isEmpty()) {
-                XDialog.alert("⚠️ Vui lòng nhập đầy đủ tên đăng nhập và mật khẩu!");
-                return;
-            }
-
-            UserDAO dao = new UserDAOImpl();
-            User user = dao.findById(username);
-
-            if (user == null) {
-                XDialog.alert("❌ Tên đăng nhập không tồn tại!");
-                return;
-            }
-
-            if (!password.equals(user.getPassword())) {
-                XDialog.alert("❌ Mật khẩu không đúng!");
-                return;
-            }
-
-            if (!user.isEnabled()) {
-                XDialog.alert("⚠️ Tài khoản đã bị khóa. Vui lòng liên hệ quản trị viên.");
-                return;
-            }
-
-            XAuth.user = user;
-
-            this.dispose();
-
-        } catch (Exception e) {
-            e.printStackTrace();  // log ra console để debug
-            XDialog.alert("❗ Đã xảy ra lỗi khi kết nối đến hệ thống. Vui lòng thử lại!");
-        }
+//            UserDAO dao = new UserDAOImpl();
+//            User user = dao.findById(username);
+//
+//            if (user == null) {
+//                XDialog.alert("❌ Tên đăng nhập không tồn tại!");
+//                return;
+//            }
+//
+//            if (!password.equals(user.getPassword())) {
+//                XDialog.alert("❌ Mật khẩu không đúng!");
+//                return;
+//            }
+//
+//            if (!user.isEnabled()) {
+//                XDialog.alert("⚠️ Tài khoản đã bị khóa. Vui lòng liên hệ quản trị viên.");
+//                return;
+//            }
+//
+//            XAuth.user = user;
+//
+//            this.dispose();
+//
+//        } catch (Exception e) {
+//            e.printStackTrace();  // log ra console để debug
+//            XDialog.alert("❗ Đã xảy ra lỗi khi kết nối đến hệ thống. Vui lòng thử lại!");
+//        }
 
     }
 

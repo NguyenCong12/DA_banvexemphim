@@ -305,7 +305,7 @@ public class DoiMatKhau extends javax.swing.JPanel implements DoiMatKhauControll
     }// </editor-fold>//GEN-END:initComponents
 
     private void bntSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bntSaveActionPerformed
-        this.save();
+//        this.save();
     }//GEN-LAST:event_bntSaveActionPerformed
 
     private void bntExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bntExitActionPerformed
@@ -330,71 +330,71 @@ public class DoiMatKhau extends javax.swing.JPanel implements DoiMatKhauControll
         // TODO add your handling code here:
     }//GEN-LAST:event_txtCaptchaActionPerformed
 
-    UserDAO dao = new UserDAOImpl();
-
-    @Override
-    public void save() {
-        String username = txtUsername.getText().trim();
-        String password = txtPassword.getText();
-        String newpass = txtNewpass.getText();
-        String confirm = txtConfirm.getText();
-        String userCaptcha = txtCaptcha.getText().trim();
-
-        clearErrorLabels();
-
-        boolean isValid = true;
-
-        if (!username.equals(XAuth.user.getUsername())) {
-            lblLoiUsername.setText("Sai tên đăng nhập");
-            isValid = false;
-        }
-
-        if (!password.equals(XAuth.user.getPassword())) {
-            lblLoiPassword.setText("Sai mật khẩu");
-            isValid = false;
-        }
-
-        if (newpass.length() < 8) {
-            lblLoiNewPass.setText("Mật khẩu phải từ 8 ký tự trở lên");
-            isValid = false;
-        } else if (!newpass.matches(".*[A-Z].*")) {
-            lblLoiNewPass.setText("Phải có ít nhất 1 chữ in hoa");
-            isValid = false;
-        } else if (!newpass.matches(".*[a-z].*")) {
-            lblLoiNewPass.setText("Phải có ít nhất 1 chữ thường");
-            isValid = false;
-        } else if (!newpass.matches(".*\\d.*")) {
-            lblLoiNewPass.setText("Phải có ít nhất 1 chữ số");
-            isValid = false;
-        } else if (!newpass.matches(".*[!@#$%^&*()_+\\-=\\[\\]{};':\"\\\\|,.<>\\/?].*")) {
-            lblLoiNewPass.setText("Phải có ít nhất 1 ký tự đặc biệt");
-            isValid = false;
-        } else if (newpass.contains(" ")) {
-            lblLoiNewPass.setText("Không được chứa khoảng trắng");
-            isValid = false;
-        } else if (newpass.toLowerCase().contains(username.toLowerCase())) {
-            lblLoiNewPass.setText("Không được chứa tên đăng nhập");
-            isValid = false;
-        }
-
-        if (!newpass.equals(confirm)) {
-            lblLoiConfirm.setText("Mật khẩu không khớp");
-            isValid = false;
-        }
-
-        if (!userCaptcha.equals(currentCaptcha)) {
-            lblLoiCaptcha.setText("Mã captcha không đúng!");
-            isValid = false;
-            loadCaptcha();
-        }
-
-        if (isValid) {
-            XAuth.user.setPassword(newpass);
-            dao.update(XAuth.user);
-            JOptionPane.showMessageDialog(this, "Đổi mật khẩu thành công!");
-            loadCaptcha();
-        }
-    }
+//    UserDAO dao = new UserDAOImpl();
+//
+//    @Override
+//    public void save() {
+//        String username = txtUsername.getText().trim();
+//        String password = txtPassword.getText();
+//        String newpass = txtNewpass.getText();
+//        String confirm = txtConfirm.getText();
+//        String userCaptcha = txtCaptcha.getText().trim();
+//
+//        clearErrorLabels();
+//
+//        boolean isValid = true;
+//
+//        if (!username.equals(XAuth.user.getUsername())) {
+//            lblLoiUsername.setText("Sai tên đăng nhập");
+//            isValid = false;
+//        }
+//
+//        if (!password.equals(XAuth.user.getPassword())) {
+//            lblLoiPassword.setText("Sai mật khẩu");
+//            isValid = false;
+//        }
+//
+//        if (newpass.length() < 8) {
+//            lblLoiNewPass.setText("Mật khẩu phải từ 8 ký tự trở lên");
+//            isValid = false;
+//        } else if (!newpass.matches(".*[A-Z].*")) {
+//            lblLoiNewPass.setText("Phải có ít nhất 1 chữ in hoa");
+//            isValid = false;
+//        } else if (!newpass.matches(".*[a-z].*")) {
+//            lblLoiNewPass.setText("Phải có ít nhất 1 chữ thường");
+//            isValid = false;
+//        } else if (!newpass.matches(".*\\d.*")) {
+//            lblLoiNewPass.setText("Phải có ít nhất 1 chữ số");
+//            isValid = false;
+//        } else if (!newpass.matches(".*[!@#$%^&*()_+\\-=\\[\\]{};':\"\\\\|,.<>\\/?].*")) {
+//            lblLoiNewPass.setText("Phải có ít nhất 1 ký tự đặc biệt");
+//            isValid = false;
+//        } else if (newpass.contains(" ")) {
+//            lblLoiNewPass.setText("Không được chứa khoảng trắng");
+//            isValid = false;
+//        } else if (newpass.toLowerCase().contains(username.toLowerCase())) {
+//            lblLoiNewPass.setText("Không được chứa tên đăng nhập");
+//            isValid = false;
+//        }
+//
+//        if (!newpass.equals(confirm)) {
+//            lblLoiConfirm.setText("Mật khẩu không khớp");
+//            isValid = false;
+//        }
+//
+//        if (!userCaptcha.equals(currentCaptcha)) {
+//            lblLoiCaptcha.setText("Mã captcha không đúng!");
+//            isValid = false;
+//            loadCaptcha();
+//        }
+//
+//        if (isValid) {
+//            XAuth.user.setPassword(newpass);
+//            dao.update(XAuth.user);
+//            JOptionPane.showMessageDialog(this, "Đổi mật khẩu thành công!");
+//            loadCaptcha();
+//        }
+//    }
 
     private void clearErrorLabels() {
         lblLoiUsername.setText("");
@@ -448,5 +448,10 @@ public class DoiMatKhau extends javax.swing.JPanel implements DoiMatKhauControll
     private javax.swing.JTextField txtPassword;
     private javax.swing.JTextField txtUsername;
     // End of variables declaration//GEN-END:variables
+
+    @Override
+    public void save() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
 
 }

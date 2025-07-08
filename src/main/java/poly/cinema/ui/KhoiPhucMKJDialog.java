@@ -5,7 +5,6 @@
 package poly.cinema.ui;
 
 import poly.cinema.util.XDialog;
-import poly.cinema.util.XMailer;
 
 
 /**
@@ -13,8 +12,8 @@ import poly.cinema.util.XMailer;
  * @author KhanhLinh
  */
 public class KhoiPhucMKJDialog extends javax.swing.JDialog {
-
-    private final UserDAO dao = new UserDAOImpl();
+//
+//    private final UserDAO dao = new UserDAOImpl();
     private String otpCode = null;
 
     /**
@@ -237,38 +236,38 @@ public class KhoiPhucMKJDialog extends javax.swing.JDialog {
             XDialog.alert("Vui lòng nhập tên đăng nhập.");
             return;
         }
+//
+//        User user = dao.findById(username);
+//        if (user == null) {
+//            XDialog.alert("Không tìm thấy người dùng.");
+//            return;
+//        }
+//
+//        if (email.isEmpty()) {
+//            XDialog.alert("Vui lòng nhập email.");
+//            return;
+//        }
 
-        User user = dao.findById(username);
-        if (user == null) {
-            XDialog.alert("Không tìm thấy người dùng.");
-            return;
-        }
-
-        if (email.isEmpty()) {
-            XDialog.alert("Vui lòng nhập email.");
-            return;
-        }
-
-        User existing = dao.findByEmail(email);
-        if (existing != null && !existing.getUsername().equals(user.getUsername())) {
-            XDialog.alert("Email này đã được sử dụng bởi người dùng khác.");
-            return;
-        }
-
-        // Cập nhật email cho user
-        user.setEmail(email);
-        dao.update(user);
-
-        // Tạo mã OTP 6 chữ số
-        otpCode = String.valueOf((int) (Math.random() * 900000 + 100000));
-
-        try {
-            // Gửi email OTP với HTML đẹp
-            XMailer.send(email, "Xác thực tài khoản - Mã OTP từ Poly Phone", user.getFullname(), otpCode);
-            XDialog.alert("Mã OTP đã được gửi đến email.");
-        } catch (Exception e) {
-            XDialog.alert("Gửi email thất bại: " + e.getMessage());
-        }
+//        User existing = dao.findByEmail(email);
+//        if (existing != null && !existing.getUsername().equals(user.getUsername())) {
+//            XDialog.alert("Email này đã được sử dụng bởi người dùng khác.");
+//            return;
+//        }
+//
+//        // Cập nhật email cho user
+//        user.setEmail(email);
+//        dao.update(user);
+//
+//        // Tạo mã OTP 6 chữ số
+//        otpCode = String.valueOf((int) (Math.random() * 900000 + 100000));
+//
+//        try {
+//            // Gửi email OTP với HTML đẹp
+//            XMailer.send(email, "Xác thực tài khoản - Mã OTP từ Poly Phone", user.getFullname(), otpCode);
+//            XDialog.alert("Mã OTP đã được gửi đến email.");
+//        } catch (Exception e) {
+//            XDialog.alert("Gửi email thất bại: " + e.getMessage());
+//        }
     }//GEN-LAST:event_btnOPTActionPerformed
 
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
@@ -327,16 +326,16 @@ public class KhoiPhucMKJDialog extends javax.swing.JDialog {
             return;
         }
 
-        User user = dao.findById(username);
-        if (user == null) {
-            XDialog.alert("Không tìm thấy người dùng.");
-            return;
-        }
-
-        user.setPassword(newPass); // có thể mã hóa nếu cần
-        dao.update(user);
-        XDialog.alert("Mật khẩu đã được đặt lại thành công!");
-        dispose();
+//        User user = dao.findById(username);
+//        if (user == null) {
+//            XDialog.alert("Không tìm thấy người dùng.");
+//            return;
+//        }
+//
+//        user.setPassword(newPass); // có thể mã hóa nếu cần
+//        dao.update(user);
+//        XDialog.alert("Mật khẩu đã được đặt lại thành công!");
+//        dispose();
 
     }//GEN-LAST:event_btnLoginActionPerformed
 
