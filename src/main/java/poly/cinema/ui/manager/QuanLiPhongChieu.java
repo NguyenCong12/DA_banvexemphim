@@ -114,7 +114,8 @@ public class QuanLiPhongChieu extends javax.swing.JPanel {
                 .addContainerGap(17, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
-
+public void open() {
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnMoi;

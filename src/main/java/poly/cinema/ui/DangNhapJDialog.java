@@ -4,8 +4,12 @@
  */
 package poly.cinema.ui;
 
+import poly.cinema.dao.UserDAO;
+import poly.cinema.dao.impl.UserDAOImpl;
+import poly.cinema.entity.User;
 import poly.cinema.util.XAuth;
 import poly.cinema.util.XDialog;
+import poly.cinema.util.XIcon;
 
 /**
  *
@@ -19,6 +23,7 @@ public class DangNhapJDialog extends javax.swing.JDialog implements DangNhapCont
     public DangNhapJDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        this.setIconImage(XIcon.getIcon("logocinema1.png").getImage());
         this.addWindowListener(new java.awt.event.WindowAdapter() {
             public void WindowOpened(java.awt.event.WindowEvent e) {
                 formWindowOpened(e);
@@ -196,7 +201,7 @@ public class DangNhapJDialog extends javax.swing.JDialog implements DangNhapCont
     }//GEN-LAST:event_txtMatKhauActionPerformed
 
     private void btnDangNhapActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDangNhapActionPerformed
-        // TODO add your handling code here:
+        login();
     }//GEN-LAST:event_btnDangNhapActionPerformed
 
     private void btnKetThucActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnKetThucActionPerformed
@@ -268,12 +273,12 @@ public class DangNhapJDialog extends javax.swing.JDialog implements DangNhapCont
 
     @Override
     public void open() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+         this.setLocationRelativeTo(null);
     }
 
     @Override
     public void login() {
-//        try {
+        try {
 //            String username = txtTenDangNhap.getText().trim();
 //            String password = txtMatKhau.getText();
 //
@@ -281,7 +286,7 @@ public class DangNhapJDialog extends javax.swing.JDialog implements DangNhapCont
 //                XDialog.alert("⚠️ Vui lòng nhập đầy đủ tên đăng nhập và mật khẩu!");
 //                return;
 //            }
-
+//
 //            UserDAO dao = new UserDAOImpl();
 //            User user = dao.findById(username);
 //
@@ -290,24 +295,24 @@ public class DangNhapJDialog extends javax.swing.JDialog implements DangNhapCont
 //                return;
 //            }
 //
-//            if (!password.equals(user.getPassword())) {
+//            if (!password.equals(user.getMatKhau())) {
 //                XDialog.alert("❌ Mật khẩu không đúng!");
 //                return;
 //            }
 //
-//            if (!user.isEnabled()) {
+//            if (!user.isVaiTro()) {
 //                XDialog.alert("⚠️ Tài khoản đã bị khóa. Vui lòng liên hệ quản trị viên.");
 //                return;
 //            }
 //
 //            XAuth.user = user;
-//
-//            this.dispose();
-//
-//        } catch (Exception e) {
-//            e.printStackTrace();  // log ra console để debug
-//            XDialog.alert("❗ Đã xảy ra lỗi khi kết nối đến hệ thống. Vui lòng thử lại!");
-//        }
+
+            this.dispose();
+
+        } catch (Exception e) {
+            e.printStackTrace();  // log ra console để debug
+            XDialog.alert("❗ Đã xảy ra lỗi khi kết nối đến hệ thống. Vui lòng thử lại!");
+        }
 
     }
 

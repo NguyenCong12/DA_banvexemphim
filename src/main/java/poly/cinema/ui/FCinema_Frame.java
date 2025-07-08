@@ -1,5 +1,6 @@
 package poly.cinema.ui;
 
+import java.awt.CardLayout;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import poly.cinema.util.XAuth;
@@ -23,7 +24,24 @@ public class FCinema_Frame extends javax.swing.JFrame implements FCinema_Control
         initComponents();
         init();
         setLocationRelativeTo(null);
+//        pnlBanHang = new BanHang();
+        pnlMainContent.removeAll();
+        pnlMainContent.setLayout(new CardLayout());
         
+        pnlQuanLyPhim = new poly.cinema.ui.manager.QuanLyPhim();
+        pnlQuanLyPhongChieu = new poly.cinema.ui.manager.QuanLiPhongChieu();
+//        pnlDoiMatKhau = new poly.cinema.ui.DoiMatKhau();
+//        pnlMainContent.add(pnlBanHang, "pnlBanHang");
+
+        pnlMainContent.add(pnlQuanLyPhim, "pnlQuanLyPhim");
+        pnlMainContent.add(pnlQuanLyPhongChieu, "pnlQuanLyPhongChieu");
+//        pnlMainContent.add(pnlDoiMatKhau, "pnlDoiMatKhau");
+        
+        pnlMainContent.add(pnlTrangchu, "pnlTrangchu");
+        
+        // Mặc định hiển thị Trang chủ
+        CardLayout cl = (CardLayout) pnlMainContent.getLayout();
+        cl.show(pnlMainContent, "pnlTrangchu");
     }
 
     /**
@@ -46,23 +64,26 @@ public class FCinema_Frame extends javax.swing.JFrame implements FCinema_Control
         jButton19 = new javax.swing.JButton();
         jButton20 = new javax.swing.JButton();
         jButton21 = new javax.swing.JButton();
-        jButton22 = new javax.swing.JButton();
         jButton23 = new javax.swing.JButton();
         jButton24 = new javax.swing.JButton();
         jButton25 = new javax.swing.JButton();
         jButton26 = new javax.swing.JButton();
         jButton27 = new javax.swing.JButton();
         jButton28 = new javax.swing.JButton();
-        pnlManager1 = new javax.swing.JPanel();
+        pnlMainContent = new javax.swing.JPanel();
+        pnlDoiMatKhau = new javax.swing.JPanel();
+        pnlQuanLyPhongChieu = new javax.swing.JPanel();
+        pnlQuanLyGhe = new javax.swing.JPanel();
+        pnlBanVe = new javax.swing.JPanel();
+        pnlQuanLyHoaDon = new javax.swing.JPanel();
+        pnlQuanLyNhanVien = new javax.swing.JPanel();
+        pnlTrangchu = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
-        jLabel2 = new javax.swing.JLabel();
-        jButton5 = new javax.swing.JButton();
-        jButton10 = new javax.swing.JButton();
-        jButton11 = new javax.swing.JButton();
-        jButton12 = new javax.swing.JButton();
-        jButton14 = new javax.swing.JButton();
-        jPanel3 = new javax.swing.JPanel();
+        pnlQuanLySanPham = new javax.swing.JPanel();
+        pnlQuanLyPhim = new javax.swing.JPanel();
+        pnlXemLichChieu = new javax.swing.JPanel();
+        pnlThongKeDoanhThu = new javax.swing.JPanel();
+        pnlLichSuBanHang = new javax.swing.JPanel();
         lblFullname = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -77,6 +98,11 @@ public class FCinema_Frame extends javax.swing.JFrame implements FCinema_Control
 
         jButton15.setText("Trang chủ");
         jButton15.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        jButton15.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton15ActionPerformed(evt);
+            }
+        });
 
         jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(255, 51, 51));
@@ -112,16 +138,13 @@ public class FCinema_Frame extends javax.swing.JFrame implements FCinema_Control
             }
         });
 
-        jButton22.setText("QUẢN LÝ VÉ ");
-        jButton22.setBorder(null);
-        jButton22.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton22ActionPerformed(evt);
-            }
-        });
-
         jButton23.setText("QUẢN LÝ PHÒNG CHIẾU");
         jButton23.setBorder(null);
+        jButton23.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton23ActionPerformed(evt);
+            }
+        });
 
         jButton24.setText("LỊCH SỬ BÁN HÀNG");
         jButton24.setBorder(null);
@@ -131,12 +154,22 @@ public class FCinema_Frame extends javax.swing.JFrame implements FCinema_Control
 
         jButton26.setText("ĐĂNG XUẤT");
         jButton26.setBorder(null);
+        jButton26.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton26ActionPerformed(evt);
+            }
+        });
 
         jButton27.setText("THỐNG KÊ DOANH THU");
         jButton27.setBorder(null);
 
         jButton28.setText("ĐỔI MẬT KHẨU");
         jButton28.setBorder(null);
+        jButton28.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton28ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout pnlManagerLayout = new javax.swing.GroupLayout(pnlManager);
         pnlManager.setLayout(pnlManagerLayout);
@@ -159,14 +192,13 @@ public class FCinema_Frame extends javax.swing.JFrame implements FCinema_Control
                                 .addComponent(jButton18, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(jButton19, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(jButton20, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jButton22, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(jButton24, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(jButton25, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(jButton27, javax.swing.GroupLayout.DEFAULT_SIZE, 166, Short.MAX_VALUE)
                                 .addComponent(jButton23, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(jButton21, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(jButton28, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(35, Short.MAX_VALUE))
         );
         pnlManagerLayout.setVerticalGroup(
             pnlManagerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -192,114 +224,182 @@ public class FCinema_Frame extends javax.swing.JFrame implements FCinema_Control
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton21, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton22, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton25, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton27, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton24, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(45, 45, 45)
                 .addComponent(jButton28, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton26, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(15, Short.MAX_VALUE))
         );
 
         pnlCenter.add(pnlManager, new org.netbeans.lib.awtextra.AbsoluteConstraints(4, 0, 230, 720));
 
-        pnlManager1.setBackground(new java.awt.Color(204, 204, 204));
+        pnlMainContent.setLayout(new java.awt.CardLayout());
 
-        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setIcon(new javax.swing.ImageIcon("E:\\DA1\\DA_BANVEXEMPHIM\\DA_banvexemphim\\src\\main\\RESOURCES\\poly\\cafe\\icons\\logocinema1.png")); // NOI18N
-
-        jButton1.setText("Trang chủ");
-        jButton1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-
-        jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(255, 51, 51));
-        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel2.setText("Nhân viên");
-        jLabel2.setToolTipText("");
-
-        jButton5.setText("BÁN VÉ");
-        jButton5.setBorder(null);
-        jButton5.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton5ActionPerformed(evt);
-            }
-        });
-
-        jButton10.setText("LỊCH SỬ BÁN HÀNG");
-        jButton10.setBorder(null);
-
-        jButton11.setText("XEM LỊCH CHIẾU");
-        jButton11.setBorder(null);
-
-        jButton12.setText("ĐĂNG XUẤT");
-        jButton12.setBorder(null);
-
-        jButton14.setText("ĐỔI MẬT KHẨU");
-        jButton14.setBorder(null);
-
-        javax.swing.GroupLayout pnlManager1Layout = new javax.swing.GroupLayout(pnlManager1);
-        pnlManager1.setLayout(pnlManager1Layout);
-        pnlManager1Layout.setHorizontalGroup(
-            pnlManager1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnlManager1Layout.createSequentialGroup()
-                .addGroup(pnlManager1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(pnlManager1Layout.createSequentialGroup()
-                        .addGap(49, 49, 49)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(pnlManager1Layout.createSequentialGroup()
-                        .addGap(29, 29, 29)
-                        .addGroup(pnlManager1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jButton12, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(pnlManager1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 166, Short.MAX_VALUE)
-                                .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 166, Short.MAX_VALUE)
-                                .addComponent(jButton5, javax.swing.GroupLayout.DEFAULT_SIZE, 166, Short.MAX_VALUE)
-                                .addComponent(jButton10, javax.swing.GroupLayout.DEFAULT_SIZE, 166, Short.MAX_VALUE)
-                                .addComponent(jButton11, javax.swing.GroupLayout.DEFAULT_SIZE, 166, Short.MAX_VALUE)
-                                .addComponent(jButton14, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
-                .addContainerGap(42, Short.MAX_VALUE))
-        );
-        pnlManager1Layout.setVerticalGroup(
-            pnlManager1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnlManager1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(10, 10, 10)
-                .addComponent(jLabel2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton11, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton10, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 309, Short.MAX_VALUE)
-                .addComponent(jButton14, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton12, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
-        );
-
-        pnlCenter.add(pnlManager1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, 720));
-
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        javax.swing.GroupLayout pnlDoiMatKhauLayout = new javax.swing.GroupLayout(pnlDoiMatKhau);
+        pnlDoiMatKhau.setLayout(pnlDoiMatKhauLayout);
+        pnlDoiMatKhauLayout.setHorizontalGroup(
+            pnlDoiMatKhauLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 1110, Short.MAX_VALUE)
         );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        pnlDoiMatKhauLayout.setVerticalGroup(
+            pnlDoiMatKhauLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 720, Short.MAX_VALUE)
         );
 
-        pnlCenter.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(234, 0, 1110, 720));
+        pnlMainContent.add(pnlDoiMatKhau, "card13");
+
+        javax.swing.GroupLayout pnlQuanLyPhongChieuLayout = new javax.swing.GroupLayout(pnlQuanLyPhongChieu);
+        pnlQuanLyPhongChieu.setLayout(pnlQuanLyPhongChieuLayout);
+        pnlQuanLyPhongChieuLayout.setHorizontalGroup(
+            pnlQuanLyPhongChieuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 1110, Short.MAX_VALUE)
+        );
+        pnlQuanLyPhongChieuLayout.setVerticalGroup(
+            pnlQuanLyPhongChieuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 720, Short.MAX_VALUE)
+        );
+
+        pnlMainContent.add(pnlQuanLyPhongChieu, "card3");
+
+        javax.swing.GroupLayout pnlQuanLyGheLayout = new javax.swing.GroupLayout(pnlQuanLyGhe);
+        pnlQuanLyGhe.setLayout(pnlQuanLyGheLayout);
+        pnlQuanLyGheLayout.setHorizontalGroup(
+            pnlQuanLyGheLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 1110, Short.MAX_VALUE)
+        );
+        pnlQuanLyGheLayout.setVerticalGroup(
+            pnlQuanLyGheLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 720, Short.MAX_VALUE)
+        );
+
+        pnlMainContent.add(pnlQuanLyGhe, "card3");
+
+        javax.swing.GroupLayout pnlBanVeLayout = new javax.swing.GroupLayout(pnlBanVe);
+        pnlBanVe.setLayout(pnlBanVeLayout);
+        pnlBanVeLayout.setHorizontalGroup(
+            pnlBanVeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 1110, Short.MAX_VALUE)
+        );
+        pnlBanVeLayout.setVerticalGroup(
+            pnlBanVeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 720, Short.MAX_VALUE)
+        );
+
+        pnlMainContent.add(pnlBanVe, "card3");
+
+        javax.swing.GroupLayout pnlQuanLyHoaDonLayout = new javax.swing.GroupLayout(pnlQuanLyHoaDon);
+        pnlQuanLyHoaDon.setLayout(pnlQuanLyHoaDonLayout);
+        pnlQuanLyHoaDonLayout.setHorizontalGroup(
+            pnlQuanLyHoaDonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 1110, Short.MAX_VALUE)
+        );
+        pnlQuanLyHoaDonLayout.setVerticalGroup(
+            pnlQuanLyHoaDonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 720, Short.MAX_VALUE)
+        );
+
+        pnlMainContent.add(pnlQuanLyHoaDon, "card3");
+
+        javax.swing.GroupLayout pnlQuanLyNhanVienLayout = new javax.swing.GroupLayout(pnlQuanLyNhanVien);
+        pnlQuanLyNhanVien.setLayout(pnlQuanLyNhanVienLayout);
+        pnlQuanLyNhanVienLayout.setHorizontalGroup(
+            pnlQuanLyNhanVienLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 1110, Short.MAX_VALUE)
+        );
+        pnlQuanLyNhanVienLayout.setVerticalGroup(
+            pnlQuanLyNhanVienLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 720, Short.MAX_VALUE)
+        );
+
+        pnlMainContent.add(pnlQuanLyNhanVien, "card3");
+
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel1.setIcon(new javax.swing.ImageIcon("E:\\DA1\\DA_BANVEXEMPHIM\\DA_banvexemphim\\src\\main\\RESOURCES\\backgourd.png")); // NOI18N
+
+        javax.swing.GroupLayout pnlTrangchuLayout = new javax.swing.GroupLayout(pnlTrangchu);
+        pnlTrangchu.setLayout(pnlTrangchuLayout);
+        pnlTrangchuLayout.setHorizontalGroup(
+            pnlTrangchuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 1110, Short.MAX_VALUE)
+        );
+        pnlTrangchuLayout.setVerticalGroup(
+            pnlTrangchuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 720, Short.MAX_VALUE)
+        );
+
+        pnlMainContent.add(pnlTrangchu, "card2");
+
+        javax.swing.GroupLayout pnlQuanLySanPhamLayout = new javax.swing.GroupLayout(pnlQuanLySanPham);
+        pnlQuanLySanPham.setLayout(pnlQuanLySanPhamLayout);
+        pnlQuanLySanPhamLayout.setHorizontalGroup(
+            pnlQuanLySanPhamLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 1110, Short.MAX_VALUE)
+        );
+        pnlQuanLySanPhamLayout.setVerticalGroup(
+            pnlQuanLySanPhamLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 720, Short.MAX_VALUE)
+        );
+
+        pnlMainContent.add(pnlQuanLySanPham, "card3");
+
+        javax.swing.GroupLayout pnlQuanLyPhimLayout = new javax.swing.GroupLayout(pnlQuanLyPhim);
+        pnlQuanLyPhim.setLayout(pnlQuanLyPhimLayout);
+        pnlQuanLyPhimLayout.setHorizontalGroup(
+            pnlQuanLyPhimLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 1110, Short.MAX_VALUE)
+        );
+        pnlQuanLyPhimLayout.setVerticalGroup(
+            pnlQuanLyPhimLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 720, Short.MAX_VALUE)
+        );
+
+        pnlMainContent.add(pnlQuanLyPhim, "card3");
+
+        javax.swing.GroupLayout pnlXemLichChieuLayout = new javax.swing.GroupLayout(pnlXemLichChieu);
+        pnlXemLichChieu.setLayout(pnlXemLichChieuLayout);
+        pnlXemLichChieuLayout.setHorizontalGroup(
+            pnlXemLichChieuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 1110, Short.MAX_VALUE)
+        );
+        pnlXemLichChieuLayout.setVerticalGroup(
+            pnlXemLichChieuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 720, Short.MAX_VALUE)
+        );
+
+        pnlMainContent.add(pnlXemLichChieu, "card3");
+
+        javax.swing.GroupLayout pnlThongKeDoanhThuLayout = new javax.swing.GroupLayout(pnlThongKeDoanhThu);
+        pnlThongKeDoanhThu.setLayout(pnlThongKeDoanhThuLayout);
+        pnlThongKeDoanhThuLayout.setHorizontalGroup(
+            pnlThongKeDoanhThuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 1110, Short.MAX_VALUE)
+        );
+        pnlThongKeDoanhThuLayout.setVerticalGroup(
+            pnlThongKeDoanhThuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 720, Short.MAX_VALUE)
+        );
+
+        pnlMainContent.add(pnlThongKeDoanhThu, "card3");
+
+        javax.swing.GroupLayout pnlLichSuBanHangLayout = new javax.swing.GroupLayout(pnlLichSuBanHang);
+        pnlLichSuBanHang.setLayout(pnlLichSuBanHangLayout);
+        pnlLichSuBanHangLayout.setHorizontalGroup(
+            pnlLichSuBanHangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 1110, Short.MAX_VALUE)
+        );
+        pnlLichSuBanHangLayout.setVerticalGroup(
+            pnlLichSuBanHangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 720, Short.MAX_VALUE)
+        );
+
+        pnlMainContent.add(pnlLichSuBanHang, "card3");
+
+        pnlCenter.add(pnlMainContent, new org.netbeans.lib.awtextra.AbsoluteConstraints(234, 0, 1110, 720));
 
         lblFullname.setText("jLabel5");
         pnlCenter.add(lblFullname, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 50, 60, 50));
@@ -318,21 +418,36 @@ public class FCinema_Frame extends javax.swing.JFrame implements FCinema_Control
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton5ActionPerformed
-
-    private void jButton22ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton22ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton22ActionPerformed
-
     private void jButton21ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton21ActionPerformed
-        // TODO add your handling code here:
+        CardLayout cl = (CardLayout) pnlMainContent.getLayout();
+        cl.show(pnlMainContent, "pnlQuanLyPhim");
+        ((poly.cinema.ui.manager.QuanLyPhim) pnlQuanLyPhim).open();
     }//GEN-LAST:event_jButton21ActionPerformed
 
     private void jButton19ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton19ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton19ActionPerformed
+
+    private void jButton15ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton15ActionPerformed
+        CardLayout cl = (CardLayout) pnlMainContent.getLayout();
+        cl.show(pnlMainContent, "pnlTrangchu");
+    }//GEN-LAST:event_jButton15ActionPerformed
+
+    private void jButton23ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton23ActionPerformed
+        CardLayout cl = (CardLayout) pnlMainContent.getLayout();
+        cl.show(pnlMainContent, "pnlQuanLyPhongChieu");
+        ((poly.cinema.ui.manager.QuanLiPhongChieu) pnlQuanLyPhongChieu).open();
+    }//GEN-LAST:event_jButton23ActionPerformed
+
+    private void jButton26ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton26ActionPerformed
+        logout();
+    }//GEN-LAST:event_jButton26ActionPerformed
+
+    private void jButton28ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton28ActionPerformed
+//        CardLayout cl = (CardLayout) pnlMainContent.getLayout();
+//        cl.show(pnlMainContent, "pnlDoiMatKhau");
+//        ((poly.cinema.ui.DoiMatKhau) pnlDoiMatKhau).open();
+    }//GEN-LAST:event_jButton28ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -370,11 +485,6 @@ public class FCinema_Frame extends javax.swing.JFrame implements FCinema_Control
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton10;
-    private javax.swing.JButton jButton11;
-    private javax.swing.JButton jButton12;
-    private javax.swing.JButton jButton14;
     private javax.swing.JButton jButton15;
     private javax.swing.JButton jButton16;
     private javax.swing.JButton jButton17;
@@ -382,23 +492,31 @@ public class FCinema_Frame extends javax.swing.JFrame implements FCinema_Control
     private javax.swing.JButton jButton19;
     private javax.swing.JButton jButton20;
     private javax.swing.JButton jButton21;
-    private javax.swing.JButton jButton22;
     private javax.swing.JButton jButton23;
     private javax.swing.JButton jButton24;
     private javax.swing.JButton jButton25;
     private javax.swing.JButton jButton26;
     private javax.swing.JButton jButton27;
     private javax.swing.JButton jButton28;
-    private javax.swing.JButton jButton5;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JPanel jPanel3;
     private javax.swing.JLabel lblFullname;
+    private javax.swing.JPanel pnlBanVe;
     private javax.swing.JPanel pnlCenter;
+    private javax.swing.JPanel pnlDoiMatKhau;
+    private javax.swing.JPanel pnlLichSuBanHang;
+    private javax.swing.JPanel pnlMainContent;
     private javax.swing.JPanel pnlManager;
-    private javax.swing.JPanel pnlManager1;
+    private javax.swing.JPanel pnlQuanLyGhe;
+    private javax.swing.JPanel pnlQuanLyHoaDon;
+    private javax.swing.JPanel pnlQuanLyNhanVien;
+    private javax.swing.JPanel pnlQuanLyPhim;
+    private javax.swing.JPanel pnlQuanLyPhongChieu;
+    private javax.swing.JPanel pnlQuanLySanPham;
+    private javax.swing.JPanel pnlThongKeDoanhThu;
+    private javax.swing.JPanel pnlTrangchu;
+    private javax.swing.JPanel pnlXemLichChieu;
     // End of variables declaration//GEN-END:variables
 
     @Override
@@ -408,28 +526,28 @@ public class FCinema_Frame extends javax.swing.JFrame implements FCinema_Control
         this.showWelcomeJDialog(this);
         this.showLoginJDialog(this);
 
-//        lblFullname.setText(XAuth.user.getFullname());
-//        if (!XAuth.user.isManager()) {
-//            pnlCenter.remove(pnlManager);
-//        }
+        lblFullname.setText(XAuth.user.getTenNv());
+        if (!XAuth.user.isVaiTro()) {
+            pnlCenter.remove(pnlManager);
+        }
 //        if (XAuth.user.isManager()) {
 //            pnlCenter.remove(pnlManager1);
 //        } 
     }
 
-//    private void logout() {
-//        if (XDialog.confirm("Bạn có chắc chắn muốn đăng xuất không?")) {
-//            this.dispose();
-//            if (XAuth.user != null) {
-//                FCinema_Frame main = new FCinema_Frame();
-//                lblFullname.setText(XAuth.user.getFullname());
-//                if (!XAuth.user.isManager()) {
-//                    pnlCenter.remove(pnlManager);
-//                }
-//                main.setVisible(true);
-//            }
-//        }
-//    }
+    private void logout() {
+        if (XDialog.confirm("Bạn có chắc chắn muốn đăng xuất không?")) {
+            this.dispose();
+            if (XAuth.user != null) {
+                FCinema_Frame main = new FCinema_Frame();
+                lblFullname.setText(XAuth.user.getTenNv());
+                if (!XAuth.user.isVaiTro()) {
+                    pnlCenter.remove(pnlManager);
+                }
+                main.setVisible(true);
+            }
+        }
+    }
 
     @Override
     public void exit() {
