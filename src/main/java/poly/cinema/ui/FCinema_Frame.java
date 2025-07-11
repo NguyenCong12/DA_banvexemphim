@@ -99,7 +99,7 @@ public class FCinema_Frame extends javax.swing.JFrame implements FCinema_Control
         pnlManager.setBackground(new java.awt.Color(204, 204, 204));
 
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel3.setIcon(new javax.swing.ImageIcon("C:\\Users\\ADMIN\\OneDrive\\Desktop\\anh_Qlxemphim\\logogiaodien.png")); // NOI18N
+        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/poly/cinema/ui/logogiaodien.png"))); // NOI18N
 
         jButton15.setText("Trang chủ");
         jButton15.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
