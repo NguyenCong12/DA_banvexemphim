@@ -79,6 +79,7 @@ public class FCinema_Frame extends javax.swing.JFrame implements FCinema_Control
         btnThongKeDoanhThu = new javax.swing.JButton();
         jButton28 = new javax.swing.JButton();
         jSeparator1 = new javax.swing.JSeparator();
+        btnsuatchieu = new javax.swing.JButton();
         pnlMainContent = new javax.swing.JPanel();
         pnlDoiMatKhau = new javax.swing.JPanel();
         pnlQuanLyPhongChieu = new javax.swing.JPanel();
@@ -203,6 +204,9 @@ public class FCinema_Frame extends javax.swing.JFrame implements FCinema_Control
         jSeparator1.setBackground(new java.awt.Color(255, 255, 255));
         jSeparator1.setForeground(new java.awt.Color(255, 255, 255));
 
+        btnsuatchieu.setText("QUẢN LÝ SUẤT CHIÊU");
+        btnsuatchieu.setBorder(null);
+
         javax.swing.GroupLayout pnlManagerLayout = new javax.swing.GroupLayout(pnlManager);
         pnlManager.setLayout(pnlManagerLayout);
         pnlManagerLayout.setHorizontalGroup(
@@ -217,7 +221,7 @@ public class FCinema_Frame extends javax.swing.JFrame implements FCinema_Control
                             .addGroup(pnlManagerLayout.createSequentialGroup()
                                 .addGap(29, 29, 29)
                                 .addGroup(pnlManagerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jButton26, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jButton26, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGroup(pnlManagerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                         .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                         .addComponent(jButton15, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -231,7 +235,8 @@ public class FCinema_Frame extends javax.swing.JFrame implements FCinema_Control
                                         .addComponent(btnThongKeDoanhThu, javax.swing.GroupLayout.DEFAULT_SIZE, 166, Short.MAX_VALUE)
                                         .addComponent(btnQLPhongChieu, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                         .addComponent(btnQLPhim, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(jButton28, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
+                                        .addComponent(jButton28, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(btnsuatchieu, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
                         .addGap(0, 29, Short.MAX_VALUE))
                     .addGroup(pnlManagerLayout.createSequentialGroup()
                         .addContainerGap()
@@ -247,7 +252,7 @@ public class FCinema_Frame extends javax.swing.JFrame implements FCinema_Control
                 .addComponent(jButton15, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(10, 10, 10)
                 .addComponent(jLabel4)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnQLNHANVIEN, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnQLHoaDon, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -267,13 +272,15 @@ public class FCinema_Frame extends javax.swing.JFrame implements FCinema_Control
                 .addComponent(btnThongKeDoanhThu, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnLichSuBanHang, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(23, 23, 23)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnsuatchieu, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(2, 2, 2)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(6, 6, 6)
                 .addComponent(jButton28, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton26, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(15, Short.MAX_VALUE))
+                .addContainerGap(9, Short.MAX_VALUE))
         );
 
         pnlCenter.add(pnlManager, new org.netbeans.lib.awtextra.AbsoluteConstraints(4, 0, 230, 720));
@@ -504,13 +511,13 @@ public class FCinema_Frame extends javax.swing.JFrame implements FCinema_Control
     private void btnXemLichChieuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXemLichChieuActionPerformed
         CardLayout cl = (CardLayout) pnlMainContent.getLayout();
         cl.show(pnlMainContent, "pnlXemLichChieu");
-        ((poly.cinema.ui.manager.ThongKePanel) pnlXemLichChieu).open();
+        ((poly.cinema.ui.manager.XemLichChieu) pnlXemLichChieu).open();
     }//GEN-LAST:event_btnXemLichChieuActionPerformed
 
     private void btnQLHoaDonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnQLHoaDonActionPerformed
         CardLayout cl = (CardLayout) pnlMainContent.getLayout();
         cl.show(pnlMainContent, "pnlQuanLyHoaDon");
-        ((poly.cinema.ui.manager.ThongKePanel) pnlQuanLyHoaDon).open();
+        ((poly.cinema.ui.manager.QuanLyHoaDonJpanel) pnlQuanLyHoaDon).open();
     }//GEN-LAST:event_btnQLHoaDonActionPerformed
 
     /**
@@ -559,6 +566,7 @@ public class FCinema_Frame extends javax.swing.JFrame implements FCinema_Control
     private javax.swing.JButton btnQLSanPham;
     private javax.swing.JButton btnThongKeDoanhThu;
     private javax.swing.JButton btnXemLichChieu;
+    private javax.swing.JButton btnsuatchieu;
     private javax.swing.JButton jButton15;
     private javax.swing.JButton jButton26;
     private javax.swing.JButton jButton28;
