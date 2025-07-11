@@ -76,6 +76,7 @@ poly\cinema\ui\DangNhapJDialog.class
 poly\cinema\util\CaptchaGenerator.class
 poly\cinema\ui\FCinema_Frame$6.class
 poly\cinema\ui\FCinema_Frame.class
+poly\cinema\ui\manager\QuanLyHoaDonJpanel.class
 poly\cinema\ui\manager\CrudController.class
 poly\cinema\ui\DangNhapJDialog$7.class
 poly\cinema\ui\FCinema_Controller.class

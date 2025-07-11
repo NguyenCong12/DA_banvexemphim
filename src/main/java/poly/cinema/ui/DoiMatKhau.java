@@ -239,7 +239,7 @@ public class DoiMatKhau extends javax.swing.JPanel implements DoiMatKhauControll
         jLabel1.setText("Đổi mật khẩu");
 
         jLabel9.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/poly/cafe/icons/logocinema.png"))); // NOI18N
+        jLabel9.setIcon(new javax.swing.ImageIcon("C:\\Users\\ADMIN\\OneDrive\\Desktop\\anh_Qlxemphim\\anhdoimatkhau.png")); // NOI18N
         jLabel9.setText("jLabel9");
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
