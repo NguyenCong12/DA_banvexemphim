@@ -35,6 +35,7 @@ public class FCinema_Frame extends javax.swing.JFrame implements FCinema_Control
         pnlThongKeDoanhThu = new poly.cinema.ui.manager.ThongKePanel();
         pnlQuanLyHoaDon = new poly.cinema.ui.manager.QuanLyHoaDonJpanel();
         pnlXemLichChieu = new poly.cinema.ui.manager.XemLichChieu();
+        pnlLichSuBanHang = new poly.cinema.ui.manager.LichSuBanHang();
 //        pnlMainContent.add(pnlBanHang, "pnlBanHang");
 
         pnlMainContent.add(pnlQuanLyPhim, "pnlQuanLyPhim");
@@ -44,6 +45,7 @@ public class FCinema_Frame extends javax.swing.JFrame implements FCinema_Control
         pnlMainContent.add(pnlDoiMatKhau, "pnlDoiMatKhau");
         pnlMainContent.add(pnlQuanLyHoaDon, "pnlQuanLyHoaDon");
         pnlMainContent.add(pnlXemLichChieu, "pnlXemLichChieu");
+        pnlMainContent.add(pnlLichSuBanHang, "pnlLichSuBanHang");
         
         pnlMainContent.add(pnlTrangchu, "pnlTrangchu");
         
@@ -168,6 +170,11 @@ public class FCinema_Frame extends javax.swing.JFrame implements FCinema_Control
 
         btnLichSuBanHang.setText("LỊCH SỬ BÁN HÀNG");
         btnLichSuBanHang.setBorder(null);
+        btnLichSuBanHang.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLichSuBanHangActionPerformed(evt);
+            }
+        });
 
         btnXemLichChieu.setText("XEM LỊCH CHIẾU");
         btnXemLichChieu.setBorder(null);
@@ -519,6 +526,12 @@ public class FCinema_Frame extends javax.swing.JFrame implements FCinema_Control
         cl.show(pnlMainContent, "pnlQuanLyHoaDon");
         ((poly.cinema.ui.manager.QuanLyHoaDonJpanel) pnlQuanLyHoaDon).open();
     }//GEN-LAST:event_btnQLHoaDonActionPerformed
+
+    private void btnLichSuBanHangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLichSuBanHangActionPerformed
+        CardLayout cl = (CardLayout) pnlMainContent.getLayout();
+        cl.show(pnlMainContent, "pnlLichSuBanHang");
+        ((poly.cinema.ui.manager.QuanLyHoaDonJpanel) pnlLichSuBanHang).open();
+    }//GEN-LAST:event_btnLichSuBanHangActionPerformed
 
     /**
      * @param args the command line arguments
