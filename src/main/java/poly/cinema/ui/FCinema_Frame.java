@@ -345,7 +345,7 @@ public class FCinema_Frame extends javax.swing.JFrame implements FCinema_Control
         pnlMainContent.add(pnlQuanLyNhanVien, "card3");
 
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/backgourd.png"))); // NOI18N
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/poly/cafe/icons/backgourd.png"))); // NOI18N
 
         javax.swing.GroupLayout pnlTrangchuLayout = new javax.swing.GroupLayout(pnlTrangchu);
         pnlTrangchu.setLayout(pnlTrangchuLayout);
