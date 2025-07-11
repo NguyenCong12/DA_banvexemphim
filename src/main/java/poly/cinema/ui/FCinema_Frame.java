@@ -33,6 +33,8 @@ public class FCinema_Frame extends javax.swing.JFrame implements FCinema_Control
         pnlDoiMatKhau = new poly.cinema.ui.DoiMatKhau();
         pnlQuanLyNhanVien = new poly.cinema.ui.manager.QuanLiNhanVien();
         pnlThongKeDoanhThu = new poly.cinema.ui.manager.ThongKePanel();
+        pnlQuanLyHoaDon = new poly.cinema.ui.manager.QuanLyHoaDonJpanel();
+        pnlXemLichChieu = new poly.cinema.ui.manager.XemLichChieu();
 //        pnlMainContent.add(pnlBanHang, "pnlBanHang");
 
         pnlMainContent.add(pnlQuanLyPhim, "pnlQuanLyPhim");
@@ -40,6 +42,8 @@ public class FCinema_Frame extends javax.swing.JFrame implements FCinema_Control
         pnlMainContent.add(pnlQuanLyNhanVien, "pnlQuanLyNhanVien");
         pnlMainContent.add(pnlThongKeDoanhThu, "pnlThongKeDoanhThu");
         pnlMainContent.add(pnlDoiMatKhau, "pnlDoiMatKhau");
+        pnlMainContent.add(pnlQuanLyHoaDon, "pnlQuanLyHoaDon");
+        pnlMainContent.add(pnlXemLichChieu, "pnlXemLichChieu");
         
         pnlMainContent.add(pnlTrangchu, "pnlTrangchu");
         
@@ -62,17 +66,17 @@ public class FCinema_Frame extends javax.swing.JFrame implements FCinema_Control
         jLabel3 = new javax.swing.JLabel();
         jButton15 = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
-        jButton16 = new javax.swing.JButton();
-        jButton17 = new javax.swing.JButton();
-        jButton18 = new javax.swing.JButton();
-        jButton19 = new javax.swing.JButton();
-        jButton20 = new javax.swing.JButton();
-        jButton21 = new javax.swing.JButton();
-        jButton23 = new javax.swing.JButton();
-        jButton24 = new javax.swing.JButton();
-        jButton25 = new javax.swing.JButton();
+        btnQLHoaDon = new javax.swing.JButton();
+        btnQLNHANVIEN = new javax.swing.JButton();
+        btnQLGhe = new javax.swing.JButton();
+        btnBanVe = new javax.swing.JButton();
+        btnQLSanPham = new javax.swing.JButton();
+        btnQLPhim = new javax.swing.JButton();
+        btnQLPhongChieu = new javax.swing.JButton();
+        btnLichSuBanHang = new javax.swing.JButton();
+        btnXemLichChieu = new javax.swing.JButton();
         jButton26 = new javax.swing.JButton();
-        jButton27 = new javax.swing.JButton();
+        btnThongKeDoanhThu = new javax.swing.JButton();
         jButton28 = new javax.swing.JButton();
         jSeparator1 = new javax.swing.JSeparator();
         pnlMainContent = new javax.swing.JPanel();
@@ -99,7 +103,7 @@ public class FCinema_Frame extends javax.swing.JFrame implements FCinema_Control
         pnlManager.setBackground(new java.awt.Color(204, 204, 204));
 
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/poly/cinema/ui/logogiaodien.png"))); // NOI18N
+        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/poly/cafe/icons/logonho.png"))); // NOI18N
 
         jButton15.setText("Trang chủ");
         jButton15.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
@@ -115,52 +119,62 @@ public class FCinema_Frame extends javax.swing.JFrame implements FCinema_Control
         jLabel4.setText("Quản lý");
         jLabel4.setToolTipText("");
 
-        jButton16.setText("QUẢN LÝ HÓA ĐƠN");
-        jButton16.setBorder(null);
-
-        jButton17.setText("QUẢN LÝ NHÂN VIÊN");
-        jButton17.setBorder(null);
-        jButton17.addActionListener(new java.awt.event.ActionListener() {
+        btnQLHoaDon.setText("QUẢN LÝ HÓA ĐƠN");
+        btnQLHoaDon.setBorder(null);
+        btnQLHoaDon.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton17ActionPerformed(evt);
+                btnQLHoaDonActionPerformed(evt);
             }
         });
 
-        jButton18.setText("QUẢN LÝ GHẾ");
-        jButton18.setBorder(null);
-
-        jButton19.setText("BÁN VÉ");
-        jButton19.setBorder(null);
-        jButton19.addActionListener(new java.awt.event.ActionListener() {
+        btnQLNHANVIEN.setText("QUẢN LÝ NHÂN VIÊN");
+        btnQLNHANVIEN.setBorder(null);
+        btnQLNHANVIEN.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton19ActionPerformed(evt);
+                btnQLNHANVIENActionPerformed(evt);
             }
         });
 
-        jButton20.setText("QUẢN LÝ SẢN PHẨM ");
-        jButton20.setBorder(null);
+        btnQLGhe.setText("QUẢN LÝ GHẾ");
+        btnQLGhe.setBorder(null);
 
-        jButton21.setText("QUẢN LÝ PHIM");
-        jButton21.setBorder(null);
-        jButton21.addActionListener(new java.awt.event.ActionListener() {
+        btnBanVe.setText("BÁN VÉ");
+        btnBanVe.setBorder(null);
+        btnBanVe.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton21ActionPerformed(evt);
+                btnBanVeActionPerformed(evt);
             }
         });
 
-        jButton23.setText("QUẢN LÝ PHÒNG CHIẾU");
-        jButton23.setBorder(null);
-        jButton23.addActionListener(new java.awt.event.ActionListener() {
+        btnQLSanPham.setText("QUẢN LÝ SẢN PHẨM ");
+        btnQLSanPham.setBorder(null);
+
+        btnQLPhim.setText("QUẢN LÝ PHIM");
+        btnQLPhim.setBorder(null);
+        btnQLPhim.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton23ActionPerformed(evt);
+                btnQLPhimActionPerformed(evt);
             }
         });
 
-        jButton24.setText("LỊCH SỬ BÁN HÀNG");
-        jButton24.setBorder(null);
+        btnQLPhongChieu.setText("QUẢN LÝ PHÒNG CHIẾU");
+        btnQLPhongChieu.setBorder(null);
+        btnQLPhongChieu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnQLPhongChieuActionPerformed(evt);
+            }
+        });
 
-        jButton25.setText("XEM LỊCH CHIẾU");
-        jButton25.setBorder(null);
+        btnLichSuBanHang.setText("LỊCH SỬ BÁN HÀNG");
+        btnLichSuBanHang.setBorder(null);
+
+        btnXemLichChieu.setText("XEM LỊCH CHIẾU");
+        btnXemLichChieu.setBorder(null);
+        btnXemLichChieu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnXemLichChieuActionPerformed(evt);
+            }
+        });
 
         jButton26.setText("ĐĂNG XUẤT");
         jButton26.setBorder(null);
@@ -170,11 +184,11 @@ public class FCinema_Frame extends javax.swing.JFrame implements FCinema_Control
             }
         });
 
-        jButton27.setText("THỐNG KÊ DOANH THU");
-        jButton27.setBorder(null);
-        jButton27.addActionListener(new java.awt.event.ActionListener() {
+        btnThongKeDoanhThu.setText("THỐNG KÊ DOANH THU");
+        btnThongKeDoanhThu.setBorder(null);
+        btnThongKeDoanhThu.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton27ActionPerformed(evt);
+                btnThongKeDoanhThuActionPerformed(evt);
             }
         });
 
@@ -207,16 +221,16 @@ public class FCinema_Frame extends javax.swing.JFrame implements FCinema_Control
                                     .addGroup(pnlManagerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                         .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                         .addComponent(jButton15, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(jButton16, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(jButton17, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(jButton18, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(jButton19, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(jButton20, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(jButton24, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(jButton25, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(jButton27, javax.swing.GroupLayout.DEFAULT_SIZE, 166, Short.MAX_VALUE)
-                                        .addComponent(jButton23, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(jButton21, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(btnQLHoaDon, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(btnQLNHANVIEN, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(btnQLGhe, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(btnBanVe, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(btnQLSanPham, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(btnLichSuBanHang, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(btnXemLichChieu, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(btnThongKeDoanhThu, javax.swing.GroupLayout.DEFAULT_SIZE, 166, Short.MAX_VALUE)
+                                        .addComponent(btnQLPhongChieu, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(btnQLPhim, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                         .addComponent(jButton28, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
                         .addGap(0, 29, Short.MAX_VALUE))
                     .addGroup(pnlManagerLayout.createSequentialGroup()
@@ -234,25 +248,25 @@ public class FCinema_Frame extends javax.swing.JFrame implements FCinema_Control
                 .addGap(10, 10, 10)
                 .addComponent(jLabel4)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton17, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnQLNHANVIEN, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton16, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnQLHoaDon, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton19, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnBanVe, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton18, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnQLGhe, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton23, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnQLPhongChieu, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton20, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnQLSanPham, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton21, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnQLPhim, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton25, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnXemLichChieu, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton27, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnThongKeDoanhThu, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton24, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnLichSuBanHang, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(23, 23, 23)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -444,26 +458,26 @@ public class FCinema_Frame extends javax.swing.JFrame implements FCinema_Control
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton21ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton21ActionPerformed
+    private void btnQLPhimActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnQLPhimActionPerformed
         CardLayout cl = (CardLayout) pnlMainContent.getLayout();
         cl.show(pnlMainContent, "pnlQuanLyPhim");
         ((poly.cinema.ui.manager.QuanLyPhim) pnlQuanLyPhim).open();
-    }//GEN-LAST:event_jButton21ActionPerformed
+    }//GEN-LAST:event_btnQLPhimActionPerformed
 
-    private void jButton19ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton19ActionPerformed
+    private void btnBanVeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBanVeActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton19ActionPerformed
+    }//GEN-LAST:event_btnBanVeActionPerformed
 
     private void jButton15ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton15ActionPerformed
         CardLayout cl = (CardLayout) pnlMainContent.getLayout();
         cl.show(pnlMainContent, "pnlTrangchu");
     }//GEN-LAST:event_jButton15ActionPerformed
 
-    private void jButton23ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton23ActionPerformed
+    private void btnQLPhongChieuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnQLPhongChieuActionPerformed
         CardLayout cl = (CardLayout) pnlMainContent.getLayout();
         cl.show(pnlMainContent, "pnlQuanLyPhongChieu");
         ((poly.cinema.ui.manager.QuanLiPhongChieu) pnlQuanLyPhongChieu).open();
-    }//GEN-LAST:event_jButton23ActionPerformed
+    }//GEN-LAST:event_btnQLPhongChieuActionPerformed
 
     private void jButton26ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton26ActionPerformed
         logout();
@@ -475,17 +489,29 @@ public class FCinema_Frame extends javax.swing.JFrame implements FCinema_Control
         ((poly.cinema.ui.DoiMatKhau) pnlDoiMatKhau).open();
     }//GEN-LAST:event_jButton28ActionPerformed
 
-    private void jButton17ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton17ActionPerformed
+    private void btnQLNHANVIENActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnQLNHANVIENActionPerformed
        CardLayout cl = (CardLayout) pnlMainContent.getLayout();
         cl.show(pnlMainContent, "pnlQuanLyNhanVien");
         ((poly.cinema.ui.manager.QuanLiNhanVien) pnlQuanLyNhanVien).open();
-    }//GEN-LAST:event_jButton17ActionPerformed
+    }//GEN-LAST:event_btnQLNHANVIENActionPerformed
 
-    private void jButton27ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton27ActionPerformed
+    private void btnThongKeDoanhThuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThongKeDoanhThuActionPerformed
         CardLayout cl = (CardLayout) pnlMainContent.getLayout();
         cl.show(pnlMainContent, "pnlThongKeDoanhThu");
         ((poly.cinema.ui.manager.ThongKePanel) pnlThongKeDoanhThu).open();
-    }//GEN-LAST:event_jButton27ActionPerformed
+    }//GEN-LAST:event_btnThongKeDoanhThuActionPerformed
+
+    private void btnXemLichChieuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXemLichChieuActionPerformed
+        CardLayout cl = (CardLayout) pnlMainContent.getLayout();
+        cl.show(pnlMainContent, "pnlXemLichChieu");
+        ((poly.cinema.ui.manager.ThongKePanel) pnlXemLichChieu).open();
+    }//GEN-LAST:event_btnXemLichChieuActionPerformed
+
+    private void btnQLHoaDonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnQLHoaDonActionPerformed
+        CardLayout cl = (CardLayout) pnlMainContent.getLayout();
+        cl.show(pnlMainContent, "pnlQuanLyHoaDon");
+        ((poly.cinema.ui.manager.ThongKePanel) pnlQuanLyHoaDon).open();
+    }//GEN-LAST:event_btnQLHoaDonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -523,18 +549,18 @@ public class FCinema_Frame extends javax.swing.JFrame implements FCinema_Control
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnBanVe;
+    private javax.swing.JButton btnLichSuBanHang;
+    private javax.swing.JButton btnQLGhe;
+    private javax.swing.JButton btnQLHoaDon;
+    private javax.swing.JButton btnQLNHANVIEN;
+    private javax.swing.JButton btnQLPhim;
+    private javax.swing.JButton btnQLPhongChieu;
+    private javax.swing.JButton btnQLSanPham;
+    private javax.swing.JButton btnThongKeDoanhThu;
+    private javax.swing.JButton btnXemLichChieu;
     private javax.swing.JButton jButton15;
-    private javax.swing.JButton jButton16;
-    private javax.swing.JButton jButton17;
-    private javax.swing.JButton jButton18;
-    private javax.swing.JButton jButton19;
-    private javax.swing.JButton jButton20;
-    private javax.swing.JButton jButton21;
-    private javax.swing.JButton jButton23;
-    private javax.swing.JButton jButton24;
-    private javax.swing.JButton jButton25;
     private javax.swing.JButton jButton26;
-    private javax.swing.JButton jButton27;
     private javax.swing.JButton jButton28;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;

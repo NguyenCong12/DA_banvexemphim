@@ -70,16 +70,16 @@
                                           <Group type="103" alignment="0" groupAlignment="0" max="-2" attributes="0">
                                               <Component id="jLabel4" alignment="0" max="32767" attributes="0"/>
                                               <Component id="jButton15" alignment="0" max="32767" attributes="0"/>
-                                              <Component id="jButton16" alignment="0" max="32767" attributes="0"/>
-                                              <Component id="jButton17" alignment="0" max="32767" attributes="0"/>
-                                              <Component id="jButton18" alignment="0" max="32767" attributes="0"/>
-                                              <Component id="jButton19" alignment="0" max="32767" attributes="0"/>
-                                              <Component id="jButton20" alignment="0" max="32767" attributes="0"/>
-                                              <Component id="jButton24" alignment="0" max="32767" attributes="0"/>
-                                              <Component id="jButton25" alignment="0" max="32767" attributes="0"/>
-                                              <Component id="jButton27" alignment="0" pref="166" max="32767" attributes="0"/>
-                                              <Component id="jButton23" alignment="0" max="32767" attributes="0"/>
-                                              <Component id="jButton21" alignment="0" max="32767" attributes="0"/>
+                                              <Component id="btnQLHoaDon" alignment="0" max="32767" attributes="0"/>
+                                              <Component id="btnQLNHANVIEN" alignment="0" max="32767" attributes="0"/>
+                                              <Component id="btnQLGhe" alignment="0" max="32767" attributes="0"/>
+                                              <Component id="btnBanVe" alignment="0" max="32767" attributes="0"/>
+                                              <Component id="btnQLSanPham" alignment="0" max="32767" attributes="0"/>
+                                              <Component id="btnLichSuBanHang" alignment="0" max="32767" attributes="0"/>
+                                              <Component id="btnXemLichChieu" alignment="0" max="32767" attributes="0"/>
+                                              <Component id="btnThongKeDoanhThu" alignment="0" pref="166" max="32767" attributes="0"/>
+                                              <Component id="btnQLPhongChieu" alignment="0" max="32767" attributes="0"/>
+                                              <Component id="btnQLPhim" alignment="0" max="32767" attributes="0"/>
                                               <Component id="jButton28" alignment="0" max="32767" attributes="0"/>
                                           </Group>
                                       </Group>
@@ -106,25 +106,25 @@
                       <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
                       <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Component id="jButton17" min="-2" pref="33" max="-2" attributes="0"/>
+                      <Component id="btnQLNHANVIEN" min="-2" pref="33" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jButton16" min="-2" pref="33" max="-2" attributes="0"/>
+                      <Component id="btnQLHoaDon" min="-2" pref="33" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jButton19" min="-2" pref="33" max="-2" attributes="0"/>
+                      <Component id="btnBanVe" min="-2" pref="33" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jButton18" min="-2" pref="33" max="-2" attributes="0"/>
+                      <Component id="btnQLGhe" min="-2" pref="33" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jButton23" min="-2" pref="33" max="-2" attributes="0"/>
+                      <Component id="btnQLPhongChieu" min="-2" pref="33" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jButton20" min="-2" pref="33" max="-2" attributes="0"/>
+                      <Component id="btnQLSanPham" min="-2" pref="33" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jButton21" min="-2" pref="33" max="-2" attributes="0"/>
+                      <Component id="btnQLPhim" min="-2" pref="33" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jButton25" min="-2" pref="33" max="-2" attributes="0"/>
+                      <Component id="btnXemLichChieu" min="-2" pref="33" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jButton27" min="-2" pref="33" max="-2" attributes="0"/>
+                      <Component id="btnThongKeDoanhThu" min="-2" pref="33" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jButton24" min="-2" pref="33" max="-2" attributes="0"/>
+                      <Component id="btnLichSuBanHang" min="-2" pref="33" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="23" max="-2" attributes="0"/>
                       <Component id="jSeparator1" min="-2" pref="10" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
@@ -141,7 +141,7 @@
               <Properties>
                 <Property name="horizontalAlignment" type="int" value="0"/>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/poly/cinema/ui/logogiaodien.png"/>
+                  <Image iconType="3" name="/poly/cafe/icons/logonho.png"/>
                 </Property>
               </Properties>
             </Component>
@@ -171,15 +171,18 @@
                 <Property name="toolTipText" type="java.lang.String" value=""/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JButton" name="jButton16">
+            <Component class="javax.swing.JButton" name="btnQLHoaDon">
               <Properties>
                 <Property name="text" type="java.lang.String" value="QU&#x1ea2;N L&#xdd; H&#xd3;A &#x110;&#x1a0;N"/>
                 <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                   <Border info="null"/>
                 </Property>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnQLHoaDonActionPerformed"/>
+              </Events>
             </Component>
-            <Component class="javax.swing.JButton" name="jButton17">
+            <Component class="javax.swing.JButton" name="btnQLNHANVIEN">
               <Properties>
                 <Property name="text" type="java.lang.String" value="QU&#x1ea2;N L&#xdd; NH&#xc2;N VI&#xca;N"/>
                 <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
@@ -187,10 +190,10 @@
                 </Property>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton17ActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnQLNHANVIENActionPerformed"/>
               </Events>
             </Component>
-            <Component class="javax.swing.JButton" name="jButton18">
+            <Component class="javax.swing.JButton" name="btnQLGhe">
               <Properties>
                 <Property name="text" type="java.lang.String" value="QU&#x1ea2;N L&#xdd; GH&#x1ebe;"/>
                 <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
@@ -198,7 +201,7 @@
                 </Property>
               </Properties>
             </Component>
-            <Component class="javax.swing.JButton" name="jButton19">
+            <Component class="javax.swing.JButton" name="btnBanVe">
               <Properties>
                 <Property name="text" type="java.lang.String" value="B&#xc1;N V&#xc9;"/>
                 <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
@@ -206,10 +209,10 @@
                 </Property>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton19ActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnBanVeActionPerformed"/>
               </Events>
             </Component>
-            <Component class="javax.swing.JButton" name="jButton20">
+            <Component class="javax.swing.JButton" name="btnQLSanPham">
               <Properties>
                 <Property name="text" type="java.lang.String" value="QU&#x1ea2;N L&#xdd; S&#x1ea2;N PH&#x1ea8;M "/>
                 <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
@@ -217,7 +220,7 @@
                 </Property>
               </Properties>
             </Component>
-            <Component class="javax.swing.JButton" name="jButton21">
+            <Component class="javax.swing.JButton" name="btnQLPhim">
               <Properties>
                 <Property name="text" type="java.lang.String" value="QU&#x1ea2;N L&#xdd; PHIM"/>
                 <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
@@ -225,10 +228,10 @@
                 </Property>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton21ActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnQLPhimActionPerformed"/>
               </Events>
             </Component>
-            <Component class="javax.swing.JButton" name="jButton23">
+            <Component class="javax.swing.JButton" name="btnQLPhongChieu">
               <Properties>
                 <Property name="text" type="java.lang.String" value="QU&#x1ea2;N L&#xdd; PH&#xd2;NG CHI&#x1ebe;U"/>
                 <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
@@ -236,10 +239,10 @@
                 </Property>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton23ActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnQLPhongChieuActionPerformed"/>
               </Events>
             </Component>
-            <Component class="javax.swing.JButton" name="jButton24">
+            <Component class="javax.swing.JButton" name="btnLichSuBanHang">
               <Properties>
                 <Property name="text" type="java.lang.String" value="L&#x1eca;CH S&#x1eec; B&#xc1;N H&#xc0;NG"/>
                 <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
@@ -247,13 +250,16 @@
                 </Property>
               </Properties>
             </Component>
-            <Component class="javax.swing.JButton" name="jButton25">
+            <Component class="javax.swing.JButton" name="btnXemLichChieu">
               <Properties>
                 <Property name="text" type="java.lang.String" value="XEM L&#x1eca;CH CHI&#x1ebe;U"/>
                 <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                   <Border info="null"/>
                 </Property>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnXemLichChieuActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JButton" name="jButton26">
               <Properties>
@@ -266,7 +272,7 @@
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton26ActionPerformed"/>
               </Events>
             </Component>
-            <Component class="javax.swing.JButton" name="jButton27">
+            <Component class="javax.swing.JButton" name="btnThongKeDoanhThu">
               <Properties>
                 <Property name="text" type="java.lang.String" value="TH&#x1ed0;NG K&#xca; DOANH THU"/>
                 <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
@@ -274,7 +280,7 @@
                 </Property>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton27ActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnThongKeDoanhThuActionPerformed"/>
               </Events>
             </Component>
             <Component class="javax.swing.JButton" name="jButton28">
