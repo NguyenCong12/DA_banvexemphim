@@ -15,7 +15,6 @@ import javax.swing.SwingUtilities;
  */
 public class WelcomeJDialog extends javax.swing.JDialog implements WelcomeController {
 
-  
     public WelcomeJDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         this.setUndecorated(true);
@@ -73,8 +72,8 @@ public class WelcomeJDialog extends javax.swing.JDialog implements WelcomeContro
         prb.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         prb.setStringPainted(true);
 
-        jLabel4.setIcon(new javax.swing.ImageIcon("C:\\Users\\ADMIN\\OneDrive\\Desktop\\anh_Qlxemphim\\logonho.png")); // NOI18N
-        jLabel4.setText("jLabel4");
+        jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/poly/cafe/icons/logocinema1.png"))); // NOI18N
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);

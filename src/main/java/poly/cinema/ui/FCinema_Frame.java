@@ -30,12 +30,16 @@ public class FCinema_Frame extends javax.swing.JFrame implements FCinema_Control
         
         pnlQuanLyPhim = new poly.cinema.ui.manager.QuanLyPhim();
         pnlQuanLyPhongChieu = new poly.cinema.ui.manager.QuanLiPhongChieu();
-//        pnlDoiMatKhau = new poly.cinema.ui.DoiMatKhau();
+        pnlDoiMatKhau = new poly.cinema.ui.DoiMatKhau();
+        pnlQuanLyNhanVien = new poly.cinema.ui.manager.QuanLiNhanVien();
+        pnlThongKeDoanhThu = new poly.cinema.ui.manager.ThongKePanel();
 //        pnlMainContent.add(pnlBanHang, "pnlBanHang");
 
         pnlMainContent.add(pnlQuanLyPhim, "pnlQuanLyPhim");
         pnlMainContent.add(pnlQuanLyPhongChieu, "pnlQuanLyPhongChieu");
-//        pnlMainContent.add(pnlDoiMatKhau, "pnlDoiMatKhau");
+        pnlMainContent.add(pnlQuanLyNhanVien, "pnlQuanLyNhanVien");
+        pnlMainContent.add(pnlThongKeDoanhThu, "pnlThongKeDoanhThu");
+        pnlMainContent.add(pnlDoiMatKhau, "pnlDoiMatKhau");
         
         pnlMainContent.add(pnlTrangchu, "pnlTrangchu");
         
@@ -95,6 +99,7 @@ public class FCinema_Frame extends javax.swing.JFrame implements FCinema_Control
         pnlManager.setBackground(new java.awt.Color(204, 204, 204));
 
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/poly/cafe/icons/logocinema1.png"))); // NOI18N
 
         jButton15.setText("Trang chủ");
         jButton15.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
@@ -115,6 +120,11 @@ public class FCinema_Frame extends javax.swing.JFrame implements FCinema_Control
 
         jButton17.setText("QUẢN LÝ NHÂN VIÊN");
         jButton17.setBorder(null);
+        jButton17.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton17ActionPerformed(evt);
+            }
+        });
 
         jButton18.setText("QUẢN LÝ GHẾ");
         jButton18.setBorder(null);
@@ -162,6 +172,11 @@ public class FCinema_Frame extends javax.swing.JFrame implements FCinema_Control
 
         jButton27.setText("THỐNG KÊ DOANH THU");
         jButton27.setBorder(null);
+        jButton27.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton27ActionPerformed(evt);
+            }
+        });
 
         jButton28.setText("ĐỔI MẬT KHẨU");
         jButton28.setBorder(null);
@@ -330,6 +345,7 @@ public class FCinema_Frame extends javax.swing.JFrame implements FCinema_Control
         pnlMainContent.add(pnlQuanLyNhanVien, "card3");
 
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/backgourd.png"))); // NOI18N
 
         javax.swing.GroupLayout pnlTrangchuLayout = new javax.swing.GroupLayout(pnlTrangchu);
         pnlTrangchu.setLayout(pnlTrangchuLayout);
@@ -454,10 +470,22 @@ public class FCinema_Frame extends javax.swing.JFrame implements FCinema_Control
     }//GEN-LAST:event_jButton26ActionPerformed
 
     private void jButton28ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton28ActionPerformed
-//        CardLayout cl = (CardLayout) pnlMainContent.getLayout();
-//        cl.show(pnlMainContent, "pnlDoiMatKhau");
-//        ((poly.cinema.ui.DoiMatKhau) pnlDoiMatKhau).open();
+        CardLayout cl = (CardLayout) pnlMainContent.getLayout();
+        cl.show(pnlMainContent, "pnlDoiMatKhau");
+        ((poly.cinema.ui.DoiMatKhau) pnlDoiMatKhau).open();
     }//GEN-LAST:event_jButton28ActionPerformed
+
+    private void jButton17ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton17ActionPerformed
+       CardLayout cl = (CardLayout) pnlMainContent.getLayout();
+        cl.show(pnlMainContent, "pnlQuanLyNhanVien");
+        ((poly.cinema.ui.manager.QuanLiNhanVien) pnlQuanLyNhanVien).open();
+    }//GEN-LAST:event_jButton17ActionPerformed
+
+    private void jButton27ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton27ActionPerformed
+        CardLayout cl = (CardLayout) pnlMainContent.getLayout();
+        cl.show(pnlMainContent, "pnlThongKeDoanhThu");
+        ((poly.cinema.ui.manager.ThongKePanel) pnlThongKeDoanhThu).open();
+    }//GEN-LAST:event_jButton27ActionPerformed
 
     /**
      * @param args the command line arguments

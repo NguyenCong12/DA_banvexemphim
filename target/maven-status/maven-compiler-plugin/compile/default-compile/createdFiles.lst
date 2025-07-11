@@ -8,6 +8,7 @@ poly\cinema\ui\manager\ThongKeController.class
 poly\cinema\dao\ThongKeDAO.class
 poly\cinema\ui\DoiMatKhau$3.class
 poly\cinema\entity\ThongKe$ByUser.class
+poly\cinema\ui\FCinema_Frame$8.class
 poly\cinema\ui\manager\QuanLyPhim$2.class
 poly\cinema\util\TimeRange.class
 poly\cinema\util\XDate.class
@@ -33,6 +34,8 @@ poly\cinema\ui\manager\QuanLyPhim$7.class
 poly\cinema\ui\FCinema_Frame$3.class
 poly\cinema\ui\KhoiPhucMKJDialog$3$1.class
 poly\cinema\ui\manager\QuanLiNhanVien$1.class
+poly\cinema\ui\FCinema_Frame$9.class
+poly\cinema\ui\manager\QuanLiPhongChieu$1.class
 poly\cinema\ui\FCinema_Frame$2.class
 poly\cinema\ui\DangNhapJDialog$4.class
 poly\cinema\ui\manager\QuanLyPhim$6.class

@@ -211,10 +211,10 @@
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel1">
               <Properties>
+                <Property name="horizontalAlignment" type="int" value="0"/>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="2" name="C:\Users\ADMIN\OneDrive\Desktop\anh_Qlxemphim\logo.png"/>
+                  <Image iconType="3" name="/poly/cafe/icons/logocinema1.png"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="jLabel1"/>
               </Properties>
             </Component>
           </SubComponents>
