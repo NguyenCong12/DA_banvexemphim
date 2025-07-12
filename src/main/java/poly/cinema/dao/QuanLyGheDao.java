@@ -14,6 +14,11 @@ import poly.cinema.entity.QuanLyGhe;
 public interface QuanLyGheDao extends CrudDAO<QuanLyGhe, Integer> {
     List<QuanLyGhe> findByPhong(String maPhong);
     boolean updateTrangThai(int maGhe, String trangThai);
+    QuanLyGhe findBySoGhe(String soGhe); 
+    QuanLyGhe findBySoGheAndPhong(String soGhe, String maPhong);
+   
+    public List<String> getAllMaPhong();
+
 }
 
 

@@ -4,10 +4,12 @@
  */
 package poly.cinema.ui.manager;
 
+import poly.cinema.entity.QuanLyGhe;
+
 /**
  *
  * @author Admin
  */
-public interface QuanLyGheController extends CrudController<QuanLyGheJpanel>{
+public interface QuanLyGheController extends CrudController<QuanLyGhe>{
     
 }

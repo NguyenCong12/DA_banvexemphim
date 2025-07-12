@@ -5,8 +5,6 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Lớp tiện ích hỗ trợ làm việc với CSDL quan hệ
@@ -15,35 +13,6 @@ import java.util.List;
  * @version 1.0
  */
 public class XJdbc {
-
-    
-    
-
-    // Lấy danh sách Bean
-    public static <T> List<T> getBeanList(Class<T> type, String sql, Object... args) {
-        List<T> list = new ArrayList<>();
-        try (ResultSet rs = executeQuery(sql, args)) {
-            while (rs.next()) {
-//                if (type == Category.class) {
-//                    Category c = new Category();
-//                    c.setId(rs.getString("Id"));      // tên cột phải đúng
-//                    c.setName(rs.getString("Name"));
-//                    list.add(type.cast(c));
-//                }
-                // Thêm if khác nếu bạn có nhiều loại Bean
-            }
-            rs.getStatement().getConnection().close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return list;
-    }
-
-    // Lấy một Bean duy nhất
-    public static <T> T getSingleBean(Class<T> type, String sql, Object... args) {
-        List<T> list = getBeanList(type, sql, args);
-        return list.isEmpty() ? null : list.get(0);
-    }
 
     private static Connection connection;
 
@@ -56,7 +25,7 @@ public class XJdbc {
         var driver = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
         var dburl = "jdbc:sqlserver://localhost:1433;database=QuanLyBanVeXemPhim;encrypt=true;trustServerCertificate=true;";
         var username = "sa";
-        var password = "1";
+        var password = "223344";
         try {
             if (!XJdbc.isReady()) {
                 Class.forName(driver);

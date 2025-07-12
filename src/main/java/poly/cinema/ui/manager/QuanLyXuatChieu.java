@@ -286,4 +286,8 @@ public class QuanLyXuatChieu extends javax.swing.JPanel {
     private javax.swing.JTextField txtMaXuat;
     private javax.swing.JTextField txtNgayChieu;
     // End of variables declaration//GEN-END:variables
+
+    public void open() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
 }

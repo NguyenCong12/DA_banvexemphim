@@ -23,21 +23,35 @@ import poly.cinema.util.XQuery;
 public class QuanLyPhimDaoImpl implements QuanLyPhimDao {
 
     private final String INSERT_SQL = """
-        INSERT INTO Phim (ten_phim, the_loai, thoi_luong, mo_ta, ngay_khoi_chieu, trang_thai, hinh_anh)
-        VALUES (?, ?, ?, ?, ?, ?, ?)
-    """;
+    INSERT INTO Phim (ten_phim, the_loai, thoi_luong, mo_ta, ngay_khoi_chieu, trang_thai, hinh_anh)
+    VALUES (?, ?, ?, ?, ?, ?, ?)
+""";
 
-    private final String UPDATE_SQL = """
-        UPDATE Phim
-        SET ten_phim = ?, the_loai = ?, thoi_luong = ?, mo_ta = ?, ngay_khoi_chieu = ?, trang_thai = ?, hinh_anh = ?
-        WHERE ma_phim = ?
-    """;
+private final String UPDATE_SQL = """
+    UPDATE Phim
+    SET ten_phim = ?, the_loai = ?, thoi_luong = ?, mo_ta = ?, ngay_khoi_chieu = ?, trang_thai = ?, hinh_anh = ?
+    WHERE ma_phim = ?
+""";
 
-    private final String DELETE_SQL = "DELETE FROM Phim WHERE ma_phim = ?";
-    private final String SELECT_ALL_SQL = "SELECT * FROM Phim";
-    private final String SELECT_BY_ID_SQL = "SELECT * FROM Phim WHERE ma_phim = ?";
-    private final String SELECT_BY_TENPHIM_SQL = "SELECT * FROM Phim WHERE ten_phim LIKE ?";
-    private final String SELECT_BY_TRANGTHAI_SQL = "SELECT * FROM Phim WHERE trang_thai = ?";
+private final String DELETE_SQL = "DELETE FROM Phim WHERE ma_phim = ?";
+
+private final String SELECT_ALL_SQL = """
+    SELECT 
+        ma_phim AS MaPhim,
+        ten_phim AS TenPhim,
+        the_loai AS TheLoai,
+        thoi_luong AS ThoiLuong,
+        mo_ta AS MoTa,
+        ngay_khoi_chieu AS NgayKhoiChieu,
+        trang_thai AS TrangThai,
+        hinh_anh AS HinhAnh
+    FROM Phim
+""";
+
+private final String SELECT_BY_ID_SQL = SELECT_ALL_SQL + " WHERE MaPhim = ?";
+private final String SELECT_BY_TENPHIM_SQL = SELECT_ALL_SQL + " WHERE TenPhim LIKE ?";
+private final String SELECT_BY_TRANGTHAI_SQL = SELECT_ALL_SQL + " WHERE TrangThai = ?";
+
 
     @Override
     public Phim create(Phim entity) {

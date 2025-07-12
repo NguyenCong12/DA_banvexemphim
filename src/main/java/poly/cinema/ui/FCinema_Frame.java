@@ -565,25 +565,25 @@ public class FCinema_Frame extends javax.swing.JFrame implements FCinema_Control
     private void btnLichSuBanHangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLichSuBanHangActionPerformed
         CardLayout cl = (CardLayout) pnlMainContent.getLayout();
         cl.show(pnlMainContent, "pnlLichSuBanHang");
-        ((poly.cinema.ui.manager.QuanLyHoaDonJpanel) pnlLichSuBanHang).open();
+        ((poly.cinema.ui.manager.LichSuBanHang) pnlLichSuBanHang).open();
     }//GEN-LAST:event_btnLichSuBanHangActionPerformed
 
     private void btnQLGheActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnQLGheActionPerformed
         CardLayout cl = (CardLayout) pnlMainContent.getLayout();
         cl.show(pnlMainContent, "pnlQuanLyGhe");
-        ((poly.cinema.ui.manager.QuanLyHoaDonJpanel) pnlQuanLyGhe).open();
+        ((poly.cinema.ui.manager.QuanLyGheJpanel) pnlQuanLyGhe).open();
     }//GEN-LAST:event_btnQLGheActionPerformed
 
     private void btnQLSanPhamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnQLSanPhamActionPerformed
         CardLayout cl = (CardLayout) pnlMainContent.getLayout();
         cl.show(pnlMainContent, "pnlQuanLySanPham");
-        ((poly.cinema.ui.manager.QuanLyHoaDonJpanel) pnlQuanLySanPham).open();
+        ((poly.cinema.ui.manager.QuanLySanPham) pnlQuanLySanPham).open();
     }//GEN-LAST:event_btnQLSanPhamActionPerformed
 
     private void btnsuatchieuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnsuatchieuActionPerformed
         CardLayout cl = (CardLayout) pnlMainContent.getLayout();
         cl.show(pnlMainContent, "pnlQuanLySuatChieu");
-        ((poly.cinema.ui.manager.QuanLyHoaDonJpanel) pnlQuanLySuatChieu).open();
+        ((poly.cinema.ui.manager.QuanLyXuatChieu) pnlQuanLySuatChieu).open();
     }//GEN-LAST:event_btnsuatchieuActionPerformed
 
     /**

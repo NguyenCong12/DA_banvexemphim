@@ -4,11 +4,18 @@
  */
 package poly.cinema.ui.manager;
 
+import java.io.File;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import javax.swing.ImageIcon;
+import javax.swing.JFileChooser;
 import javax.swing.table.DefaultTableModel;
 import poly.cinema.dao.QuanLyPhimDao;
 import poly.cinema.dao.impl.QuanLyPhimDaoImpl;
 import poly.cinema.entity.Phim;
+import poly.cinema.util.XDate;
+import poly.cinema.util.XDialog;
 
 /**
  *
@@ -21,6 +28,7 @@ public class QuanLyPhim extends javax.swing.JPanel implements QuanLyPhimControll
      */
     public QuanLyPhim() {
         initComponents();
+        open();
     }
 
     /**
@@ -46,15 +54,15 @@ public class QuanLyPhim extends javax.swing.JPanel implements QuanLyPhimControll
         jLabel4 = new javax.swing.JLabel();
         txtMoTa = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
-        txtNgayKhoiChieu = new javax.swing.JTextField();
+        txtNgayChieu = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
         rdoDangChieu = new javax.swing.JRadioButton();
         rdoSapChieu = new javax.swing.JRadioButton();
         rdoNgungChieu = new javax.swing.JRadioButton();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
+        btnThem = new javax.swing.JButton();
+        btnSua = new javax.swing.JButton();
+        btnXoa = new javax.swing.JButton();
+        btnLamMoi = new javax.swing.JButton();
         lblHinhAnh = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
 
@@ -94,6 +102,11 @@ public class QuanLyPhim extends javax.swing.JPanel implements QuanLyPhimControll
         });
         tblPhim.setGridColor(new java.awt.Color(0, 0, 0));
         tblPhim.setShowGrid(true);
+        tblPhim.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblPhimMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tblPhim);
 
         jPanel1.setBackground(new java.awt.Color(204, 204, 204));
@@ -139,9 +152,9 @@ public class QuanLyPhim extends javax.swing.JPanel implements QuanLyPhimControll
         jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel5.setText("Ngày khởi chiếu:");
 
-        txtNgayKhoiChieu.addActionListener(new java.awt.event.ActionListener() {
+        txtNgayChieu.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtNgayKhoiChieuActionPerformed(evt);
+                txtNgayChieuActionPerformed(evt);
             }
         });
 
@@ -157,24 +170,44 @@ public class QuanLyPhim extends javax.swing.JPanel implements QuanLyPhimControll
         btgTrangThai.add(rdoNgungChieu);
         rdoNgungChieu.setText("Ngưng chiếu");
 
-        jButton1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jButton1.setText("Thêm");
-
-        jButton2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jButton2.setText("Sửa");
-
-        jButton3.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jButton3.setText("xóa");
-
-        jButton4.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jButton4.setText("Làm mới");
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
+        btnThem.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnThem.setText("Thêm");
+        btnThem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
+                btnThemActionPerformed(evt);
             }
         });
 
-        lblHinhAnh.setText("jLabel8");
+        btnSua.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnSua.setText("Sửa");
+        btnSua.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSuaActionPerformed(evt);
+            }
+        });
+
+        btnXoa.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnXoa.setText("xóa");
+        btnXoa.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnXoaActionPerformed(evt);
+            }
+        });
+
+        btnLamMoi.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnLamMoi.setText("Làm mới");
+        btnLamMoi.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLamMoiActionPerformed(evt);
+            }
+        });
+
+        lblHinhAnh.setBackground(new java.awt.Color(255, 255, 255));
+        lblHinhAnh.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblHinhAnhMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -206,21 +239,21 @@ public class QuanLyPhim extends javax.swing.JPanel implements QuanLyPhimControll
                                         .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGap(214, 214, 214))
                                     .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(txtNgayKhoiChieu)
+                                        .addComponent(txtNgayChieu)
                                         .addGap(85, 85, 85)))
                                 .addGap(14, 14, 14))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                                 .addGap(16, 16, 16)
                                 .addComponent(lblHinhAnh, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jButton1)
+                                .addComponent(btnThem)
                                 .addGap(45, 45, 45)))
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(rdoDangChieu)
-                                    .addComponent(jButton2))
+                                    .addComponent(btnSua))
                                 .addGap(17, 17, 17)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(jPanel1Layout.createSequentialGroup()
@@ -229,9 +262,9 @@ public class QuanLyPhim extends javax.swing.JPanel implements QuanLyPhimControll
                                         .addComponent(rdoNgungChieu))
                                     .addGroup(jPanel1Layout.createSequentialGroup()
                                         .addGap(6, 6, 6)
-                                        .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(btnXoa, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 34, Short.MAX_VALUE)
-                                        .addComponent(jButton4)))))
+                                        .addComponent(btnLamMoi)))))
                         .addGap(28, 28, 28))))
         );
         jPanel1Layout.setVerticalGroup(
@@ -262,7 +295,7 @@ public class QuanLyPhim extends javax.swing.JPanel implements QuanLyPhimControll
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(txtNgayKhoiChieu, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtNgayChieu, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(rdoDangChieu)
                                     .addComponent(rdoSapChieu)
                                     .addComponent(rdoNgungChieu))
@@ -272,10 +305,10 @@ public class QuanLyPhim extends javax.swing.JPanel implements QuanLyPhimControll
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(btnThem, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(btnSua, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(btnXoa, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(btnLamMoi, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(35, 35, 35))))))
         );
 
@@ -325,25 +358,49 @@ public class QuanLyPhim extends javax.swing.JPanel implements QuanLyPhimControll
         // TODO add your handling code here:
     }//GEN-LAST:event_txtMoTaActionPerformed
 
-    private void txtNgayKhoiChieuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNgayKhoiChieuActionPerformed
+    private void txtNgayChieuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNgayChieuActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtNgayKhoiChieuActionPerformed
+    }//GEN-LAST:event_txtNgayChieuActionPerformed
 
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton4ActionPerformed
+    private void btnLamMoiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLamMoiActionPerformed
+        clear();
+    }//GEN-LAST:event_btnLamMoiActionPerformed
 
     private void txtTheLoaiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTheLoaiActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtTheLoaiActionPerformed
 
+    private void btnSuaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSuaActionPerformed
+        update();
+    }//GEN-LAST:event_btnSuaActionPerformed
+
+    private void btnThemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemActionPerformed
+        create();
+    }//GEN-LAST:event_btnThemActionPerformed
+
+    private void btnXoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXoaActionPerformed
+        delete();
+    }//GEN-LAST:event_btnXoaActionPerformed
+
+    private void tblPhimMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblPhimMouseClicked
+        int row = tblPhim.getSelectedRow();
+        if (row >= 0) {
+            Phim phim = items.get(row);
+            setForm(phim);
+        }
+    }//GEN-LAST:event_tblPhimMouseClicked
+
+    private void lblHinhAnhMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblHinhAnhMouseClicked
+        chooseImage();
+    }//GEN-LAST:event_lblHinhAnhMouseClicked
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup btgTrangThai;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
+    private javax.swing.JButton btnLamMoi;
+    private javax.swing.JButton btnSua;
+    private javax.swing.JButton btnThem;
+    private javax.swing.JButton btnXoa;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -360,117 +417,256 @@ public class QuanLyPhim extends javax.swing.JPanel implements QuanLyPhimControll
     private javax.swing.JRadioButton rdoSapChieu;
     private javax.swing.JTable tblPhim;
     private javax.swing.JTextField txtMoTa;
-    private javax.swing.JTextField txtNgayKhoiChieu;
+    private javax.swing.JTextField txtNgayChieu;
     private javax.swing.JTextField txtTenPhim;
     private javax.swing.JTextField txtTheLoai;
     private javax.swing.JTextField txtThoiLuong;
     // End of variables declaration//GEN-END:variables
 
     QuanLyPhimDao dao = new QuanLyPhimDaoImpl();
-    List<Phim> items = List.of();
+    List<Phim> items = new ArrayList<>();
 
     @Override
     public void open() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        fillToTable();
+        clear();
     }
 
     private String getTrangThai() {
-        if (rdoDangChieu.isSelected()) {
-            return "Đang chiếu";
-        }
-        if (rdoNgungChieu.isSelected()) {
-            return "Ngừng chiếu";
-        }
-        if (rdoSapChieu.isSelected()) {
-            return "Sắp chiếu";
-        }
-        return null;
-    }
+    if (rdoDangChieu.isSelected()) return "Đang chiếu";
+    if (rdoNgungChieu.isSelected()) return "Ngừng chiếu";
+    if (rdoSapChieu.isSelected()) return "Sắp chiếu";
+    return null; // ❌ Nếu không chọn gì => null => lỗi CHECK constraint
+}
+
 
     @Override
     public Phim getForm() {
-        
-        return null;
-        
+        Phim p = new Phim();
+        p.setTenPhim(txtTenPhim.getText());
+        p.setTheLoai(txtTheLoai.getText());
+        try {
+            p.setThoiLuong(Integer.parseInt(txtThoiLuong.getText()));
+        } catch (NumberFormatException e) {
+            XDialog.alert("Thời lượng không hợp lệ!");
+            return null;
+        }
+        p.setMoTa(txtMoTa.getText());
+
+        // Ngày chiếu kiểm tra định dạng và ngày
+        Date ngayChieu = XDate.parse(txtNgayChieu.getText().trim(), "dd/MM/yyyy");
+        if (ngayChieu == null) {
+            XDialog.alert("Ngày chiếu không đúng định dạng (dd/MM/yyyy).");
+            return null;
+        }
+        Date today = new Date();
+        if (ngayChieu.before(today)) {
+            XDialog.alert("Ngày chiếu không được nhỏ hơn ngày hôm nay.");
+            return null;
+        }
+        p.setNgayKhoiChieu(ngayChieu);
+
+        p.setTrangThai(getTrangThai());
+        p.setHinhAnh(lblHinhAnh.getToolTipText());
+
+        return p;
     }
 
     @Override
     public void setForm(Phim entity) {
-       
+        txtTenPhim.setText(entity.getTenPhim());
+        txtTheLoai.setText(entity.getTheLoai());
+        txtThoiLuong.setText(String.valueOf(entity.getThoiLuong()));
+        txtMoTa.setText(entity.getMoTa());
+        txtNgayChieu.setText(XDate.format(entity.getNgayKhoiChieu(), "dd/MM/yyyy"));
+
+        switch (entity.getTrangThai()) {
+            case "Đang chiếu" ->
+                rdoDangChieu.setSelected(true);
+            case "Ngừng chiếu" ->
+                rdoNgungChieu.setSelected(true);
+            case "Sắp chiếu" ->
+                rdoSapChieu.setSelected(true);
+        }
+
+        lblHinhAnh.setToolTipText(entity.getHinhAnh());
+        // Hiển thị ảnh nếu cần
+        // lblHinhAnh.setIcon(XImage.read(entity.getHinhAnh()));
     }
 
     @Override
     public void fillToTable() {
         DefaultTableModel model = (DefaultTableModel) tblPhim.getModel();
         model.setRowCount(0);
-        items = dao.findAll();  // Cập nhật danh sách tạm thời
+        items = dao.findAll();
 
         for (Phim p : items) {
             model.addRow(new Object[]{
                 p.getMaPhim(), p.getTenPhim(), p.getTheLoai(), p.getThoiLuong(),
-                p.getMoTa(), p.getNgayKhoiChieu(), p.getTrangThai(), p.getHinhAnh()
+                p.getMoTa(), XDate.format(p.getNgayKhoiChieu(), "dd/MM/yyyy"),
+                p.getTrangThai(), p.getHinhAnh()
             });
         }
     }
 
     @Override
-    public void edit() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-    @Override
     public void create() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        Phim phim = getForm();
+        if (phim == null) {
+            return;
+        }
+        dao.create(phim);
+        fillToTable();
+        clear();
+        XDialog.alert("Thêm mới thành công!");
     }
 
     @Override
     public void update() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        int row = tblPhim.getSelectedRow();
+        if (row < 0) {
+            XDialog.alert("Vui lòng chọn phim để cập nhật.");
+            return;
+        }
+        Phim phim = getForm();
+        if (phim == null) {
+            return;
+        }
+
+        phim.setMaPhim((Integer) tblPhim.getValueAt(row, 0));
+        dao.update(phim);
+        fillToTable();
+        XDialog.alert("Cập nhật thành công!");
     }
 
     @Override
     public void delete() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        int row = tblPhim.getSelectedRow();
+        if (row < 0) {
+            XDialog.alert("Vui lòng chọn phim để xóa.");
+            return;
+        }
+        int id = (Integer) tblPhim.getValueAt(row, 0);
+        dao.deleteById(id);
+        fillToTable();
+        clear();
+        XDialog.alert("Xóa thành công!");
     }
 
     @Override
     public void clear() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        txtTenPhim.setText("");
+        txtTheLoai.setText("");
+        txtThoiLuong.setText("");
+        txtMoTa.setText("");
+        txtNgayChieu.setText("");
+        rdoDangChieu.setSelected(true);
+        lblHinhAnh.setIcon(null);
+        lblHinhAnh.setToolTipText(null);
+        tblPhim.clearSelection();
     }
 
     @Override
     public void setEditable(boolean editable) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        txtTenPhim.setEditable(editable);
+        txtTheLoai.setEditable(editable);
+        txtThoiLuong.setEditable(editable);
+        txtMoTa.setEditable(editable);
+        txtNgayChieu.setEditable(editable);
+        rdoDangChieu.setEnabled(editable);
+        rdoNgungChieu.setEnabled(editable);
+        rdoSapChieu.setEnabled(editable);
+        // Nếu có nút hoặc hình ảnh thì xử lý thêm ở đây
     }
 
     @Override
     public void moveFirst() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        if (items.isEmpty()) {
+            return;
+        }
+        tblPhim.setRowSelectionInterval(0, 0);
+        setForm(items.get(0));
     }
 
     @Override
     public void movePrevious() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        int row = tblPhim.getSelectedRow();
+        if (row > 0) {
+            row--;
+            tblPhim.setRowSelectionInterval(row, row);
+            setForm(items.get(row));
+        }
     }
 
     @Override
     public void moveNext() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        int row = tblPhim.getSelectedRow();
+        if (row < items.size() - 1) {
+            row++;
+            tblPhim.setRowSelectionInterval(row, row);
+            setForm(items.get(row));
+        }
     }
 
     @Override
     public void moveLast() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        int row = items.size() - 1;
+        tblPhim.setRowSelectionInterval(row, row);
+        setForm(items.get(row));
     }
 
     @Override
     public void moveTo(int rowIndex) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        if (rowIndex >= 0 && rowIndex < items.size()) {
+            tblPhim.setRowSelectionInterval(rowIndex, rowIndex);
+            setForm(items.get(rowIndex));
+        }
     }
 
     @Override
     public void selectTimeRange() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+//        Date tuNgay = txtTuNgay.getDate();
+//        Date denNgay = txtDenNgay.getDate();
+//
+//        if (tuNgay == null || denNgay == null) {
+//            XDialog.alert("Vui lòng chọn đầy đủ khoảng ngày.");
+//            return;
+//        }
+//
+//        DefaultTableModel model = (DefaultTableModel) tblPhim.getModel();
+//        model.setRowCount(0);
+//        for (Phim p : dao.findAll()) {
+//            Date ngayKhoiChieu = p.getNgayKhoiChieu();
+//            if (!ngayKhoiChieu.before(tuNgay) && !ngayKhoiChieu.after(denNgay)) {
+//                model.addRow(new Object[]{
+//                    p.getMaPhim(), p.getTenPhim(), p.getTheLoai(), p.getThoiLuong(),
+//                    p.getMoTa(), XDate.format(p.getNgayKhoiChieu(), "dd/MM/yyyy"),
+//                    p.getTrangThai(), p.getHinhAnh()
+//                });
+//            }
+//        }
+    }
+
+    @Override
+    public void edit() {
+        int row = tblPhim.getSelectedRow();
+        if (row < 0) {
+            XDialog.alert("Vui lòng chọn phim để sửa.");
+            return;
+        }
+        setForm(items.get(row));
+        tblPhim.setRowSelectionInterval(row, row);
+    }
+
+    private void chooseImage() {
+        JFileChooser fileChooser = new JFileChooser();
+        if (fileChooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
+            File file = fileChooser.getSelectedFile();
+            String fileName = file.getName();
+            // Copy vào thư mục ảnh của dự án nếu cần
+            lblHinhAnh.setIcon(new ImageIcon(file.getAbsolutePath()));
+            lblHinhAnh.setToolTipText(fileName); // Dùng để lưu tên file vào DB
+        }
     }
 
 }

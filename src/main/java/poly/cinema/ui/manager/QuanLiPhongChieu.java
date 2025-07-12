@@ -4,17 +4,26 @@
  */
 package poly.cinema.ui.manager;
 
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.table.DefaultTableModel;
+import poly.cinema.dao.QuanLyPhongChieuDao;
+import poly.cinema.dao.impl.QuanLyPhongChieuDaoImpl;
+import poly.cinema.entity.PhongChieu;
+import poly.cinema.util.XDialog;
+
 /**
  *
  * @author BA HAO
  */
-public class QuanLiPhongChieu extends javax.swing.JPanel {
+public class QuanLiPhongChieu extends javax.swing.JPanel implements QuanLyPhongChieuController {
 
     /**
      * Creates new form QuanLiPhongChieu
      */
     public QuanLiPhongChieu() {
         initComponents();
+        open();
     }
 
     /**
@@ -28,12 +37,12 @@ public class QuanLiPhongChieu extends javax.swing.JPanel {
 
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tblQLphongchieu = new javax.swing.JTable();
+        tblPhongChieu = new javax.swing.JTable();
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        txtMaphong = new javax.swing.JTextField();
-        txtTenphong = new javax.swing.JTextField();
+        txtMaPhong = new javax.swing.JTextField();
+        txtTenPhong = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
         btnSua = new javax.swing.JButton();
         btnXoa = new javax.swing.JButton();
@@ -45,26 +54,46 @@ public class QuanLiPhongChieu extends javax.swing.JPanel {
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setPreferredSize(new java.awt.Dimension(1110, 720));
 
-        tblQLphongchieu.setModel(new javax.swing.table.DefaultTableModel(
+        tblPhongChieu.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null}
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null}
             },
             new String [] {
-                "Mã phòng", "Tên phòng"
+                "Mã phòng", "Tên phòng", ""
             }
-        ));
-        tblQLphongchieu.setGridColor(new java.awt.Color(0, 0, 0));
-        tblQLphongchieu.setShowGrid(true);
-        jScrollPane1.setViewportView(tblQLphongchieu);
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Object.class, java.lang.Object.class, java.lang.Boolean.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, true
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        tblPhongChieu.setGridColor(new java.awt.Color(0, 0, 0));
+        tblPhongChieu.setShowGrid(true);
+        tblPhongChieu.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblPhongChieuMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(tblPhongChieu);
 
         jPanel2.setBackground(new java.awt.Color(212, 212, 212));
 
@@ -76,12 +105,27 @@ public class QuanLiPhongChieu extends javax.swing.JPanel {
 
         jButton1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jButton1.setText("Thêm");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         btnSua.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnSua.setText("Sửa");
+        btnSua.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSuaActionPerformed(evt);
+            }
+        });
 
         btnXoa.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnXoa.setText("Xóa");
+        btnXoa.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnXoaActionPerformed(evt);
+            }
+        });
 
         btnMoi.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnMoi.setText("Nhập mới");
@@ -100,11 +144,11 @@ public class QuanLiPhongChieu extends javax.swing.JPanel {
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(47, 47, 47)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtMaphong, javax.swing.GroupLayout.PREFERRED_SIZE, 393, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtMaPhong, javax.swing.GroupLayout.PREFERRED_SIZE, 393, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel1))
                         .addGap(107, 107, 107)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtTenphong, javax.swing.GroupLayout.PREFERRED_SIZE, 416, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtTenPhong, javax.swing.GroupLayout.PREFERRED_SIZE, 416, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel2)))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                         .addContainerGap()
@@ -126,8 +170,8 @@ public class QuanLiPhongChieu extends javax.swing.JPanel {
                     .addComponent(jLabel2))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtMaphong, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtTenphong, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtMaPhong, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtTenPhong, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 47, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnXoa, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -180,11 +224,29 @@ public class QuanLiPhongChieu extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnMoiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMoiActionPerformed
-        // TODO add your handling code here:
+        clear();
     }//GEN-LAST:event_btnMoiActionPerformed
-public void open() {
-    }
 
+    private void tblPhongChieuMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblPhongChieuMouseClicked
+        int row = tblPhongChieu.getSelectedRow();
+        if (row >= 0) {
+            PhongChieu phongChieu = items.get(row);
+            setForm(phongChieu);
+        }
+    }//GEN-LAST:event_tblPhongChieuMouseClicked
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        create();
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void btnSuaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSuaActionPerformed
+        update();
+    }//GEN-LAST:event_btnSuaActionPerformed
+
+    private void btnXoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXoaActionPerformed
+       delete();
+    }//GEN-LAST:event_btnXoaActionPerformed
+  
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnMoi;
     private javax.swing.JButton btnSua;
@@ -196,8 +258,156 @@ public void open() {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable tblQLphongchieu;
-    private javax.swing.JTextField txtMaphong;
-    private javax.swing.JTextField txtTenphong;
+    private javax.swing.JTable tblPhongChieu;
+    private javax.swing.JTextField txtMaPhong;
+    private javax.swing.JTextField txtTenPhong;
     // End of variables declaration//GEN-END:variables
+
+    QuanLyPhongChieuDao dao = new QuanLyPhongChieuDaoImpl();
+    List<PhongChieu> items = new ArrayList<>();
+
+    @Override
+    public PhongChieu getForm() {
+        String ma = txtMaPhong.getText().trim();
+        String ten = txtTenPhong.getText().trim();
+        if (ma.isEmpty() || ten.isEmpty()) {
+            XDialog.alert("Vui lòng nhập đầy đủ thông tin.");
+            return null;
+        }
+        return new PhongChieu(ma, ten);
+    }
+
+    @Override
+    public void setForm(PhongChieu entity) {
+        txtMaPhong.setText(entity.getMaPhong());
+        txtTenPhong.setText(entity.getTenPhong());
+    }
+
+    @Override
+    public void fillToTable() {
+        DefaultTableModel model = (DefaultTableModel) tblPhongChieu.getModel();
+        model.setRowCount(0);
+        items = dao.findAll();
+        for (PhongChieu pc : items) {
+            model.addRow(new Object[]{pc.getMaPhong(), pc.getTenPhong()});
+        }
+    }
+
+    @Override
+    public void create() {
+        PhongChieu pc = getForm();
+        if (pc == null) {
+            return;
+        }
+        dao.create(pc);
+        fillToTable();
+        clear();
+        XDialog.alert("Thêm thành công!");
+    }
+
+    @Override
+    public void update() {
+        int row = tblPhongChieu.getSelectedRow();
+        if (row < 0) {
+            XDialog.alert("Vui lòng chọn phòng để cập nhật.");
+            return;
+        }
+        PhongChieu pc = getForm();
+        if (pc == null) {
+            return;
+        }
+        dao.update(pc);
+        fillToTable();
+        XDialog.alert("Cập nhật thành công!");
+    }
+
+    @Override
+    public void delete() {
+        int row = tblPhongChieu.getSelectedRow();
+        if (row < 0) {
+            XDialog.alert("Vui lòng chọn phòng để xóa.");
+            return;
+        }
+        String maPhong = (String) tblPhongChieu.getValueAt(row, 0);
+        ((QuanLyPhongChieuDaoImpl) dao).deleteByMaPhong(maPhong);
+        fillToTable();
+        clear();
+        XDialog.alert("Xóa thành công!");
+    }
+
+    @Override
+    public void clear() {
+        txtMaPhong.setText("");
+        txtTenPhong.setText("");
+        tblPhongChieu.clearSelection();
+    }
+
+    @Override
+    public void setEditable(boolean editable) {
+        txtMaPhong.setEditable(editable);
+        txtTenPhong.setEditable(editable);
+    }
+
+    @Override
+    public void moveFirst() {
+        if (items.isEmpty()) {
+            return;
+        }
+        tblPhongChieu.setRowSelectionInterval(0, 0);
+        setForm(items.get(0));
+    }
+
+    @Override
+    public void movePrevious() {
+        int row = tblPhongChieu.getSelectedRow();
+        if (row > 0) {
+            row--;
+            tblPhongChieu.setRowSelectionInterval(row, row);
+            setForm(items.get(row));
+        }
+    }
+
+    @Override
+    public void moveNext() {
+        int row = tblPhongChieu.getSelectedRow();
+        if (row < items.size() - 1) {
+            row++;
+            tblPhongChieu.setRowSelectionInterval(row, row);
+            setForm(items.get(row));
+        }
+    }
+
+    @Override
+    public void moveLast() {
+        int row = items.size() - 1;
+        tblPhongChieu.setRowSelectionInterval(row, row);
+        setForm(items.get(row));
+    }
+
+    @Override
+    public void moveTo(int rowIndex) {
+        if (rowIndex >= 0 && rowIndex < items.size()) {
+            tblPhongChieu.setRowSelectionInterval(rowIndex, rowIndex);
+            setForm(items.get(rowIndex));
+        }
+    }
+
+    @Override
+    public void edit() {
+        int row = tblPhongChieu.getSelectedRow();
+        if (row >= 0) {
+            setForm(items.get(row));
+        }
+    }
+
+    @Override
+    public void selectTimeRange() {
+        throw new UnsupportedOperationException("Chức năng lọc theo thời gian không áp dụng cho Phòng Chiếu.");
+    }
+
+    @Override
+    public void open() {
+        fillToTable();
+        clear();
+      }
 }
