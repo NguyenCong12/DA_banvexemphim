@@ -37,6 +37,7 @@ public class LichSuBanHang extends javax.swing.JPanel {
         btnLoc = new javax.swing.JButton();
         cboTimeRanges = new javax.swing.JComboBox<>();
 
+        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setPreferredSize(new java.awt.Dimension(1110, 720));
 
         tblBill.setModel(new javax.swing.table.DefaultTableModel(
@@ -63,7 +64,7 @@ public class LichSuBanHang extends javax.swing.JPanel {
         jLabel3.setText("Từ ngày:");
 
         jLabel1.setBackground(new java.awt.Color(255, 255, 255));
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 28)); // NOI18N
         jLabel1.setText("LỊCH SỬ BÁN HÀNG");
 
         jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -129,7 +130,7 @@ public class LichSuBanHang extends javax.swing.JPanel {
                     .addComponent(txtEnd, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnLoc)
                     .addComponent(cboTimeRanges, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 56, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 50, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 506, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(32, 32, 32))
         );

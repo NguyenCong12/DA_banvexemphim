@@ -57,6 +57,7 @@ public class QuanLyGheJpanel extends javax.swing.JPanel implements QuanLyGheCont
         txtSoCot = new javax.swing.JTextField();
         btn = new javax.swing.JButton();
 
+        setBackground(new java.awt.Color(255, 255, 255));
         setPreferredSize(new java.awt.Dimension(1110, 720));
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -64,6 +65,8 @@ public class QuanLyGheJpanel extends javax.swing.JPanel implements QuanLyGheCont
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Quản Lý Ghế");
         add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(438, 6, 291, 88));
+
+        jPanel3.setBackground(new java.awt.Color(212, 212, 212));
 
         jButton1.setText("Thêm");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -142,15 +145,15 @@ public class QuanLyGheJpanel extends javax.swing.JPanel implements QuanLyGheCont
                 .addContainerGap()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addGroup(jPanel3Layout.createSequentialGroup()
                                 .addComponent(jLabel6)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(jTextField4))
                             .addGroup(jPanel3Layout.createSequentialGroup()
                                 .addComponent(jLabel7)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(jComboBox1)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(jPanel3Layout.createSequentialGroup()
@@ -173,7 +176,7 @@ public class QuanLyGheJpanel extends javax.swing.JPanel implements QuanLyGheCont
                 .addGap(18, 18, 18))
         );
 
-        add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(48, 521, -1, -1));
+        add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 540, -1, -1));
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -200,8 +203,9 @@ public class QuanLyGheJpanel extends javax.swing.JPanel implements QuanLyGheCont
         });
         jScrollPane1.setViewportView(jTable1);
 
-        add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(48, 125, 529, 365));
+        add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 120, 529, 365));
 
+        jPanel1.setBackground(new java.awt.Color(218, 218, 218));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -212,7 +216,7 @@ public class QuanLyGheJpanel extends javax.swing.JPanel implements QuanLyGheCont
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(200, Short.MAX_VALUE)
                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(170, 170, 170))
         );
@@ -226,10 +230,10 @@ public class QuanLyGheJpanel extends javax.swing.JPanel implements QuanLyGheCont
 
         jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, 475, -1));
 
-        panelGhe.setLayout(new java.awt.GridLayout());
+        panelGhe.setLayout(new java.awt.GridLayout(1, 0));
         jPanel1.add(panelGhe, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 60, -1, -1));
 
-        jLabel3.setText("Số ghế");
+        jLabel3.setText("Số hàng");
 
         txtSoHang.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -254,36 +258,36 @@ public class QuanLyGheJpanel extends javax.swing.JPanel implements QuanLyGheCont
                 .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtSoHang, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(42, 42, 42)
+                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtSoCot, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(21, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(9, 9, 9)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
                     .addComponent(txtSoHang, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel4)
-                        .addComponent(txtSoCot, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(16, Short.MAX_VALUE))
+                    .addComponent(jLabel3)
+                    .addComponent(jLabel4)
+                    .addComponent(txtSoCot, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(13, Short.MAX_VALUE))
         );
 
         jPanel1.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 340, 475, -1));
 
+        btn.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btn.setText("Tạo ghế");
         btn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnActionPerformed(evt);
             }
         });
-        jPanel1.add(btn, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 380, -1, -1));
+        jPanel1.add(btn, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 390, -1, 20));
 
-        add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 100, 500, 410));
+        add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 100, 520, 420));
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed

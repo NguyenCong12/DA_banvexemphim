@@ -38,7 +38,7 @@ public class FCinema_Frame extends javax.swing.JFrame implements FCinema_Control
         pnlLichSuBanHang = new poly.cinema.ui.manager.LichSuBanHang();
         pnlQuanLyGhe = new poly.cinema.ui.manager.QuanLyGheJpanel();
         pnlQuanLySanPham = new poly.cinema.ui.manager.QuanLySanPham();
-        pnlQuanLySuatChieu = new poly.cinema.ui.manager.SuatChieu();
+        pnlQuanLySuatChieu = new poly.cinema.ui.manager.QuanLyXuatChieu();
 //        pnlMainContent.add(pnlBanHang, "pnlBanHang");
 
         pnlMainContent.add(pnlQuanLyPhim, "pnlQuanLyPhim");
@@ -661,7 +661,7 @@ public class FCinema_Frame extends javax.swing.JFrame implements FCinema_Control
 
     @Override
     public void init() {
-        this.setIconImage(XIcon.getIcon("logocinema1.png").getImage());
+        this.setIconImage(XIcon.getIcon("logonho.png").getImage());
 
         this.showWelcomeJDialog(this);
         this.showLoginJDialog(this);

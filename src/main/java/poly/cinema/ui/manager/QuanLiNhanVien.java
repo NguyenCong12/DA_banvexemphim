@@ -79,6 +79,7 @@ public class QuanLiNhanVien extends javax.swing.JPanel {
         jScrollPane1.setViewportView(tblQLnhanvien);
 
         jPanel1.setBackground(new java.awt.Color(212, 212, 212));
+        jPanel1.setFont(new java.awt.Font("Segoe UI", 1, 28)); // NOI18N
 
         lblAnh.setText("ảnh");
 

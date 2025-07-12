@@ -73,35 +73,38 @@
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" attributes="0">
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Group type="102" attributes="0">
-                                      <Group type="103" groupAlignment="0" attributes="0">
-                                          <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
-                                          <Component id="txtMatKhau" alignment="0" min="-2" pref="289" max="-2" attributes="0"/>
-                                          <Component id="txtTenDangNhap" min="-2" pref="289" max="-2" attributes="0"/>
-                                          <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
-                                      </Group>
-                                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                                  <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
+                                  <Component id="txtTenDangNhap" min="-2" pref="289" max="-2" attributes="0"/>
+                                  <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                          </Group>
+                          <Group type="102" alignment="1" attributes="0">
+                              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Group type="102" alignment="1" attributes="0">
+                                      <Component id="btnQuenMatKhau" min="-2" pref="95" max="-2" attributes="0"/>
+                                      <EmptySpace min="-2" pref="81" max="-2" attributes="0"/>
                                   </Group>
                                   <Group type="102" alignment="1" attributes="0">
-                                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                                      <Group type="103" groupAlignment="0" attributes="0">
+                                      <Group type="103" groupAlignment="1" attributes="0">
+                                          <Component id="jSeparator1" alignment="1" min="-2" pref="295" max="-2" attributes="0"/>
                                           <Group type="102" alignment="1" attributes="0">
                                               <Component id="btnDangNhap" min="-2" pref="126" max="-2" attributes="0"/>
                                               <EmptySpace min="-2" pref="46" max="-2" attributes="0"/>
                                               <Component id="btnKetThuc" min="-2" pref="123" max="-2" attributes="0"/>
-                                              <EmptySpace min="-2" pref="16" max="-2" attributes="0"/>
-                                          </Group>
-                                          <Group type="102" alignment="1" attributes="0">
-                                              <Component id="btnQuenMatKhau" min="-2" pref="95" max="-2" attributes="0"/>
-                                              <EmptySpace min="-2" pref="8" max="-2" attributes="0"/>
                                           </Group>
                                       </Group>
+                                      <EmptySpace min="-2" pref="89" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
-                              <EmptySpace min="-2" pref="73" max="-2" attributes="0"/>
                           </Group>
                           <Group type="102" attributes="0">
-                              <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="txtMatKhau" min="-2" pref="289" max="-2" attributes="0"/>
+                                  <Component id="chkHienMatKhau" alignment="0" min="-2" max="-2" attributes="0"/>
+                              </Group>
                               <EmptySpace max="32767" attributes="0"/>
                           </Group>
                       </Group>
@@ -117,13 +120,18 @@
                       <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Component id="txtTenDangNhap" min="-2" pref="32" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="51" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="42" max="-2" attributes="0"/>
                       <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Component id="txtMatKhau" min="-2" pref="32" max="-2" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Component id="btnQuenMatKhau" min="-2" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="btnQuenMatKhau" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="chkHienMatKhau" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
                       <EmptySpace max="32767" attributes="0"/>
+                      <Component id="jSeparator1" min="-2" pref="10" max="-2" attributes="0"/>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="btnKetThuc" alignment="3" min="-2" pref="36" max="-2" attributes="0"/>
                           <Component id="btnDangNhap" alignment="3" min="-2" pref="37" max="-2" attributes="0"/>
@@ -131,7 +139,7 @@
                       <EmptySpace min="-2" pref="51" max="-2" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
-                      <Component id="jLabel1" pref="484" max="32767" attributes="0"/>
+                      <Component id="jLabel1" pref="485" max="32767" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
               </Group>
@@ -166,11 +174,6 @@
                 </Property>
                 <Property name="text" type="java.lang.String" value="M&#x1ead;t kh&#x1ea9;u:"/>
               </Properties>
-            </Component>
-            <Component class="javax.swing.JTextField" name="txtMatKhau">
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtMatKhauActionPerformed"/>
-              </Events>
             </Component>
             <Component class="javax.swing.JLabel" name="btnQuenMatKhau">
               <Properties>
@@ -215,6 +218,21 @@
                   <Image iconType="3" name="/poly/cafe/icons/logo.png"/>
                 </Property>
               </Properties>
+            </Component>
+            <Component class="javax.swing.JPasswordField" name="txtMatKhau">
+            </Component>
+            <Component class="javax.swing.JCheckBox" name="chkHienMatKhau">
+              <Properties>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Segoe UI" size="12" style="2"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="Hi&#x1ec7;n m&#x1ead;t kh&#x1ea9;u"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="chkHienMatKhauActionPerformed"/>
+              </Events>
+            </Component>
+            <Component class="javax.swing.JSeparator" name="jSeparator1">
             </Component>
           </SubComponents>
         </Container>
