@@ -20,28 +20,28 @@ import poly.cinema.util.XQuery;
 public class QuanLyGheDaoImpl implements QuanLyGheDao {
 
     private final String INSERT_SQL = """
-    INSERT INTO Ghe (ma_phong, so_ghe, trang_thai)
-    VALUES (?, ?, ?)
+    INSERT INTO Ghe (ma_phong, so_ghe, hang, cot, loai_ghe, trang_thai)
+    VALUES (?, ?, ?, ?, ?, ?)
 """;
 
     private final String UPDATE_SQL = """
     UPDATE Ghe
-    SET ma_phong = ?, so_ghe = ?, trang_thai = ?
+    SET ma_phong = ?, so_ghe = ?, hang = ?, cot = ?, loai_ghe = ?, trang_thai = ?
     WHERE ma_ghe = ?
 """;
 
     private final String DELETE_SQL = "DELETE FROM Ghe WHERE ma_ghe = ?";
 
     private final String SELECT_ALL_SQL = """
-    SELECT 
-        ma_ghe AS maGhe,
-        ma_phong AS maPhong,
-        so_ghe AS soGhe,
-        hang AS hang,
-        cot AS cot,
-        loai_ghe AS loaiGhe,
-        trang_thai AS trangThai
-    FROM Ghe
+SELECT 
+    ma_ghe AS maGhe,
+    ma_phong AS maPhong,
+    so_ghe AS soGhe,
+    hang AS hang,
+    cot AS cot,
+    loai_ghe AS loaiGhe,
+    trang_thai AS trangThai
+FROM Ghe
 """;
 
 // ✅ Phải dùng tên cột gốc trong WHERE, không dùng alias!
@@ -63,8 +63,11 @@ public class QuanLyGheDaoImpl implements QuanLyGheDao {
                     return QuanLyGhe.builder()
                             .maGhe(rs.getInt("ma_ghe"))
                             .soGhe(rs.getString("so_ghe"))
-                            .maPhong(rs.getString("ma_phong"))
+                            .hang(rs.getString("hang"))
+                            .cot(rs.getInt("cot"))
+                            .loaiGhe(rs.getString("loai_ghe"))
                             .trangThai(rs.getString("trang_thai"))
+                            .maPhong(rs.getString("ma_phong"))
                             .build();
                 }
             }
@@ -80,7 +83,10 @@ public class QuanLyGheDaoImpl implements QuanLyGheDao {
                 Connection conn = XJdbc.openConnection(); PreparedStatement stmt = conn.prepareStatement(INSERT_SQL, Statement.RETURN_GENERATED_KEYS)) {
             stmt.setString(1, ghe.getMaPhong());
             stmt.setString(2, ghe.getSoGhe());
-            stmt.setString(3, ghe.getTrangThai());
+            stmt.setString(3, ghe.getHang());
+            stmt.setInt(4, ghe.getCot());
+            stmt.setString(5, ghe.getLoaiGhe());
+            stmt.setString(6, ghe.getTrangThai());
 
             stmt.executeUpdate();
 
@@ -100,6 +106,9 @@ public class QuanLyGheDaoImpl implements QuanLyGheDao {
         Object[] args = {
             ghe.getMaPhong(),
             ghe.getSoGhe(),
+            ghe.getHang(),
+            ghe.getCot(),
+            ghe.getLoaiGhe(),
             ghe.getTrangThai(),
             ghe.getMaGhe()
         };
