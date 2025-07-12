@@ -666,8 +666,8 @@ public class FCinema_Frame extends javax.swing.JFrame implements FCinema_Control
         this.showWelcomeJDialog(this);
         this.showLoginJDialog(this);
 
-        lblFullname.setText(XAuth.user.getTenNv());
-        if (!XAuth.user.isVaiTro()) {
+        lblFullname.setText(XAuth.user.getTen_nv());
+        if (!XAuth.user.isVai_tro()) {
             pnlCenter.remove(pnlManager);
         }
 //        if (XAuth.user.isManager()) {
@@ -680,8 +680,8 @@ public class FCinema_Frame extends javax.swing.JFrame implements FCinema_Control
             this.dispose();
             if (XAuth.user != null) {
                 FCinema_Frame main = new FCinema_Frame();
-                lblFullname.setText(XAuth.user.getTenNv());
-                if (!XAuth.user.isVaiTro()) {
+                lblFullname.setText(XAuth.user.getTen_nv());
+                if (!XAuth.user.isVai_tro()) {
                     pnlCenter.remove(pnlManager);
                 }
                 main.setVisible(true);

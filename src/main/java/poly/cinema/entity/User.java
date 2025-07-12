@@ -16,15 +16,15 @@ import lombok.*;
 @Data
 public class User {
 
-    private Integer maNv;              // ma_nv (ID)
-    private String tenNv;             // ten_nv
-    private String email;             // email
-    private String matKhau;           // mat_khau
+    private Integer ma_nv;
+    private String ten_nv;
+    private String email;
+    private String mat_khau;
     @Builder.Default
-    private boolean vaiTro = false;   // vai_tro (quản lý)
-    private String sdt;               // sdt
+    private boolean vai_tro = false;
+    private String sdt;
     @Builder.Default
-    private boolean hoatDong = true;  // hoat_dong
+    private boolean hoat_dong = true;
     @Builder.Default
-    private String anhNv = "photo.png"; // anh_nv
+    private String anh_nv = "photo.png";
 }

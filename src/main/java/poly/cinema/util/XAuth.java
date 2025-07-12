@@ -17,11 +17,11 @@ public class XAuth {
     public static User user1;
     public static User user = User.builder()
             .email("123")
-            .matKhau("123")
-            .hoatDong(true)
-            .vaiTro(true)
-            .tenNv("Nguyễn Văn Tèo")
-            .anhNv("trump.png")
+            .mat_khau("123")
+            .hoat_dong(true)
+            .vai_tro(true)
+            .ten_nv("Nguyễn Văn Tèo")
+            .anh_nv("trump.png")
             .build(); // biến user này sẽ được thay thế sau khi đăng nhập
 
 }

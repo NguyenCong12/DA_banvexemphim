@@ -4,17 +4,30 @@
  */
 package poly.cinema.ui.manager;
 
+import java.io.File;
+import java.util.List;
+import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
+import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.swing.table.DefaultTableModel;
+import poly.cinema.dao.UserDAO;
+import poly.cinema.dao.impl.UserDAOImpl;
+import poly.cinema.entity.User;
+import static poly.cinema.util.XAuth.user;
+import poly.cinema.util.XIcon;
+
 /**
  *
  * @author BA HAO
  */
-public class QuanLiNhanVien extends javax.swing.JPanel {
+public class QuanLiNhanVien extends javax.swing.JPanel implements QuanLiNhanVienController {
 
     /**
      * Creates new form QuanLiNhanVien
      */
     public QuanLiNhanVien() {
         initComponents();
+        this.open();
     }
 
     /**
@@ -61,21 +74,35 @@ public class QuanLiNhanVien extends javax.swing.JPanel {
 
         tblQLnhanvien.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null}
+
             },
             new String [] {
-                "Tên nhân viên", "Tài khoản", "Mật khẩu", "Email", "Số điện thoại", "Vai trò", "Trạng thái"
+                "Tên nhân viên", "Mật khẩu", "Email", "Số điện thoại", "Vai trò", "Trạng thái", ""
             }
-        ));
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Boolean.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         tblQLnhanvien.setEnabled(false);
         tblQLnhanvien.setGridColor(new java.awt.Color(0, 0, 0));
         tblQLnhanvien.setShowGrid(true);
+        tblQLnhanvien.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblQLnhanvienMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tblQLnhanvien);
 
         jPanel1.setBackground(new java.awt.Color(212, 212, 212));
@@ -221,15 +248,35 @@ public class QuanLiNhanVien extends javax.swing.JPanel {
 
         btnThem.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnThem.setText("Thêm ");
+        btnThem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnThemActionPerformed(evt);
+            }
+        });
 
         btnSua.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnSua.setText("Sửa");
+        btnSua.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSuaActionPerformed(evt);
+            }
+        });
 
         btnXoa.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnXoa.setText("Xóa");
+        btnXoa.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnXoaActionPerformed(evt);
+            }
+        });
 
         btnNhapmoi.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnNhapmoi.setText("Nhập mới");
+        btnNhapmoi.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnNhapmoiActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -328,8 +375,34 @@ public class QuanLiNhanVien extends javax.swing.JPanel {
     private void txtEmailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtEmailActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtEmailActionPerformed
-public void open(){
-}
+
+    private void btnThemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemActionPerformed
+        // TODO add your handling code here:
+        this.create();
+    }//GEN-LAST:event_btnThemActionPerformed
+
+    private void btnSuaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSuaActionPerformed
+        // TODO add your handling code here:
+        this.update();
+    }//GEN-LAST:event_btnSuaActionPerformed
+
+    private void btnXoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXoaActionPerformed
+        // TODO add your handling code here:
+        this.delete();
+    }//GEN-LAST:event_btnXoaActionPerformed
+
+    private void btnNhapmoiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNhapmoiActionPerformed
+        // TODO add your handling code here:
+        this.clear();
+    }//GEN-LAST:event_btnNhapmoiActionPerformed
+
+    private void tblQLnhanvienMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblQLnhanvienMouseClicked
+        // TODO add your handling code here:
+                if (evt.getClickCount() == 2) {
+            this.edit();
+        }
+    }//GEN-LAST:event_tblQLnhanvienMouseClicked
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup btgTrangthai;
@@ -362,4 +435,211 @@ public void open(){
     private javax.swing.JTextField txtTaikhoan;
     private javax.swing.JTextField txtTennhanvien;
     // End of variables declaration//GEN-END:variables
+      
+    List<User> items = List.of();
+    UserDAO userDAO = new UserDAOImpl();
+    
+    @Override
+    public void open() {
+                this.setVisible(true);
+        clear();       // Xóa sạch form
+        fillToTable(); // Đổ dữ liệu lên bảng  
+    } 
+    @Override
+    public void setForm(User entity) {
+    txtTennhanvien.setText(entity.getTen_nv());
+    txtTaikhoan.setText(entity.getEmail());
+    txtMatkhau.setText(entity.getMat_khau());
+    txtSodienthoai.setText(entity.getSdt());
+    lblAnh.setToolTipText(entity.getAnh_nv());
+
+    rdoHoatDong.setSelected(entity.isHoat_dong());
+    rdoDaNgung.setSelected(!entity.isHoat_dong());
+
+    rdoNhanVien.setSelected(entity.isVai_tro());
+    rdoQuanLy.setSelected(!entity.isVai_tro());    }
+
+    @Override
+    public User getForm() {
+        User user = new User();
+        user.setTen_nv(txtTennhanvien.getText());
+        user.setEmail(txtTaikhoan.getText());
+        user.setMat_khau(txtMatkhau.getText());
+        user.setSdt(txtSodienthoai.getText());
+        user.setVai_tro(rdoQuanLy.isSelected());
+        user.setHoat_dong(rdoHoatDong.isSelected());
+        user.setAnh_nv(lblAnh.getToolTipText());
+        return user;    }
+
+    @Override
+    public void fillToTable() {
+        DefaultTableModel model = (DefaultTableModel) tblQLnhanvien.getModel();
+        model.setRowCount(0); // Xóa dữ liệu cũ
+
+        items = userDAO.findAll();
+        items.forEach(item -> {
+            Object[] rowData = {
+                item.getTen_nv(),
+                item.getMat_khau(),
+                item.getEmail(),
+                item.getSdt(),
+                item.isVai_tro() ? "Quản lý" : "Nhân viên",
+                item.isHoat_dong() ? "Hoạt động" : "Tạm dừng",
+                false
+            };
+            model.addRow(rowData);
+        });    }
+
+    @Override
+    public void edit() {
+        User entity = items.get(tblQLnhanvien.getSelectedRow());
+        this.setForm(entity);
+        this.setEditable(true);    }
+
+    @Override
+    public void create() {
+        String tennhanvien = txtTennhanvien.getText().trim();
+        String matkhau = txtMatkhau.getText().trim();
+        String sodienthoai = txtSodienthoai.getText().trim();
+        String taikhoan = txtTaikhoan.getText().trim();
+        String anh = lblAnh.getToolTipText();
+
+        // Kiểm tra rỗng
+        if (tennhanvien.isEmpty() || matkhau.isEmpty() || taikhoan.isEmpty() || sodienthoai.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Vui lòng nhập đầy đủ thông tin!");
+            return;
+        }
+
+        // Kiểm tra ảnh
+        if (anh == null || anh.trim().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Vui lòng chọn ảnh!");
+            return;
+        }
+
+        // Kiểm tra mật khẩu khớp và đủ độ dài
+//        if (!password.equals(confirmPassword)) {
+//            JOptionPane.showMessageDialog(this, "Mật khẩu và xác nhận không khớp!");
+//            return;
+//        }
+//        if (password.length() < 6) {
+//            JOptionPane.showMessageDialog(this, "Mật khẩu phải từ 6 ký tự trở lên!");
+//            return;
+//        }
+        // Kiểm tra độ dài username
+        if (tennhanvien.length() < 3) {
+            JOptionPane.showMessageDialog(this, "Tên đăng nhập phải có ít nhất 3 ký tự!");
+            return;
+        }
+
+        // Kiểm tra vai trò + trạng thái
+        if (!rdoNhanVien.isSelected() && !rdoQuanLy.isSelected()) {
+            JOptionPane.showMessageDialog(this, "Vui lòng chọn vai trò!");
+            return;
+        }
+        if (!rdoHoatDong.isSelected() && !rdoDaNgung.isSelected()) {
+            JOptionPane.showMessageDialog(this, "Vui lòng chọn trạng thái!");
+            return;
+        }
+
+        // Kiểm tra trùng username
+        if (userDAO.findById(tennhanvien) != null) {
+            JOptionPane.showMessageDialog(this, "Tên đăng nhập đã tồn tại!");
+            return;
+        }
+
+        // Tạo mới
+        try {
+            User entity = getForm();
+            userDAO.create(entity);
+            fillToTable();
+            clear();
+            JOptionPane.showMessageDialog(this, "Thêm mới thành công!");
+        } catch (Exception e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Thêm mới thất bại: ");
+        }    }
+
+    @Override
+    public void update() {
+        User newUser = getForm();                     // Lấy dữ liệu người dùng mới từ form
+        User oldUser = items.get(tblQLnhanvien.getSelectedRow());  // Lấy dữ liệu cũ từ danh sách
+
+        if (newUser.equals(oldUser)) {
+            JOptionPane.showMessageDialog(this, "Không có thay đổi nào để cập nhật!");
+            return;
+        }
+
+        try {
+            userDAO.update(newUser);
+            fillToTable();
+            JOptionPane.showMessageDialog(this, "Cập nhật thành công!");
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Cập nhật thất bại!");
+        }    }
+
+    @Override
+    public void delete() {
+        int choice = JOptionPane.showConfirmDialog(this, "Bạn có chắc muốn xóa?", "Xác nhận", JOptionPane.YES_NO_OPTION);
+        if (choice == JOptionPane.YES_OPTION) {
+            String username = txtTennhanvien.getText();
+            userDAO.deleteById(username);
+            fillToTable();
+            clear();
+            JOptionPane.showMessageDialog(this, "Xóa thành công!");
+        }    }
+
+    @Override
+    public void clear() {
+        this.setForm(new User());
+        setEditable(false);
+        lblAnh.setIcon(null);    }
+
+    @Override
+    public void setEditable(boolean editable) {
+        btnThem.setEnabled(!editable);
+        btnSua.setEnabled(editable);
+        btnXoa.setEnabled(editable);
+        int rowCount = tblQLnhanvien.getRowCount();    }
+
+    @Override
+    public void moveFirst() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public void movePrevious() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public void moveNext() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public void moveLast() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public void moveTo(int rowIndex) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public void selectTimeRange() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+    
+    private final JFileChooser fileChooser = new JFileChooser();
+
+    public void chooseFile() {
+        fileChooser.setFileFilter(new FileNameExtensionFilter("Image files", "jpg", "png", "jpeg", "gif"));
+        if (fileChooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
+            File selectedFile = fileChooser.getSelectedFile();
+            File file = XIcon.copyTo(selectedFile, "images");
+            lblAnh.setToolTipText(file.getName());
+            XIcon.setIcon(lblAnh, file);
+        }
+    }
 }

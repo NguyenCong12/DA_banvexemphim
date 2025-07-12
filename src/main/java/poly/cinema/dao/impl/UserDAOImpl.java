@@ -26,13 +26,13 @@ public class UserDAOImpl implements UserDAO {
     @Override
     public User create(User entity) {
         XJdbc.executeUpdate(createSql,
-            entity.getTenNv(),
+            entity.getTen_nv(),
             entity.getEmail(),
-            entity.getMatKhau(),
-            entity.isVaiTro(),
+            entity.getMat_khau(),
+            entity.isVai_tro(),
             entity.getSdt(),
-            entity.isHoatDong(),
-            entity.getAnhNv()
+            entity.isHoat_dong(),
+            entity.getAnh_nv()
         );
         return entity;
     }
@@ -40,14 +40,14 @@ public class UserDAOImpl implements UserDAO {
     @Override
     public void update(User entity) {
         XJdbc.executeUpdate(updateSql,
-            entity.getTenNv(),
+             entity.getTen_nv(),
             entity.getEmail(),
-            entity.getMatKhau(),
-            entity.isVaiTro(),
+            entity.getMat_khau(),
+            entity.isVai_tro(),
             entity.getSdt(),
-            entity.isHoatDong(),
-            entity.getAnhNv(),
-            entity.getMaNv()
+            entity.isHoat_dong(),
+            entity.getAnh_nv(),
+            entity.getMa_nv()
         );
     }
 
