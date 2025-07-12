@@ -1,8 +1,11 @@
 E:\DA1\DA_BANVEXEMPHIM\DA_banvexemphim\src\main\java\poly\cinema\dao\CrudDAO.java
+E:\DA1\DA_BANVEXEMPHIM\DA_banvexemphim\src\main\java\poly\cinema\dao\impl\QuanLyGheDaoImpl.java
 E:\DA1\DA_BANVEXEMPHIM\DA_banvexemphim\src\main\java\poly\cinema\dao\impl\ThongKeDAOImpl.java
 E:\DA1\DA_BANVEXEMPHIM\DA_banvexemphim\src\main\java\poly\cinema\dao\impl\UserDAOImpl.java
+E:\DA1\DA_BANVEXEMPHIM\DA_banvexemphim\src\main\java\poly\cinema\dao\QuanLyGheDao.java
 E:\DA1\DA_BANVEXEMPHIM\DA_banvexemphim\src\main\java\poly\cinema\dao\ThongKeDAO.java
 E:\DA1\DA_BANVEXEMPHIM\DA_banvexemphim\src\main\java\poly\cinema\dao\UserDAO.java
+E:\DA1\DA_BANVEXEMPHIM\DA_banvexemphim\src\main\java\poly\cinema\entity\QuanLyGhe.java
 E:\DA1\DA_BANVEXEMPHIM\DA_banvexemphim\src\main\java\poly\cinema\entity\ThongKe.java
 E:\DA1\DA_BANVEXEMPHIM\DA_banvexemphim\src\main\java\poly\cinema\entity\User.java
 E:\DA1\DA_BANVEXEMPHIM\DA_banvexemphim\src\main\java\poly\cinema\ui\DangNhapController.java
@@ -16,8 +19,13 @@ E:\DA1\DA_BANVEXEMPHIM\DA_banvexemphim\src\main\java\poly\cinema\ui\manager\Crud
 E:\DA1\DA_BANVEXEMPHIM\DA_banvexemphim\src\main\java\poly\cinema\ui\manager\LichSuBanHang.java
 E:\DA1\DA_BANVEXEMPHIM\DA_banvexemphim\src\main\java\poly\cinema\ui\manager\QuanLiNhanVien.java
 E:\DA1\DA_BANVEXEMPHIM\DA_banvexemphim\src\main\java\poly\cinema\ui\manager\QuanLiPhongChieu.java
+E:\DA1\DA_BANVEXEMPHIM\DA_banvexemphim\src\main\java\poly\cinema\ui\manager\QuanLyGheController.java
+E:\DA1\DA_BANVEXEMPHIM\DA_banvexemphim\src\main\java\poly\cinema\ui\manager\QuanLyGheJpanel.java
 E:\DA1\DA_BANVEXEMPHIM\DA_banvexemphim\src\main\java\poly\cinema\ui\manager\QuanLyHoaDonJpanel.java
 E:\DA1\DA_BANVEXEMPHIM\DA_banvexemphim\src\main\java\poly\cinema\ui\manager\QuanLyPhim.java
+E:\DA1\DA_BANVEXEMPHIM\DA_banvexemphim\src\main\java\poly\cinema\ui\manager\QuanLyPhongChieuController.java
+E:\DA1\DA_BANVEXEMPHIM\DA_banvexemphim\src\main\java\poly\cinema\ui\manager\QuanLySanPham.java
+E:\DA1\DA_BANVEXEMPHIM\DA_banvexemphim\src\main\java\poly\cinema\ui\manager\SuatChieu.java
 E:\DA1\DA_BANVEXEMPHIM\DA_banvexemphim\src\main\java\poly\cinema\ui\manager\ThongKeController.java
 E:\DA1\DA_BANVEXEMPHIM\DA_banvexemphim\src\main\java\poly\cinema\ui\manager\ThongKePanel.java
 E:\DA1\DA_BANVEXEMPHIM\DA_banvexemphim\src\main\java\poly\cinema\ui\manager\XemLichChieu.java

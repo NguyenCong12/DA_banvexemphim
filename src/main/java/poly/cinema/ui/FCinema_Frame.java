@@ -36,6 +36,9 @@ public class FCinema_Frame extends javax.swing.JFrame implements FCinema_Control
         pnlQuanLyHoaDon = new poly.cinema.ui.manager.QuanLyHoaDonJpanel();
         pnlXemLichChieu = new poly.cinema.ui.manager.XemLichChieu();
         pnlLichSuBanHang = new poly.cinema.ui.manager.LichSuBanHang();
+        pnlQuanLyGhe = new poly.cinema.ui.manager.QuanLyGheJpanel();
+        pnlQuanLySanPham = new poly.cinema.ui.manager.QuanLySanPham();
+        pnlQuanLySuatChieu = new poly.cinema.ui.manager.SuatChieu();
 //        pnlMainContent.add(pnlBanHang, "pnlBanHang");
 
         pnlMainContent.add(pnlQuanLyPhim, "pnlQuanLyPhim");
@@ -46,6 +49,9 @@ public class FCinema_Frame extends javax.swing.JFrame implements FCinema_Control
         pnlMainContent.add(pnlQuanLyHoaDon, "pnlQuanLyHoaDon");
         pnlMainContent.add(pnlXemLichChieu, "pnlXemLichChieu");
         pnlMainContent.add(pnlLichSuBanHang, "pnlLichSuBanHang");
+        pnlMainContent.add(pnlQuanLyGhe, "pnlQuanLyGhe");
+        pnlMainContent.add(pnlQuanLySanPham, "pnlQuanLySanPham");
+        pnlMainContent.add(pnlQuanLySuatChieu, "pnlQuanLySuatChieu");
         
         pnlMainContent.add(pnlTrangchu, "pnlTrangchu");
         
@@ -96,6 +102,7 @@ public class FCinema_Frame extends javax.swing.JFrame implements FCinema_Control
         pnlXemLichChieu = new javax.swing.JPanel();
         pnlThongKeDoanhThu = new javax.swing.JPanel();
         pnlLichSuBanHang = new javax.swing.JPanel();
+        pnlQuanLySuatChieu = new javax.swing.JPanel();
         lblFullname = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -140,6 +147,11 @@ public class FCinema_Frame extends javax.swing.JFrame implements FCinema_Control
 
         btnQLGhe.setText("QUẢN LÝ GHẾ");
         btnQLGhe.setBorder(null);
+        btnQLGhe.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnQLGheActionPerformed(evt);
+            }
+        });
 
         btnBanVe.setText("BÁN VÉ");
         btnBanVe.setBorder(null);
@@ -151,6 +163,11 @@ public class FCinema_Frame extends javax.swing.JFrame implements FCinema_Control
 
         btnQLSanPham.setText("QUẢN LÝ SẢN PHẨM ");
         btnQLSanPham.setBorder(null);
+        btnQLSanPham.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnQLSanPhamActionPerformed(evt);
+            }
+        });
 
         btnQLPhim.setText("QUẢN LÝ PHIM");
         btnQLPhim.setBorder(null);
@@ -213,6 +230,11 @@ public class FCinema_Frame extends javax.swing.JFrame implements FCinema_Control
 
         btnsuatchieu.setText("QUẢN LÝ SUẤT CHIÊU");
         btnsuatchieu.setBorder(null);
+        btnsuatchieu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnsuatchieuActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout pnlManagerLayout = new javax.swing.GroupLayout(pnlManager);
         pnlManager.setLayout(pnlManagerLayout);
@@ -453,6 +475,19 @@ public class FCinema_Frame extends javax.swing.JFrame implements FCinema_Control
 
         pnlMainContent.add(pnlLichSuBanHang, "card3");
 
+        javax.swing.GroupLayout pnlQuanLySuatChieuLayout = new javax.swing.GroupLayout(pnlQuanLySuatChieu);
+        pnlQuanLySuatChieu.setLayout(pnlQuanLySuatChieuLayout);
+        pnlQuanLySuatChieuLayout.setHorizontalGroup(
+            pnlQuanLySuatChieuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 1110, Short.MAX_VALUE)
+        );
+        pnlQuanLySuatChieuLayout.setVerticalGroup(
+            pnlQuanLySuatChieuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 720, Short.MAX_VALUE)
+        );
+
+        pnlMainContent.add(pnlQuanLySuatChieu, "card3");
+
         pnlCenter.add(pnlMainContent, new org.netbeans.lib.awtextra.AbsoluteConstraints(234, 0, 1110, 720));
 
         lblFullname.setText("jLabel5");
@@ -533,6 +568,24 @@ public class FCinema_Frame extends javax.swing.JFrame implements FCinema_Control
         ((poly.cinema.ui.manager.QuanLyHoaDonJpanel) pnlLichSuBanHang).open();
     }//GEN-LAST:event_btnLichSuBanHangActionPerformed
 
+    private void btnQLGheActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnQLGheActionPerformed
+        CardLayout cl = (CardLayout) pnlMainContent.getLayout();
+        cl.show(pnlMainContent, "pnlQuanLyGhe");
+        ((poly.cinema.ui.manager.QuanLyHoaDonJpanel) pnlQuanLyGhe).open();
+    }//GEN-LAST:event_btnQLGheActionPerformed
+
+    private void btnQLSanPhamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnQLSanPhamActionPerformed
+        CardLayout cl = (CardLayout) pnlMainContent.getLayout();
+        cl.show(pnlMainContent, "pnlQuanLySanPham");
+        ((poly.cinema.ui.manager.QuanLyHoaDonJpanel) pnlQuanLySanPham).open();
+    }//GEN-LAST:event_btnQLSanPhamActionPerformed
+
+    private void btnsuatchieuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnsuatchieuActionPerformed
+        CardLayout cl = (CardLayout) pnlMainContent.getLayout();
+        cl.show(pnlMainContent, "pnlQuanLySuatChieu");
+        ((poly.cinema.ui.manager.QuanLyHoaDonJpanel) pnlQuanLySuatChieu).open();
+    }//GEN-LAST:event_btnsuatchieuActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -600,6 +653,7 @@ public class FCinema_Frame extends javax.swing.JFrame implements FCinema_Control
     private javax.swing.JPanel pnlQuanLyPhim;
     private javax.swing.JPanel pnlQuanLyPhongChieu;
     private javax.swing.JPanel pnlQuanLySanPham;
+    private javax.swing.JPanel pnlQuanLySuatChieu;
     private javax.swing.JPanel pnlThongKeDoanhThu;
     private javax.swing.JPanel pnlTrangchu;
     private javax.swing.JPanel pnlXemLichChieu;
