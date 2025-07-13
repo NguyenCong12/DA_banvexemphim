@@ -254,7 +254,7 @@ public class QuanLyGheJpanel extends javax.swing.JPanel
 
             },
             new String [] {
-                "Mã ghế", "Mã phòng", "Số ghế", "Trạng thái", "Hàng", "Cột", "Loại ghế", ""
+                "Mã ghế", "Số ghế", "Hàng", "Cột", "Loại ghế", "Trạng thái", "Mã phòng", ""
             }
         ) {
             Class[] types = new Class [] {

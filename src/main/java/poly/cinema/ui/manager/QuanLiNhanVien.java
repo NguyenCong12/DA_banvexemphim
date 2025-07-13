@@ -5,6 +5,7 @@
 package poly.cinema.ui.manager;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
@@ -50,11 +51,9 @@ public class QuanLiNhanVien extends javax.swing.JPanel implements QuanLiNhanVien
         jLabel11 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
-        jLabel14 = new javax.swing.JLabel();
         jLabel15 = new javax.swing.JLabel();
         jLabel16 = new javax.swing.JLabel();
         txtTennhanvien = new javax.swing.JTextField();
-        txtTaikhoan = new javax.swing.JTextField();
         txtMatkhau = new javax.swing.JTextField();
         txtSodienthoai = new javax.swing.JTextField();
         txtEmail = new javax.swing.JTextField();
@@ -84,7 +83,7 @@ public class QuanLiNhanVien extends javax.swing.JPanel implements QuanLiNhanVien
                 java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Boolean.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false
+                false, false, false, false, false, false, true
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -95,7 +94,6 @@ public class QuanLiNhanVien extends javax.swing.JPanel implements QuanLiNhanVien
                 return canEdit [columnIndex];
             }
         });
-        tblQLnhanvien.setEnabled(false);
         tblQLnhanvien.setGridColor(new java.awt.Color(0, 0, 0));
         tblQLnhanvien.setShowGrid(true);
         tblQLnhanvien.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -109,6 +107,11 @@ public class QuanLiNhanVien extends javax.swing.JPanel implements QuanLiNhanVien
         jPanel1.setFont(new java.awt.Font("Segoe UI", 1, 28)); // NOI18N
 
         lblAnh.setText("ảnh");
+        lblAnh.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblAnhMouseClicked(evt);
+            }
+        });
 
         jLabel10.setText("Tên nhân viên");
 
@@ -118,8 +121,6 @@ public class QuanLiNhanVien extends javax.swing.JPanel implements QuanLiNhanVien
 
         jLabel13.setText("Vai trò");
 
-        jLabel14.setText("Tài khoản");
-
         jLabel15.setText("Số điện thoại");
 
         jLabel16.setText("Email");
@@ -127,12 +128,6 @@ public class QuanLiNhanVien extends javax.swing.JPanel implements QuanLiNhanVien
         txtTennhanvien.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtTennhanvienActionPerformed(evt);
-            }
-        });
-
-        txtTaikhoan.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtTaikhoanActionPerformed(evt);
             }
         });
 
@@ -179,8 +174,6 @@ public class QuanLiNhanVien extends javax.swing.JPanel implements QuanLiNhanVien
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel10)
                             .addComponent(txtTennhanvien, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel14)
-                            .addComponent(txtTaikhoan, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel12)
                             .addComponent(txtMatkhau, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel16))
@@ -219,12 +212,9 @@ public class QuanLiNhanVien extends javax.swing.JPanel implements QuanLiNhanVien
                             .addComponent(txtTennhanvien, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(txtSodienthoai, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel14)
-                            .addComponent(jLabel13))
+                        .addComponent(jLabel13)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(txtTaikhoan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(rdoQuanLy)
                             .addComponent(rdoNhanVien))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -360,10 +350,6 @@ public class QuanLiNhanVien extends javax.swing.JPanel implements QuanLiNhanVien
         // TODO add your handling code here:
     }//GEN-LAST:event_txtTennhanvienActionPerformed
 
-    private void txtTaikhoanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTaikhoanActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtTaikhoanActionPerformed
-
     private void txtMatkhauActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtMatkhauActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtMatkhauActionPerformed
@@ -397,11 +383,23 @@ public class QuanLiNhanVien extends javax.swing.JPanel implements QuanLiNhanVien
     }//GEN-LAST:event_btnNhapmoiActionPerformed
 
     private void tblQLnhanvienMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblQLnhanvienMouseClicked
-        // TODO add your handling code here:
-                if (evt.getClickCount() == 2) {
-            this.edit();
+        int row = tblQLnhanvien.getSelectedRow();
+    if (row >= 0) {
+        String email = tblQLnhanvien.getValueAt(row, 2).toString(); // Cột 2 là email
+        User nhanVien = dao.findByEmail(email); // Tìm theo email, không dùng ID nữa
+
+        if (nhanVien != null) {
+            setForm(nhanVien);
+            setEditable(true);
+        } else {
+            JOptionPane.showMessageDialog(this, "Không tìm thấy nhân viên!");
         }
+    }
     }//GEN-LAST:event_tblQLnhanvienMouseClicked
+
+    private void lblAnhMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblAnhMouseClicked
+        chooseFile();
+    }//GEN-LAST:event_lblAnhMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -416,7 +414,6 @@ public class QuanLiNhanVien extends javax.swing.JPanel implements QuanLiNhanVien
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
-    private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
     private javax.swing.JPanel jPanel1;
@@ -432,214 +429,243 @@ public class QuanLiNhanVien extends javax.swing.JPanel implements QuanLiNhanVien
     private javax.swing.JTextField txtEmail;
     private javax.swing.JTextField txtMatkhau;
     private javax.swing.JTextField txtSodienthoai;
-    private javax.swing.JTextField txtTaikhoan;
     private javax.swing.JTextField txtTennhanvien;
     // End of variables declaration//GEN-END:variables
-      
-    List<User> items = List.of();
-    UserDAO userDAO = new UserDAOImpl();
-    
-    @Override
-    public void open() {
-                this.setVisible(true);
-        clear();       // Xóa sạch form
-        fillToTable(); // Đổ dữ liệu lên bảng  
-    } 
-    @Override
-    public void setForm(User entity) {
+
+    UserDAO dao = new UserDAOImpl();
+List<User> items = new ArrayList<>();
+
+@Override
+public void open() {
+    this.setVisible(true);
+    clear();
+    fillToTable();
+}
+
+@Override
+public void setForm(User entity) {
     txtTennhanvien.setText(entity.getTen_nv());
-    txtTaikhoan.setText(entity.getEmail());
     txtMatkhau.setText(entity.getMat_khau());
     txtSodienthoai.setText(entity.getSdt());
     lblAnh.setToolTipText(entity.getAnh_nv());
-
+    txtEmail.setText(entity.getEmail());
     rdoHoatDong.setSelected(entity.isHoat_dong());
     rdoDaNgung.setSelected(!entity.isHoat_dong());
 
-    rdoNhanVien.setSelected(entity.isVai_tro());
-    rdoQuanLy.setSelected(!entity.isVai_tro());    }
+    rdoQuanLy.setSelected(entity.isVai_tro());
+    rdoNhanVien.setSelected(!entity.isVai_tro());
+}
 
-    @Override
-    public User getForm() {
-        User user = new User();
-        user.setTen_nv(txtTennhanvien.getText());
-        user.setEmail(txtTaikhoan.getText());
-        user.setMat_khau(txtMatkhau.getText());
-        user.setSdt(txtSodienthoai.getText());
-        user.setVai_tro(rdoQuanLy.isSelected());
-        user.setHoat_dong(rdoHoatDong.isSelected());
-        user.setAnh_nv(lblAnh.getToolTipText());
-        return user;    }
+@Override
+public User getForm() {
+    User user = new User();
+    user.setTen_nv(txtTennhanvien.getText());
+    user.setEmail(txtEmail.getText());
+    user.setMat_khau(txtMatkhau.getText());
+    user.setSdt(txtSodienthoai.getText());
+    user.setVai_tro(rdoQuanLy.isSelected());
+    user.setHoat_dong(rdoHoatDong.isSelected());
+    String anh = lblAnh.getToolTipText();
+    user.setAnh_nv(anh == null ? "" : anh);
+    return user;
+}
 
-    @Override
-    public void fillToTable() {
-        DefaultTableModel model = (DefaultTableModel) tblQLnhanvien.getModel();
-        model.setRowCount(0); // Xóa dữ liệu cũ
+@Override
+public void fillToTable() {
+    DefaultTableModel model = (DefaultTableModel) tblQLnhanvien.getModel();
+    model.setRowCount(0);
 
-        items = userDAO.findAll();
-        items.forEach(item -> {
-            Object[] rowData = {
-                item.getTen_nv(),
-                item.getMat_khau(),
-                item.getEmail(),
-                item.getSdt(),
-                item.isVai_tro() ? "Quản lý" : "Nhân viên",
-                item.isHoat_dong() ? "Hoạt động" : "Tạm dừng",
-                false
-            };
-            model.addRow(rowData);
-        });    }
+    items = dao.findAll();
+    for (User item : items) {
+        Object[] rowData = {
+            item.getTen_nv(),
+            item.getMat_khau(),
+            item.getEmail(),
+            item.getSdt(),
+            item.isVai_tro() ? "Quản lý" : "Nhân viên",
+            item.isHoat_dong() ? "Hoạt động" : "Tạm dừng",
+            false
+        };
+        model.addRow(rowData);
+    }
+}
 
-    @Override
-    public void edit() {
-        User entity = items.get(tblQLnhanvien.getSelectedRow());
+@Override
+public void edit() {
+    int row = tblQLnhanvien.getSelectedRow();
+    if (row < 0) {
+        JOptionPane.showMessageDialog(this, "Vui lòng chọn một dòng để chỉnh sửa!");
+        return;
+    }
+    String email = tblQLnhanvien.getValueAt(row, 2).toString();
+    User entity = dao.findByEmail(email);
+    if (entity != null) {
         this.setForm(entity);
-        this.setEditable(true);    }
+        this.setEditable(true);
+    }
+}
 
-    @Override
-    public void create() {
-        String tennhanvien = txtTennhanvien.getText().trim();
-        String matkhau = txtMatkhau.getText().trim();
-        String sodienthoai = txtSodienthoai.getText().trim();
-        String taikhoan = txtTaikhoan.getText().trim();
-        String anh = lblAnh.getToolTipText();
+@Override
+public void create() {
+    String tennhanvien = txtTennhanvien.getText().trim();
+    String matkhau = txtMatkhau.getText().trim();
+    String sodienthoai = txtSodienthoai.getText().trim();
+    String taikhoan = txtEmail.getText().trim();
+    String anh = lblAnh.getToolTipText();
 
-        // Kiểm tra rỗng
-        if (tennhanvien.isEmpty() || matkhau.isEmpty() || taikhoan.isEmpty() || sodienthoai.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Vui lòng nhập đầy đủ thông tin!");
-            return;
-        }
-
-        // Kiểm tra ảnh
-        if (anh == null || anh.trim().isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Vui lòng chọn ảnh!");
-            return;
-        }
-
-        // Kiểm tra mật khẩu khớp và đủ độ dài
-//        if (!password.equals(confirmPassword)) {
-//            JOptionPane.showMessageDialog(this, "Mật khẩu và xác nhận không khớp!");
-//            return;
-//        }
-//        if (password.length() < 6) {
-//            JOptionPane.showMessageDialog(this, "Mật khẩu phải từ 6 ký tự trở lên!");
-//            return;
-//        }
-        // Kiểm tra độ dài username
-        if (tennhanvien.length() < 3) {
-            JOptionPane.showMessageDialog(this, "Tên đăng nhập phải có ít nhất 3 ký tự!");
-            return;
-        }
-
-        // Kiểm tra vai trò + trạng thái
-        if (!rdoNhanVien.isSelected() && !rdoQuanLy.isSelected()) {
-            JOptionPane.showMessageDialog(this, "Vui lòng chọn vai trò!");
-            return;
-        }
-        if (!rdoHoatDong.isSelected() && !rdoDaNgung.isSelected()) {
-            JOptionPane.showMessageDialog(this, "Vui lòng chọn trạng thái!");
-            return;
-        }
-
-        // Kiểm tra trùng username
-        if (userDAO.findById(tennhanvien) != null) {
-            JOptionPane.showMessageDialog(this, "Tên đăng nhập đã tồn tại!");
-            return;
-        }
-
-        // Tạo mới
-        try {
-            User entity = getForm();
-            userDAO.create(entity);
-            fillToTable();
-            clear();
-            JOptionPane.showMessageDialog(this, "Thêm mới thành công!");
-        } catch (Exception e) {
-            e.printStackTrace();
-            JOptionPane.showMessageDialog(this, "Thêm mới thất bại: ");
-        }    }
-
-    @Override
-    public void update() {
-        User newUser = getForm();                     // Lấy dữ liệu người dùng mới từ form
-        User oldUser = items.get(tblQLnhanvien.getSelectedRow());  // Lấy dữ liệu cũ từ danh sách
-
-        if (newUser.equals(oldUser)) {
-            JOptionPane.showMessageDialog(this, "Không có thay đổi nào để cập nhật!");
-            return;
-        }
-
-        try {
-            userDAO.update(newUser);
-            fillToTable();
-            JOptionPane.showMessageDialog(this, "Cập nhật thành công!");
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Cập nhật thất bại!");
-        }    }
-
-    @Override
-    public void delete() {
-        int choice = JOptionPane.showConfirmDialog(this, "Bạn có chắc muốn xóa?", "Xác nhận", JOptionPane.YES_NO_OPTION);
-        if (choice == JOptionPane.YES_OPTION) {
-            String username = txtTennhanvien.getText();
-            userDAO.deleteById(username);
-            fillToTable();
-            clear();
-            JOptionPane.showMessageDialog(this, "Xóa thành công!");
-        }    }
-
-    @Override
-    public void clear() {
-        this.setForm(new User());
-        setEditable(false);
-        lblAnh.setIcon(null);    }
-
-    @Override
-    public void setEditable(boolean editable) {
-        btnThem.setEnabled(!editable);
-        btnSua.setEnabled(editable);
-        btnXoa.setEnabled(editable);
-        int rowCount = tblQLnhanvien.getRowCount();    }
-
-    @Override
-    public void moveFirst() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    if (tennhanvien.isEmpty() || matkhau.isEmpty() || taikhoan.isEmpty() || sodienthoai.isEmpty()) {
+        JOptionPane.showMessageDialog(this, "Vui lòng nhập đầy đủ thông tin!");
+        return;
+    }
+    if (anh == null || anh.trim().isEmpty()) {
+        JOptionPane.showMessageDialog(this, "Vui lòng chọn ảnh!");
+        return;
+    }
+    if (tennhanvien.length() < 3) {
+        JOptionPane.showMessageDialog(this, "Tên đăng nhập phải có ít nhất 3 ký tự!");
+        return;
+    }
+    if (!rdoNhanVien.isSelected() && !rdoQuanLy.isSelected()) {
+        JOptionPane.showMessageDialog(this, "Vui lòng chọn vai trò!");
+        return;
+    }
+    if (!rdoHoatDong.isSelected() && !rdoDaNgung.isSelected()) {
+        JOptionPane.showMessageDialog(this, "Vui lòng chọn trạng thái!");
+        return;
+    }
+    if (dao.findByEmail(taikhoan) != null) {
+        JOptionPane.showMessageDialog(this, "Tài khoản đã tồn tại!");
+        return;
     }
 
-    @Override
-    public void movePrevious() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    try {
+        User entity = getForm();
+        dao.create(entity);
+        fillToTable();
+        clear();
+        JOptionPane.showMessageDialog(this, "Thêm mới thành công!");
+    } catch (Exception e) {
+        e.printStackTrace();
+        JOptionPane.showMessageDialog(this, "Thêm mới thất bại!");
+    }
+}
+
+@Override
+public void update() {
+    int row = tblQLnhanvien.getSelectedRow();
+    if (row == -1) {
+        JOptionPane.showMessageDialog(this, "Vui lòng chọn một dòng để cập nhật!");
+        return;
+    }
+    User newUser = getForm();
+    String email = tblQLnhanvien.getValueAt(row, 2).toString();
+    User oldUser = dao.findByEmail(email);
+
+    if (oldUser != null && newUser.equals(oldUser)) {
+        JOptionPane.showMessageDialog(this, "Không có thay đổi nào để cập nhật!");
+        return;
     }
 
-    @Override
-    public void moveNext() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    try {
+        dao.update(newUser);
+        fillToTable();
+        JOptionPane.showMessageDialog(this, "Cập nhật thành công!");
+    } catch (Exception e) {
+        JOptionPane.showMessageDialog(this, "Cập nhật thất bại!");
     }
+}
 
-    @Override
-    public void moveLast() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+@Override
+public void delete() {
+    int row = tblQLnhanvien.getSelectedRow();
+    if (row == -1) {
+        JOptionPane.showMessageDialog(this, "Vui lòng chọn một dòng để xóa!");
+        return;
     }
-
-    @Override
-    public void moveTo(int rowIndex) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    int choice = JOptionPane.showConfirmDialog(this, "Bạn có chắc muốn xóa?", "Xác nhận", JOptionPane.YES_NO_OPTION);
+    if (choice == JOptionPane.YES_OPTION) {
+        String email = tblQLnhanvien.getValueAt(row, 2).toString();
+        dao.deleteById(email);
+        fillToTable();
+        clear();
+        JOptionPane.showMessageDialog(this, "Xóa thành công!");
     }
+}
 
-    @Override
-    public void selectTimeRange() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+@Override
+public void clear() {
+    this.setForm(new User());
+    setEditable(false);
+    lblAnh.setIcon(null);
+}
+
+@Override
+public void setEditable(boolean editable) {
+    btnThem.setEnabled(!editable);
+    btnSua.setEnabled(editable);
+    btnXoa.setEnabled(editable);
+}
+
+@Override
+public void moveFirst() {
+    if (!items.isEmpty()) {
+        tblQLnhanvien.setRowSelectionInterval(0, 0);
+        edit();
     }
-    
-    private final JFileChooser fileChooser = new JFileChooser();
+}
 
-    public void chooseFile() {
-        fileChooser.setFileFilter(new FileNameExtensionFilter("Image files", "jpg", "png", "jpeg", "gif"));
-        if (fileChooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
-            File selectedFile = fileChooser.getSelectedFile();
-            File file = XIcon.copyTo(selectedFile, "images");
+@Override
+public void movePrevious() {
+    int row = tblQLnhanvien.getSelectedRow();
+    if (row > 0) {
+        tblQLnhanvien.setRowSelectionInterval(row - 1, row - 1);
+        edit();
+    }
+}
+
+@Override
+public void moveNext() {
+    int row = tblQLnhanvien.getSelectedRow();
+    if (row < tblQLnhanvien.getRowCount() - 1) {
+        tblQLnhanvien.setRowSelectionInterval(row + 1, row + 1);
+        edit();
+    }
+}
+
+@Override
+public void moveLast() {
+    int rowCount = tblQLnhanvien.getRowCount();
+    if (rowCount > 0) {
+        tblQLnhanvien.setRowSelectionInterval(rowCount - 1, rowCount - 1);
+        edit();
+    }
+}
+
+@Override
+public void moveTo(int rowIndex) {
+    if (rowIndex >= 0 && rowIndex < tblQLnhanvien.getRowCount()) {
+        tblQLnhanvien.setRowSelectionInterval(rowIndex, rowIndex);
+        edit();
+    }
+}
+
+@Override
+public void selectTimeRange() {
+    throw new UnsupportedOperationException("Not supported yet.");
+}
+
+private final JFileChooser fileChooser = new JFileChooser();
+
+public void chooseFile() {
+    fileChooser.setFileFilter(new FileNameExtensionFilter("Image files", "jpg", "png", "jpeg", "gif"));
+    if (fileChooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
+        File selectedFile = fileChooser.getSelectedFile();
+        File file = XIcon.copyTo(selectedFile, "images");
+        if (file != null) {
             lblAnh.setToolTipText(file.getName());
             XIcon.setIcon(lblAnh, file);
         }
     }
+}
+
 }

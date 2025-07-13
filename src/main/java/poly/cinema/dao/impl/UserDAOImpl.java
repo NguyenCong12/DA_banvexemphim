@@ -10,7 +10,6 @@ import poly.cinema.entity.User;
 import poly.cinema.util.XJdbc;
 import poly.cinema.util.XQuery;
 
-
 /**
  *
  * @author KhanhLinh
@@ -26,13 +25,13 @@ public class UserDAOImpl implements UserDAO {
     @Override
     public User create(User entity) {
         XJdbc.executeUpdate(createSql,
-            entity.getTen_nv(),
-            entity.getEmail(),
-            entity.getMat_khau(),
-            entity.isVai_tro(),
-            entity.getSdt(),
-            entity.isHoat_dong(),
-            entity.getAnh_nv()
+                entity.getTen_nv(),
+                entity.getEmail(),
+                entity.getMat_khau(),
+                entity.isVai_tro(),
+                entity.getSdt(),
+                entity.isHoat_dong(),
+                entity.getAnh_nv()
         );
         return entity;
     }
@@ -40,20 +39,21 @@ public class UserDAOImpl implements UserDAO {
     @Override
     public void update(User entity) {
         XJdbc.executeUpdate(updateSql,
-             entity.getTen_nv(),
-            entity.getEmail(),
-            entity.getMat_khau(),
-            entity.isVai_tro(),
-            entity.getSdt(),
-            entity.isHoat_dong(),
-            entity.getAnh_nv(),
-            entity.getMa_nv()
+                entity.getTen_nv(),
+                entity.getEmail(),
+                entity.getMat_khau(),
+                entity.isVai_tro(),
+                entity.getSdt(),
+                entity.isHoat_dong(),
+                entity.getAnh_nv(),
+                entity.getMa_nv()
         );
     }
 
     @Override
-    public void deleteById(String id) {
-        XJdbc.executeUpdate(deleteSql, Integer.parseInt(id));
+    public void deleteById(String email) {
+        String sql = "DELETE FROM NhanVien WHERE email = ?";
+        XJdbc.executeUpdate(sql, email);
     }
 
     @Override
@@ -62,9 +62,11 @@ public class UserDAOImpl implements UserDAO {
     }
 
     @Override
-    public User findById(String id) {
-        return XQuery.getSingleBean(User.class, findByIdSql, Integer.parseInt(id));
-    }
+public User findById(String email) {
+    // Dùng email thay vì parse thành int
+    String sql = "SELECT * FROM NhanVien WHERE email = ?";
+    return XQuery.getSingleBean(User.class, sql, email);
+}
 
     @Override
     public User findByUsername(String tenNv) {
@@ -78,7 +80,3 @@ public class UserDAOImpl implements UserDAO {
         return XQuery.getSingleBean(User.class, sql, email);
     }
 }
-
-
-
-
