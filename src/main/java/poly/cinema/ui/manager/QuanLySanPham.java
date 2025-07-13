@@ -4,10 +4,18 @@
  */
 package poly.cinema.ui.manager;
 
+import java.awt.Image;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.ImageIcon;
+import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import poly.cinema.dao.impl.QuanLySanPhamDAOImpl;
 import poly.cinema.entity.SanPham;
@@ -67,11 +75,11 @@ public class QuanLySanPham extends javax.swing.JPanel implements QuanLySanPhamCo
 
             },
             new String [] {
-                "Mã hàng", "Tên hàng", "Loại", "Giá", "Trạng thái"
+                "Mã hàng", "Tên hàng", "Loại", "Giá", "Trạng thái", "Ảnh"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false
+                false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -267,7 +275,7 @@ public class QuanLySanPham extends javax.swing.JPanel implements QuanLySanPhamCo
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnLamMoiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLamMoiActionPerformed
-        this.clear();
+
     }//GEN-LAST:event_btnLamMoiActionPerformed
 
     private void cboLoaiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboLoaiActionPerformed
@@ -275,24 +283,50 @@ public class QuanLySanPham extends javax.swing.JPanel implements QuanLySanPhamCo
     }//GEN-LAST:event_cboLoaiActionPerformed
 
     private void btnThemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemActionPerformed
-        this.create();
+
     }//GEN-LAST:event_btnThemActionPerformed
 
     private void btnSuaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSuaActionPerformed
-        this.update();
+
     }//GEN-LAST:event_btnSuaActionPerformed
 
     private void btnXoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXoaActionPerformed
-        this.delete();
+
     }//GEN-LAST:event_btnXoaActionPerformed
 
     private void lblAnhMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblAnhMouseClicked
+        JFileChooser fileChooser = new JFileChooser();
+        if (fileChooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
+            File file = fileChooser.getSelectedFile();
+            String fileName = file.getName();
 
+            // Copy ảnh vào thư mục img/
+            File dest = new File("img", fileName);
+            try {
+                Files.copy(file.toPath(), dest.toPath(), StandardCopyOption.REPLACE_EXISTING);
+            } catch (IOException ex) {
+                ex.printStackTrace();
+                JOptionPane.showMessageDialog(this, "❌ Lỗi khi sao chép ảnh!");
+                return;
+            }
+
+            // Hiển thị ảnh vừa với khung
+            ImageIcon icon = new ImageIcon(dest.getAbsolutePath());
+            Image image = icon.getImage().getScaledInstance(
+                    lblAnh.getWidth(), lblAnh.getHeight(), Image.SCALE_SMOOTH
+            );
+            lblAnh.setIcon(new ImageIcon(image));
+
+            // Gán tên file ảnh để lưu vào DB
+            lblAnh.setText(fileName);
+        }
     }//GEN-LAST:event_lblAnhMouseClicked
 
     private final QuanLySanPhamDAOImpl dao = new QuanLySanPhamDAOImpl();
     private List<SanPham> list;
     private int index = -1;
+
+    private boolean isCreating = false;
 
     @Override
     public void open() {
@@ -306,11 +340,26 @@ public class QuanLySanPham extends javax.swing.JPanel implements QuanLySanPhamCo
         txtTenHang.setText(sp.getTenSanPham());
         txtGia.setText(String.valueOf(sp.getGia()));
         cboLoai.setSelectedItem(sp.getLoai());
-        lblAnh.setText(sp.getAnh());
         rdoCon.setSelected(sp.isTrangThai());
         rdoHet.setSelected(!sp.isTrangThai());
 
-        // KHÔNG cần set txtMaHang
+        String fileName = sp.getAnh();
+        lblAnh.setText(fileName);
+
+        if (fileName != null && !fileName.isEmpty()) {
+            File imgFile = new File("img", fileName);
+            if (imgFile.exists()) {
+                ImageIcon icon = new ImageIcon(imgFile.getAbsolutePath());
+                Image image = icon.getImage().getScaledInstance(
+                        lblAnh.getWidth(), lblAnh.getHeight(), Image.SCALE_SMOOTH
+                );
+                lblAnh.setIcon(new ImageIcon(image));
+            } else {
+                lblAnh.setIcon(null);
+            }
+        } else {
+            lblAnh.setIcon(null);
+        }
     }
 
     @Override
@@ -320,8 +369,6 @@ public class QuanLySanPham extends javax.swing.JPanel implements QuanLySanPhamCo
         double gia = Double.parseDouble(txtGia.getText().trim());
         String anh = lblAnh.getText();
         boolean trangThai = rdoCon.isSelected();
-
-        // KHÔNG cần mã vì DB tự tăng
         return new SanPham(null, ten, loai, gia, trangThai, anh);
     }
 
@@ -351,49 +398,134 @@ public class QuanLySanPham extends javax.swing.JPanel implements QuanLySanPhamCo
             if (sp != null) {
                 setForm(sp);
                 index = row;
+                updateButtonStates(true);
             }
         }
     }
 
     @Override
     public void create() {
-        SanPham sp = getForm();
-        dao.create(sp);
-        fillToTable();
-        clear();
+        try {
+            String ten = txtTenHang.getText().trim();
+            String loai = (String) cboLoai.getSelectedItem();
+            String giaStr = txtGia.getText().trim();
+            String anh = lblAnh.getText().trim();
+
+            if (ten.isEmpty() || giaStr.isEmpty() || anh.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "❌ Vui lòng nhập đầy đủ thông tin!");
+                return;
+            }
+
+            double gia = Double.parseDouble(giaStr);
+
+            // Kiểm tra trùng tên
+            for (SanPham sp : dao.findAll()) {
+                if (sp.getTenSanPham().equalsIgnoreCase(ten)) {
+                    JOptionPane.showMessageDialog(this, "❌ Tên sản phẩm đã tồn tại!");
+                    return;
+                }
+            }
+
+            SanPham sp = new SanPham(null, ten, loai, gia, true, anh);
+
+            // Tạm thời khóa sự kiện click bảng
+            isCreating = true;
+
+            dao.create(sp);
+            fillToTable();
+            clear();
+            JOptionPane.showMessageDialog(this, "✔️ Thêm sản phẩm thành công!");
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "❌ Giá phải là số!");
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "❌ Lỗi thêm sản phẩm: " + e.getMessage());
+        } finally {
+            isCreating = false; // Mở lại sau khi xong
+        }
     }
 
     @Override
     public void update() {
-        SanPham sp = getForm();
-        dao.update(sp);
-        fillToTable();
+        try {
+            int row = tblSanPham.getSelectedRow();
+            if (row == -1) {
+                JOptionPane.showMessageDialog(this, "❌ Vui lòng chọn sản phẩm để cập nhật!");
+                return;
+            }
+
+            String ma = tblSanPham.getValueAt(row, 0).toString();
+            String ten = txtTenHang.getText().trim();
+            String loai = (String) cboLoai.getSelectedItem();
+            String giaStr = txtGia.getText().trim();
+            String anh = lblAnh.getText().trim();
+            boolean trangThai = rdoCon.isSelected();
+            if (ten.isEmpty() || giaStr.isEmpty() || anh.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "❌ Vui lòng nhập đầy đủ thông tin!");
+                return;
+            }
+
+            double gia = Double.parseDouble(giaStr);
+
+            for (SanPham sp : dao.findAll()) {
+                if (sp.getTenSanPham().equalsIgnoreCase(ten) && !sp.getMaSanPham().equals(ma)) {
+                    JOptionPane.showMessageDialog(this, "❌ Tên sản phẩm đã tồn tại ở sản phẩm khác!");
+                    return;
+                }
+            }
+
+            
+            SanPham sp = new SanPham(ma, ten, loai, gia, trangThai, anh);
+            dao.update(sp);
+            fillToTable();
+            JOptionPane.showMessageDialog(this, "✔️ Cập nhật thành công!");
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "❌ Giá phải là số!");
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "❌ Cập nhật thất bại: " + e.getMessage());
+        }
     }
 
     @Override
     public void delete() {
-        String ma = txtTenHang.getText().trim();
-        dao.deleteById(ma);
-        fillToTable();
-        clear();
+        try {
+            int row = tblSanPham.getSelectedRow();
+            if (row == -1) {
+                JOptionPane.showMessageDialog(this, "Vui lòng chọn sản phẩm cần xóa trong bảng!");
+                return;
+            }
+
+            String ma = tblSanPham.getValueAt(row, 0).toString();
+
+            int confirm = JOptionPane.showConfirmDialog(this, "Bạn chắc chắn muốn xóa sản phẩm này?", "Xác nhận", JOptionPane.YES_NO_OPTION);
+            if (confirm == JOptionPane.YES_OPTION) {
+                dao.deleteById(ma);
+                fillToTable();
+                clear();
+                JOptionPane.showMessageDialog(this, "Xóa sản phẩm thành công!");
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Xóa thất bại: " + e.getMessage());
+        }
     }
 
     @Override
     public void clear() {
         txtTenHang.setText("");
-        txtTenHang.setText("");
         txtGia.setText("");
         cboLoai.setSelectedIndex(0);
         lblAnh.setText("");
+        lblAnh.setIcon(null);
         index = -1;
+        updateButtonStates(false);
     }
 
     @Override
     public void setEditable(boolean editable) {
         txtTenHang.setEditable(editable);
-        txtTenHang.setEditable(editable);
         txtGia.setEditable(editable);
         cboLoai.setEnabled(editable);
+        rdoCon.setEnabled(editable);
+        rdoHet.setEnabled(editable);
     }
 
     @Override
@@ -439,6 +571,13 @@ public class QuanLySanPham extends javax.swing.JPanel implements QuanLySanPhamCo
         ));
     }
 
+    private void updateButtonStates(boolean isEditing) {
+        btnThem.setEnabled(!isEditing);
+        btnLamMoi.setEnabled(true); // luôn bật
+        btnSua.setEnabled(isEditing);
+        btnXoa.setEnabled(isEditing);
+    }
+
     private void initListeners() {
         btnThem.addActionListener(e -> create());
         btnSua.addActionListener(e -> update());
@@ -446,13 +585,16 @@ public class QuanLySanPham extends javax.swing.JPanel implements QuanLySanPhamCo
         btnLamMoi.addActionListener(e -> clear());
 
         tblSanPham.addMouseListener(new MouseAdapter() {
+            @Override
             public void mouseClicked(MouseEvent e) {
-                if (e.getClickCount() == 2) {
+                if (e.getClickCount() == 1 && !isCreating) {
                     edit();
                 }
             }
         });
     }
+
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup btgTrangThai;
     private javax.swing.JButton btnLamMoi;

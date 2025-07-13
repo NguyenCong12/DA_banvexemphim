@@ -17,7 +17,7 @@ import poly.cinema.util.XJdbc;
  */
 public class QuanLySanPhamDAOImpl implements QuanLySanPhamDAO {
 
-    private final String INSERT_SQL = "INSERT INTO MatHang (ma_hang, ten_hang, loai, gia, trang_thai, anh_hang) VALUES (?, ?, ?, ?, ?, ?)";
+    private final String INSERT_SQL = "INSERT INTO MatHang (ten_hang, loai, gia, trang_thai, anh_hang) VALUES (?, ?, ?, ?, ?)";
     private final String UPDATE_SQL = "UPDATE MatHang SET ten_hang=?, loai=?, gia=?, trang_thai=?, anh_hang=? WHERE ma_hang=?";
     private final String DELETE_SQL = "DELETE FROM MatHang WHERE ma_hang=?";
     private final String SELECT_ALL_SQL = "SELECT * FROM MatHang";
@@ -27,15 +27,22 @@ public class QuanLySanPhamDAOImpl implements QuanLySanPhamDAO {
 
     @Override
     public SanPham create(SanPham sp) {
+        // Thêm mới không cần truyền mã
         int rows = XJdbc.executeUpdate(INSERT_SQL,
-                sp.getMaSanPham(),
                 sp.getTenSanPham(),
                 sp.getLoai(),
                 sp.getGia(),
                 sp.isTrangThai(),
                 sp.getAnh()
         );
-        return rows > 0 ? sp : null;
+
+        // Lấy lại ID mới chèn (nếu cần)
+        if (rows > 0) {
+            Integer idMoi = XJdbc.getValue("SELECT SCOPE_IDENTITY()");
+            sp.setMaSanPham(idMoi.toString()); // gán lại cho entity
+            return sp;
+        }
+        return null;
     }
 
     @Override
@@ -89,7 +96,7 @@ public class QuanLySanPhamDAOImpl implements QuanLySanPhamDAO {
                 sp.setAnh(rs.getString("anh_hang"));
                 list.add(sp);
             }
-            rs.getStatement().getConnection().close(); // Đóng kết nối khi dùng ResultSet
+            rs.getStatement().getConnection().close();
         } catch (Exception e) {
             throw new RuntimeException("Lỗi truy vấn SanPham: " + e.getMessage(), e);
         }
