@@ -18,9 +18,8 @@ public class UserDAOImpl implements UserDAO {
 
     String createSql = "INSERT INTO NhanVien(ten_nv, email, mat_khau, vai_tro, sdt, hoat_dong, anh_nv) VALUES (?, ?, ?, ?, ?, ?, ?)";
     String updateSql = "UPDATE NhanVien SET ten_nv=?, email=?, mat_khau=?, vai_tro=?, sdt=?, hoat_dong=?, anh_nv=? WHERE ma_nv=?";
-    String deleteSql = "DELETE FROM NhanVien WHERE ma_nv=?";
+
     String findAllSql = "SELECT * FROM NhanVien";
-    String findByIdSql = "SELECT * FROM NhanVien WHERE ma_nv=?";
 
     @Override
     public User create(User entity) {

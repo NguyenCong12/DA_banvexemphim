@@ -18,13 +18,11 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 public class QuanLyGhe {
-
     private Integer maGhe;
     private String maPhong;
     private String soGhe;
     private String hang;
     private Integer cot;
     private String loaiGhe;
-    private String trangThai;
-
 }
+

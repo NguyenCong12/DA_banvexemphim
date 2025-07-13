@@ -4,15 +4,14 @@
  */
 package poly.cinema.ui.manager;
 
-import java.awt.Color;
-import java.awt.GridLayout;
 import java.awt.event.ItemEvent;
 import java.util.ArrayList;
 import java.util.List;
-import javax.swing.JButton;
 import javax.swing.table.DefaultTableModel;
 import poly.cinema.dao.QuanLyGheDao;
 import poly.cinema.dao.impl.QuanLyGheDaoImpl;
+import poly.cinema.dao.impl.QuanLyPhongChieuDaoImpl;
+import poly.cinema.entity.PhongChieu;
 import poly.cinema.entity.QuanLyGhe;
 import poly.cinema.util.XDialog;
 
@@ -49,9 +48,7 @@ public class QuanLyGheJpanel extends javax.swing.JPanel
         jLabel5 = new javax.swing.JLabel();
         txtSoGhe = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
-        jLabel8 = new javax.swing.JLabel();
         cboPhongChieu = new javax.swing.JComboBox<>();
-        cboTrangThai = new javax.swing.JComboBox<>();
         cboLoaiGhe = new javax.swing.JComboBox<>();
         jLabel3 = new javax.swing.JLabel();
         txtSoHang = new javax.swing.JTextField();
@@ -111,15 +108,11 @@ public class QuanLyGheJpanel extends javax.swing.JPanel
 
         jLabel7.setText("Mã phòng chiếu");
 
-        jLabel8.setText("Trạng thái");
-
         cboPhongChieu.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cboPhongChieuActionPerformed(evt);
             }
         });
-
-        cboTrangThai.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Trống", "Đã đặt" }));
 
         cboLoaiGhe.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Thường", "Vip", " " }));
         cboLoaiGhe.setToolTipText("");
@@ -162,21 +155,21 @@ public class QuanLyGheJpanel extends javax.swing.JPanel
                 .addGap(28, 28, 28)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(txtSoGhe, javax.swing.GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE)
-                        .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(txtSoHang)
-                        .addComponent(cboLoaiGhe, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(cboLoaiGhe, 0, 180, Short.MAX_VALUE))
                     .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(98, 98, 98)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(cboPhongChieu, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(cboTrangThai, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(cboPhongChieu, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(txtSoGhe, javax.swing.GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE)
+                            .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(84, 84, 84)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jButton3, javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jButton1, javax.swing.GroupLayout.Alignment.TRAILING))
@@ -201,34 +194,6 @@ public class QuanLyGheJpanel extends javax.swing.JPanel
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jLabel3)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(txtSoHang, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jLabel4)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(txtSoCot, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                                .addComponent(jLabel7)
-                                .addGap(8, 8, 8))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                                .addComponent(jLabel9)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)))
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(cboPhongChieu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(cboLoaiGhe, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabel8)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(cboTrangThai, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(6, 6, 6))
-                    .addGroup(jPanel3Layout.createSequentialGroup()
                         .addContainerGap(21, Short.MAX_VALUE)
                         .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -236,14 +201,40 @@ public class QuanLyGheJpanel extends javax.swing.JPanel
                             .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addGap(0, 0, Short.MAX_VALUE)
                                 .addComponent(jLabel5)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(txtSoGhe, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(jLabel3)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(txtSoHang, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(jLabel4)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(txtSoCot, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                                        .addComponent(jLabel7)
+                                        .addGap(8, 8, 8))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                                        .addComponent(jLabel9)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)))
+                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(cboPhongChieu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(cboLoaiGhe, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGap(34, 34, 34)))
                 .addGap(18, 18, 18))
         );
 
@@ -254,14 +245,14 @@ public class QuanLyGheJpanel extends javax.swing.JPanel
 
             },
             new String [] {
-                "Mã ghế", "Số ghế", "Hàng", "Cột", "Loại ghế", "Trạng thái", "Mã phòng", ""
+                "Mã ghế", "Số ghế", "Hàng", "Cột", "Loại ghế", "Mã phòng", ""
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Boolean.class
+                java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Boolean.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, true
+                false, false, false, false, false, false, true
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -338,7 +329,6 @@ public class QuanLyGheJpanel extends javax.swing.JPanel
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> cboLoaiGhe;
     private javax.swing.JComboBox<String> cboPhongChieu;
-    private javax.swing.JComboBox<String> cboTrangThai;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
@@ -349,7 +339,6 @@ public class QuanLyGheJpanel extends javax.swing.JPanel
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
@@ -378,27 +367,38 @@ public class QuanLyGheJpanel extends javax.swing.JPanel
         return;
     }
 
+    // Lấy thông tin phòng chiếu từ DB
+    PhongChieu phong = new QuanLyPhongChieuDaoImpl().findByMaPhong(maPhong);
+    if (phong == null) {
+        XDialog.alert("Không tìm thấy thông tin phòng chiếu: " + maPhong);
+        return;
+    }
+
+    // Kiểm tra vượt cấu hình của phòng
+    if (soHang > phong.getSoHang() || soCot > phong.getSoCot()) {
+        XDialog.alert("Phòng chiếu không đủ số ghế đó!\n" +
+                      "Cấu hình tối đa: " + phong.getSoHang() + " hàng, " + phong.getSoCot() + " cột.");
+        return;
+    }
+
     int gheDaTao = 0;
     for (int i = 0; i < soHang; i++) {
-        char hang = (char) ('A' + i); // Hàng: A, B, C, ...
-        String loaiGhe = (i < 3) ? "Thường" : "VIP"; // ✅ 3 hàng đầu là Thường
+        char hang = (char) ('A' + i);
+        String loaiGhe = (i < 3) ? "Thường" : "VIP";
 
         for (int cot = 1; cot <= soCot; cot++) {
             String soGhe = hang + String.valueOf(cot);
-
-            // Bỏ qua nếu đã tồn tại
             if (dao.findBySoGheAndPhong(soGhe, maPhong) != null) {
                 continue;
             }
 
             QuanLyGhe ghe = QuanLyGhe.builder()
-                .maPhong(maPhong)
-                .soGhe(soGhe)
-                .hang(String.valueOf(hang))
-                .cot(cot)
-                .loaiGhe(loaiGhe)
-                .trangThai("Còn trống")
-                .build();
+                    .maPhong(maPhong)
+                    .soGhe(soGhe)
+                    .hang(String.valueOf(hang))
+                    .cot(cot)
+                    .loaiGhe(loaiGhe)
+                    .build();
 
             dao.create(ghe);
             gheDaTao++;
@@ -410,11 +410,12 @@ public class QuanLyGheJpanel extends javax.swing.JPanel
 }
 
 
-    
+
     @Override
     public void open() {
         addListeners();
         fillComboBoxPhong();
+        fillComboBoxLoaiGhe(); // ✅ Thêm dòng này
         fillToTable();
         clear();
     }
@@ -427,6 +428,12 @@ public class QuanLyGheJpanel extends javax.swing.JPanel
         });
     }
 
+    private void fillComboBoxLoaiGhe() {
+        cboLoaiGhe.removeAllItems();
+        cboLoaiGhe.addItem("Thường");
+        cboLoaiGhe.addItem("VIP");
+    }
+
     private void fillComboBoxPhong() {
         cboPhongChieu.removeAllItems();
         List<String> dsPhong = dao.getAllMaPhong();
@@ -436,44 +443,38 @@ public class QuanLyGheJpanel extends javax.swing.JPanel
     }
 
     @Override
-public QuanLyGhe getForm() {
-    QuanLyGhe ghe = new QuanLyGhe();
-    String hang = txtSoHang.getText().trim();
-    String cotText = txtSoCot.getText().trim();
+    public QuanLyGhe getForm() {
+        QuanLyGhe ghe = new QuanLyGhe();
+        String hang = txtSoHang.getText().trim();
+        String cotText = txtSoCot.getText().trim();
 
-    ghe.setHang(hang);
-    int cot;
-    try {
-        cot = Integer.parseInt(cotText);
-        ghe.setCot(cot);
-    } catch (NumberFormatException e) {
-        XDialog.alert("Cột phải là số nguyên!");
-        return null;
+        ghe.setHang(hang);
+        int cot;
+        try {
+            cot = Integer.parseInt(cotText);
+            ghe.setCot(cot);
+        } catch (NumberFormatException e) {
+            XDialog.alert("Cột phải là số nguyên!");
+            return null;
+        }
+
+        String soGhe = txtSoGhe.getText().trim();
+        if (soGhe.isEmpty()) {
+            soGhe = hang + cot;
+        }
+        ghe.setSoGhe(soGhe);
+
+        ghe.setLoaiGhe((String) cboLoaiGhe.getSelectedItem());
+        ghe.setMaPhong((String) cboPhongChieu.getSelectedItem());
+        return ghe;
     }
-
-    // ✅ Nếu không nhập soGhe thì tạo từ hang + cot
-    String soGhe = txtSoGhe.getText().trim();
-    if (soGhe.isEmpty()) {
-        soGhe = hang + cot;
-    }
-    ghe.setSoGhe(soGhe);
-
-    ghe.setLoaiGhe((String) cboLoaiGhe.getSelectedItem());
-    ghe.setTrangThai((String) cboTrangThai.getSelectedItem());
-    ghe.setMaPhong((String) cboPhongChieu.getSelectedItem());
-    return ghe;
-}
-
-
 
     @Override
     public void setForm(QuanLyGhe ghe) {
-        
         txtSoGhe.setText(ghe.getSoGhe());
         txtSoHang.setText(ghe.getHang());
         txtSoCot.setText(String.valueOf(ghe.getCot()));
         cboLoaiGhe.setSelectedItem(ghe.getLoaiGhe());
-        cboTrangThai.setSelectedItem(ghe.getTrangThai());
         cboPhongChieu.setSelectedItem(ghe.getMaPhong());
     }
 
@@ -491,33 +492,31 @@ public QuanLyGhe getForm() {
                     ghe.getHang(),
                     ghe.getCot(),
                     ghe.getLoaiGhe(),
-                    ghe.getTrangThai(),
-                    ghe.getMaPhong()
+                    ghe.getMaPhong(),
+                    false
                 });
             }
         }
     }
 
     @Override
-public void create() {
-    QuanLyGhe ghe = getForm();
-    if (ghe == null) {
-        return; // Lỗi nhập dữ liệu
+    public void create() {
+        QuanLyGhe ghe = getForm();
+        if (ghe == null) {
+            return;
+        }
+
+        QuanLyGhe existed = dao.findBySoGheAndPhong(ghe.getSoGhe(), ghe.getMaPhong());
+        if (existed != null) {
+            XDialog.alert("Ghế " + ghe.getSoGhe() + " đã tồn tại trong phòng " + ghe.getMaPhong() + "!");
+            return;
+        }
+
+        dao.create(ghe);
+        fillToTable();
+        clear();
+        XDialog.alert("Thêm ghế thành công!");
     }
-
-    // ✅ Kiểm tra trùng mã ghế trong phòng
-    QuanLyGhe existed = dao.findBySoGheAndPhong(ghe.getSoGhe(), ghe.getMaPhong());
-    if (existed != null) {
-        XDialog.alert("Ghế " + ghe.getSoGhe() + " đã tồn tại trong phòng " + ghe.getMaPhong() + "!");
-        return;
-    }
-
-    dao.create(ghe);
-    fillToTable();
-    clear();
-    XDialog.alert("Thêm ghế thành công!");
-}
-
 
     @Override
     public void update() {
@@ -561,9 +560,6 @@ public void create() {
         if (cboLoaiGhe.getItemCount() > 0) {
             cboLoaiGhe.setSelectedIndex(0);
         }
-        if (cboTrangThai.getItemCount() > 0) {
-            cboTrangThai.setSelectedIndex(0);
-        }
         if (cboPhongChieu.getItemCount() > 0) {
             cboPhongChieu.setSelectedIndex(0);
         }
@@ -589,7 +585,6 @@ public void create() {
         txtSoHang.setEditable(editable);
         txtSoCot.setEditable(editable);
         cboLoaiGhe.setEnabled(editable);
-        cboTrangThai.setEnabled(editable);
         cboPhongChieu.setEnabled(editable);
     }
 
