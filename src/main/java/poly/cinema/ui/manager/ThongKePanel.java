@@ -4,21 +4,11 @@
  */
 package poly.cinema.ui.manager;
 
-import java.io.File;
-import java.io.FileOutputStream;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
-import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
-import org.apache.poi.xwpf.usermodel.ParagraphAlignment;
-import org.apache.poi.xwpf.usermodel.XWPFDocument;
-import org.apache.poi.xwpf.usermodel.XWPFParagraph;
-import org.apache.poi.xwpf.usermodel.XWPFRun;
-import org.apache.poi.xwpf.usermodel.XWPFTable;
-import org.apache.poi.xwpf.usermodel.XWPFTableCell;
 import poly.cinema.dao.ThongKeDAO;
 import poly.cinema.dao.impl.ThongKeDAOImpl;
 import poly.cinema.entity.ThongKe;
@@ -38,7 +28,6 @@ public class ThongKePanel extends javax.swing.JPanel implements ThongKeControlle
      */
     public ThongKePanel() {
         initComponents();
-        tblModel = (DefaultTableModel) tblTongHopThongKe.getModel();
         this.open();
     }
 
@@ -63,10 +52,10 @@ public class ThongKePanel extends javax.swing.JPanel implements ThongKeControlle
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tblTongHopThongKe = new javax.swing.JTable();
+        tblDoanhthuPhim = new javax.swing.JTable();
         jPanel4 = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tblDoanhthubapnuov = new javax.swing.JTable();
         btnXuatWord = new javax.swing.JButton();
 
         addMouseListener(new java.awt.event.MouseAdapter() {
@@ -113,7 +102,7 @@ public class ThongKePanel extends javax.swing.JPanel implements ThongKeControlle
 
         jTabbedPane1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
 
-        tblTongHopThongKe.setModel(new javax.swing.table.DefaultTableModel(
+        tblDoanhthuPhim.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null},
                 {null, null},
@@ -143,16 +132,16 @@ public class ThongKePanel extends javax.swing.JPanel implements ThongKeControlle
                 return canEdit [columnIndex];
             }
         });
-        tblTongHopThongKe.setEnabled(false);
-        tblTongHopThongKe.setGridColor(new java.awt.Color(0, 0, 0));
-        tblTongHopThongKe.setRowHeight(25);
-        tblTongHopThongKe.setShowGrid(true);
-        tblTongHopThongKe.addMouseListener(new java.awt.event.MouseAdapter() {
+        tblDoanhthuPhim.setEnabled(false);
+        tblDoanhthuPhim.setGridColor(new java.awt.Color(0, 0, 0));
+        tblDoanhthuPhim.setRowHeight(25);
+        tblDoanhthuPhim.setShowGrid(true);
+        tblDoanhthuPhim.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                tblTongHopThongKeMouseClicked(evt);
+                tblDoanhthuPhimMouseClicked(evt);
             }
         });
-        jScrollPane1.setViewportView(tblTongHopThongKe);
+        jScrollPane1.setViewportView(tblDoanhthuPhim);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -173,7 +162,7 @@ public class ThongKePanel extends javax.swing.JPanel implements ThongKeControlle
 
         jTabbedPane1.addTab("DOANH THU PHIM", jPanel1);
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tblDoanhthubapnuov.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null},
                 {null, null},
@@ -192,10 +181,10 @@ public class ThongKePanel extends javax.swing.JPanel implements ThongKeControlle
                 "Loại", "Doanh thu"
             }
         ));
-        jTable1.setGridColor(new java.awt.Color(0, 0, 0));
-        jTable1.setRowHeight(25);
-        jTable1.setShowGrid(true);
-        jScrollPane3.setViewportView(jTable1);
+        tblDoanhthubapnuov.setGridColor(new java.awt.Color(0, 0, 0));
+        tblDoanhthubapnuov.setRowHeight(25);
+        tblDoanhthubapnuov.setShowGrid(true);
+        jScrollPane3.setViewportView(tblDoanhthubapnuov);
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -279,7 +268,7 @@ public class ThongKePanel extends javax.swing.JPanel implements ThongKeControlle
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(15, Short.MAX_VALUE))
+                .addContainerGap(21, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -297,9 +286,7 @@ public class ThongKePanel extends javax.swing.JPanel implements ThongKeControlle
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 1116, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -313,38 +300,38 @@ public class ThongKePanel extends javax.swing.JPanel implements ThongKeControlle
     }//GEN-LAST:event_cboTimeRangesActionPerformed
 
     private void btnLocActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLocActionPerformed
-        Date begin = XDate.parse(txtBegin.getText(), "dd-MM-yyyy");
-        Date end = XDate.parse(txtEnd.getText(), "dd-MM-yyyy");
+//        Date begin = XDate.parse(txtBegin.getText(), "dd-MM-yyyy");
+//        Date end = XDate.parse(txtEnd.getText(), "dd-MM-yyyy");
+//
+//        // Cập nhật giờ đầu ngày và cuối ngày
+//        Calendar cal = Calendar.getInstance();
+//
+//        cal.setTime(begin);
+//        cal.set(Calendar.HOUR_OF_DAY, 0);
+//        cal.set(Calendar.MINUTE, 0);
+//        cal.set(Calendar.SECOND, 0);
+//        cal.set(Calendar.MILLISECOND, 0);
+//        begin = cal.getTime();
+//
+//        cal.setTime(end);
+//        cal.set(Calendar.HOUR_OF_DAY, 23);
+//        cal.set(Calendar.MINUTE, 59);
+//        cal.set(Calendar.SECOND, 59);
+//        cal.set(Calendar.MILLISECOND, 999);
+//        end = cal.getTime();
+//
+//        fillRevenue(begin, end);
+        if (tblDoanhthuPhim.getRowCount() == 0 && tblDoanhthubapnuov.getRowCount() == 0) {
+    JOptionPane.showMessageDialog(this, "Không có dữ liệu trong khoảng thời gian đã chọn.");
+}
 
-        // Cập nhật giờ đầu ngày và cuối ngày
-        Calendar cal = Calendar.getInstance();
-
-        cal.setTime(begin);
-        cal.set(Calendar.HOUR_OF_DAY, 0);
-        cal.set(Calendar.MINUTE, 0);
-        cal.set(Calendar.SECOND, 0);
-        cal.set(Calendar.MILLISECOND, 0);
-        begin = cal.getTime();
-
-        cal.setTime(end);
-        cal.set(Calendar.HOUR_OF_DAY, 23);
-        cal.set(Calendar.MINUTE, 59);
-        cal.set(Calendar.SECOND, 59);
-        cal.set(Calendar.MILLISECOND, 999);
-        end = cal.getTime();
-
-        fillRevenue(begin, end);
-        List<ThongKe.ByUser> list = dao.getByUser(begin, end);
-        if (list.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Không tìm thấy phiếu nào trong khoảng thời gian đã chọn!");
-        }
     }//GEN-LAST:event_btnLocActionPerformed
 
-    private void tblTongHopThongKeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblTongHopThongKeMouseClicked
+    private void tblDoanhthuPhimMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblDoanhthuPhimMouseClicked
         if (evt.getClickCount() == 2) {
             this.edit();
         }
-    }//GEN-LAST:event_tblTongHopThongKeMouseClicked
+    }//GEN-LAST:event_tblDoanhthuPhimMouseClicked
 
     private void formMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseClicked
         // TODO add your handling code here:
@@ -369,66 +356,91 @@ public class ThongKePanel extends javax.swing.JPanel implements ThongKeControlle
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTabbedPane jTabbedPane1;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTable tblTongHopThongKe;
+    private javax.swing.JTable tblDoanhthuPhim;
+    private javax.swing.JTable tblDoanhthubapnuov;
     private javax.swing.JTextField txtBegin;
     private javax.swing.JTextField txtEnd;
     // End of variables declaration//GEN-END:variables
 
-    private final ThongKeDAO dao = new ThongKeDAOImpl();
-    private final DefaultTableModel tblModel;
+  private final ThongKeDAO dao = new ThongKeDAOImpl();
 
-    @Override
-    public void open() {
-        this.selectTimeRange(); // gán mặc định thời gian
-        this.fillRevenue();     // load dữ liệu doanh thu theo nhân viên
+@Override
+public void open() {
+    this.selectTimeRange(); // Gán mặc định thời gian
+    this.fillRevenue();     // Load dữ liệu doanh thu phim và bắp nước
+}
+
+@Override
+public void selectTimeRange() {
+    TimeRange range = TimeRange.today();
+    switch (cboTimeRanges.getSelectedIndex()) {
+        case 0 -> range = TimeRange.today();         // Hôm nay
+        case 1 -> range = TimeRange.thisWeek();      // Tuần này
+        case 2 -> range = TimeRange.thisMonth();     // Tháng này
+        case 3 -> range = TimeRange.thisQuarter();   // Quý này
+        case 4 -> range = TimeRange.thisYear();      // Năm này
     }
+    txtBegin.setText(XDate.format(range.getBegin(), "dd-MM-yyyy"));
+    txtEnd.setText(XDate.format(range.getEnd(), "dd-MM-yyyy"));
+}
 
-    @Override
-    public void selectTimeRange() {
-        TimeRange range = TimeRange.today();
-        switch (cboTimeRanges.getSelectedIndex()) {
-            case 0 ->
-                range = TimeRange.today();         // Hôm nay
-            case 1 ->
-                range = TimeRange.thisWeek();      // Tuần này
-            case 2 ->
-                range = TimeRange.thisMonth();     // Tháng này
-            case 3 ->
-                range = TimeRange.thisQuarter();   // Quý này
-            case 4 ->
-                range = TimeRange.thisYear();      // Năm này
-        }
-        txtBegin.setText(XDate.format(range.getBegin(), "dd-MM-yyyy"));
-        txtEnd.setText(XDate.format(range.getEnd(), "dd-MM-yyyy"));
-    }
+@Override
+public void fillRevenue() {
+    Date begin = XDate.parse(txtBegin.getText(), "dd-MM-yyyy");
+    Date end = XDate.parse(txtEnd.getText(), "dd-MM-yyyy");
 
-    public void fillRevenue(Date begin, Date end) {
-    List<ThongKe.ByUser> list = dao.getByUser(begin, end);
-    tblModel.setRowCount(0);
+    Calendar cal = Calendar.getInstance();
+    cal.setTime(begin);
+    cal.set(Calendar.HOUR_OF_DAY, 0);
+    cal.set(Calendar.MINUTE, 0);
+    cal.set(Calendar.SECOND, 0);
+    cal.set(Calendar.MILLISECOND, 0);
+    begin = cal.getTime();
 
-    for (ThongKe.ByUser item : list) {
-        tblModel.addRow(new Object[]{
-            item.getUser(),
-            String.format("%,.0f VNĐ", item.getRevenue()),
-            item.getQuantity(),
-            XDate.format(item.getFirstTime(), "HH:mm:ss dd-MM-yyyy"),
-            XDate.format(item.getLastTime(), "HH:mm:ss dd-MM-yyyy")
+    cal.setTime(end);
+    cal.set(Calendar.HOUR_OF_DAY, 23);
+    cal.set(Calendar.MINUTE, 59);
+    cal.set(Calendar.SECOND, 59);
+    cal.set(Calendar.MILLISECOND, 999);
+    end = cal.getTime();
+
+    fillMovieRevenue(begin, end);
+    fillFoodRevenue(begin, end);
+}
+
+public void fillMovieRevenue(Date begin, Date end) {
+    List<ThongKe.DoanhThuPhim> list = dao.getDoanhThuPhim(begin, end);
+    DefaultTableModel model = (DefaultTableModel) tblDoanhthuPhim.getModel();
+    model.setRowCount(0);
+    for (ThongKe.DoanhThuPhim item : list) {
+        model.addRow(new Object[]{
+            item.getTenPhim(),
+            String.format("%,.0f VNĐ", item.getDoanhThu())
         });
     }
+}
 
-    if (list.isEmpty()) {
-        XDialog.alert("Không có dữ liệu trong khoảng thời gian đã chọn.");
+
+public void fillFoodRevenue(Date begin, Date end) {
+    List<ThongKe.DoanhThuSanPham> list = dao.getDoanhThuSanPham(begin, end);
+    DefaultTableModel model = (DefaultTableModel) tblDoanhthubapnuov.getModel();
+    model.setRowCount(0);
+    for (ThongKe.DoanhThuSanPham item : list) {
+        model.addRow(new Object[]{
+            item.getLoai(),
+            String.format("%,.0f VNĐ", item.getDoanhThu())
+        });
     }
 }
 
-
-    @Override
-public void fillRevenue() {
-    
+@Override
+public void edit() {
+    int row = tblDoanhthuPhim.getSelectedRow();
+    if (row != -1) {
+        String movie = tblDoanhthuPhim.getValueAt(row, 0).toString();
+        JOptionPane.showMessageDialog(this, "Xem thống kê của phim: " + movie);
+    }
 }
-
-
     private void xuatWord() {
         
     }
@@ -448,14 +460,7 @@ public void fillRevenue() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
-    @Override
-    public void edit() {
-        int row = tblTongHopThongKe.getSelectedRow();
-        if (row != -1) {
-            String user = tblTongHopThongKe.getValueAt(row, 0).toString();
-            JOptionPane.showMessageDialog(this, "Xem thống kê của: " + user);
-        }
-    }
+  
 
     @Override
     public void create() {

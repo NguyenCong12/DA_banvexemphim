@@ -219,7 +219,12 @@ public class DangNhapJDialog extends javax.swing.JDialog implements DangNhapCont
     }//GEN-LAST:event_txtTenDangNhapActionPerformed
 
     private void chkHienMatKhauActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chkHienMatKhauActionPerformed
-        this.setupTogglePassword();
+         if (chkHienMatKhau.isSelected()) {
+        txtMatKhau.setEchoChar((char) 0); // Hiện mật khẩu
+    } else {
+        txtMatKhau.setEchoChar('*'); // Ẩn mật khẩu
+    }
+
     }//GEN-LAST:event_chkHienMatKhauActionPerformed
 
     /**
