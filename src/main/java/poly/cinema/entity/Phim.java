@@ -27,4 +27,9 @@ public class Phim {
     private Date ngayKhoiChieu;
     private String trangThai;
     private String hinhAnh;
+    @Override
+    public String toString() {
+    return tenPhim; // hoặc "P" + maPhim + " - " + tenPhim
+}
+    
 }

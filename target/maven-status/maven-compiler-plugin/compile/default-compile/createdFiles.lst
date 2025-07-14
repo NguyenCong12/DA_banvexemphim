@@ -28,12 +28,15 @@ poly\cinema\ui\manager\QuanLyHoaDonJpanel$3.class
 poly\cinema\ui\FCinema_Frame$11.class
 poly\cinema\ui\manager\QuanLyPhim$7.class
 poly\cinema\ui\KhoiPhucMKJDialog$3$1.class
+poly\cinema\ui\manager\QuanLySuatChieuController.class
 poly\cinema\ui\manager\QuanLiNhanVien$1.class
 poly\cinema\ui\manager\QuanLiNhanVien$8.class
 poly\cinema\ui\manager\LichSuBanHang.class
+poly\cinema\entity\SuatChieu$SuatChieuBuilder.class
 poly\cinema\ui\manager\QuanLiPhongChieu$1.class
 poly\cinema\ui\manager\XemLichChieu.class
 poly\cinema\ui\manager\ThongKePanel$5.class
+poly\cinema\dao\QuanLySuatChieuDao.class
 poly\cinema\ui\manager\QuanLiPhongChieu$5.class
 poly\cinema\ui\manager\QuanLySanPham$1.class
 poly\cinema\ui\manager\QuanLySanPham.class
@@ -53,6 +56,7 @@ poly\cinema\ui\manager\QuanLiNhanVien$10.class
 poly\cinema\ui\manager\QuanLyGheJpanel$6.class
 poly\cinema\ui\manager\ThongKePanel$3.class
 poly\cinema\ui\FCinema_Frame$1.class
+poly\cinema\dao\impl\QuanLySuatChieuDaoImpl.class
 poly\cinema\entity\SanPham$SanPhamBuilder.class
 poly\cinema\ui\manager\QuanLyHoaDonJpanel$4.class
 poly\cinema\ui\FCinema_Frame$15.class
@@ -84,6 +88,7 @@ poly\cinema\ui\DoiMatKhau.class
 poly\cinema\ui\manager\QuanLyPhim$3.class
 poly\cinema\dao\QuanLyGheDao.class
 poly\cinema\ui\manager\QuanLyGheJpanel.class
+poly\cinema\entity\SuatChieu.class
 poly\cinema\entity\QuanLyGhe$QuanLyGheBuilder.class
 poly\cinema\ui\manager\QuanLyHoaDonJpanel$5.class
 poly\cinema\entity\ThongKe$DoanhThuSanPham.class
@@ -92,6 +97,7 @@ poly\cinema\ui\manager\ThongKePanel$1.class
 poly\cinema\ui\manager\QuanLyPhim$5.class
 poly\cinema\ui\manager\QuanLiNhanVien$4.class
 poly\cinema\ui\manager\QuanLySanPham$8.class
+poly\cinema\ui\manager\QuanLyXuatChieu$7.class
 poly\cinema\ui\FCinema_Frame$8.class
 poly\cinema\dao\QuanLySanPhamDAO.class
 poly\cinema\ui\manager\QuanLyGheJpanel$10.class
@@ -149,6 +155,7 @@ poly\cinema\ui\manager\QuanLiNhanVien$3.class
 poly\cinema\ui\DangNhapJDialog$3.class
 poly\cinema\ui\manager\QuanLyHoaDonJpanel$1.class
 poly\cinema\ui\FCinema_Frame$7.class
+poly\cinema\ui\manager\QuanLyXuatChieu$6.class
 poly\cinema\entity\PhongChieu.class
 poly\cinema\ui\DoiMatKhau$4.class
 poly\cinema\util\XMailer.class

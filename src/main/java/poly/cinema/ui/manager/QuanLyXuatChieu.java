@@ -4,17 +4,44 @@
  */
 package poly.cinema.ui.manager;
 
+import java.math.BigDecimal;
+import java.sql.Time;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.Date;
+import java.util.List;
+import java.util.Locale;
+import java.util.stream.Collectors;
+import javax.swing.JSpinner;
+import javax.swing.SpinnerDateModel;
+import javax.swing.table.DefaultTableModel;
+import poly.cinema.dao.QuanLyPhimDao;
+import poly.cinema.dao.QuanLyPhongChieuDao;
+import poly.cinema.dao.QuanLySuatChieuDao;
+import poly.cinema.dao.impl.QuanLyPhimDaoImpl;
+import poly.cinema.dao.impl.QuanLyPhongChieuDaoImpl;
+import poly.cinema.dao.impl.QuanLySuatChieuDaoImpl;
+import poly.cinema.entity.Phim;
+import poly.cinema.entity.PhongChieu;
+import poly.cinema.entity.SuatChieu;
+import poly.cinema.util.XDialog;
+
 /**
  *
  * @author ADMIN
  */
-public class QuanLyXuatChieu extends javax.swing.JPanel {
+public class QuanLyXuatChieu extends javax.swing.JPanel implements QuanLySuatChieuController {
 
     /**
      * Creates new form SuatChieu
      */
     public QuanLyXuatChieu() {
         initComponents();
+        open();
     }
 
     /**
@@ -28,28 +55,31 @@ public class QuanLyXuatChieu extends javax.swing.JPanel {
 
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tblXuatChieu = new javax.swing.JTable();
+        tblSuatChieu = new javax.swing.JTable();
         jPanel2 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         txtMaXuat = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         txtMaPhim = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
-        txtMaPhong = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
-        txtNgayChieu = new javax.swing.JTextField();
         btnThem = new javax.swing.JButton();
         btnSua = new javax.swing.JButton();
         btnXoa = new javax.swing.JButton();
         btnLamMoi = new javax.swing.JButton();
         jLabel6 = new javax.swing.JLabel();
-        txtGiave = new javax.swing.JTextField();
+        txtGiaVe = new javax.swing.JTextField();
+        cboPhim = new javax.swing.JComboBox<>();
+        cboPhong = new javax.swing.JComboBox<>();
+        jLabel7 = new javax.swing.JLabel();
+        chooserNgayChieu = new com.toedter.calendar.JDateChooser();
+        spnGioChieu = new javax.swing.JSpinner();
         jLabel1 = new javax.swing.JLabel();
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setPreferredSize(new java.awt.Dimension(1110, 720));
 
-        tblXuatChieu.setModel(new javax.swing.table.DefaultTableModel(
+        tblSuatChieu.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null, null},
                 {null, null, null, null, null, null, null},
@@ -77,9 +107,14 @@ public class QuanLyXuatChieu extends javax.swing.JPanel {
                 return canEdit [columnIndex];
             }
         });
-        tblXuatChieu.setGridColor(new java.awt.Color(0, 0, 0));
-        tblXuatChieu.setShowGrid(true);
-        jScrollPane1.setViewportView(tblXuatChieu);
+        tblSuatChieu.setGridColor(new java.awt.Color(0, 0, 0));
+        tblSuatChieu.setShowGrid(true);
+        tblSuatChieu.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblSuatChieuMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(tblSuatChieu);
 
         jPanel2.setBackground(new java.awt.Color(212, 212, 212));
 
@@ -98,29 +133,32 @@ public class QuanLyXuatChieu extends javax.swing.JPanel {
         jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel4.setText("Ngày chiếu");
 
-        txtMaPhong.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtMaPhongActionPerformed(evt);
-            }
-        });
-
         jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel5.setText("Mã phòng");
 
-        txtNgayChieu.addActionListener(new java.awt.event.ActionListener() {
+        btnThem.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnThem.setText("Thêm");
+        btnThem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtNgayChieuActionPerformed(evt);
+                btnThemActionPerformed(evt);
             }
         });
 
-        btnThem.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        btnThem.setText("Thêm");
-
         btnSua.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnSua.setText("Sửa");
+        btnSua.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSuaActionPerformed(evt);
+            }
+        });
 
         btnXoa.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnXoa.setText("Xóa");
+        btnXoa.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnXoaActionPerformed(evt);
+            }
+        });
 
         btnLamMoi.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnLamMoi.setText("Làm mới");
@@ -132,6 +170,11 @@ public class QuanLyXuatChieu extends javax.swing.JPanel {
 
         jLabel6.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel6.setText("Giá vé");
+
+        cboPhong.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        jLabel7.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel7.setText("Ngày chiếu");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -146,12 +189,15 @@ public class QuanLyXuatChieu extends javax.swing.JPanel {
                             .addComponent(txtMaXuat, javax.swing.GroupLayout.PREFERRED_SIZE, 257, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(86, 86, 86)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel5)
-                            .addComponent(txtMaPhong, javax.swing.GroupLayout.PREFERRED_SIZE, 249, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(jLabel5)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(cboPhong, 0, 249, Short.MAX_VALUE)
+                                .addGap(81, 81, 81)))
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel6)
-                            .addComponent(txtGiave, javax.swing.GroupLayout.PREFERRED_SIZE, 217, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(txtGiaVe, javax.swing.GroupLayout.PREFERRED_SIZE, 217, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(76, 76, 76))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
@@ -164,14 +210,19 @@ public class QuanLyXuatChieu extends javax.swing.JPanel {
                         .addComponent(btnLamMoi)
                         .addGap(53, 53, 53))
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel3)
-                            .addComponent(txtMaPhim, javax.swing.GroupLayout.PREFERRED_SIZE, 257, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(cboPhim, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtMaPhim, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 257, Short.MAX_VALUE))
                         .addGap(86, 86, 86)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtNgayChieu, javax.swing.GroupLayout.PREFERRED_SIZE, 249, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel4))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                            .addComponent(jLabel4)
+                            .addComponent(chooserNgayChieu, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel7)
+                            .addComponent(spnGioChieu, javax.swing.GroupLayout.PREFERRED_SIZE, 209, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(84, 84, 84))))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -183,18 +234,27 @@ public class QuanLyXuatChieu extends javax.swing.JPanel {
                     .addComponent(jLabel6))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(txtMaXuat)
-                    .addComponent(txtGiave, javax.swing.GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE)
-                    .addComponent(txtMaPhong))
+                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(txtMaXuat)
+                        .addComponent(cboPhong, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtGiaVe, javax.swing.GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(jLabel4))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtMaPhim, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtNgayChieu, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(69, 69, 69)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jLabel7)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(spnGioChieu))
+                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addGroup(jPanel2Layout.createSequentialGroup()
+                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jLabel3)
+                                .addComponent(jLabel4))
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(txtMaPhim, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(chooserNgayChieu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(41, 41, 41)
+                .addComponent(cboPhim, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(8, 8, 8)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnThem, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnSua, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -227,7 +287,7 @@ public class QuanLyXuatChieu extends javax.swing.JPanel {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(44, 44, 44)
                 .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 40, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 41, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(59, 59, 59)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -249,20 +309,31 @@ public class QuanLyXuatChieu extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnLamMoiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLamMoiActionPerformed
-        // TODO add your handling code here:
+        clear();
     }//GEN-LAST:event_btnLamMoiActionPerformed
 
     private void txtMaXuatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtMaXuatActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtMaXuatActionPerformed
 
-    private void txtMaPhongActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtMaPhongActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtMaPhongActionPerformed
+    private void btnThemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemActionPerformed
+        create();
+    }//GEN-LAST:event_btnThemActionPerformed
 
-    private void txtNgayChieuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNgayChieuActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtNgayChieuActionPerformed
+    private void btnSuaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSuaActionPerformed
+        update();
+    }//GEN-LAST:event_btnSuaActionPerformed
+
+    private void btnXoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXoaActionPerformed
+        delete();
+    }//GEN-LAST:event_btnXoaActionPerformed
+
+    private void tblSuatChieuMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblSuatChieuMouseClicked
+        int row = tblSuatChieu.getSelectedRow();
+        if (row >= 0) {
+            setForm(items.get(row)); // Hiển thị dữ liệu lên form
+        }
+    }//GEN-LAST:event_tblSuatChieuMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -270,24 +341,428 @@ public class QuanLyXuatChieu extends javax.swing.JPanel {
     private javax.swing.JButton btnSua;
     private javax.swing.JButton btnThem;
     private javax.swing.JButton btnXoa;
+    private javax.swing.JComboBox<String> cboPhim;
+    private javax.swing.JComboBox<String> cboPhong;
+    private com.toedter.calendar.JDateChooser chooserNgayChieu;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable tblXuatChieu;
-    private javax.swing.JTextField txtGiave;
+    private javax.swing.JSpinner spnGioChieu;
+    private javax.swing.JTable tblSuatChieu;
+    private javax.swing.JTextField txtGiaVe;
     private javax.swing.JTextField txtMaPhim;
-    private javax.swing.JTextField txtMaPhong;
     private javax.swing.JTextField txtMaXuat;
-    private javax.swing.JTextField txtNgayChieu;
     // End of variables declaration//GEN-END:variables
 
+    private QuanLySuatChieuDao dao = new QuanLySuatChieuDaoImpl();
+    private List<SuatChieu> items = new ArrayList<>();
+    private List<Phim> phimList = new ArrayList<>();
+
+    @Override
     public void open() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        loadComboboxes();
+        chooserNgayChieu.setLocale(new Locale("vi", "VN"));
+
+        cboPhim.addActionListener(e -> {
+            filterTable();
+            suggestNextGioChieu();
+        });
+
+        cboPhong.addActionListener(e -> {
+            filterTable();
+            suggestNextGioChieu();
+        });
+
+        chooserNgayChieu.getDateEditor().addPropertyChangeListener(evt -> {
+            if ("date".equals(evt.getPropertyName())) {
+                filterTable();
+                suggestNextGioChieu();
+            }
+        });
+
+        // Khởi tạo spinner giờ chiếu
+        SpinnerDateModel model = new SpinnerDateModel();
+        spnGioChieu.setModel(model);
+        JSpinner.DateEditor editor = new JSpinner.DateEditor(spnGioChieu, "HH:mm");
+        spnGioChieu.setEditor(editor);
+
+        fillToTable();
+        clear();
     }
+
+    @Override
+    public SuatChieu getForm() {
+        try {
+            String tenPhim = (String) cboPhim.getSelectedItem();
+            int maPhim = -1;
+            for (Phim p : phimList) {
+                if (p.getTenPhim().equals(tenPhim)) {
+                    maPhim = p.getMaPhim();
+                    break;
+                }
+            }
+
+            String maPhong = (String) cboPhong.getSelectedItem();
+
+            LocalDate ngayChieu = chooserNgayChieu.getDate()
+                    .toInstant()
+                    .atZone(ZoneId.systemDefault())
+                    .toLocalDate();
+
+            Date gioChieuDate = (Date) spnGioChieu.getValue();
+            LocalTime gioChieu = gioChieuDate.toInstant()
+                    .atZone(ZoneId.systemDefault())
+                    .toLocalTime();
+
+            BigDecimal giaVe = new BigDecimal(txtGiaVe.getText().trim());
+
+            SuatChieu sc = SuatChieu.builder()
+                    .maPhim(maPhim)
+                    .maPhong(maPhong)
+                    .ngayChieu(ngayChieu)
+                    .gioChieu(gioChieu)
+                    .giaVe(giaVe)
+                    .build();
+
+            if (!txtMaXuat.getText().trim().isEmpty()) {
+                sc.setMaXuat(Integer.parseInt(txtMaXuat.getText().trim()));
+            }
+
+            return sc;
+        } catch (Exception e) {
+            XDialog.alert("Vui lòng nhập đúng định dạng dữ liệu!");
+            return null;
+        }
+    }
+
+    @Override
+    public void setForm(SuatChieu entity) {
+        for (Phim phim : phimList) {
+            if (phim.getMaPhim() == entity.getMaPhim()) {
+                cboPhim.setSelectedItem(phim.getTenPhim());
+                break;
+            }
+        }
+
+        txtMaXuat.setText(String.valueOf(entity.getMaXuat()));
+        txtMaPhim.setText(String.valueOf(entity.getMaPhim()));
+        cboPhong.setSelectedItem(entity.getMaPhong());
+
+        Date date = Date.from(entity.getNgayChieu()
+                .atStartOfDay(ZoneId.systemDefault())
+                .toInstant());
+        chooserNgayChieu.setDate(date);
+
+        LocalTime gio = entity.getGioChieu();
+        LocalDate today = LocalDate.now();
+        Date dateGio = Date.from(gio.atDate(today).atZone(ZoneId.systemDefault()).toInstant());
+        spnGioChieu.setValue(dateGio);
+        txtGiaVe.setText(entity.getGiaVe().toString());
+    }
+
+    @Override
+    public void fillToTable() {
+        filterTable(); // luôn lọc theo trạng thái hiện tại
+    }
+
+    private void suggestNextGioChieu() {
+        String maPhong = (String) cboPhong.getSelectedItem();
+        String tenPhim = (String) cboPhim.getSelectedItem();
+
+        if (maPhong == null || tenPhim == null
+                || tenPhim.equals("-- Tất cả --")
+                || maPhong.equals("-- Tất cả --")
+                || phimList.stream().noneMatch(p -> p.getTenPhim().equals(tenPhim))) {
+            return;
+        }
+
+        LocalDate ngayChieu;
+        try {
+            ngayChieu = chooserNgayChieu.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        } catch (Exception e) {
+            return;
+        }
+
+        List<SuatChieu> suatCungNgayPhong = items.stream()
+                .filter(sc -> sc.getMaPhong().equals(maPhong) && sc.getNgayChieu().isEqual(ngayChieu))
+                .sorted(Comparator.comparing(SuatChieu::getGioChieu))
+                .collect(Collectors.toList());
+
+        if (suatCungNgayPhong.isEmpty()) {
+            spnGioChieu.setValue(Date.from(LocalTime.of(8, 0).atDate(ngayChieu).atZone(ZoneId.systemDefault()).toInstant()));
+            return;
+        }
+
+        SuatChieu last = suatCungNgayPhong.get(suatCungNgayPhong.size() - 1);
+        int duration = phimList.stream()
+                .filter(p -> p.getMaPhim() == last.getMaPhim())
+                .mapToInt(Phim::getThoiLuong)
+                .findFirst()
+                .orElse(0);
+
+        LocalTime nextTime = last.getGioChieu().plusMinutes(duration + 15);
+        Date suggestDate = Date.from(nextTime.atDate(ngayChieu).atZone(ZoneId.systemDefault()).toInstant());
+        spnGioChieu.setValue(suggestDate);
+    }
+
+    private boolean isOverlapping(SuatChieu newSc) {
+        // Cập nhật danh sách mới nhất từ DB
+        items = dao.findAll();
+
+        int duration = phimList.stream()
+                .filter(p -> p.getMaPhim() == newSc.getMaPhim())
+                .mapToInt(Phim::getThoiLuong)
+                .findFirst()
+                .orElse(0);
+
+        int bufferMinutes = 15;
+
+        for (SuatChieu sc : items) {
+            if (newSc.getMaXuat() != 0 && sc.getMaXuat() == newSc.getMaXuat()) {
+                continue; // Bỏ qua chính nó khi cập nhật
+            }
+
+            boolean sameRoom = sc.getMaPhong().equals(newSc.getMaPhong());
+            boolean sameDate = sc.getNgayChieu().isEqual(newSc.getNgayChieu());
+
+            if (sameRoom && sameDate) {
+                LocalTime start1 = sc.getGioChieu();
+                int dur1 = phimList.stream()
+                        .filter(p -> p.getMaPhim() == sc.getMaPhim())
+                        .mapToInt(Phim::getThoiLuong)
+                        .findFirst()
+                        .orElse(0);
+                LocalTime end1 = start1.plusMinutes(dur1 + bufferMinutes);
+
+                LocalTime start2 = newSc.getGioChieu();
+                LocalTime end2 = start2.plusMinutes(duration + bufferMinutes);
+
+                // Kiểm tra giao nhau
+                boolean overlap = !end1.isBefore(start2) && !end2.isBefore(start1);
+                if (overlap) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+
+    @Override
+    public void create() {
+        SuatChieu sc = getForm();
+        if (sc == null) {
+            return;
+        }
+
+        if (isOverlapping(sc)) {
+            XDialog.alert("Không thể thêm/cập nhật.\n"
+                    + "Suất chiếu bị trùng hoặc quá gần suất chiếu khác trong cùng phòng.\n"
+                    + "Yêu cầu cách nhau ít nhất: thời lượng phim + 15 phút.");
+            return;
+        }
+
+        dao.create(sc);
+        fillToTable();
+        clear();
+        XDialog.alert("Thêm suất chiếu thành công!");
+    }
+
+    @Override
+    public void update() {
+        int row = tblSuatChieu.getSelectedRow();
+        if (row < 0) {
+            XDialog.alert("Vui lòng chọn dòng cần cập nhật.");
+            return;
+        }
+
+        SuatChieu sc = getForm();
+        if (sc == null) {
+            return;
+        }
+
+        sc.setMaXuat((Integer) tblSuatChieu.getValueAt(row, 0));
+
+        if (isOverlapping(sc)) {
+            XDialog.alert("Không thể thêm/cập nhật.\n"
+                    + "Suất chiếu bị trùng hoặc quá gần suất chiếu khác trong cùng phòng.\n"
+                    + "Yêu cầu cách nhau ít nhất: thời lượng phim + 15 phút.");
+            return;
+        }
+
+        dao.update(sc);
+        fillToTable();
+        XDialog.alert("Cập nhật thành công!");
+    }
+
+    @Override
+    public void delete() {
+        int row = tblSuatChieu.getSelectedRow();
+        if (row < 0) {
+            XDialog.alert("Vui lòng chọn dòng cần xóa.");
+            return;
+        }
+
+        int maXuat = (Integer) tblSuatChieu.getValueAt(row, 0);
+        dao.deleteById(maXuat);
+        fillToTable();
+        clear();
+        XDialog.alert("Xóa thành công!");
+    }
+
+    @Override
+    public void clear() {
+        cboPhim.setSelectedIndex(0);
+        cboPhong.setSelectedIndex(0);
+        chooserNgayChieu.setDate(new Date());
+        spnGioChieu.setValue(new Date());
+        txtGiaVe.setText("");
+        txtMaPhim.setText("");
+        txtMaXuat.setText("");
+        tblSuatChieu.clearSelection();
+        filterTable();
+    }
+
+    @Override
+    public void setEditable(boolean editable) {
+        cboPhim.setEnabled(editable);
+        cboPhong.setEnabled(editable);
+        chooserNgayChieu.setEnabled(editable);
+        spnGioChieu.setEnabled(editable);
+        txtGiaVe.setEditable(editable);
+    }
+
+    @Override
+    public void moveFirst() {
+        if (!items.isEmpty()) {
+            moveTo(0);
+        }
+    }
+
+    @Override
+    public void movePrevious() {
+        int row = tblSuatChieu.getSelectedRow();
+        if (row > 0) {
+            moveTo(row - 1);
+        }
+    }
+
+    @Override
+    public void moveNext() {
+        int row = tblSuatChieu.getSelectedRow();
+        if (row < items.size() - 1) {
+            moveTo(row + 1);
+        }
+    }
+
+    @Override
+    public void moveLast() {
+        if (!items.isEmpty()) {
+            moveTo(items.size() - 1);
+        }
+    }
+
+    @Override
+    public void moveTo(int rowIndex) {
+        tblSuatChieu.setRowSelectionInterval(rowIndex, rowIndex);
+        setForm(items.get(rowIndex));
+    }
+
+    @Override
+    public void edit() {
+        int row = tblSuatChieu.getSelectedRow();
+        if (row >= 0) {
+            setForm(items.get(row));
+        }
+    }
+
+    @Override
+    public void selectTimeRange() {
+        // Bỏ trống nếu không cần lọc theo khoảng thời gian
+    }
+
+// ---------------- Helper methods ----------------
+    private void loadComboboxes() {
+        QuanLyPhimDao phimDao = new QuanLyPhimDaoImpl();
+        phimList = phimDao.findAll();
+
+        cboPhim.removeAllItems();
+        cboPhim.addItem("-- Tất cả --");
+        for (Phim phim : phimList) {
+            cboPhim.addItem(phim.getTenPhim());
+        }
+
+        QuanLyPhongChieuDao phongDao = new QuanLyPhongChieuDaoImpl();
+        List<PhongChieu> phongList = phongDao.findAll();
+
+        cboPhong.removeAllItems();
+        cboPhong.addItem("-- Tất cả --");
+        for (PhongChieu pc : phongList) {
+            cboPhong.addItem(pc.getMaPhong());
+        }
+    }
+
+    private void filterTable() {
+        String tenPhim = (String) cboPhim.getSelectedItem();
+        String maPhong = (String) cboPhong.getSelectedItem();
+        LocalDate selectedDate = null;
+
+        try {
+            selectedDate = chooserNgayChieu.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        } catch (Exception e) {
+            // Không chọn ngày thì selectedDate vẫn null
+        }
+
+        DefaultTableModel model = (DefaultTableModel) tblSuatChieu.getModel();
+        model.setRowCount(0);
+        items = dao.findAll();
+
+        DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");
+
+        for (SuatChieu sc : items) {
+            boolean matchPhim = true, matchPhong = true, matchNgay = true;
+
+            if (tenPhim != null && !tenPhim.equals("-- Tất cả --")) {
+                Phim phim = phimList.stream()
+                        .filter(p -> p.getMaPhim() == sc.getMaPhim())
+                        .findFirst()
+                        .orElse(null);
+                matchPhim = phim != null && phim.getTenPhim().equals(tenPhim);
+            }
+
+            if (maPhong != null && !maPhong.equals("-- Tất cả --")) {
+                matchPhong = sc.getMaPhong().equals(maPhong);
+            }
+
+            if (selectedDate != null) {
+                matchNgay = sc.getNgayChieu().isEqual(selectedDate);
+            }
+
+            if (matchPhim && matchPhong && matchNgay) {
+                Phim phim = phimList.stream()
+                        .filter(p -> p.getMaPhim() == sc.getMaPhim())
+                        .findFirst()
+                        .orElse(null);
+
+                String gioStr = sc.getGioChieu().format(timeFormatter);
+
+                model.addRow(new Object[]{
+                    sc.getMaXuat(),
+                    phim != null ? phim.getTenPhim() : sc.getMaPhim(),
+                    sc.getMaPhong(),
+                    sc.getNgayChieu(),
+                    gioStr,
+                    sc.getGiaVe()
+                });
+            }
+        }
+    }
+
 }
