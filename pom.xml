@@ -80,7 +80,8 @@
                 </executions>
                 <configuration>
                     <outfile>target/PolyCinemaApp.exe</outfile>
-                    <jar>target/DemoDuAnMot_PolyCinema-1.0-SNAPSHOT.jar</jar>
+                    <jar>target/DA_banvexemphim-1.0-SNAPSHOT.jar</jar>
+
                     <dontWrapJar>false</dontWrapJar>
                     <headerType>gui</headerType>
                     <classPath>

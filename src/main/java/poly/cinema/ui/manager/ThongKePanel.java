@@ -4,11 +4,19 @@
  */
 package poly.cinema.ui.manager;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import org.apache.poi.xwpf.usermodel.XWPFDocument;
+import org.apache.poi.xwpf.usermodel.XWPFParagraph;
+import org.apache.poi.xwpf.usermodel.XWPFRun;
+import org.apache.poi.xwpf.usermodel.XWPFTable;
+import org.apache.poi.xwpf.usermodel.XWPFTableRow;
 import poly.cinema.dao.ThongKeDAO;
 import poly.cinema.dao.impl.ThongKeDAOImpl;
 import poly.cinema.entity.ThongKe;
@@ -442,8 +450,57 @@ public void edit() {
     }
 }
     private void xuatWord() {
-        
+    try (XWPFDocument doc = new XWPFDocument()) {
+        XWPFParagraph p = doc.createParagraph();
+        XWPFRun r = p.createRun();
+        r.setText("THỐNG KÊ DOANH THU PHIM");
+        r.setBold(true);
+        r.setFontSize(16);
+
+        // Table phim
+        XWPFTable tablePhim = doc.createTable();
+        XWPFTableRow headerPhim = tablePhim.getRow(0);
+        headerPhim.getCell(0).setText("Tên phim");
+        headerPhim.addNewTableCell().setText("Doanh thu");
+
+        for (int i = 0; i < tblDoanhthuPhim.getRowCount(); i++) {
+            XWPFTableRow row = tablePhim.createRow();
+            row.getCell(0).setText(tblDoanhthuPhim.getValueAt(i, 0).toString());
+            row.getCell(1).setText(tblDoanhthuPhim.getValueAt(i, 1).toString());
+        }
+
+        doc.createParagraph().createRun().addBreak();
+
+        XWPFParagraph p2 = doc.createParagraph();
+        XWPFRun r2 = p2.createRun();
+        r2.setText("THỐNG KÊ DOANH THU SẢN PHẨM");
+        r2.setBold(true);
+        r2.setFontSize(16);
+
+        XWPFTable tableHang = doc.createTable();
+        XWPFTableRow headerHang = tableHang.getRow(0);
+        headerHang.getCell(0).setText("Loại sản phẩm");
+        headerHang.addNewTableCell().setText("Doanh thu");
+
+        for (int i = 0; i < tblDoanhthubapnuov.getRowCount(); i++) {
+            XWPFTableRow row = tableHang.createRow();
+            row.getCell(0).setText(tblDoanhthubapnuov.getValueAt(i, 0).toString());
+            row.getCell(1).setText(tblDoanhthubapnuov.getValueAt(i, 1).toString());
+        }
+
+        JFileChooser chooser = new JFileChooser();
+        chooser.setSelectedFile(new File("ThongKeDoanhThu.docx"));
+        if (chooser.showSaveDialog(null) == JFileChooser.APPROVE_OPTION) {
+            try (FileOutputStream fos = new FileOutputStream(chooser.getSelectedFile())) {
+                doc.write(fos);
+                XDialog.alert("Xuất file Word thành công!");
+            }
+        }
+    } catch (Exception e) {
+        XDialog.alert("Xuất Word thất bại: " + e.getMessage());
     }
+}
+
 
     @Override
     public void setForm(ThongKe entity) {

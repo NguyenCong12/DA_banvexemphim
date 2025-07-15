@@ -20,8 +20,8 @@ public class XAuth {
             .mat_khau("123")
             .hoat_dong(true)
             .vai_tro(true)
-            .ten_nv("Nguyễn Văn Tèo")
-            .anh_nv("trump.png")
+            .ten_nd("Nguyễn Văn Tèo")
+            .anh_dai_dien("trump.png")
             .build(); // biến user này sẽ được thay thế sau khi đăng nhập
 
 }

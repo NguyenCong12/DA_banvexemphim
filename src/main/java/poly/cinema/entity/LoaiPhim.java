@@ -4,7 +4,6 @@
  */
 package poly.cinema.entity;
 
-import java.util.Date;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -18,18 +17,13 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Phim {
-    private int maPhim;
-    private String tenPhim;
-    private int maLoai;
-    private int thoiLuong;
-    private String moTa;
-    private Date ngayKhoiChieu;
-    private String trangThai;
-    private String hinhAnh;
+public class LoaiPhim {
+
+    private Integer maLoai;
+    private String tenLoai;
+
     @Override
     public String toString() {
-    return tenPhim; // hoặc "P" + maPhim + " - " + tenPhim
-}
-    
+        return tenLoai;
+    }
 }

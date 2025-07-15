@@ -1,4 +1,5 @@
 E:\DA1\DA_BANVEXEMPHIM\DA_banvexemphim\src\main\java\poly\cinema\dao\CrudDAO.java
+E:\DA1\DA_BANVEXEMPHIM\DA_banvexemphim\src\main\java\poly\cinema\dao\impl\LoaiPhimDaoImpl.java
 E:\DA1\DA_BANVEXEMPHIM\DA_banvexemphim\src\main\java\poly\cinema\dao\impl\QuanLyGheDaoImpl.java
 E:\DA1\DA_BANVEXEMPHIM\DA_banvexemphim\src\main\java\poly\cinema\dao\impl\QuanLyPhimDaoImpl.java
 E:\DA1\DA_BANVEXEMPHIM\DA_banvexemphim\src\main\java\poly\cinema\dao\impl\QuanLyPhongChieuDaoImpl.java
@@ -6,6 +7,7 @@ E:\DA1\DA_BANVEXEMPHIM\DA_banvexemphim\src\main\java\poly\cinema\dao\impl\QuanLy
 E:\DA1\DA_BANVEXEMPHIM\DA_banvexemphim\src\main\java\poly\cinema\dao\impl\QuanLySuatChieuDaoImpl.java
 E:\DA1\DA_BANVEXEMPHIM\DA_banvexemphim\src\main\java\poly\cinema\dao\impl\ThongKeDAOImpl.java
 E:\DA1\DA_BANVEXEMPHIM\DA_banvexemphim\src\main\java\poly\cinema\dao\impl\UserDAOImpl.java
+E:\DA1\DA_BANVEXEMPHIM\DA_banvexemphim\src\main\java\poly\cinema\dao\LoaiPhimDao.java
 E:\DA1\DA_BANVEXEMPHIM\DA_banvexemphim\src\main\java\poly\cinema\dao\QuanLyGheDao.java
 E:\DA1\DA_BANVEXEMPHIM\DA_banvexemphim\src\main\java\poly\cinema\dao\QuanLyPhimDao.java
 E:\DA1\DA_BANVEXEMPHIM\DA_banvexemphim\src\main\java\poly\cinema\dao\QuanLyPhongChieuDao.java
@@ -13,6 +15,7 @@ E:\DA1\DA_BANVEXEMPHIM\DA_banvexemphim\src\main\java\poly\cinema\dao\QuanLySanPh
 E:\DA1\DA_BANVEXEMPHIM\DA_banvexemphim\src\main\java\poly\cinema\dao\QuanLySuatChieuDao.java
 E:\DA1\DA_BANVEXEMPHIM\DA_banvexemphim\src\main\java\poly\cinema\dao\ThongKeDAO.java
 E:\DA1\DA_BANVEXEMPHIM\DA_banvexemphim\src\main\java\poly\cinema\dao\UserDAO.java
+E:\DA1\DA_BANVEXEMPHIM\DA_banvexemphim\src\main\java\poly\cinema\entity\LoaiPhim.java
 E:\DA1\DA_BANVEXEMPHIM\DA_banvexemphim\src\main\java\poly\cinema\entity\Phim.java
 E:\DA1\DA_BANVEXEMPHIM\DA_banvexemphim\src\main\java\poly\cinema\entity\PhongChieu.java
 E:\DA1\DA_BANVEXEMPHIM\DA_banvexemphim\src\main\java\poly\cinema\entity\QuanLyGhe.java
