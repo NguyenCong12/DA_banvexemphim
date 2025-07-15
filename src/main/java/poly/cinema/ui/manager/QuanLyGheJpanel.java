@@ -263,6 +263,7 @@ public class QuanLyGheJpanel extends javax.swing.JPanel
                 return canEdit [columnIndex];
             }
         });
+        tblGhe.setRowHeight(25);
         tblGhe.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 tblGheMouseClicked(evt);

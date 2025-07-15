@@ -125,6 +125,7 @@
                 <Property name="gridColor" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="0" green="0" red="0" type="rgb"/>
                 </Property>
+                <Property name="rowHeight" type="int" value="25"/>
                 <Property name="showGrid" type="boolean" value="true"/>
               </Properties>
             </Component>

@@ -49,6 +49,7 @@ poly\cinema\util\XJdbc.class
 poly\cinema\ui\manager\QuanLiPhongChieu$2.class
 poly\cinema\ui\DangNhapJDialog$5.class
 poly\cinema\ui\manager\QuanLyGheJpanel$4.class
+poly\cinema\ui\manager\QuanLyXuatChieu$9.class
 poly\cinema\entity\Phim.class
 poly\cinema\ui\DoiMatKhau$1.class
 poly\cinema\ui\manager\QuanLyPhim$1.class
@@ -109,6 +110,7 @@ poly\cinema\ui\manager\QuanLyPhim$11.class
 poly\cinema\ui\NewJFrame$2.class
 poly\cinema\ui\manager\QuanLyGheJpanel$3.class
 poly\cinema\ui\manager\QuanLiNhanVien.class
+poly\cinema\ui\manager\QuanLyXuatChieu$8.class
 poly\cinema\ui\WelcomeController.class
 poly\cinema\dao\UserDAO.class
 poly\cinema\dao\impl\ThongKeDAOImpl.class

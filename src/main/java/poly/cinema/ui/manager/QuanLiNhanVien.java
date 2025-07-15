@@ -95,6 +95,7 @@ public class QuanLiNhanVien extends javax.swing.JPanel implements QuanLiNhanVien
             }
         });
         tblQLnhanvien.setGridColor(new java.awt.Color(0, 0, 0));
+        tblQLnhanvien.setRowHeight(25);
         tblQLnhanvien.setShowGrid(true);
         tblQLnhanvien.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {

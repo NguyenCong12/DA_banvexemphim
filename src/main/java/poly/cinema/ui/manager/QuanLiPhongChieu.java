@@ -91,6 +91,7 @@ public class QuanLiPhongChieu extends javax.swing.JPanel implements QuanLyPhongC
             }
         });
         tblPhongChieu.setGridColor(new java.awt.Color(0, 0, 0));
+        tblPhongChieu.setRowHeight(25);
         tblPhongChieu.setShowGrid(true);
         tblPhongChieu.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {

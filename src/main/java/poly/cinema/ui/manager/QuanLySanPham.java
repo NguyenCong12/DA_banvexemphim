@@ -87,6 +87,7 @@ public class QuanLySanPham extends javax.swing.JPanel implements QuanLySanPhamCo
             }
         });
         tblSanPham.setGridColor(new java.awt.Color(0, 0, 0));
+        tblSanPham.setRowHeight(25);
         tblSanPham.setShowGrid(true);
         jScrollPane1.setViewportView(tblSanPham);
 

@@ -67,6 +67,7 @@ public class QuanLyHoaDonJpanel extends javax.swing.JPanel {
             }
         ));
         jTable1.setGridColor(new java.awt.Color(0, 0, 0));
+        jTable1.setRowHeight(25);
         jTable1.setShowGrid(true);
         jScrollPane1.setViewportView(jTable1);
 

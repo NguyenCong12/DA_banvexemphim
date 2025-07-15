@@ -6,7 +6,7 @@ import java.util.Date;
 
 public class XDate {
 
-    public static final String PATTERN_FULL = "HH:mm:ss dd-MM-yyyy";
+    public static final String PATTERN_FULL = "HH:mm:ss dd/MM/yyyy";
     public static final String PATTERN_SHORT = "dd/MM/yyyy";
     
     private static final SimpleDateFormat formater = new SimpleDateFormat();

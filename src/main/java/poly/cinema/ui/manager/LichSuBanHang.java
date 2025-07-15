@@ -56,6 +56,7 @@ public class LichSuBanHang extends javax.swing.JPanel {
                 return canEdit [columnIndex];
             }
         });
+        tblBill.setRowHeight(25);
         jScrollPane1.setViewportView(tblBill);
 
         txtBegin.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153), 2));

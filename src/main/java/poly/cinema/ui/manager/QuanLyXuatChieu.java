@@ -5,17 +5,17 @@
 package poly.cinema.ui.manager;
 
 import java.math.BigDecimal;
-import java.sql.Time;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
-import java.util.stream.Collectors;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerDateModel;
 import javax.swing.table.DefaultTableModel;
@@ -75,39 +75,37 @@ public class QuanLyXuatChieu extends javax.swing.JPanel implements QuanLySuatChi
         chooserNgayChieu = new com.toedter.calendar.JDateChooser();
         spnGioChieu = new javax.swing.JSpinner();
         jLabel1 = new javax.swing.JLabel();
+        cboPhong1 = new javax.swing.JComboBox<>();
+        chooserNgayChieu1 = new com.toedter.calendar.JDateChooser();
+        cboPhim1 = new javax.swing.JComboBox<>();
+        btnResetBoLoc = new javax.swing.JButton();
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setPreferredSize(new java.awt.Dimension(1110, 720));
 
         tblSuatChieu.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null}
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
             },
             new String [] {
-                "Mã suất", "Mã phim", "Mã phòng", "Ngày chiếu", "Giờ chiếu", "Giá vé", ""
+                "Mã suất", "Mã phim", "Mã phòng", "Ngày chiếu", "Giờ chiếu", "Giá vé"
             }
         ) {
-            Class[] types = new Class [] {
-                java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Boolean.class
-            };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, true
+                false, false, false, false, false, false
             };
-
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
             }
         });
         tblSuatChieu.setGridColor(new java.awt.Color(0, 0, 0));
+        tblSuatChieu.setRowHeight(25);
         tblSuatChieu.setShowGrid(true);
         tblSuatChieu.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -121,6 +119,7 @@ public class QuanLyXuatChieu extends javax.swing.JPanel implements QuanLySuatChi
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel2.setText("Mã suất");
 
+        txtMaXuat.setEditable(false);
         txtMaXuat.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtMaXuatActionPerformed(evt);
@@ -129,6 +128,8 @@ public class QuanLyXuatChieu extends javax.swing.JPanel implements QuanLySuatChi
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel3.setText("Mã phim");
+
+        txtMaPhim.setEditable(false);
 
         jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel4.setText("Ngày chiếu");
@@ -174,7 +175,7 @@ public class QuanLyXuatChieu extends javax.swing.JPanel implements QuanLySuatChi
         cboPhong.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         jLabel7.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jLabel7.setText("Ngày chiếu");
+        jLabel7.setText("Giờ chiếu");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -266,6 +267,21 @@ public class QuanLyXuatChieu extends javax.swing.JPanel implements QuanLySuatChi
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 28)); // NOI18N
         jLabel1.setText("QUẢN LÝ XUẤT CHIẾU");
 
+        cboPhong1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        cboPhim1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cboPhim1ActionPerformed(evt);
+            }
+        });
+
+        btnResetBoLoc.setText("Reset Lọc");
+        btnResetBoLoc.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnResetBoLocActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -273,13 +289,22 @@ public class QuanLyXuatChieu extends javax.swing.JPanel implements QuanLySuatChi
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(436, 436, 436)
-                        .addComponent(jLabel1))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(50, 50, 50)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1016, Short.MAX_VALUE)
-                            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                .addComponent(cboPhim1, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(chooserNgayChieu1, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(cboPhong1, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(59, 59, 59)
+                                .addComponent(btnResetBoLoc)
+                                .addGap(27, 27, 27))))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(436, 436, 436)
+                        .addComponent(jLabel1)))
                 .addContainerGap(44, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -287,9 +312,16 @@ public class QuanLyXuatChieu extends javax.swing.JPanel implements QuanLySuatChi
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(44, 44, 44)
                 .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 41, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(59, 59, 59)
+                .addGap(13, 13, 13)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(cboPhong1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnResetBoLoc))
+                    .addComponent(chooserNgayChieu1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cboPhim1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(60, 60, 60))
         );
@@ -299,12 +331,16 @@ public class QuanLyXuatChieu extends javax.swing.JPanel implements QuanLySuatChi
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 732, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(20, 20, 20)
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 706, Short.MAX_VALUE)
+                .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -331,19 +367,35 @@ public class QuanLyXuatChieu extends javax.swing.JPanel implements QuanLySuatChi
     private void tblSuatChieuMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblSuatChieuMouseClicked
         int row = tblSuatChieu.getSelectedRow();
         if (row >= 0) {
-            setForm(items.get(row)); // Hiển thị dữ liệu lên form
+            setForm(items.get(row));
+            setEditable(true);
         }
     }//GEN-LAST:event_tblSuatChieuMouseClicked
+
+    private void cboPhim1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboPhim1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cboPhim1ActionPerformed
+
+    private void btnResetBoLocActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnResetBoLocActionPerformed
+        cboPhim1.setSelectedItem("-- Tất cả --");
+        cboPhong1.setSelectedItem("-- Tất cả --");
+        chooserNgayChieu1.setDate(new Date());
+        open();
+    }//GEN-LAST:event_btnResetBoLocActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnLamMoi;
+    private javax.swing.JButton btnResetBoLoc;
     private javax.swing.JButton btnSua;
     private javax.swing.JButton btnThem;
     private javax.swing.JButton btnXoa;
     private javax.swing.JComboBox<String> cboPhim;
+    private javax.swing.JComboBox<String> cboPhim1;
     private javax.swing.JComboBox<String> cboPhong;
+    private javax.swing.JComboBox<String> cboPhong1;
     private com.toedter.calendar.JDateChooser chooserNgayChieu;
+    private com.toedter.calendar.JDateChooser chooserNgayChieu1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -368,32 +420,41 @@ public class QuanLyXuatChieu extends javax.swing.JPanel implements QuanLySuatChi
     @Override
     public void open() {
         loadComboboxes();
+
         chooserNgayChieu.setLocale(new Locale("vi", "VN"));
+        chooserNgayChieu1.setLocale(new Locale("vi", "VN"));
 
-        cboPhim.addActionListener(e -> {
+        chooserNgayChieu.setDateFormatString("dd/MM/yyyy");
+        chooserNgayChieu1.setDateFormatString("dd/MM/yyyy");
+
+        cboPhim1.setSelectedItem("-- Tất cả --");
+        cboPhong1.setSelectedItem("-- Tất cả --");
+
+        // 👉 Thêm dòng này để lọc mặc định hôm nay
+        chooserNgayChieu1.setDate(Date.from(LocalDate.now().atStartOfDay(ZoneId.systemDefault()).toInstant()));
+
+        cboPhim1.addActionListener(e -> {
             filterTable();
             suggestNextGioChieu();
         });
 
-        cboPhong.addActionListener(e -> {
+        cboPhong1.addActionListener(e -> {
             filterTable();
             suggestNextGioChieu();
         });
 
-        chooserNgayChieu.getDateEditor().addPropertyChangeListener(evt -> {
+        chooserNgayChieu1.getDateEditor().addPropertyChangeListener(evt -> {
             if ("date".equals(evt.getPropertyName())) {
                 filterTable();
                 suggestNextGioChieu();
             }
         });
 
-        // Khởi tạo spinner giờ chiếu
-        SpinnerDateModel model = new SpinnerDateModel();
-        spnGioChieu.setModel(model);
-        JSpinner.DateEditor editor = new JSpinner.DateEditor(spnGioChieu, "HH:mm");
-        spnGioChieu.setEditor(editor);
-
-        fillToTable();
+        SpinnerDateModel model2 = new SpinnerDateModel();
+        spnGioChieu.setModel(model2);
+        spnGioChieu.setEditor(new JSpinner.DateEditor(spnGioChieu, "HH:mm"));
+        setEditable(false);
+        fillToTable();  // ⬅ tự động fill theo hôm nay vì chooserNgayChieu1 đã được set sẵn
         clear();
     }
 
@@ -401,40 +462,26 @@ public class QuanLyXuatChieu extends javax.swing.JPanel implements QuanLySuatChi
     public SuatChieu getForm() {
         try {
             String tenPhim = (String) cboPhim.getSelectedItem();
-            int maPhim = -1;
-            for (Phim p : phimList) {
-                if (p.getTenPhim().equals(tenPhim)) {
-                    maPhim = p.getMaPhim();
-                    break;
-                }
+            if (tenPhim == null || tenPhim.equals("-- Chưa chọn --")) {
+                XDialog.alert("Vui lòng chọn phim!");
+                return null;
             }
+            int maPhim = phimList.stream().filter(p -> p.getTenPhim().equals(tenPhim)).findFirst().map(Phim::getMaPhim).orElse(-1);
 
             String maPhong = (String) cboPhong.getSelectedItem();
+            if (maPhong == null || maPhong.equals("-- Chưa chọn --")) {
+                XDialog.alert("Vui lòng chọn phòng chiếu!");
+                return null;
+            }
 
-            LocalDate ngayChieu = chooserNgayChieu.getDate()
-                    .toInstant()
-                    .atZone(ZoneId.systemDefault())
-                    .toLocalDate();
-
-            Date gioChieuDate = (Date) spnGioChieu.getValue();
-            LocalTime gioChieu = gioChieuDate.toInstant()
-                    .atZone(ZoneId.systemDefault())
-                    .toLocalTime();
-
+            LocalDate ngayChieu = chooserNgayChieu.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+            LocalTime gioChieu = ((Date) spnGioChieu.getValue()).toInstant().atZone(ZoneId.systemDefault()).toLocalTime();
             BigDecimal giaVe = new BigDecimal(txtGiaVe.getText().trim());
 
-            SuatChieu sc = SuatChieu.builder()
-                    .maPhim(maPhim)
-                    .maPhong(maPhong)
-                    .ngayChieu(ngayChieu)
-                    .gioChieu(gioChieu)
-                    .giaVe(giaVe)
-                    .build();
-
+            SuatChieu sc = SuatChieu.builder().maPhim(maPhim).maPhong(maPhong).ngayChieu(ngayChieu).gioChieu(gioChieu).giaVe(giaVe).build();
             if (!txtMaXuat.getText().trim().isEmpty()) {
                 sc.setMaXuat(Integer.parseInt(txtMaXuat.getText().trim()));
             }
-
             return sc;
         } catch (Exception e) {
             XDialog.alert("Vui lòng nhập đúng định dạng dữ liệu!");
@@ -444,131 +491,54 @@ public class QuanLyXuatChieu extends javax.swing.JPanel implements QuanLySuatChi
 
     @Override
     public void setForm(SuatChieu entity) {
-        for (Phim phim : phimList) {
-            if (phim.getMaPhim() == entity.getMaPhim()) {
-                cboPhim.setSelectedItem(phim.getTenPhim());
-                break;
-            }
-        }
+        phimList.stream().filter(p -> p.getMaPhim() == entity.getMaPhim()).findFirst().ifPresent(p -> cboPhim.setSelectedItem(p.getTenPhim()));
 
         txtMaXuat.setText(String.valueOf(entity.getMaXuat()));
         txtMaPhim.setText(String.valueOf(entity.getMaPhim()));
         cboPhong.setSelectedItem(entity.getMaPhong());
-
-        Date date = Date.from(entity.getNgayChieu()
-                .atStartOfDay(ZoneId.systemDefault())
-                .toInstant());
-        chooserNgayChieu.setDate(date);
-
-        LocalTime gio = entity.getGioChieu();
-        LocalDate today = LocalDate.now();
-        Date dateGio = Date.from(gio.atDate(today).atZone(ZoneId.systemDefault()).toInstant());
-        spnGioChieu.setValue(dateGio);
+        chooserNgayChieu.setDate(Date.from(entity.getNgayChieu().atStartOfDay(ZoneId.systemDefault()).toInstant()));
+        spnGioChieu.setValue(Date.from(entity.getGioChieu().atDate(LocalDate.now()).atZone(ZoneId.systemDefault()).toInstant()));
         txtGiaVe.setText(entity.getGiaVe().toString());
     }
 
     @Override
     public void fillToTable() {
-        filterTable(); // luôn lọc theo trạng thái hiện tại
-    }
+        LocalDate today = LocalDate.now();
 
-    private void suggestNextGioChieu() {
-        String maPhong = (String) cboPhong.getSelectedItem();
-        String tenPhim = (String) cboPhim.getSelectedItem();
-
-        if (maPhong == null || tenPhim == null
-                || tenPhim.equals("-- Tất cả --")
-                || maPhong.equals("-- Tất cả --")
-                || phimList.stream().noneMatch(p -> p.getTenPhim().equals(tenPhim))) {
-            return;
-        }
-
-        LocalDate ngayChieu;
-        try {
-            ngayChieu = chooserNgayChieu.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-        } catch (Exception e) {
-            return;
-        }
-
-        List<SuatChieu> suatCungNgayPhong = items.stream()
-                .filter(sc -> sc.getMaPhong().equals(maPhong) && sc.getNgayChieu().isEqual(ngayChieu))
-                .sorted(Comparator.comparing(SuatChieu::getGioChieu))
-                .collect(Collectors.toList());
-
-        if (suatCungNgayPhong.isEmpty()) {
-            spnGioChieu.setValue(Date.from(LocalTime.of(8, 0).atDate(ngayChieu).atZone(ZoneId.systemDefault()).toInstant()));
-            return;
-        }
-
-        SuatChieu last = suatCungNgayPhong.get(suatCungNgayPhong.size() - 1);
-        int duration = phimList.stream()
-                .filter(p -> p.getMaPhim() == last.getMaPhim())
-                .mapToInt(Phim::getThoiLuong)
-                .findFirst()
-                .orElse(0);
-
-        LocalTime nextTime = last.getGioChieu().plusMinutes(duration + 15);
-        Date suggestDate = Date.from(nextTime.atDate(ngayChieu).atZone(ZoneId.systemDefault()).toInstant());
-        spnGioChieu.setValue(suggestDate);
-    }
-
-    private boolean isOverlapping(SuatChieu newSc) {
-        // Cập nhật danh sách mới nhất từ DB
+        DefaultTableModel model = (DefaultTableModel) tblSuatChieu.getModel();
+        model.setRowCount(0);
         items = dao.findAll();
 
-        int duration = phimList.stream()
-                .filter(p -> p.getMaPhim() == newSc.getMaPhim())
-                .mapToInt(Phim::getThoiLuong)
-                .findFirst()
-                .orElse(0);
-
-        int bufferMinutes = 15;
+        DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");
 
         for (SuatChieu sc : items) {
-            if (newSc.getMaXuat() != 0 && sc.getMaXuat() == newSc.getMaXuat()) {
-                continue; // Bỏ qua chính nó khi cập nhật
-            }
-
-            boolean sameRoom = sc.getMaPhong().equals(newSc.getMaPhong());
-            boolean sameDate = sc.getNgayChieu().isEqual(newSc.getNgayChieu());
-
-            if (sameRoom && sameDate) {
-                LocalTime start1 = sc.getGioChieu();
-                int dur1 = phimList.stream()
+            if (sc.getNgayChieu().isEqual(today)) {
+                String tenPhim = phimList.stream()
                         .filter(p -> p.getMaPhim() == sc.getMaPhim())
-                        .mapToInt(Phim::getThoiLuong)
+                        .map(Phim::getTenPhim)
                         .findFirst()
-                        .orElse(0);
-                LocalTime end1 = start1.plusMinutes(dur1 + bufferMinutes);
+                        .orElse("N/A");
 
-                LocalTime start2 = newSc.getGioChieu();
-                LocalTime end2 = start2.plusMinutes(duration + bufferMinutes);
-
-                // Kiểm tra giao nhau
-                boolean overlap = !end1.isBefore(start2) && !end2.isBefore(start1);
-                if (overlap) {
-                    return true;
-                }
+                model.addRow(new Object[]{
+                    sc.getMaXuat(),
+                    tenPhim,
+                    sc.getMaPhong(),
+                    sc.getNgayChieu().format(dateFormatter),
+                    sc.getGioChieu().format(timeFormatter),
+                    sc.getGiaVe()
+                });
             }
         }
-
-        return false;
     }
 
     @Override
     public void create() {
         SuatChieu sc = getForm();
-        if (sc == null) {
+        if (sc == null || isOverlapping(sc)) {
+            XDialog.alert("Suất chiếu bị trùng hoặc cách nhau không đủ thời gian!");
             return;
         }
-
-        if (isOverlapping(sc)) {
-            XDialog.alert("Không thể thêm/cập nhật.\n"
-                    + "Suất chiếu bị trùng hoặc quá gần suất chiếu khác trong cùng phòng.\n"
-                    + "Yêu cầu cách nhau ít nhất: thời lượng phim + 15 phút.");
-            return;
-        }
-
         dao.create(sc);
         fillToTable();
         clear();
@@ -582,21 +552,15 @@ public class QuanLyXuatChieu extends javax.swing.JPanel implements QuanLySuatChi
             XDialog.alert("Vui lòng chọn dòng cần cập nhật.");
             return;
         }
-
         SuatChieu sc = getForm();
         if (sc == null) {
             return;
         }
-
         sc.setMaXuat((Integer) tblSuatChieu.getValueAt(row, 0));
-
         if (isOverlapping(sc)) {
-            XDialog.alert("Không thể thêm/cập nhật.\n"
-                    + "Suất chiếu bị trùng hoặc quá gần suất chiếu khác trong cùng phòng.\n"
-                    + "Yêu cầu cách nhau ít nhất: thời lượng phim + 15 phút.");
+            XDialog.alert("Suất chiếu bị trùng hoặc cách nhau không đủ thời gian!");
             return;
         }
-
         dao.update(sc);
         fillToTable();
         XDialog.alert("Cập nhật thành công!");
@@ -609,9 +573,7 @@ public class QuanLyXuatChieu extends javax.swing.JPanel implements QuanLySuatChi
             XDialog.alert("Vui lòng chọn dòng cần xóa.");
             return;
         }
-
-        int maXuat = (Integer) tblSuatChieu.getValueAt(row, 0);
-        dao.deleteById(maXuat);
+        dao.deleteById((Integer) tblSuatChieu.getValueAt(row, 0));
         fillToTable();
         clear();
         XDialog.alert("Xóa thành công!");
@@ -621,23 +583,27 @@ public class QuanLyXuatChieu extends javax.swing.JPanel implements QuanLySuatChi
     public void clear() {
         cboPhim.setSelectedIndex(0);
         cboPhong.setSelectedIndex(0);
-        chooserNgayChieu.setDate(new Date());
-        spnGioChieu.setValue(new Date());
+        chooserNgayChieu.setDate(null);
+        spnGioChieu.setModel(new SpinnerDateModel());
+        spnGioChieu.setEditor(new JSpinner.DateEditor(spnGioChieu, "HH:mm"));
+        spnGioChieu.setValue(new Date()); // cần set trước để tránh lỗi
+        ((JSpinner.DefaultEditor) spnGioChieu.getEditor()).getTextField().setText("");
         txtGiaVe.setText("");
         txtMaPhim.setText("");
         txtMaXuat.setText("");
         tblSuatChieu.clearSelection();
         filterTable();
+        setEditable(false); 
     }
 
     @Override
-    public void setEditable(boolean editable) {
-        cboPhim.setEnabled(editable);
-        cboPhong.setEnabled(editable);
-        chooserNgayChieu.setEnabled(editable);
-        spnGioChieu.setEnabled(editable);
-        txtGiaVe.setEditable(editable);
-    }
+public void setEditable(boolean editable) {
+    btnLamMoi.setEnabled(true); // luôn bật làm mới
+    btnThem.setEnabled(!editable); // nếu đang edit thì tắt nút thêm
+    btnSua.setEnabled(editable);
+    btnXoa.setEnabled(editable);
+}
+
 
     @Override
     public void moveFirst() {
@@ -685,80 +651,124 @@ public class QuanLyXuatChieu extends javax.swing.JPanel implements QuanLySuatChi
 
     @Override
     public void selectTimeRange() {
-        // Bỏ trống nếu không cần lọc theo khoảng thời gian
+        // Chưa áp dụng
     }
 
-// ---------------- Helper methods ----------------
+    private void suggestNextGioChieu() {
+        String maPhong = (String) cboPhong1.getSelectedItem();
+        String tenPhim = (String) cboPhim1.getSelectedItem();
+        if (maPhong == null || tenPhim == null || tenPhim.equals("-- Chưa chọn --") || maPhong.equals("-- Chưa chọn --")) {
+            return;
+        }
+        LocalDate ngayChieu;
+        try {
+            ngayChieu = chooserNgayChieu1.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        } catch (Exception e) {
+            return;
+        }
+        List<SuatChieu> suatCungNgayPhong = items.stream()
+                .filter(sc -> sc.getMaPhong().equals(maPhong) && sc.getNgayChieu().isEqual(ngayChieu))
+                .sorted(Comparator.comparing(SuatChieu::getGioChieu))
+                .toList();
+        if (suatCungNgayPhong.isEmpty()) {
+            spnGioChieu.setValue(Date.from(LocalTime.of(8, 0).atDate(ngayChieu).atZone(ZoneId.systemDefault()).toInstant()));
+            return;
+        }
+        SuatChieu last = suatCungNgayPhong.getLast();
+        int duration = phimList.stream().filter(p -> p.getMaPhim() == last.getMaPhim()).mapToInt(Phim::getThoiLuong).findFirst().orElse(0);
+        LocalTime nextTime = last.getGioChieu().plusMinutes(duration + 15);
+        spnGioChieu.setValue(Date.from(nextTime.atDate(ngayChieu).atZone(ZoneId.systemDefault()).toInstant()));
+    }
+
+    private boolean isOverlapping(SuatChieu newSc) {
+        items = dao.findAll();
+        int duration = phimList.stream().filter(p -> p.getMaPhim() == newSc.getMaPhim()).mapToInt(Phim::getThoiLuong).findFirst().orElse(0);
+        for (SuatChieu sc : items) {
+            if (newSc.getMaXuat() != 0 && sc.getMaXuat() == newSc.getMaXuat()) {
+                continue;
+            }
+            if (sc.getMaPhong().equals(newSc.getMaPhong()) && sc.getNgayChieu().isEqual(newSc.getNgayChieu())) {
+                LocalTime start1 = sc.getGioChieu();
+                int dur1 = phimList.stream().filter(p -> p.getMaPhim() == sc.getMaPhim()).mapToInt(Phim::getThoiLuong).findFirst().orElse(0);
+                LocalTime end1 = start1.plusMinutes(dur1 + 15);
+                LocalTime start2 = newSc.getGioChieu();
+                LocalTime end2 = start2.plusMinutes(duration + 15);
+                if (!end1.isBefore(start2) && !end2.isBefore(start1)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
     private void loadComboboxes() {
         QuanLyPhimDao phimDao = new QuanLyPhimDaoImpl();
         phimList = phimDao.findAll();
-
         cboPhim.removeAllItems();
-        cboPhim.addItem("-- Tất cả --");
+        cboPhim1.removeAllItems();
+        cboPhim.addItem("-- Chưa chọn --");
+        cboPhim1.addItem("-- Tất cả --"); // lọc
+
         for (Phim phim : phimList) {
             cboPhim.addItem(phim.getTenPhim());
+            cboPhim1.addItem(phim.getTenPhim());
         }
 
         QuanLyPhongChieuDao phongDao = new QuanLyPhongChieuDaoImpl();
         List<PhongChieu> phongList = phongDao.findAll();
-
         cboPhong.removeAllItems();
-        cboPhong.addItem("-- Tất cả --");
+        cboPhong1.removeAllItems();
+        cboPhong.addItem("-- Chưa chọn --");
+        cboPhong1.addItem("-- Tất cả --"); // lọc
+
         for (PhongChieu pc : phongList) {
             cboPhong.addItem(pc.getMaPhong());
+            cboPhong1.addItem(pc.getMaPhong());
         }
     }
 
     private void filterTable() {
-        String tenPhim = (String) cboPhim.getSelectedItem();
-        String maPhong = (String) cboPhong.getSelectedItem();
+        String tenPhim = (String) cboPhim1.getSelectedItem();
+        String maPhong = (String) cboPhong1.getSelectedItem();
         LocalDate selectedDate = null;
 
         try {
-            selectedDate = chooserNgayChieu.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-        } catch (Exception e) {
-            // Không chọn ngày thì selectedDate vẫn null
+            Date date = chooserNgayChieu1.getDate();
+            if (date != null) {
+                selectedDate = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+            }
+        } catch (Exception ignored) {
         }
 
         DefaultTableModel model = (DefaultTableModel) tblSuatChieu.getModel();
         model.setRowCount(0);
         items = dao.findAll();
 
+        DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");
 
         for (SuatChieu sc : items) {
-            boolean matchPhim = true, matchPhong = true, matchNgay = true;
+            boolean matchPhim = tenPhim == null || tenPhim.equals("-- Tất cả --")
+                    || phimList.stream().anyMatch(p -> p.getMaPhim() == sc.getMaPhim() && p.getTenPhim().equals(tenPhim));
 
-            if (tenPhim != null && !tenPhim.equals("-- Tất cả --")) {
-                Phim phim = phimList.stream()
-                        .filter(p -> p.getMaPhim() == sc.getMaPhim())
-                        .findFirst()
-                        .orElse(null);
-                matchPhim = phim != null && phim.getTenPhim().equals(tenPhim);
-            }
+            boolean matchPhong = maPhong == null || maPhong.equals("-- Tất cả --")
+                    || sc.getMaPhong().equals(maPhong);
 
-            if (maPhong != null && !maPhong.equals("-- Tất cả --")) {
-                matchPhong = sc.getMaPhong().equals(maPhong);
-            }
-
-            if (selectedDate != null) {
-                matchNgay = sc.getNgayChieu().isEqual(selectedDate);
-            }
+            boolean matchNgay = selectedDate == null || sc.getNgayChieu().isEqual(selectedDate);
 
             if (matchPhim && matchPhong && matchNgay) {
-                Phim phim = phimList.stream()
+                String ten = phimList.stream()
                         .filter(p -> p.getMaPhim() == sc.getMaPhim())
+                        .map(Phim::getTenPhim)
                         .findFirst()
-                        .orElse(null);
-
-                String gioStr = sc.getGioChieu().format(timeFormatter);
+                        .orElse("N/A");
 
                 model.addRow(new Object[]{
                     sc.getMaXuat(),
-                    phim != null ? phim.getTenPhim() : sc.getMaPhim(),
+                    ten,
                     sc.getMaPhong(),
-                    sc.getNgayChieu(),
-                    gioStr,
+                    sc.getNgayChieu().format(dateFormatter),
+                    sc.getGioChieu().format(timeFormatter),
                     sc.getGiaVe()
                 });
             }

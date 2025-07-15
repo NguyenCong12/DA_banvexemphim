@@ -114,6 +114,7 @@
                     <Column editable="false" title="Tr&#x1ea1;ng th&#xe1;i" type="java.lang.Object"/>
                   </Table>
                 </Property>
+                <Property name="rowHeight" type="int" value="25"/>
               </Properties>
             </Component>
           </SubComponents>

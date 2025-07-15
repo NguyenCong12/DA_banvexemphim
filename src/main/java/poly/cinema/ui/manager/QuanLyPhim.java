@@ -104,6 +104,7 @@ public class QuanLyPhim extends javax.swing.JPanel implements QuanLyPhimControll
             }
         });
         tblPhim.setGridColor(new java.awt.Color(0, 0, 0));
+        tblPhim.setRowHeight(25);
         tblPhim.setShowGrid(true);
         tblPhim.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
