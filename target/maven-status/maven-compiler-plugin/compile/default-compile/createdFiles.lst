@@ -10,6 +10,7 @@ poly\cinema\entity\Phim$PhimBuilder.class
 poly\cinema\ui\manager\QuanLySanPham$5.class
 poly\cinema\ui\manager\LichSuBanHang$3.class
 poly\cinema\ui\manager\QuanLyPhim$2.class
+poly\cinema\dao\impl\LichSuDAOImpl.class
 poly\cinema\ui\manager\QuanLyPhim$8.class
 poly\cinema\ui\FCinema_Frame$12.class
 poly\cinema\util\XDate.class
@@ -32,6 +33,7 @@ poly\cinema\ui\manager\QuanLySuatChieuController.class
 poly\cinema\ui\manager\QuanLiNhanVien$1.class
 poly\cinema\ui\manager\QuanLiNhanVien$8.class
 poly\cinema\ui\manager\LichSuBanHang.class
+poly\cinema\entity\LichSu.class
 poly\cinema\entity\SuatChieu$SuatChieuBuilder.class
 poly\cinema\ui\manager\QuanLiPhongChieu$1.class
 poly\cinema\ui\manager\XemLichChieu.class
@@ -52,6 +54,7 @@ poly\cinema\ui\manager\QuanLyGheJpanel$4.class
 poly\cinema\ui\manager\QuanLyXuatChieu$9.class
 poly\cinema\entity\Phim.class
 poly\cinema\ui\DoiMatKhau$1.class
+poly\cinema\entity\LichSu$LichSuBuilder.class
 poly\cinema\ui\manager\QuanLyPhim$1.class
 poly\cinema\ui\manager\QuanLiNhanVien$10.class
 poly\cinema\ui\manager\QuanLyGheJpanel$6.class
@@ -137,6 +140,7 @@ poly\cinema\ui\manager\QuanLyPhim$6.class
 poly\cinema\ui\NewJFrame$1.class
 poly\cinema\dao\QuanLyPhongChieuDao.class
 poly\cinema\ui\manager\QuanLyXuatChieu$3.class
+poly\cinema\dao\LichSuDAO.class
 poly\cinema\ui\WelcomeJDialog$1.class
 poly\cinema\ui\manager\QuanLyPhim$9.class
 poly\cinema\ui\FCinema_Frame$10.class
@@ -175,6 +179,7 @@ poly\cinema\util\CaptchaGenerator.class
 poly\cinema\ui\FCinema_Frame$6.class
 poly\cinema\ui\manager\QuanLyHoaDonJpanel.class
 poly\cinema\ui\manager\QuanLyPhim$10.class
+poly\cinema\ui\manager\LichSuBanHangController.class
 poly\cinema\ui\manager\QuanLyXuatChieu$4.class
 poly\cinema\entity\User.class
 poly\cinema\ui\manager\QuanLiNhanVien$5.class

@@ -4,11 +4,22 @@
  */
 package poly.cinema.ui.manager;
 
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import poly.cinema.dao.LichSuDAO;
+import poly.cinema.dao.impl.LichSuDAOImpl;
+import poly.cinema.entity.LichSu;
+import poly.cinema.util.TimeRange;
+import poly.cinema.util.XDate;
+
 /**
  *
  * @author NITRO
  */
-public class LichSuBanHang extends javax.swing.JPanel {
+public class LichSuBanHang extends javax.swing.JPanel implements LichSuBanHangController {
 
     /**
      * Creates new form QuanLyHoaDon
@@ -28,7 +39,7 @@ public class LichSuBanHang extends javax.swing.JPanel {
 
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tblBill = new javax.swing.JTable();
+        tblBills = new javax.swing.JTable();
         txtBegin = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
@@ -40,24 +51,23 @@ public class LichSuBanHang extends javax.swing.JPanel {
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setPreferredSize(new java.awt.Dimension(1110, 720));
 
-        tblBill.setModel(new javax.swing.table.DefaultTableModel(
+        tblBills.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "Mã hóa đơn", "Mã nhân viên", "Thời điểm check out", "Trạng thái"
+                "Mã hóa đơn", "Thời điểm check out", "Tên nhân viên", "Tên phim", "Tổng tiền"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false
+                false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
             }
         });
-        tblBill.setRowHeight(25);
-        jScrollPane1.setViewportView(tblBill);
+        jScrollPane1.setViewportView(tblBills);
 
         txtBegin.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153), 2));
 
@@ -153,38 +163,97 @@ public class LichSuBanHang extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnLocActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLocActionPerformed
-//        Date begin = XDate.parse(txtBegin.getText(), "dd-MM-yyyy");
-//        Date end = XDate.parse(txtEnd.getText(), "dd-MM-yyyy");
-//
-//        // Cập nhật giờ đầu ngày và cuối ngày
-//        Calendar cal = Calendar.getInstance();
-//
-//        cal.setTime(begin);
-//        cal.set(Calendar.HOUR_OF_DAY, 0);
-//        cal.set(Calendar.MINUTE, 0);
-//        cal.set(Calendar.SECOND, 0);
-//        cal.set(Calendar.MILLISECOND, 0);
-//        begin = cal.getTime();
-
-//        cal.setTime(end);
-//        cal.set(Calendar.HOUR_OF_DAY, 23);
-//        cal.set(Calendar.MINUTE, 59);
-//        cal.set(Calendar.SECOND, 59);
-//        cal.set(Calendar.MILLISECOND, 999);
-//        end = cal.getTime();
-//
-//        fillRevenue(begin, end);
-//        List<ThongKe.ByUser> list = dao.getByUser(begin, end);
-//        if (list.isEmpty()) {
-//            JOptionPane.showMessageDialog(this, "Không tìm thấy phiếu nào trong khoảng thời gian đã chọn!");
-//        }
+        this.locTheoNgay();
     }//GEN-LAST:event_btnLocActionPerformed
 
     private void cboTimeRangesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboTimeRangesActionPerformed
-//        selectTimeRange();
-//        fillRevenue();
+
     }//GEN-LAST:event_cboTimeRangesActionPerformed
 
+    private final LichSuDAO lichSuDAO = new LichSuDAOImpl();
+    private List<LichSu> listLichSu;
+    private DefaultTableModel model;
+
+    private void initComboTimeRanges() {
+        cboTimeRanges.removeAllItems();
+        cboTimeRanges.addItem("Hôm nay");
+        cboTimeRanges.addItem("Tuần này");
+        cboTimeRanges.addItem("Tháng này");
+        cboTimeRanges.addItem("Quý này");
+        cboTimeRanges.addItem("Năm nay");
+    }
+
+    private void initComboTimeRangeListener() {
+        cboTimeRanges.addActionListener(e -> {
+            String selected = (String) cboTimeRanges.getSelectedItem();
+            TimeRange range = switch (selected) {
+                case "Hôm nay" ->
+                    TimeRange.today();
+                case "Tuần này" ->
+                    TimeRange.thisWeek();
+                case "Tháng này" ->
+                    TimeRange.thisMonth();
+                case "Quý này" ->
+                    TimeRange.thisQuarter();
+                case "Năm nay" ->
+                    TimeRange.thisYear();
+                default ->
+                    null;
+            };
+
+            if (range != null) {
+                var sdf = new java.text.SimpleDateFormat("dd/MM/yyyy");
+                txtBegin.setText(sdf.format(range.getBegin()));
+                txtEnd.setText(sdf.format(range.getEnd()));
+            }
+        });
+    }
+
+    private void fillTableLichSu(List<LichSu> list) {
+        listLichSu = lichSuDAO.selectAll();
+        model = (DefaultTableModel) tblBills.getModel();
+        model.setRowCount(0);
+
+        for (LichSu ls : listLichSu) {
+            model.addRow(new Object[]{
+                ls.getMaHd(),
+                ls.getNgayLap(),
+                ls.getTenNhanVien(),
+                ls.getTenPhim() != null ? ls.getTenPhim() : "",
+                ls.getTongTien()
+            });
+        }
+    }
+
+    private void locTheoNgay() {
+        try {
+            Date begin = XDate.parse(txtBegin.getText(), "dd-MM-yyyy");
+            Date end = XDate.parse(txtEnd.getText(), "dd-MM-yyyy");
+
+            // Đặt giờ đầu – cuối
+            Calendar cal = Calendar.getInstance();
+            cal.setTime(begin);
+            cal.set(Calendar.HOUR_OF_DAY, 0);
+            cal.set(Calendar.MINUTE, 0);
+            cal.set(Calendar.SECOND, 0);
+            cal.set(Calendar.MILLISECOND, 0);
+            begin = cal.getTime();
+
+            cal.setTime(end);
+            cal.set(Calendar.HOUR_OF_DAY, 23);
+            cal.set(Calendar.MINUTE, 59);
+            cal.set(Calendar.SECOND, 59);
+            cal.set(Calendar.MILLISECOND, 999);
+            end = cal.getTime();
+
+            // Gọi DAO để lọc lịch sử bán hàng
+            List<LichSu> list = lichSuDAO.getByDate(begin, end);  // bạn cần viết hàm này trong DAOImpl
+            fillTableLichSu(list);
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Ngày không hợp lệ. Định dạng đúng: dd-MM-yyyy");
+        }
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnLoc;
@@ -194,12 +263,55 @@ public class LichSuBanHang extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable tblBill;
+    private javax.swing.JTable tblBills;
     private javax.swing.JTextField txtBegin;
     private javax.swing.JTextField txtEnd;
     // End of variables declaration//GEN-END:variables
 
+    @Override
     public void open() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        fillTable();
     }
+
+    @Override
+    public void fillTable() {
+        List<LichSu> list = lichSuDAO.selectAll();
+        fillTableLichSu(list);
+    }
+
+    @Override
+    public void fillTableByDate(Date begin, Date end) {
+        List<LichSu> list = lichSuDAO.getByDate(begin, end);
+        fillTableLichSu(list);
+    }
+
+    @Override
+    public void clear() {
+        DefaultTableModel model = (DefaultTableModel) tblBills.getModel();
+        model.setRowCount(0);
+    }
+
+    @Override
+    public void selectTimeRange() {
+        int index = cboTimeRanges.getSelectedIndex();
+        TimeRange range = switch (index) {
+            case 0 ->
+                TimeRange.today();
+            case 1 ->
+                TimeRange.thisWeek();
+            case 2 ->
+                TimeRange.thisMonth();
+            case 3 ->
+                TimeRange.thisQuarter();
+            case 4 ->
+                TimeRange.thisYear();
+            default ->
+                TimeRange.today();
+        };
+
+        var sdf = new java.text.SimpleDateFormat("dd-MM-yyyy");
+        txtBegin.setText(sdf.format(range.getBegin()));
+        txtEnd.setText(sdf.format(range.getEnd()));
+    }
+
 }
