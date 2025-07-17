@@ -21,7 +21,7 @@ import lombok.NoArgsConstructor;
 public class Phim {
     private int maPhim;
     private String tenPhim;
-    private String theLoai;
+    private int maLoai;
     private int thoiLuong;
     private String moTa;
     private Date ngayKhoiChieu;

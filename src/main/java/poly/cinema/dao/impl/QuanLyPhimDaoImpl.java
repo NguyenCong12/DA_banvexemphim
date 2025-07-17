@@ -19,48 +19,46 @@ import poly.cinema.util.XQuery;
  *
  * @author Admin
  */
-
 public class QuanLyPhimDaoImpl implements QuanLyPhimDao {
 
     private final String INSERT_SQL = """
-    INSERT INTO Phim (ten_phim, the_loai, thoi_luong, mo_ta, ngay_khoi_chieu, trang_thai, hinh_anh)
-    VALUES (?, ?, ?, ?, ?, ?, ?)
+INSERT INTO Phim (ten_phim, ma_loai, thoi_luong, mo_ta, ngay_khoi_chieu, trang_thai, hinh_anh)
+VALUES (?, ?, ?, ?, ?, ?, ?)
 """;
 
-private final String UPDATE_SQL = """
-    UPDATE Phim
-    SET ten_phim = ?, the_loai = ?, thoi_luong = ?, mo_ta = ?, ngay_khoi_chieu = ?, trang_thai = ?, hinh_anh = ?
-    WHERE ma_phim = ?
+    private final String UPDATE_SQL = """
+UPDATE Phim
+SET ten_phim = ?, ma_loai = ?, thoi_luong = ?, mo_ta = ?, ngay_khoi_chieu = ?, trang_thai = ?, hinh_anh = ?
+WHERE ma_phim = ?
 """;
 
-private final String DELETE_SQL = "DELETE FROM Phim WHERE ma_phim = ?";
+    private final String DELETE_SQL = "DELETE FROM Phim WHERE ma_phim = ?";
 
-private final String SELECT_ALL_SQL = """
-    SELECT 
-        ma_phim AS MaPhim,
-        ten_phim AS TenPhim,
-        the_loai AS TheLoai,
-        thoi_luong AS ThoiLuong,
-        mo_ta AS MoTa,
-        ngay_khoi_chieu AS NgayKhoiChieu,
-        trang_thai AS TrangThai,
-        hinh_anh AS HinhAnh
-    FROM Phim
+    private final String SELECT_ALL_SQL = """
+SELECT 
+    p.ma_phim AS maPhim,
+    p.ten_phim AS tenPhim,
+    p.ma_loai AS maLoai,
+    p.thoi_luong AS thoiLuong,
+    p.mo_ta AS moTa,
+    p.ngay_khoi_chieu AS ngayKhoiChieu,
+    p.trang_thai AS trangThai,
+    p.hinh_anh AS hinhAnh,
+    lp.ten_loai AS tenLoai
+FROM Phim p
+JOIN LoaiPhim lp ON p.ma_loai = lp.ma_loai
 """;
 
-private final String SELECT_BY_ID_SQL = SELECT_ALL_SQL + " WHERE MaPhim = ?";
-private final String SELECT_BY_TENPHIM_SQL = SELECT_ALL_SQL + " WHERE TenPhim LIKE ?";
-private final String SELECT_BY_TRANGTHAI_SQL = SELECT_ALL_SQL + " WHERE TrangThai = ?";
-
+    private final String SELECT_BY_ID_SQL = SELECT_ALL_SQL + " WHERE MaPhim = ?";
+    private final String SELECT_BY_TENPHIM_SQL = SELECT_ALL_SQL + " WHERE TenPhim LIKE ?";
+    private final String SELECT_BY_TRANGTHAI_SQL = SELECT_ALL_SQL + " WHERE TrangThai = ?";
 
     @Override
     public Phim create(Phim entity) {
         try (
-            Connection conn = XJdbc.openConnection();
-            PreparedStatement stmt = conn.prepareStatement(INSERT_SQL, Statement.RETURN_GENERATED_KEYS)
-        ) {
+                Connection conn = XJdbc.openConnection(); PreparedStatement stmt = conn.prepareStatement(INSERT_SQL, Statement.RETURN_GENERATED_KEYS)) {
             stmt.setString(1, entity.getTenPhim());
-            stmt.setString(2, entity.getTheLoai());
+            stmt.setInt(2, entity.getMaLoai());
             stmt.setInt(3, entity.getThoiLuong());
             stmt.setString(4, entity.getMoTa());
             stmt.setDate(5, new java.sql.Date(entity.getNgayKhoiChieu().getTime()));
@@ -84,7 +82,7 @@ private final String SELECT_BY_TRANGTHAI_SQL = SELECT_ALL_SQL + " WHERE TrangTha
     public void update(Phim entity) {
         Object[] values = {
             entity.getTenPhim(),
-            entity.getTheLoai(),
+            entity.getMaLoai(),
             entity.getThoiLuong(),
             entity.getMoTa(),
             new java.sql.Date(entity.getNgayKhoiChieu().getTime()),
@@ -120,5 +118,3 @@ private final String SELECT_BY_TRANGTHAI_SQL = SELECT_ALL_SQL + " WHERE TrangTha
         return XQuery.getEntityList(Phim.class, SELECT_BY_TRANGTHAI_SQL, trangThai);
     }
 }
-
-

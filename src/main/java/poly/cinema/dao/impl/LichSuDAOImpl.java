@@ -19,73 +19,55 @@ import poly.cinema.util.XJdbc;
  */
 public class LichSuDAOImpl implements LichSuDAO {
 
+    private final String SELECT_ALL_SQL = """
+        SELECT 
+            hd.ma_hd,
+            hd.ngay_lap,
+            nd.ten_nd AS tenNhanVien,
+            hd.tong_tien
+        FROM HoaDon hd
+        JOIN NguoiDung nd ON nd.ma_nd = hd.ma_nd
+    """;
+
+    private final String SELECT_BY_DATE_SQL = SELECT_ALL_SQL + " WHERE hd.ngay_lap BETWEEN ? AND ?";
+
     @Override
     public List<LichSu> selectAll() {
-        String sql = """
-            SELECT hd.ma_hd, hd.ngay_lap, nv.ten_nv, p.ten_phim,
-                   xc.ngay_chieu, xc.gio_chieu,
-                   g.so_ghe, g.loai_ghe, xc.gia_ve,
-                   mh.ten_hang, cthd.so_luong, mh.gia,
-                   hd.tong_tien
-            FROM HoaDon hd
-            JOIN NhanVien nv ON hd.ma_nv = nv.ma_nv
-            LEFT JOIN ChiTietHoaDon cthd ON hd.ma_hd = cthd.ma_hd
-            LEFT JOIN XuatChieu xc ON cthd.ma_xuat = xc.ma_xuat
-            LEFT JOIN Phim p ON xc.ma_phim = p.ma_phim
-            LEFT JOIN Ghe g ON cthd.ma_ghe = g.ma_ghe
-            LEFT JOIN MatHang mh ON cthd.ma_hang = mh.ma_hang
-            ORDER BY hd.ngay_lap DESC
-        """;
-
-        return selectBySQL(sql);
+        return selectBySql(SELECT_ALL_SQL);
     }
 
     @Override
     public List<LichSu> getByDate(Date begin, Date end) {
-        String sql = """
-            SELECT hd.ma_hd, hd.ngay_lap, nv.ten_nv, p.ten_phim,
-                   xc.ngay_chieu, xc.gio_chieu,
-                   g.so_ghe, g.loai_ghe, xc.gia_ve,
-                   mh.ten_hang, cthd.so_luong, mh.gia,
-                   hd.tong_tien
-            FROM HoaDon hd
-            JOIN NhanVien nv ON hd.ma_nv = nv.ma_nv
-            LEFT JOIN ChiTietHoaDon cthd ON hd.ma_hd = cthd.ma_hd
-            LEFT JOIN XuatChieu xc ON cthd.ma_xuat = xc.ma_xuat
-            LEFT JOIN Phim p ON xc.ma_phim = p.ma_phim
-            LEFT JOIN Ghe g ON cthd.ma_ghe = g.ma_ghe
-            LEFT JOIN MatHang mh ON cthd.ma_hang = mh.ma_hang
-            WHERE hd.ngay_lap BETWEEN ? AND ?
-            ORDER BY hd.ngay_lap DESC
-        """;
-
-        return selectBySQL(sql, begin, end);
+        return selectBySql(SELECT_BY_DATE_SQL, begin, end);
     }
 
-    private List<LichSu> selectBySQL(String sql, Object... args) {
+    private List<LichSu> selectBySql(String sql, Object... args) {
         List<LichSu> list = new ArrayList<>();
-        try (ResultSet rs = XJdbc.executeQuery(sql, args)) {
+        ResultSet rs = null;
+
+        try {
+            rs = XJdbc.executeQuery(sql, args);
             while (rs.next()) {
-                LichSu ls = new LichSu(
-                        rs.getInt("ma_hd"),
-                        rs.getTimestamp("ngay_lap"),
-                        rs.getString("ten_nv"),
-                        rs.getString("ten_phim"),
-                        rs.getDate("ngay_chieu"),
-                        rs.getTime("gio_chieu"),
-                        rs.getString("so_ghe"),
-                        rs.getString("loai_ghe"),
-                        rs.getDouble("gia_ve"),
-                        rs.getString("ten_hang"),
-                        rs.getObject("so_luong") != null ? rs.getInt("so_luong") : null,
-                        rs.getObject("gia") != null ? rs.getDouble("gia") : null,
-                        rs.getDouble("tong_tien")
-                );
+                LichSu ls = new LichSu();
+                ls.setMaHd(rs.getInt("ma_hd"));
+                ls.setNgayLap(rs.getTimestamp("ngay_lap"));
+                ls.setTenNhanVien(rs.getString("tenNhanVien"));
+                ls.setTongTien(rs.getDouble("tong_tien"));
+
                 list.add(ls);
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new RuntimeException("Lỗi khi truy vấn LichSu: " + e.getMessage(), e);
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.getStatement().getConnection().close();
+                }
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
         }
+
         return list;
     }
 }

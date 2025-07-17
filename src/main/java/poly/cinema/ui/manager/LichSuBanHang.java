@@ -56,11 +56,11 @@ public class LichSuBanHang extends javax.swing.JPanel implements LichSuBanHangCo
 
             },
             new String [] {
-                "Mã hóa đơn", "Thời điểm check out", "Tên nhân viên", "Tên phim", "Tổng tiền"
+                "Mã hóa đơn", "Thời điểm lập", "Tên nhân viên", "Tổng tiền"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false
+                false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -70,6 +70,11 @@ public class LichSuBanHang extends javax.swing.JPanel implements LichSuBanHangCo
         jScrollPane1.setViewportView(tblBills);
 
         txtBegin.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153), 2));
+        txtBegin.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtBeginActionPerformed(evt);
+            }
+        });
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel3.setText("Từ ngày:");
@@ -104,43 +109,43 @@ public class LichSuBanHang extends javax.swing.JPanel implements LichSuBanHangCo
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(29, 29, 29)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1053, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(28, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabel1))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(202, 202, 202)
-                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(txtEnd, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(txtBegin, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(202, 202, 202)
+                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(txtBegin, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(txtEnd, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(58, 58, 58)
                 .addComponent(btnLoc)
                 .addGap(71, 71, 71)
                 .addComponent(cboTimeRanges, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(133, 133, 133))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(29, 29, 29)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1053, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(416, 416, 416)
+                        .addComponent(jLabel1)))
+                .addContainerGap(28, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGap(18, 18, 18)
+                .addContainerGap()
                 .addComponent(jLabel1)
-                .addGap(41, 41, 41)
+                .addGap(53, 53, 53)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtBegin, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtBegin, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3)
                     .addComponent(jLabel4)
-                    .addComponent(txtEnd, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnLoc)
-                    .addComponent(cboTimeRanges, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cboTimeRanges, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtEnd, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 50, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 506, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(32, 32, 32))
@@ -170,6 +175,10 @@ public class LichSuBanHang extends javax.swing.JPanel implements LichSuBanHangCo
 
     }//GEN-LAST:event_cboTimeRangesActionPerformed
 
+    private void txtBeginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtBeginActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtBeginActionPerformed
+
     private final LichSuDAO lichSuDAO = new LichSuDAOImpl();
     private List<LichSu> listLichSu;
     private DefaultTableModel model;
@@ -185,7 +194,12 @@ public class LichSuBanHang extends javax.swing.JPanel implements LichSuBanHangCo
 
     private void initComboTimeRangeListener() {
         cboTimeRanges.addActionListener(e -> {
-            String selected = (String) cboTimeRanges.getSelectedItem();
+            Object selectedObj = cboTimeRanges.getSelectedItem();
+            if (selectedObj == null) {
+                return;
+            }
+
+            String selected = selectedObj.toString(); // hoặc (String) selectedObj nếu chắc chắn
             TimeRange range = switch (selected) {
                 case "Hôm nay" ->
                     TimeRange.today();
@@ -219,7 +233,6 @@ public class LichSuBanHang extends javax.swing.JPanel implements LichSuBanHangCo
                 ls.getMaHd(),
                 ls.getNgayLap(),
                 ls.getTenNhanVien(),
-                ls.getTenPhim() != null ? ls.getTenPhim() : "",
                 ls.getTongTien()
             });
         }
@@ -227,10 +240,10 @@ public class LichSuBanHang extends javax.swing.JPanel implements LichSuBanHangCo
 
     private void locTheoNgay() {
         try {
-            Date begin = XDate.parse(txtBegin.getText(), "dd-MM-yyyy");
-            Date end = XDate.parse(txtEnd.getText(), "dd-MM-yyyy");
+            Date begin = XDate.parse(txtBegin.getText(), "dd/MM/yyyy");
+            Date end = XDate.parse(txtEnd.getText(), "dd/MM/yyyy");
 
-            // Đặt giờ đầu – cuối
+            // Đặt thời gian từ 00:00 đến 23:59
             Calendar cal = Calendar.getInstance();
             cal.setTime(begin);
             cal.set(Calendar.HOUR_OF_DAY, 0);
@@ -246,8 +259,8 @@ public class LichSuBanHang extends javax.swing.JPanel implements LichSuBanHangCo
             cal.set(Calendar.MILLISECOND, 999);
             end = cal.getTime();
 
-            // Gọi DAO để lọc lịch sử bán hàng
-            List<LichSu> list = lichSuDAO.getByDate(begin, end);  // bạn cần viết hàm này trong DAOImpl
+            // Lọc dữ liệu
+            List<LichSu> list = lichSuDAO.getByDate(begin, end);
             fillTableLichSu(list);
 
         } catch (Exception e) {
@@ -255,22 +268,12 @@ public class LichSuBanHang extends javax.swing.JPanel implements LichSuBanHangCo
         }
     }
 
-    // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnLoc;
-    private javax.swing.JComboBox<String> cboTimeRanges;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable tblBills;
-    private javax.swing.JTextField txtBegin;
-    private javax.swing.JTextField txtEnd;
-    // End of variables declaration//GEN-END:variables
-
     @Override
     public void open() {
         fillTable();
+        selectTimeRange();
+        initComboTimeRanges();
+        initComboTimeRangeListener();
     }
 
     @Override
@@ -313,5 +316,17 @@ public class LichSuBanHang extends javax.swing.JPanel implements LichSuBanHangCo
         txtBegin.setText(sdf.format(range.getBegin()));
         txtEnd.setText(sdf.format(range.getEnd()));
     }
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnLoc;
+    private javax.swing.JComboBox<String> cboTimeRanges;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable tblBills;
+    private javax.swing.JTextField txtBegin;
+    private javax.swing.JTextField txtEnd;
+    // End of variables declaration//GEN-END:variables
 
 }

@@ -445,10 +445,12 @@ public class QuanLiNhanVien extends javax.swing.JPanel implements QuanLiNhanVien
 
     @Override
     public void setForm(User entity) {
-        txtTennhanvien.setText(entity.getTen_nv());
+        txtTennhanvien.setText(entity.getTen_nd());
         txtMatkhau.setText(entity.getMat_khau());
         txtSodienthoai.setText(entity.getSdt());
-        String hinh = entity.getAnh_nv();
+
+        String hinh = entity.getAnh_dai_dien(); // đổi tên field
+
         if (hinh != null && !hinh.isBlank()) {
             File imageFile = new File("images", hinh);
             if (imageFile.exists()) {
@@ -471,27 +473,26 @@ public class QuanLiNhanVien extends javax.swing.JPanel implements QuanLiNhanVien
     }
 
     @Override
-public User getForm() {
-    User user = new User();
-    int row = tblQLnhanvien.getSelectedRow();
-    if (row >= 0) {
-        // Lấy lại ma_nv từ entity cũ
-        String email = tblQLnhanvien.getValueAt(row, 2).toString();
-        User existing = dao.findByEmail(email);
-        user.setMa_nv(existing.getMa_nv());
+    public User getForm() {
+        User user = new User();
+        int row = tblQLnhanvien.getSelectedRow();
+        if (row >= 0) {
+            // Lấy lại ma_nv từ entity cũ
+            String email = tblQLnhanvien.getValueAt(row, 2).toString();
+            User existing = dao.findByEmail(email);
+            user.setMa_nd(existing.getMa_nd());
+        }
+
+        user.setTen_nd(txtTennhanvien.getText());
+        user.setEmail(txtEmail.getText());
+        user.setMat_khau(txtMatkhau.getText());
+        user.setSdt(txtSodienthoai.getText());
+        user.setVai_tro(rdoQuanLy.isSelected());
+        user.setHoat_dong(rdoHoatDong.isSelected());
+        String anh = lblAnh.getToolTipText();
+        user.setAnh_dai_dien(anh == null ? "" : anh);
+        return user;
     }
-
-    user.setTen_nv(txtTennhanvien.getText());
-    user.setEmail(txtEmail.getText());
-    user.setMat_khau(txtMatkhau.getText());
-    user.setSdt(txtSodienthoai.getText());
-    user.setVai_tro(rdoQuanLy.isSelected());
-    user.setHoat_dong(rdoHoatDong.isSelected());
-    String anh = lblAnh.getToolTipText();
-    user.setAnh_nv(anh == null ? "" : anh);
-    return user;
-}
-
 
     @Override
     public void fillToTable() {
@@ -501,7 +502,7 @@ public User getForm() {
         items = dao.findAll();
         for (User item : items) {
             Object[] rowData = {
-                item.getTen_nv(),
+                item.getTen_nd(),
                 item.getMat_khau(),
                 item.getEmail(),
                 item.getSdt(),

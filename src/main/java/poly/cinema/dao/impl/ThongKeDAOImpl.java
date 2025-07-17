@@ -13,14 +13,14 @@ public class ThongKeDAOImpl implements ThongKeDAO {
     @Override
     public List<ThongKe.DoanhThuPhim> getDoanhThuPhim(Date begin, Date end) {
         String sql = """
-        SELECT p.ten_phim, SUM(xc.gia_ve) AS doanh_thu
-        FROM HoaDon hd
-        JOIN ChiTietHoaDon ct ON hd.ma_hd = ct.ma_hd
-        JOIN XuatChieu xc ON ct.ma_xuat = xc.ma_xuat
-        JOIN Phim p ON xc.ma_phim = p.ma_phim
-        WHERE hd.ngay_lap BETWEEN ? AND ?
-        GROUP BY p.ten_phim
-    """;
+    SELECT p.ten_phim, SUM(xc.gia_ve) AS doanh_thu
+    FROM HoaDon hd
+    JOIN ChiTietVe ct ON hd.ma_hd = ct.ma_hd
+    JOIN XuatChieu xc ON ct.ma_xuat = xc.ma_xuat
+    JOIN Phim p ON xc.ma_phim = p.ma_phim
+    WHERE hd.ngay_lap BETWEEN ? AND ?
+    GROUP BY p.ten_phim
+""";
 
         List<ThongKe.DoanhThuPhim> list = new ArrayList<>();
         try (ResultSet rs = XJdbc.executeQuery(sql, begin, end)) {
@@ -31,7 +31,7 @@ public class ThongKeDAOImpl implements ThongKeDAO {
                 list.add(tk);
             }
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException("Lỗi truy vấn doanh thu phim", e);
         }
         return list;
     }
@@ -39,13 +39,13 @@ public class ThongKeDAOImpl implements ThongKeDAO {
     @Override
     public List<ThongKe.DoanhThuSanPham> getDoanhThuSanPham(Date begin, Date end) {
         String sql = """
-        SELECT mh.loai, SUM(mh.gia * ct.so_luong) AS doanh_thu
-        FROM HoaDon hd
-        JOIN ChiTietHoaDon ct ON hd.ma_hd = ct.ma_hd
-        JOIN MatHang mh ON ct.ma_hang = mh.ma_hang
-        WHERE hd.ngay_lap BETWEEN ? AND ?
-        GROUP BY mh.loai
-    """;
+    SELECT mh.loai, SUM(ct.so_luong * ct.gia) AS doanh_thu
+    FROM HoaDon hd
+    JOIN ChiTietHang ct ON hd.ma_hd = ct.ma_hd
+    JOIN MatHang mh ON ct.ma_hang = mh.ma_hang
+    WHERE hd.ngay_lap BETWEEN ? AND ?
+    GROUP BY mh.loai
+""";
 
         List<ThongKe.DoanhThuSanPham> list = new ArrayList<>();
         try (ResultSet rs = XJdbc.executeQuery(sql, begin, end)) {
@@ -56,7 +56,7 @@ public class ThongKeDAOImpl implements ThongKeDAO {
                 list.add(tk);
             }
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException("Lỗi truy vấn doanh thu sản phẩm", e);
         }
         return list;
     }

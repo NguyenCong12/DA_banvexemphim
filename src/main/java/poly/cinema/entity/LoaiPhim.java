@@ -4,7 +4,6 @@
  */
 package poly.cinema.entity;
 
-import java.sql.Timestamp;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -12,17 +11,19 @@ import lombok.NoArgsConstructor;
 
 /**
  *
- * @author NITRO
+ * @author Admin
  */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class LichSu {
+public class LoaiPhim {
 
-    private int maHd;
-    private Timestamp ngayLap;
-    private String tenNhanVien;
-    private double tongTien;
+    private Integer maLoai;
+    private String tenLoai;
 
+    @Override
+    public String toString() {
+        return tenLoai;
+    }
 }
