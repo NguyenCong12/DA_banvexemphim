@@ -25,6 +25,7 @@ poly\cinema\ui\manager\QuanLiNhanVien$2.class
 poly\cinema\ui\manager\QuanLySanPham$6.class
 poly\cinema\ui\DoiMatKhau$2.class
 poly\cinema\ui\manager\LichSuBanHang$2.class
+poly\cinema\ui\manager\XemLichChieu$3.class
 poly\cinema\ui\manager\QuanLiNhanVienController.class
 poly\cinema\ui\FCinema_Frame$18.class
 poly\cinema\ui\manager\QuanLyHoaDonJpanel$3.class
@@ -45,7 +46,6 @@ poly\cinema\dao\QuanLySuatChieuDao.class
 poly\cinema\ui\manager\QuanLiPhongChieu$5.class
 poly\cinema\ui\manager\QuanLySanPham$1.class
 poly\cinema\ui\manager\QuanLySanPham.class
-poly\cinema\ui\FCinema_Frame$20.class
 poly\cinema\entity\ThongKe$DoanhThuPhim.class
 poly\cinema\entity\LoaiPhim.class
 poly\cinema\ui\WelcomeJDialog$3$1.class
@@ -131,7 +131,6 @@ poly\cinema\ui\manager\ThongKePanel.class
 poly\cinema\ui\NewJFrame$3.class
 poly\cinema\dao\impl\QuanLySanPhamDAOImpl.class
 poly\cinema\dao\impl\LoaiPhimDaoImpl.class
-poly\cinema\ui\FCinema_Frame$21.class
 poly\cinema\dao\CrudDAO.class
 poly\cinema\ui\manager\QuanLyPhim.class
 poly\cinema\ui\manager\ThongKePanel$6.class
@@ -148,7 +147,7 @@ poly\cinema\ui\manager\QuanLyGheJpanel$8.class
 poly\cinema\ui\DangNhapJDialog$4.class
 poly\cinema\ui\manager\QuanLyXuatChieu$1.class
 poly\cinema\ui\manager\QuanLyPhim$6.class
-poly\cinema\ui\FCinema_Frame$22.class
+poly\cinema\ui\manager\XemLichChieu$4.class
 poly\cinema\ui\NewJFrame$1.class
 poly\cinema\dao\QuanLyPhongChieuDao.class
 poly\cinema\ui\manager\XemLichChieu$1.class
@@ -171,7 +170,6 @@ poly\cinema\ui\manager\QuanLyGheJpanel$9.class
 poly\cinema\ui\manager\QuanLiNhanVien$6.class
 poly\cinema\ui\manager\QuanLiNhanVien$3.class
 poly\cinema\ui\DangNhapJDialog$3.class
-poly\cinema\ui\FCinema_Frame$19.class
 poly\cinema\ui\manager\QuanLyHoaDonJpanel$1.class
 poly\cinema\ui\FCinema_Frame$7.class
 poly\cinema\ui\manager\QuanLyXuatChieu$6.class

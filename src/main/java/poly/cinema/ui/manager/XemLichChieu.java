@@ -4,39 +4,51 @@
  */
 package poly.cinema.ui.manager;
 
+import com.toedter.calendar.JDateChooser;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Container;
 import java.awt.Cursor;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.Image;
+import java.awt.event.ItemEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
 import java.net.URL;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
+import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
 import javax.swing.JViewport;
 import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
+import poly.cinema.dao.LoaiPhimDao;
 import poly.cinema.dao.QuanLyPhimDao;
 import poly.cinema.dao.QuanLySuatChieuDao;
+import poly.cinema.dao.impl.LoaiPhimDaoImpl;
 import poly.cinema.dao.impl.QuanLyPhimDaoImpl;
 import poly.cinema.dao.impl.QuanLySuatChieuDaoImpl;
+import poly.cinema.entity.LoaiPhim;
 import poly.cinema.entity.Phim;
 import poly.cinema.entity.SuatChieu;
 
@@ -61,8 +73,13 @@ public class XemLichChieu extends javax.swing.JPanel {
 
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        pnlChiTiet = new javax.swing.JPanel();
         scpDanhSachPhim = new javax.swing.JScrollPane();
+        scpChiTiet = new javax.swing.JScrollPane();
+        pnlChiTiet = new javax.swing.JPanel();
+        cboLoai = new javax.swing.JComboBox<>();
+        btnLoc = new javax.swing.JButton();
+        txtNgayChieu = new javax.swing.JTextField();
+        cboPhim = new javax.swing.JComboBox<>();
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -71,6 +88,7 @@ public class XemLichChieu extends javax.swing.JPanel {
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Xem Lịch Chiếu");
         jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 14, 343, 70));
+        jPanel1.add(scpDanhSachPhim, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 110, 785, 606));
 
         pnlChiTiet.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         pnlChiTiet.setDebugGraphicsOptions(javax.swing.DebugGraphics.BUFFERED_OPTION);
@@ -86,8 +104,31 @@ public class XemLichChieu extends javax.swing.JPanel {
             .addGap(0, 606, Short.MAX_VALUE)
         );
 
-        jPanel1.add(pnlChiTiet, new org.netbeans.lib.awtextra.AbsoluteConstraints(787, 110, 320, -1));
-        jPanel1.add(scpDanhSachPhim, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 110, 785, 606));
+        scpChiTiet.setViewportView(pnlChiTiet);
+
+        jPanel1.add(scpChiTiet, new org.netbeans.lib.awtextra.AbsoluteConstraints(790, 280, 310, 440));
+
+        cboLoai.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jPanel1.add(cboLoai, new org.netbeans.lib.awtextra.AbsoluteConstraints(790, 140, -1, -1));
+
+        btnLoc.setText("Lọc");
+        btnLoc.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLocActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btnLoc, new org.netbeans.lib.awtextra.AbsoluteConstraints(1010, 240, -1, -1));
+
+        txtNgayChieu.setText("jTextField1");
+        jPanel1.add(txtNgayChieu, new org.netbeans.lib.awtextra.AbsoluteConstraints(790, 240, -1, -1));
+
+        cboPhim.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cboPhim.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cboPhimActionPerformed(evt);
+            }
+        });
+        jPanel1.add(cboPhim, new org.netbeans.lib.awtextra.AbsoluteConstraints(790, 110, -1, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -101,233 +142,336 @@ public class XemLichChieu extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnLocActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLocActionPerformed
+        locVaHienThiDanhSachPhim();
+    }//GEN-LAST:event_btnLocActionPerformed
+
+    private void cboPhimActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboPhimActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cboPhimActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnLoc;
+    private javax.swing.JComboBox<String> cboLoai;
+    private javax.swing.JComboBox<String> cboPhim;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel pnlChiTiet;
+    private javax.swing.JScrollPane scpChiTiet;
     private javax.swing.JScrollPane scpDanhSachPhim;
+    private javax.swing.JTextField txtNgayChieu;
     // End of variables declaration//GEN-END:variables
 private static final int CARD_W = 150;
-    private static final int CARD_H = 240;
-    private static final int POSTER_H = 190;
+private static final int POSTER_H = 190;
 
 // ==== STYLE ====
-    private static final Color CARD_BORDER = Color.GRAY;
-    private static final Color CARD_BG = Color.WHITE;
-    private static final Color CARD_BG_HOVER = new Color(245, 245, 245);
-    private static final Font TITLE_FONT = new Font("Arial", Font.BOLD, 14);
-    private static final Font SCHEDULE_FONT = new Font("Arial", Font.PLAIN, 14);
+private static final Color CARD_BORDER = Color.GRAY;
+private static final Color CARD_BG_HOVER = new Color(245, 245, 245);
+private static final Font TITLE_FONT = new Font("Arial", Font.BOLD, 14);
+private static final Font SCHEDULE_FONT = new Font("Arial", Font.PLAIN, 14);
 
-// ==== SCROLL WRAPPER ====
-    private JPanel pnlGrid; // Panel mới để đặt vào ScrollPane
+// ==== PANELS ====
+private JPanel pnlGrid;
+private JPanel pnlChiTietContent;
 
-    public XemLichChieu() {
-        initComponents();
+public XemLichChieu() {
+    initComponents();
 
-        // Tạo panel mới thay cho pnlDanhSachPhim
-        pnlGrid = new JPanel();
-        pnlGrid.setBackground(new Color(0xE0E3EB));
+    // ===== Panel danh sách phim =====
+    pnlGrid = new JPanel();
+    pnlGrid.setBackground(new Color(0xE0E3EB));
+    pnlGrid.setLayout(new BoxLayout(pnlGrid, BoxLayout.Y_AXIS));
+    pnlGrid.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        // Set layout mặc định (GridLayout sẽ set lại trong open)
-        pnlGrid.setLayout(new GridLayout(0, 5, 5, 5));
+    scpDanhSachPhim.setViewportView(pnlGrid);
+    scpDanhSachPhim.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+    scpDanhSachPhim.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+    scpDanhSachPhim.getVerticalScrollBar().setUnitIncrement(16);
 
-        // Gắn panel này vào ScrollPane
-        scpDanhSachPhim.setViewportView(pnlGrid);
-        scpDanhSachPhim.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-        scpDanhSachPhim.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
-        scpDanhSachPhim.getVerticalScrollBar().setUnitIncrement(16);
+    // ===== Panel chi tiết bên phải =====
+    pnlChiTietContent = new JPanel();
+    pnlChiTietContent.setLayout(new BoxLayout(pnlChiTietContent, BoxLayout.Y_AXIS));
+    pnlChiTietContent.setBackground(Color.WHITE);
 
-        pnlChiTiet.setLayout(new BoxLayout(pnlChiTiet, BoxLayout.Y_AXIS));
-        pnlChiTiet.setBackground(Color.WHITE);
+    JScrollPane scpChiTiet = new JScrollPane(pnlChiTietContent);
+    scpChiTiet.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+    scpChiTiet.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+    scpChiTiet.getVerticalScrollBar().setUnitIncrement(16);
 
-        SwingUtilities.invokeLater(this::open);
-    }
+    pnlChiTiet.setLayout(new BorderLayout());
+    pnlChiTiet.add(scpChiTiet, BorderLayout.CENTER);
 
-    public void open() {
-        pnlGrid.removeAll();
+    // Event filter
+    initFilterListeners();
 
-        QuanLyPhimDao phimDao = new QuanLyPhimDaoImpl();
-        List<Phim> dsPhim = phimDao.findPhimChieuHomNay();
-
-        int cols = 5;
-        int rows = (int) Math.ceil(dsPhim.size() / (double) cols);
-        pnlGrid.setLayout(new GridLayout(rows, cols, 5, 5));
-
-        for (Phim phim : dsPhim) {
-            pnlGrid.add(taoCardPhim(phim));
-        }
-
-        pnlGrid.revalidate();
-        pnlGrid.repaint();
-    }
-
-    private JPanel taoCardPhim(Phim phim) {
-        JPanel pnlPhim = new JPanel(new BorderLayout());
-        pnlPhim.setPreferredSize(new Dimension(CARD_W, CARD_H));
-        pnlPhim.setBorder(BorderFactory.createLineBorder(CARD_BORDER));
-        pnlPhim.setBackground(CARD_BG);
-        pnlPhim.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-
-        JLabel lblHinh = new JLabel("", JLabel.CENTER);
-        lblHinh.setPreferredSize(new Dimension(CARD_W, POSTER_H));
-        ImageIcon icon = loadPosterIcon(phim.getHinhAnh(), CARD_W, POSTER_H);
-        if (icon != null) {
-            lblHinh.setIcon(icon);
-        } else {
-            lblHinh.setText("<html><center>Không có<br>ảnh</center></html>");
-        }
-
-        JLabel lblTenPhim = new JLabel(
-                "<html><div style='text-align:center;white-space:normal;'>"
-                + escapeHtml(phim.getTenPhim()) + "</div></html>", JLabel.CENTER
-        );
-
-        lblTenPhim.setFont(TITLE_FONT);
-        lblTenPhim.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
-
-        pnlPhim.add(lblHinh, BorderLayout.CENTER);
-        pnlPhim.add(lblTenPhim, BorderLayout.SOUTH);
-
-        pnlPhim.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                hienThiLichChieu(phim);
-            }
-
-            @Override
-            public void mouseEntered(MouseEvent e) {
-                pnlPhim.setBackground(CARD_BG_HOVER);
-                pnlPhim.setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY));
-            }
-
-            @Override
-            public void mouseExited(MouseEvent e) {
-                pnlPhim.setBackground(CARD_BG);
-                pnlPhim.setBorder(BorderFactory.createLineBorder(CARD_BORDER));
-            }
-        });
-
-        return pnlPhim;
-    }
-
-    private ImageIcon loadPosterIcon(String fileName, int targetW, int targetH) {
-        if (fileName == null || fileName.isBlank()) {
-            return null;
-        }
-
-        File f = new File("images", fileName);
-        if (f.exists()) {
-            return scaleIcon(new ImageIcon(f.getAbsolutePath()), targetW, targetH);
-        }
-
-        URL url = getClass().getResource("/images/" + fileName);
-        if (url != null) {
-            return scaleIcon(new ImageIcon(url), targetW, targetH);
-        }
-        return null;
-    }
-
-    private ImageIcon scaleIcon(ImageIcon raw, int targetW, int targetH) {
-        if (raw.getIconWidth() <= 0 || raw.getIconHeight() <= 0) {
-            return null;
-        }
-        double scale = Math.min((double) targetW / raw.getIconWidth(), (double) targetH / raw.getIconHeight());
-        int w = (int) (raw.getIconWidth() * scale);
-        int h = (int) (raw.getIconHeight() * scale);
-        Image scaled = raw.getImage().getScaledInstance(w, h, Image.SCALE_SMOOTH);
-        return new ImageIcon(scaled);
-    }
-
-    // ==== helper: escape + center HTML ====
-private String escapeHtmlHtmlCenter(String s, int maxWidthPx) {
-    return "<html><div style='text-align:center;width:" + maxWidthPx + "px;word-wrap:break-word;'>"
-            + escapeHtml(s == null ? "" : s) + "</div></html>";
+    SwingUtilities.invokeLater(this::open);
 }
 
-// ==== helper: ép component chiếm full chiều ngang pnlChiTiet ====
-private void makeFullWidth(JComponent c) {
-    c.setAlignmentX(Component.CENTER_ALIGNMENT); // giữ toàn bộ block ở trung tâm dọc theo Y_AXIS
-    Dimension pref = c.getPreferredSize();
-    // rộng vô hạn để BoxLayout choãn hết; cao theo pref
-    c.setMaximumSize(new Dimension(Integer.MAX_VALUE, pref.height));
+/* =========================================================
+   OPEN - LOAD DANH SÁCH
+   ========================================================= */
+public void open() {
+    loadComboLoai();
+    loadComboPhim();
+    ensureNgayChieuDefaultToday();
+    locVaHienThiDanhSachPhim();
 }
 
-// ==== hiển thị chi tiết lịch chiếu ====
+/* =========================================================
+   TẠO 1 CARD PHIM (LIST STYLE)
+   ========================================================= */
+private Component taoHangPhim(Phim phim) {
+    JPanel row = new JPanel();
+    row.setOpaque(true);
+    row.setBackground(Color.WHITE);
+    row.setBorder(BorderFactory.createCompoundBorder(
+            BorderFactory.createLineBorder(CARD_BORDER),
+            BorderFactory.createEmptyBorder(10, 10, 10, 10)
+    ));
+
+    row.setLayout(new BoxLayout(row, BoxLayout.X_AXIS));
+    row.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+    // Poster
+    JLabel lblPoster = new JLabel();
+    lblPoster.setPreferredSize(new Dimension(CARD_W, POSTER_H));
+    ImageIcon poster = loadPosterIcon(phim.getHinhAnh(), CARD_W, POSTER_H);
+    lblPoster.setIcon(poster != null ? poster : new ImageIcon());
+
+    // Info panel
+    JPanel infoPanel = new JPanel();
+    infoPanel.setLayout(new BoxLayout(infoPanel, BoxLayout.Y_AXIS));
+    infoPanel.setOpaque(false);
+    infoPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+    // Tên phim (center)
+    JLabel lblTen = new JLabel("<html><div style='text-align:center;width:300px;'>" 
+            + escapeHtml(phim.getTenPhim()) + "</div></html>", JLabel.CENTER);
+    lblTen.setFont(TITLE_FONT.deriveFont(16f));
+    lblTen.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+    infoPanel.add(lblTen);
+    infoPanel.add(Box.createVerticalStrut(10)); // cách tên phim 10px
+
+    String tenLoai = LoaiPhimDaoImpl.getTenLoaiById(phim.getMaLoai());
+    JPanel infoSection = buildInfoSection(tenLoai, phim.getThoiLuong(), phim.getMoTa());
+    infoPanel.add(infoSection);
+
+    // Thêm vào row
+    row.add(lblPoster);
+    row.add(Box.createHorizontalStrut(20));
+    row.add(infoPanel);
+
+    // Hover + click
+    row.addMouseListener(new MouseAdapter() {
+        @Override
+        public void mouseEntered(MouseEvent e) {
+            row.setBackground(CARD_BG_HOVER);
+        }
+        @Override
+        public void mouseExited(MouseEvent e) {
+            row.setBackground(Color.WHITE);
+        }
+        @Override
+        public void mouseClicked(MouseEvent e) {
+            hienThiLichChieu(phim);
+        }
+    });
+
+    return row;
+}
+
+/* =========================================================
+   LỌC VÀ HIỂN THỊ DANH SÁCH PHIM
+   ========================================================= */
+private void locVaHienThiDanhSachPhim() {
+    pnlGrid.removeAll();
+
+    // Lấy loại
+    String selectedLoai = (String) cboLoai.getSelectedItem();
+
+    // Lấy ngày
+    LocalDate ngayChieu;
+    try {
+        ngayChieu = LocalDate.parse(txtNgayChieu.getText().trim(), DATE_FMT);
+    } catch (DateTimeParseException ex) {
+        ngayChieu = LocalDate.now();
+        txtNgayChieu.setText(ngayChieu.format(DATE_FMT));
+    }
+
+    // Danh sách phim
+    QuanLyPhimDao phimDao = new QuanLyPhimDaoImpl();
+    List<Phim> dsPhim = phimDao.findPhimChieuTheoNgay(ngayChieu);
+
+    // Lọc theo loại
+    if (!"Tất cả".equals(selectedLoai)) {
+        dsPhim = dsPhim.stream()
+                .filter(p -> selectedLoai.equals(LoaiPhimDaoImpl.getTenLoaiById(p.getMaLoai())))
+                .toList();
+    }
+
+    // Lọc theo cboPhim
+    String selectedPhim = (String) cboPhim.getSelectedItem();
+    if (selectedPhim != null && !"Tất cả".equals(selectedPhim)) {
+        dsPhim = dsPhim.stream()
+                .filter(p -> selectedPhim.equals(p.getTenPhim()))
+                .toList();
+    }
+
+    // Hiển thị
+    if (dsPhim.isEmpty()) {
+        JLabel lblNo = new JLabel("Không có phim phù hợp", JLabel.CENTER);
+        lblNo.setFont(new Font("Arial", Font.ITALIC, 14));
+        lblNo.setForeground(Color.GRAY);
+        pnlGrid.add(lblNo);
+    } else {
+        for (int i = 0; i < dsPhim.size(); i++) {
+            pnlGrid.add(taoHangPhim(dsPhim.get(i)));
+            if (i < dsPhim.size() - 1) pnlGrid.add(Box.createVerticalStrut(15));
+        }
+    }
+
+    pnlGrid.revalidate();
+    pnlGrid.repaint();
+}
+
+/* =========================================================
+   COMBO LOẠI + COMBO PHIM
+   ========================================================= */
+private void loadComboLoai() {
+    cboLoai.removeAllItems();
+    cboLoai.addItem("Tất cả");
+    LoaiPhimDao loaiDao = new LoaiPhimDaoImpl();
+    for (LoaiPhim lp : loaiDao.findAll()) {
+        cboLoai.addItem(lp.getTenLoai());
+    }
+}
+
+private void loadComboPhim() {
+    cboPhim.removeAllItems();
+    cboPhim.addItem("Tất cả");
+    QuanLyPhimDao phimDao = new QuanLyPhimDaoImpl();
+    List<Phim> dsPhim = phimDao.findByTrangThai("Đang chiếu");
+    for (Phim p : dsPhim) {
+        cboPhim.addItem(p.getTenPhim());
+    }
+}
+
+/* =========================================================
+   LISTENERS CHO FILTER
+   ========================================================= */
+private void initFilterListeners() {
+    cboLoai.addItemListener(e -> {
+        if (e.getStateChange() == ItemEvent.SELECTED) {
+            locVaHienThiDanhSachPhim();
+        }
+    });
+
+    cboPhim.addItemListener(e -> {
+        if (e.getStateChange() == ItemEvent.SELECTED) {
+            locVaHienThiDanhSachPhim();
+        }
+    });
+
+    txtNgayChieu.addActionListener(e -> locVaHienThiDanhSachPhim());
+}
+private JPanel buildInfoSection(String loai, Integer thoiLuong, String moTa) {
+    JPanel container = new JPanel();
+    container.setLayout(new BoxLayout(container, BoxLayout.Y_AXIS));
+    container.setOpaque(false);
+
+    // Loại phim
+    JLabel lblLoai = new JLabel("<html><b>Loại:</b> " +
+            escapeHtml(loai != null ? loai : "Không rõ") + "</html>");
+    lblLoai.setFont(SCHEDULE_FONT);
+    container.add(lblLoai);
+
+    container.add(Box.createVerticalStrut(10));
+
+    // Thời lượng
+    String tgText = "<html><b>Thời lượng:</b> " +
+            ((thoiLuong != null && thoiLuong > 0) ? thoiLuong + " phút" : "—") + "</html>";
+    JLabel lblTg = new JLabel(tgText);
+    lblTg.setFont(SCHEDULE_FONT);
+    container.add(lblTg);
+
+    container.add(Box.createVerticalStrut(5));
+
+    // Mô tả
+    JLabel lblMoTa = new JLabel("<html><b>Mô tả:</b> " +
+            escapeHtml(moTa != null ? moTa : "") + "</html>");
+    lblMoTa.setFont(new Font("Arial", Font.PLAIN, 13));
+    container.add(lblMoTa);
+
+    return container;
+}
+private String escapeHtml(String s) {
+    if (s == null) return "";
+    return s.replace("&", "&amp;")
+            .replace("<", "&lt;")
+            .replace(">", "&gt;")
+            .replace("\"", "&quot;");
+}
 private void hienThiLichChieu(Phim phim) {
-    pnlChiTiet.removeAll();
-    pnlChiTiet.setLayout(new BoxLayout(pnlChiTiet, BoxLayout.Y_AXIS));
-    pnlChiTiet.setBackground(Color.WHITE);
+    pnlChiTietContent.removeAll();
 
-    String tenPhim = phim.getTenPhim() == null ? "" : phim.getTenPhim();
+    // Tiêu đề phim
+    String tenPhim = phim.getTenPhim() != null ? phim.getTenPhim() : "";
+    JLabel lblTitle = new JLabel("<html><div style='text-align:center;width:140px;'>"
+            + escapeHtml(tenPhim) + "</div></html>", JLabel.CENTER);
+    lblTitle.setFont(new Font("Arial", Font.BOLD, 18));
+    lblTitle.setBorder(BorderFactory.createEmptyBorder(10, 10, 5, 10));
+    makeFullWidth(lblTitle);
+    pnlChiTietContent.add(lblTitle);
 
-    // --- Title ---
-    // CARD_W = 150, trừ padding → lấy khoảng 140
-JLabel lblTitle = new JLabel(escapeHtmlHtmlCenter(tenPhim, 140), JLabel.CENTER);
-lblTitle.setFont(new Font("Arial", Font.BOLD, 18));
-lblTitle.setBorder(BorderFactory.createEmptyBorder(10, 10, 5, 10));
-lblTitle.setToolTipText(tenPhim);
-makeFullWidth(lblTitle);
-pnlChiTiet.add(lblTitle);
+    pnlChiTietContent.add(Box.createVerticalStrut(8));
+    pnlChiTietContent.add(taoFullWidthSeparator());
 
-
-    // --- Separator ---
-    pnlChiTiet.add(Box.createVerticalStrut(4));
-    Component sep = taoFullWidthSeparator();
-    pnlChiTiet.add(sep);
-    pnlChiTiet.add(Box.createVerticalStrut(8));
-
-    // --- Ngày ---
-    LocalDate homNay = LocalDate.now();
-    JLabel lblNgay = new JLabel("Suất chiếu hôm nay: " + homNay, JLabel.CENTER);
+    // Ngày chiếu
+    LocalDate ngayFilter = getNgayChieuFilter();
+    JLabel lblNgay = new JLabel("Suất chiếu ngày: " + ngayFilter.format(DATE_FMT), JLabel.CENTER);
     lblNgay.setFont(new Font("Arial", Font.ITALIC, 13));
-    lblNgay.setForeground(Color.DARK_GRAY);
-    lblNgay.setBorder(BorderFactory.createEmptyBorder(0, 10, 10, 10));
     makeFullWidth(lblNgay);
-    pnlChiTiet.add(lblNgay);
+    pnlChiTietContent.add(lblNgay);
 
-    // --- Data ---
+    // Lấy danh sách suất chiếu
     QuanLySuatChieuDao dao = new QuanLySuatChieuDaoImpl();
-    java.sql.Date ngayHienTai = java.sql.Date.valueOf(homNay);
-    List<SuatChieu> dsXuat = dao.findByNgayVaPhim(ngayHienTai, phim.getMaPhim());
-
-    // // DEBUG (bật khi cần)
-    // System.out.println("DEBUG >> phim=" + phim.getMaPhim() + ", homNay=" + homNay
-    //         + ", soSuat=" + (dsXuat == null ? "null" : dsXuat.size()));
+    java.sql.Date sqlDate = java.sql.Date.valueOf(ngayFilter);
+    List<SuatChieu> dsXuat = dao.findByNgayVaPhim(sqlDate, phim.getMaPhim());
 
     if (dsXuat == null || dsXuat.isEmpty()) {
-        JLabel lbl = new JLabel("Không có suất chiếu hôm nay.", JLabel.CENTER);
+        JLabel lbl = new JLabel("Không có suất chiếu.", JLabel.CENTER);
         lbl.setFont(new Font("Arial", Font.ITALIC, 14));
         lbl.setForeground(Color.GRAY);
-        lbl.setBorder(BorderFactory.createEmptyBorder(20, 10, 20, 10));
         makeFullWidth(lbl);
-        pnlChiTiet.add(lbl);
+        pnlChiTietContent.add(lbl);
     } else {
+        dsXuat.sort(Comparator.comparing(SuatChieu::getGioChieu));
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm");
 
         JPanel listPanel = new JPanel();
         listPanel.setLayout(new BoxLayout(listPanel, BoxLayout.Y_AXIS));
-        listPanel.setOpaque(false);
-        listPanel.setAlignmentX(Component.CENTER_ALIGNMENT); // block giữa
 
         for (int i = 0; i < dsXuat.size(); i++) {
             Component row = taoDongSuatChieuCenter(dsXuat.get(i), dtf);
             listPanel.add(row);
-            if (i < dsXuat.size() - 1) {
-                listPanel.add(Box.createVerticalStrut(15)); // <<< KHOẢNG CÁCH 15PX
-            }
+            if (i < dsXuat.size() - 1) listPanel.add(Box.createVerticalStrut(15));
         }
-
         makeFullWidth(listPanel);
-        pnlChiTiet.add(listPanel);
+        pnlChiTietContent.add(listPanel);
     }
 
-    pnlChiTiet.add(Box.createVerticalStrut(20));
-    pnlChiTiet.revalidate();
-    pnlChiTiet.repaint();
+    pnlChiTietContent.revalidate();
+    pnlChiTietContent.repaint();
 }
-
-// ==== tạo 1 dòng suất chiếu, căn giữa ====
+private static final DateTimeFormatter DATE_FMT = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+private void makeFullWidth(JComponent c) {
+    c.setAlignmentX(Component.CENTER_ALIGNMENT); // căn giữa theo X
+    Dimension pref = c.getPreferredSize();
+    // rộng vô hạn để BoxLayout dàn hết, cao theo kích thước gốc
+    c.setMaximumSize(new Dimension(Integer.MAX_VALUE, pref.height));
+}
 private Component taoDongSuatChieuCenter(SuatChieu x, DateTimeFormatter dtf) {
     LocalTime gio = x.getGioChieu();
     String gioText = (gio != null ? gio.format(dtf) : "??:??");
@@ -340,48 +484,100 @@ private Component taoDongSuatChieuCenter(SuatChieu x, DateTimeFormatter dtf) {
     lblShow.setBackground(Color.WHITE);
     lblShow.setBorder(BorderFactory.createCompoundBorder(
             BorderFactory.createLineBorder(Color.LIGHT_GRAY),
-            BorderFactory.createEmptyBorder(5, 25, 5, 25) // padding trong nút; tăng chút cho dễ click
+            BorderFactory.createEmptyBorder(5, 25, 5, 25)
     ));
 
     lblShow.addMouseListener(new MouseAdapter() {
-        @Override public void mouseEntered(MouseEvent e) { lblShow.setBackground(CARD_BG_HOVER); }
-        @Override public void mouseExited (MouseEvent e) { lblShow.setBackground(Color.WHITE); }
-        // @Override public void mouseClicked(MouseEvent e) { openBooking(x); } // nếu cần
+        @Override
+        public void mouseEntered(MouseEvent e) {
+            lblShow.setBackground(CARD_BG_HOVER);
+        }
+
+        @Override
+        public void mouseExited(MouseEvent e) {
+            lblShow.setBackground(Color.WHITE);
+        }
     });
 
     JPanel row = new JPanel(new BorderLayout());
     row.setOpaque(false);
-    row.setAlignmentX(Component.CENTER_ALIGNMENT); // hàng giữa
+    row.setAlignmentX(Component.CENTER_ALIGNMENT);
     row.add(lblShow, BorderLayout.CENTER);
-
-    // Không ép max width vô hạn ở đây; để row rộng = lblShow → nhìn đúng “nút giữa”
-    // Nếu muốn hàng kéo full ngang: bỏ comment dưới
-    // row.setMaximumSize(new Dimension(Integer.MAX_VALUE, row.getPreferredSize().height));
-
     return row;
 }
+private Component taoFullWidthSeparator() {
+    JPanel wrap = new JPanel(new BorderLayout());
+    wrap.setOpaque(false);
+    JSeparator sep = new JSeparator(SwingConstants.HORIZONTAL);
+    wrap.add(sep, BorderLayout.CENTER);
+    wrap.setMaximumSize(new Dimension(Integer.MAX_VALUE, 1));
+    wrap.setAlignmentX(Component.LEFT_ALIGNMENT);
+    return wrap;
+}
+private LocalDate getNgayChieuFilter() {
+    return coerceNgayChieuOrToday();
+}
 
+private LocalDate coerceNgayChieuOrToday() {
+    String raw = txtNgayChieu.getText();
+    if (raw == null) raw = "";
+    String text = raw.trim();
 
-
-
-    private String escapeHtml(String s) {
-        if (s == null) {
-            return "";
-        }
-        return s.replace("&", "&amp;")
-                .replace("<", "&lt;")
-                .replace(">", "&gt;")
-                .replace("\"", "&quot;");
+    if (text.isEmpty() || text.equalsIgnoreCase("jTextField1") || !isValidDate(text)) {
+        LocalDate today = LocalDate.now();
+        txtNgayChieu.setText(today.format(DATE_FMT)); // gán lại vào UI
+        return today;
     }
 
-    private Component taoFullWidthSeparator() {
-        JPanel wrap = new JPanel(new BorderLayout());
-        wrap.setOpaque(false);
-        JSeparator sep = new JSeparator(SwingConstants.HORIZONTAL);
-        wrap.add(sep, BorderLayout.CENTER);
-        wrap.setMaximumSize(new Dimension(Integer.MAX_VALUE, 1));
-        wrap.setAlignmentX(Component.LEFT_ALIGNMENT);
-        return wrap;
+    return LocalDate.parse(text, DATE_FMT);
+}
+
+private boolean isValidDate(String s) {
+    try {
+        LocalDate.parse(s, DATE_FMT);
+        return true;
+    } catch (DateTimeParseException ex) {
+        return false;
+    }
+}
+private ImageIcon loadPosterIcon(String fileName, int targetW, int targetH) {
+    if (fileName == null || fileName.isBlank()) {
+        return null;
     }
 
+    // Ưu tiên tìm trong thư mục "images"
+    File f = new File("images", fileName);
+    if (f.exists()) {
+        return scaleIcon(new ImageIcon(f.getAbsolutePath()), targetW, targetH);
+    }
+
+    // Nếu không có, thử tìm trong resources
+    URL url = getClass().getResource("/images/" + fileName);
+    if (url != null) {
+        return scaleIcon(new ImageIcon(url), targetW, targetH);
+    }
+
+    return null;
+}
+
+// Hàm scale ảnh theo tỉ lệ
+private ImageIcon scaleIcon(ImageIcon raw, int targetW, int targetH) {
+    if (raw.getIconWidth() <= 0 || raw.getIconHeight() <= 0) {
+        return null;
+    }
+    double scale = Math.min((double) targetW / raw.getIconWidth(), (double) targetH / raw.getIconHeight());
+    int w = (int) (raw.getIconWidth() * scale);
+    int h = (int) (raw.getIconHeight() * scale);
+    Image scaled = raw.getImage().getScaledInstance(w, h, Image.SCALE_SMOOTH);
+    return new ImageIcon(scaled);
+}
+private void ensureNgayChieuDefaultToday() {
+    String raw = txtNgayChieu.getText();
+    if (raw == null) raw = "";
+    String text = raw.trim();
+
+    if (text.isEmpty() || text.equalsIgnoreCase("jTextField1") || !isValidDate(text)) {
+        txtNgayChieu.setText(LocalDate.now().format(DATE_FMT));
+    }
+}
 }
