@@ -312,6 +312,7 @@
                 <Column editable="true" title="" type="java.lang.Boolean"/>
               </Table>
             </Property>
+            <Property name="rowHeight" type="int" value="25"/>
           </Properties>
           <Events>
             <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="tblGheMouseClicked"/>

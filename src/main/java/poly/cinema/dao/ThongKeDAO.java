@@ -8,12 +8,13 @@ import java.util.Date;
 import java.util.List;
 import poly.cinema.entity.ThongKe;
 
-
 /**
  *
  * @author KhanhLinh
  */
 public interface ThongKeDAO {
 
-    List<ThongKe.ByUser> getByUser(Date begin, Date end); 
+    List<ThongKe.DoanhThuPhim> getDoanhThuPhim(Date begin, Date end);
+    List<ThongKe.DoanhThuSanPham> getDoanhThuSanPham(Date begin, Date end);
+
 }

@@ -1,8 +1,17 @@
 package poly.cinema.ui;
 
 import java.awt.CardLayout;
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Cursor;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 import poly.cinema.util.XAuth;
 import poly.cinema.util.XDialog;
 import poly.cinema.util.XIcon;
@@ -27,7 +36,7 @@ public class FCinema_Frame extends javax.swing.JFrame implements FCinema_Control
 //        pnlBanHang = new BanHang();
         pnlMainContent.removeAll();
         pnlMainContent.setLayout(new CardLayout());
-        
+
         pnlQuanLyPhim = new poly.cinema.ui.manager.QuanLyPhim();
         pnlQuanLyPhongChieu = new poly.cinema.ui.manager.QuanLiPhongChieu();
         pnlDoiMatKhau = new poly.cinema.ui.DoiMatKhau();
@@ -52,12 +61,14 @@ public class FCinema_Frame extends javax.swing.JFrame implements FCinema_Control
         pnlMainContent.add(pnlQuanLyGhe, "pnlQuanLyGhe");
         pnlMainContent.add(pnlQuanLySanPham, "pnlQuanLySanPham");
         pnlMainContent.add(pnlQuanLySuatChieu, "pnlQuanLySuatChieu");
-        
+
         pnlMainContent.add(pnlTrangchu, "pnlTrangchu");
-        
+
         // Mặc định hiển thị Trang chủ
         CardLayout cl = (CardLayout) pnlMainContent.getLayout();
         cl.show(pnlMainContent, "pnlTrangchu");
+        addHoverEffectToPanelLabels(pnlManager);
+
     }
 
     /**
@@ -72,24 +83,24 @@ public class FCinema_Frame extends javax.swing.JFrame implements FCinema_Control
         pnlCenter = new javax.swing.JPanel();
         pnlManager = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
-        jButton15 = new javax.swing.JButton();
-        jLabel4 = new javax.swing.JLabel();
-        btnQLHoaDon = new javax.swing.JButton();
-        btnQLNHANVIEN = new javax.swing.JButton();
-        btnQLGhe = new javax.swing.JButton();
-        btnBanVe = new javax.swing.JButton();
-        btnQLSanPham = new javax.swing.JButton();
-        btnQLPhim = new javax.swing.JButton();
-        btnQLPhongChieu = new javax.swing.JButton();
-        btnLichSuBanHang = new javax.swing.JButton();
-        btnXemLichChieu = new javax.swing.JButton();
-        jButton26 = new javax.swing.JButton();
-        btnThongKeDoanhThu = new javax.swing.JButton();
-        jButton28 = new javax.swing.JButton();
         jSeparator1 = new javax.swing.JSeparator();
-        btnsuatchieu = new javax.swing.JButton();
+        lblExit = new javax.swing.JLabel();
+        lblsuatchieu = new javax.swing.JLabel();
+        lblLichSuBanHang = new javax.swing.JLabel();
+        lblQLNHANVIEN = new javax.swing.JLabel();
+        lblQLDoanhthu = new javax.swing.JLabel();
+        lblQLHoaDon = new javax.swing.JLabel();
+        lblBanVe = new javax.swing.JLabel();
+        lblQLGhe = new javax.swing.JLabel();
+        lblQLPhongChieu = new javax.swing.JLabel();
+        lblQLSanPham = new javax.swing.JLabel();
+        lblQLPhim = new javax.swing.JLabel();
+        lblXemLichChieu = new javax.swing.JLabel();
+        lbldoimk = new javax.swing.JLabel();
+        lbldãnguat = new javax.swing.JLabel();
+        lblQLPhongChieu1 = new javax.swing.JLabel();
+        lblQLPhongChieu2 = new javax.swing.JLabel();
         pnlMainContent = new javax.swing.JPanel();
-        pnlDoiMatKhau = new javax.swing.JPanel();
         pnlQuanLyPhongChieu = new javax.swing.JPanel();
         pnlQuanLyGhe = new javax.swing.JPanel();
         pnlBanVe = new javax.swing.JPanel();
@@ -103,7 +114,11 @@ public class FCinema_Frame extends javax.swing.JFrame implements FCinema_Control
         pnlThongKeDoanhThu = new javax.swing.JPanel();
         pnlLichSuBanHang = new javax.swing.JPanel();
         pnlQuanLySuatChieu = new javax.swing.JPanel();
+        pnlDoiMatKhau = new javax.swing.JPanel();
+        pnlLoaiPhim = new javax.swing.JPanel();
+        pnlLoaiGhe = new javax.swing.JPanel();
         lblFullname = new javax.swing.JLabel();
+        lblMenu = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -111,223 +126,201 @@ public class FCinema_Frame extends javax.swing.JFrame implements FCinema_Control
         pnlCenter.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         pnlManager.setBackground(new java.awt.Color(204, 204, 204));
+        pnlManager.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/poly/cafe/icons/logonho.png"))); // NOI18N
-
-        jButton15.setText("Trang chủ");
-        jButton15.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-        jButton15.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton15ActionPerformed(evt);
+        jLabel3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel3MouseClicked(evt);
             }
         });
-
-        jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel4.setForeground(new java.awt.Color(255, 51, 51));
-        jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel4.setText("Quản lý");
-        jLabel4.setToolTipText("");
-
-        btnQLHoaDon.setText("QUẢN LÝ HÓA ĐƠN");
-        btnQLHoaDon.setBorder(null);
-        btnQLHoaDon.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnQLHoaDonActionPerformed(evt);
-            }
-        });
-
-        btnQLNHANVIEN.setText("QUẢN LÝ NHÂN VIÊN");
-        btnQLNHANVIEN.setBorder(null);
-        btnQLNHANVIEN.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnQLNHANVIENActionPerformed(evt);
-            }
-        });
-
-        btnQLGhe.setText("QUẢN LÝ GHẾ");
-        btnQLGhe.setBorder(null);
-        btnQLGhe.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnQLGheActionPerformed(evt);
-            }
-        });
-
-        btnBanVe.setText("BÁN VÉ");
-        btnBanVe.setBorder(null);
-        btnBanVe.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnBanVeActionPerformed(evt);
-            }
-        });
-
-        btnQLSanPham.setText("QUẢN LÝ SẢN PHẨM ");
-        btnQLSanPham.setBorder(null);
-        btnQLSanPham.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnQLSanPhamActionPerformed(evt);
-            }
-        });
-
-        btnQLPhim.setText("QUẢN LÝ PHIM");
-        btnQLPhim.setBorder(null);
-        btnQLPhim.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnQLPhimActionPerformed(evt);
-            }
-        });
-
-        btnQLPhongChieu.setText("QUẢN LÝ PHÒNG CHIẾU");
-        btnQLPhongChieu.setBorder(null);
-        btnQLPhongChieu.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnQLPhongChieuActionPerformed(evt);
-            }
-        });
-
-        btnLichSuBanHang.setText("LỊCH SỬ BÁN HÀNG");
-        btnLichSuBanHang.setBorder(null);
-        btnLichSuBanHang.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnLichSuBanHangActionPerformed(evt);
-            }
-        });
-
-        btnXemLichChieu.setText("XEM LỊCH CHIẾU");
-        btnXemLichChieu.setBorder(null);
-        btnXemLichChieu.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnXemLichChieuActionPerformed(evt);
-            }
-        });
-
-        jButton26.setText("ĐĂNG XUẤT");
-        jButton26.setBorder(null);
-        jButton26.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton26ActionPerformed(evt);
-            }
-        });
-
-        btnThongKeDoanhThu.setText("THỐNG KÊ DOANH THU");
-        btnThongKeDoanhThu.setBorder(null);
-        btnThongKeDoanhThu.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnThongKeDoanhThuActionPerformed(evt);
-            }
-        });
-
-        jButton28.setText("ĐỔI MẬT KHẨU");
-        jButton28.setBorder(null);
-        jButton28.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton28ActionPerformed(evt);
-            }
-        });
+        pnlManager.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 10, 127, 111));
 
         jSeparator1.setBackground(new java.awt.Color(255, 255, 255));
         jSeparator1.setForeground(new java.awt.Color(255, 255, 255));
+        pnlManager.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 670, 240, 10));
 
-        btnsuatchieu.setText("QUẢN LÝ SUẤT CHIÊU");
-        btnsuatchieu.setBorder(null);
-        btnsuatchieu.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnsuatchieuActionPerformed(evt);
+        lblExit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/poly/cafe/icons/Menu.png"))); // NOI18N
+        lblExit.setText("jLabel2");
+        lblExit.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblExitMouseClicked(evt);
             }
         });
+        pnlManager.add(lblExit, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 50, 40));
 
-        javax.swing.GroupLayout pnlManagerLayout = new javax.swing.GroupLayout(pnlManager);
-        pnlManager.setLayout(pnlManagerLayout);
-        pnlManagerLayout.setHorizontalGroup(
-            pnlManagerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnlManagerLayout.createSequentialGroup()
-                .addGroup(pnlManagerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(pnlManagerLayout.createSequentialGroup()
-                        .addGroup(pnlManagerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(pnlManagerLayout.createSequentialGroup()
-                                .addGap(49, 49, 49)
-                                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(pnlManagerLayout.createSequentialGroup()
-                                .addGap(29, 29, 29)
-                                .addGroup(pnlManagerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jButton26, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(pnlManagerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                        .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(jButton15, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(btnQLHoaDon, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(btnQLNHANVIEN, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(btnQLGhe, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(btnBanVe, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(btnQLSanPham, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(btnLichSuBanHang, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(btnXemLichChieu, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(btnThongKeDoanhThu, javax.swing.GroupLayout.DEFAULT_SIZE, 166, Short.MAX_VALUE)
-                                        .addComponent(btnQLPhongChieu, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(btnQLPhim, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(jButton28, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(btnsuatchieu, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
-                        .addGap(0, 29, Short.MAX_VALUE))
-                    .addGroup(pnlManagerLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jSeparator1)))
-                .addContainerGap())
-        );
-        pnlManagerLayout.setVerticalGroup(
-            pnlManagerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnlManagerLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton15, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(10, 10, 10)
-                .addComponent(jLabel4)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnQLNHANVIEN, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnQLHoaDon, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnBanVe, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnQLGhe, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnQLPhongChieu, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnQLSanPham, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnQLPhim, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnXemLichChieu, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnThongKeDoanhThu, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnLichSuBanHang, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnsuatchieu, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(2, 2, 2)
-                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(6, 6, 6)
-                .addComponent(jButton28, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton26, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(9, Short.MAX_VALUE))
-        );
+        lblsuatchieu.setBackground(new java.awt.Color(255, 255, 255));
+        lblsuatchieu.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        lblsuatchieu.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblsuatchieu.setText("QUẢN LÝ SUẤT CHIÊU");
+        lblsuatchieu.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblsuatchieuMouseClicked(evt);
+            }
+        });
+        pnlManager.add(lblsuatchieu, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 510, 240, 37));
 
-        pnlCenter.add(pnlManager, new org.netbeans.lib.awtextra.AbsoluteConstraints(4, 0, 230, 720));
+        lblLichSuBanHang.setBackground(new java.awt.Color(255, 255, 255));
+        lblLichSuBanHang.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        lblLichSuBanHang.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblLichSuBanHang.setText("LỊCH SỬ BÁN HÀNG");
+        lblLichSuBanHang.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblLichSuBanHangMouseClicked(evt);
+            }
+        });
+        pnlManager.add(lblLichSuBanHang, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 270, 240, 37));
+
+        lblQLNHANVIEN.setBackground(new java.awt.Color(255, 255, 255));
+        lblQLNHANVIEN.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        lblQLNHANVIEN.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblQLNHANVIEN.setText("QUẢN LÝ NHÂN VIÊN");
+        lblQLNHANVIEN.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblQLNHANVIENMouseClicked(evt);
+            }
+        });
+        pnlManager.add(lblQLNHANVIEN, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 470, 240, 37));
+
+        lblQLDoanhthu.setBackground(new java.awt.Color(255, 255, 255));
+        lblQLDoanhthu.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        lblQLDoanhthu.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblQLDoanhthu.setText("THỐNG KÊ DOANH THU");
+        lblQLDoanhthu.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblQLDoanhthuMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                lblQLDoanhthuMouseEntered(evt);
+            }
+        });
+        pnlManager.add(lblQLDoanhthu, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 230, 240, 37));
+
+        lblQLHoaDon.setBackground(new java.awt.Color(255, 255, 255));
+        lblQLHoaDon.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        lblQLHoaDon.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblQLHoaDon.setText("QUẢN LÝ HÓA ĐƠN");
+        lblQLHoaDon.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblQLHoaDonMouseClicked(evt);
+            }
+        });
+        pnlManager.add(lblQLHoaDon, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 430, 240, 37));
+
+        lblBanVe.setBackground(new java.awt.Color(255, 255, 255));
+        lblBanVe.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        lblBanVe.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblBanVe.setText("BÁN VÉ");
+        lblBanVe.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblBanVeMouseClicked(evt);
+            }
+        });
+        pnlManager.add(lblBanVe, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 150, 240, 37));
+
+        lblQLGhe.setBackground(new java.awt.Color(255, 255, 255));
+        lblQLGhe.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        lblQLGhe.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblQLGhe.setText("QUẢN LÝ GHẾ");
+        lblQLGhe.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblQLGheMouseClicked(evt);
+            }
+        });
+        pnlManager.add(lblQLGhe, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 390, 240, 37));
+
+        lblQLPhongChieu.setBackground(new java.awt.Color(255, 255, 255));
+        lblQLPhongChieu.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        lblQLPhongChieu.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblQLPhongChieu.setText("QUẢN LÝ PHÒNG CHIẾU");
+        lblQLPhongChieu.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblQLPhongChieuMouseClicked(evt);
+            }
+        });
+        pnlManager.add(lblQLPhongChieu, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 550, 240, 37));
+
+        lblQLSanPham.setBackground(new java.awt.Color(255, 255, 255));
+        lblQLSanPham.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        lblQLSanPham.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblQLSanPham.setText("QUẢN LÝ SẢN PHẨM ");
+        lblQLSanPham.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblQLSanPhamMouseClicked(evt);
+            }
+        });
+        pnlManager.add(lblQLSanPham, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 310, 240, 37));
+
+        lblQLPhim.setBackground(new java.awt.Color(255, 255, 255));
+        lblQLPhim.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        lblQLPhim.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblQLPhim.setText("QUẢN LÝ PHIM");
+        lblQLPhim.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblQLPhimMouseClicked(evt);
+            }
+        });
+        pnlManager.add(lblQLPhim, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 350, 240, 37));
+
+        lblXemLichChieu.setBackground(new java.awt.Color(255, 255, 255));
+        lblXemLichChieu.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        lblXemLichChieu.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblXemLichChieu.setText("XEM LỊCH CHIẾU");
+        lblXemLichChieu.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblXemLichChieuMouseClicked(evt);
+            }
+        });
+        pnlManager.add(lblXemLichChieu, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 190, 240, 37));
+
+        lbldoimk.setBackground(new java.awt.Color(255, 255, 255));
+        lbldoimk.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        lbldoimk.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lbldoimk.setText("ĐỔI MẬT KHẨU");
+        lbldoimk.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lbldoimkMouseClicked(evt);
+            }
+        });
+        pnlManager.add(lbldoimk, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 680, 234, 37));
+
+        lbldãnguat.setBackground(new java.awt.Color(255, 255, 255));
+        lbldãnguat.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        lbldãnguat.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lbldãnguat.setText("ĐĂNG XUẤT");
+        lbldãnguat.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lbldãnguatMouseClicked(evt);
+            }
+        });
+        pnlManager.add(lbldãnguat, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 720, 234, 37));
+
+        lblQLPhongChieu1.setBackground(new java.awt.Color(255, 255, 255));
+        lblQLPhongChieu1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        lblQLPhongChieu1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblQLPhongChieu1.setText("QUẢN LÝ LOẠI GHẾ");
+        lblQLPhongChieu1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblQLPhongChieu1MouseClicked(evt);
+            }
+        });
+        pnlManager.add(lblQLPhongChieu1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 630, 240, 37));
+
+        lblQLPhongChieu2.setBackground(new java.awt.Color(255, 255, 255));
+        lblQLPhongChieu2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        lblQLPhongChieu2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblQLPhongChieu2.setText("QUẢN LÝ LOẠI PHIM");
+        lblQLPhongChieu2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblQLPhongChieu2MouseClicked(evt);
+            }
+        });
+        pnlManager.add(lblQLPhongChieu2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 590, 240, 37));
+
+        pnlCenter.add(pnlManager, new org.netbeans.lib.awtextra.AbsoluteConstraints(4, 0, 0, 760));
 
         pnlMainContent.setLayout(new java.awt.CardLayout());
-
-        javax.swing.GroupLayout pnlDoiMatKhauLayout = new javax.swing.GroupLayout(pnlDoiMatKhau);
-        pnlDoiMatKhau.setLayout(pnlDoiMatKhauLayout);
-        pnlDoiMatKhauLayout.setHorizontalGroup(
-            pnlDoiMatKhauLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1110, Short.MAX_VALUE)
-        );
-        pnlDoiMatKhauLayout.setVerticalGroup(
-            pnlDoiMatKhauLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 720, Short.MAX_VALUE)
-        );
-
-        pnlMainContent.add(pnlDoiMatKhau, "card13");
 
         javax.swing.GroupLayout pnlQuanLyPhongChieuLayout = new javax.swing.GroupLayout(pnlQuanLyPhongChieu);
         pnlQuanLyPhongChieu.setLayout(pnlQuanLyPhongChieuLayout);
@@ -488,103 +481,232 @@ public class FCinema_Frame extends javax.swing.JFrame implements FCinema_Control
 
         pnlMainContent.add(pnlQuanLySuatChieu, "card3");
 
-        pnlCenter.add(pnlMainContent, new org.netbeans.lib.awtextra.AbsoluteConstraints(234, 0, 1110, 720));
+        javax.swing.GroupLayout pnlDoiMatKhauLayout = new javax.swing.GroupLayout(pnlDoiMatKhau);
+        pnlDoiMatKhau.setLayout(pnlDoiMatKhauLayout);
+        pnlDoiMatKhauLayout.setHorizontalGroup(
+            pnlDoiMatKhauLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 1110, Short.MAX_VALUE)
+        );
+        pnlDoiMatKhauLayout.setVerticalGroup(
+            pnlDoiMatKhauLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 720, Short.MAX_VALUE)
+        );
+
+        pnlMainContent.add(pnlDoiMatKhau, "card13");
+
+        javax.swing.GroupLayout pnlLoaiPhimLayout = new javax.swing.GroupLayout(pnlLoaiPhim);
+        pnlLoaiPhim.setLayout(pnlLoaiPhimLayout);
+        pnlLoaiPhimLayout.setHorizontalGroup(
+            pnlLoaiPhimLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 1110, Short.MAX_VALUE)
+        );
+        pnlLoaiPhimLayout.setVerticalGroup(
+            pnlLoaiPhimLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 720, Short.MAX_VALUE)
+        );
+
+        pnlMainContent.add(pnlLoaiPhim, "card15");
+
+        javax.swing.GroupLayout pnlLoaiGheLayout = new javax.swing.GroupLayout(pnlLoaiGhe);
+        pnlLoaiGhe.setLayout(pnlLoaiGheLayout);
+        pnlLoaiGheLayout.setHorizontalGroup(
+            pnlLoaiGheLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 1110, Short.MAX_VALUE)
+        );
+        pnlLoaiGheLayout.setVerticalGroup(
+            pnlLoaiGheLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 720, Short.MAX_VALUE)
+        );
+
+        pnlMainContent.add(pnlLoaiGhe, "card16");
+
+        pnlCenter.add(pnlMainContent, new org.netbeans.lib.awtextra.AbsoluteConstraints(4, 40, 1110, 720));
 
         lblFullname.setText("jLabel5");
-        pnlCenter.add(lblFullname, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 50, 60, 50));
+        pnlCenter.add(lblFullname, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 630, 60, 50));
+
+        lblMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/poly/cafe/icons/Menu.png"))); // NOI18N
+        lblMenu.setText("jLabel2");
+        lblMenu.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblMenuMouseClicked(evt);
+            }
+        });
+        pnlCenter.add(lblMenu, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 50, 40));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(pnlCenter, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(pnlCenter, javax.swing.GroupLayout.DEFAULT_SIZE, 1122, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(pnlCenter, javax.swing.GroupLayout.PREFERRED_SIZE, 717, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(pnlCenter, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnQLPhimActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnQLPhimActionPerformed
-        CardLayout cl = (CardLayout) pnlMainContent.getLayout();
-        cl.show(pnlMainContent, "pnlQuanLyPhim");
-        ((poly.cinema.ui.manager.QuanLyPhim) pnlQuanLyPhim).open();
-    }//GEN-LAST:event_btnQLPhimActionPerformed
+    private void lblMenuMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblMenuMouseClicked
+        OpenMenuBar();
+    }//GEN-LAST:event_lblMenuMouseClicked
 
-    private void btnBanVeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBanVeActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnBanVeActionPerformed
+    private void lblExitMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblExitMouseClicked
+        ExitMenuBar();
+    }//GEN-LAST:event_lblExitMouseClicked
 
-    private void jButton15ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton15ActionPerformed
-        CardLayout cl = (CardLayout) pnlMainContent.getLayout();
-        cl.show(pnlMainContent, "pnlTrangchu");
-    }//GEN-LAST:event_jButton15ActionPerformed
-
-    private void btnQLPhongChieuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnQLPhongChieuActionPerformed
-        CardLayout cl = (CardLayout) pnlMainContent.getLayout();
-        cl.show(pnlMainContent, "pnlQuanLyPhongChieu");
-        ((poly.cinema.ui.manager.QuanLiPhongChieu) pnlQuanLyPhongChieu).open();
-    }//GEN-LAST:event_btnQLPhongChieuActionPerformed
-
-    private void jButton26ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton26ActionPerformed
-        logout();
-    }//GEN-LAST:event_jButton26ActionPerformed
-
-    private void jButton28ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton28ActionPerformed
-        CardLayout cl = (CardLayout) pnlMainContent.getLayout();
-        cl.show(pnlMainContent, "pnlDoiMatKhau");
-        ((poly.cinema.ui.DoiMatKhau) pnlDoiMatKhau).open();
-    }//GEN-LAST:event_jButton28ActionPerformed
-
-    private void btnQLNHANVIENActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnQLNHANVIENActionPerformed
-       CardLayout cl = (CardLayout) pnlMainContent.getLayout();
-        cl.show(pnlMainContent, "pnlQuanLyNhanVien");
-        ((poly.cinema.ui.manager.QuanLiNhanVien) pnlQuanLyNhanVien).open();
-    }//GEN-LAST:event_btnQLNHANVIENActionPerformed
-
-    private void btnThongKeDoanhThuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThongKeDoanhThuActionPerformed
-        CardLayout cl = (CardLayout) pnlMainContent.getLayout();
-        cl.show(pnlMainContent, "pnlThongKeDoanhThu");
-        ((poly.cinema.ui.manager.ThongKePanel) pnlThongKeDoanhThu).open();
-    }//GEN-LAST:event_btnThongKeDoanhThuActionPerformed
-
-    private void btnXemLichChieuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXemLichChieuActionPerformed
-        CardLayout cl = (CardLayout) pnlMainContent.getLayout();
-        cl.show(pnlMainContent, "pnlXemLichChieu");
-        ((poly.cinema.ui.manager.XemLichChieu) pnlXemLichChieu).open();
-    }//GEN-LAST:event_btnXemLichChieuActionPerformed
-
-    private void btnQLHoaDonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnQLHoaDonActionPerformed
-        CardLayout cl = (CardLayout) pnlMainContent.getLayout();
-        cl.show(pnlMainContent, "pnlQuanLyHoaDon");
-        ((poly.cinema.ui.manager.QuanLyHoaDonJpanel) pnlQuanLyHoaDon).open();
-    }//GEN-LAST:event_btnQLHoaDonActionPerformed
-
-    private void btnLichSuBanHangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLichSuBanHangActionPerformed
-        CardLayout cl = (CardLayout) pnlMainContent.getLayout();
-        cl.show(pnlMainContent, "pnlLichSuBanHang");
-        ((poly.cinema.ui.manager.LichSuBanHang) pnlLichSuBanHang).open();
-    }//GEN-LAST:event_btnLichSuBanHangActionPerformed
-
-    private void btnQLGheActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnQLGheActionPerformed
-        CardLayout cl = (CardLayout) pnlMainContent.getLayout();
-        cl.show(pnlMainContent, "pnlQuanLyGhe");
-        ((poly.cinema.ui.manager.QuanLyGheJpanel) pnlQuanLyGhe).open();
-    }//GEN-LAST:event_btnQLGheActionPerformed
-
-    private void btnQLSanPhamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnQLSanPhamActionPerformed
-        CardLayout cl = (CardLayout) pnlMainContent.getLayout();
-        cl.show(pnlMainContent, "pnlQuanLySanPham");
-        ((poly.cinema.ui.manager.QuanLySanPham) pnlQuanLySanPham).open();
-    }//GEN-LAST:event_btnQLSanPhamActionPerformed
-
-    private void btnsuatchieuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnsuatchieuActionPerformed
+    private void lblsuatchieuMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblsuatchieuMouseClicked
         CardLayout cl = (CardLayout) pnlMainContent.getLayout();
         cl.show(pnlMainContent, "pnlQuanLySuatChieu");
         ((poly.cinema.ui.manager.QuanLyXuatChieu) pnlQuanLySuatChieu).open();
-    }//GEN-LAST:event_btnsuatchieuActionPerformed
+    }//GEN-LAST:event_lblsuatchieuMouseClicked
+
+    private void lblLichSuBanHangMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblLichSuBanHangMouseClicked
+        CardLayout cl = (CardLayout) pnlMainContent.getLayout();
+        cl.show(pnlMainContent, "pnlLichSuBanHang");
+        ((poly.cinema.ui.manager.LichSuBanHang) pnlLichSuBanHang).open();
+    }//GEN-LAST:event_lblLichSuBanHangMouseClicked
+
+    private void jLabel3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel3MouseClicked
+        CardLayout cl = (CardLayout) pnlMainContent.getLayout();
+        cl.show(pnlMainContent, "pnlTrangchu");
+    }//GEN-LAST:event_jLabel3MouseClicked
+
+    private void lblQLNHANVIENMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblQLNHANVIENMouseClicked
+        CardLayout cl = (CardLayout) pnlMainContent.getLayout();
+        cl.show(pnlMainContent, "pnlQuanLyNhanVien");
+        ((poly.cinema.ui.manager.QuanLiNhanVien) pnlQuanLyNhanVien).open();
+    }//GEN-LAST:event_lblQLNHANVIENMouseClicked
+
+    private void lblQLDoanhthuMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblQLDoanhthuMouseClicked
+        CardLayout cl = (CardLayout) pnlMainContent.getLayout();
+        cl.show(pnlMainContent, "pnlThongKeDoanhThu");
+        ((poly.cinema.ui.manager.ThongKePanel) pnlThongKeDoanhThu).open();
+    }//GEN-LAST:event_lblQLDoanhthuMouseClicked
+
+    private void lblQLHoaDonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblQLHoaDonMouseClicked
+        CardLayout cl = (CardLayout) pnlMainContent.getLayout();
+        cl.show(pnlMainContent, "pnlQuanLyHoaDon");
+        ((poly.cinema.ui.manager.QuanLyHoaDonJpanel) pnlQuanLyHoaDon).open();
+    }//GEN-LAST:event_lblQLHoaDonMouseClicked
+
+    private void lblBanVeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblBanVeMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_lblBanVeMouseClicked
+
+    private void lblQLGheMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblQLGheMouseClicked
+        CardLayout cl = (CardLayout) pnlMainContent.getLayout();
+        cl.show(pnlMainContent, "pnlQuanLyGhe");
+        ((poly.cinema.ui.manager.QuanLyGheJpanel) pnlQuanLyGhe).open();
+    }//GEN-LAST:event_lblQLGheMouseClicked
+
+    private void lblQLDoanhthuMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblQLDoanhthuMouseEntered
+        // TODO add your handling code here:
+    }//GEN-LAST:event_lblQLDoanhthuMouseEntered
+
+    private void lblQLPhongChieuMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblQLPhongChieuMouseClicked
+        CardLayout cl = (CardLayout) pnlMainContent.getLayout();
+        cl.show(pnlMainContent, "pnlQuanLyPhongChieu");
+        ((poly.cinema.ui.manager.QuanLiPhongChieu) pnlQuanLyPhongChieu).open();
+    }//GEN-LAST:event_lblQLPhongChieuMouseClicked
+
+    private void lblQLSanPhamMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblQLSanPhamMouseClicked
+        CardLayout cl = (CardLayout) pnlMainContent.getLayout();
+        cl.show(pnlMainContent, "pnlQuanLySanPham");
+        ((poly.cinema.ui.manager.QuanLySanPham) pnlQuanLySanPham).open();
+    }//GEN-LAST:event_lblQLSanPhamMouseClicked
+
+    private void lblQLPhimMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblQLPhimMouseClicked
+        CardLayout cl = (CardLayout) pnlMainContent.getLayout();
+        cl.show(pnlMainContent, "pnlQuanLyPhim");
+        ((poly.cinema.ui.manager.QuanLyPhim) pnlQuanLyPhim).open();
+    }//GEN-LAST:event_lblQLPhimMouseClicked
+
+    private void lblXemLichChieuMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblXemLichChieuMouseClicked
+        CardLayout cl = (CardLayout) pnlMainContent.getLayout();
+        cl.show(pnlMainContent, "pnlXemLichChieu");
+        ((poly.cinema.ui.manager.XemLichChieu) pnlXemLichChieu).open();
+    }//GEN-LAST:event_lblXemLichChieuMouseClicked
+
+    private void lbldoimkMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbldoimkMouseClicked
+        CardLayout cl = (CardLayout) pnlMainContent.getLayout();
+        cl.show(pnlMainContent, "pnlDoiMatKhau");
+        ((poly.cinema.ui.DoiMatKhau) pnlDoiMatKhau).open();
+    }//GEN-LAST:event_lbldoimkMouseClicked
+
+    private void lbldãnguatMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbldãnguatMouseClicked
+        logout();
+    }//GEN-LAST:event_lbldãnguatMouseClicked
+
+    private void lblQLPhongChieu1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblQLPhongChieu1MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_lblQLPhongChieu1MouseClicked
+
+    private void lblQLPhongChieu2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblQLPhongChieu2MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_lblQLPhongChieu2MouseClicked
+    private void addHoverEffectToPanelLabels(JPanel panel) {
+        for (Component comp : panel.getComponents()) {
+            if (comp instanceof JLabel) {
+                JLabel lbl = (JLabel) comp;
+
+                lbl.setOpaque(true); // Bắt buộc để hiện màu nền
+                lbl.setBackground(Color.LIGHT_GRAY);
+                lbl.setForeground(Color.BLACK);
+                lbl.setCursor(new Cursor(Cursor.HAND_CURSOR)); // Tay trỏ
+
+                lbl.addMouseListener(new MouseAdapter() {
+                    @Override
+                    public void mouseEntered(MouseEvent e) {
+                        lbl.setBackground(Color.BLUE);
+                        lbl.setForeground(Color.WHITE);
+                    }
+
+                    @Override
+                    public void mouseExited(MouseEvent e) {
+                        lbl.setBackground(Color.LIGHT_GRAY);
+                        lbl.setForeground(Color.BLACK);
+                    }
+                });
+            }
+        }
+    }
+
+    int width = 240;
+    int height = 760;
+
+    void OpenMenuBar() {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                for (int i = 0; i < width; i++) {
+                    pnlManager.setSize(i, height);
+                    try {
+                        Thread.sleep(1);
+                    } catch (InterruptedException ex) {
+                        Logger.getLogger(FCinema_Frame.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+            }
+        }).start();
+    }
+
+    void ExitMenuBar() {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                for (int i = width; i > 0; i--) {
+                    pnlManager.setSize(i, height);
+                    try {
+                        Thread.sleep(2);
+                    } catch (InterruptedException ex) {
+                        Logger.getLogger(FCinema_Frame.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+            }
+        }).start();
+    }
 
     /**
      * @param args the command line arguments
@@ -622,29 +744,33 @@ public class FCinema_Frame extends javax.swing.JFrame implements FCinema_Control
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnBanVe;
-    private javax.swing.JButton btnLichSuBanHang;
-    private javax.swing.JButton btnQLGhe;
-    private javax.swing.JButton btnQLHoaDon;
-    private javax.swing.JButton btnQLNHANVIEN;
-    private javax.swing.JButton btnQLPhim;
-    private javax.swing.JButton btnQLPhongChieu;
-    private javax.swing.JButton btnQLSanPham;
-    private javax.swing.JButton btnThongKeDoanhThu;
-    private javax.swing.JButton btnXemLichChieu;
-    private javax.swing.JButton btnsuatchieu;
-    private javax.swing.JButton jButton15;
-    private javax.swing.JButton jButton26;
-    private javax.swing.JButton jButton28;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JLabel lblBanVe;
+    private javax.swing.JLabel lblExit;
     private javax.swing.JLabel lblFullname;
+    private javax.swing.JLabel lblLichSuBanHang;
+    private javax.swing.JLabel lblMenu;
+    private javax.swing.JLabel lblQLDoanhthu;
+    private javax.swing.JLabel lblQLGhe;
+    private javax.swing.JLabel lblQLHoaDon;
+    private javax.swing.JLabel lblQLNHANVIEN;
+    private javax.swing.JLabel lblQLPhim;
+    private javax.swing.JLabel lblQLPhongChieu;
+    private javax.swing.JLabel lblQLPhongChieu1;
+    private javax.swing.JLabel lblQLPhongChieu2;
+    private javax.swing.JLabel lblQLSanPham;
+    private javax.swing.JLabel lblXemLichChieu;
+    private javax.swing.JLabel lbldoimk;
+    private javax.swing.JLabel lbldãnguat;
+    private javax.swing.JLabel lblsuatchieu;
     private javax.swing.JPanel pnlBanVe;
     private javax.swing.JPanel pnlCenter;
     private javax.swing.JPanel pnlDoiMatKhau;
     private javax.swing.JPanel pnlLichSuBanHang;
+    private javax.swing.JPanel pnlLoaiGhe;
+    private javax.swing.JPanel pnlLoaiPhim;
     private javax.swing.JPanel pnlMainContent;
     private javax.swing.JPanel pnlManager;
     private javax.swing.JPanel pnlQuanLyGhe;
@@ -666,11 +792,11 @@ public class FCinema_Frame extends javax.swing.JFrame implements FCinema_Control
         this.showWelcomeJDialog(this);
         this.showLoginJDialog(this);
 
-        lblFullname.setText(XAuth.user.getTen_nv());
+        lblFullname.setText(XAuth.user.getTen_nd());
         if (!XAuth.user.isVai_tro()) {
             pnlCenter.remove(pnlManager);
         }
-//        if (XAuth.user.isManager()) {
+//        if (XAuth.user.isVai_tro()) {
 //            pnlCenter.remove(pnlManager1);
 //        } 
     }
@@ -680,7 +806,7 @@ public class FCinema_Frame extends javax.swing.JFrame implements FCinema_Control
             this.dispose();
             if (XAuth.user != null) {
                 FCinema_Frame main = new FCinema_Frame();
-                lblFullname.setText(XAuth.user.getTen_nv());
+                lblFullname.setText(XAuth.user.getTen_nd());
                 if (!XAuth.user.isVai_tro()) {
                     pnlCenter.remove(pnlManager);
                 }

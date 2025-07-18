@@ -16,8 +16,8 @@ import lombok.*;
 @Data
 public class User {
 
-    private Integer ma_nv;
-    private String ten_nv;
+    private Integer ma_nd; // ma_nd thay vì ma_nv
+    private String ten_nd; // ten_nd thay vì ten_nv
     private String email;
     private String mat_khau;
     @Builder.Default
@@ -26,5 +26,5 @@ public class User {
     @Builder.Default
     private boolean hoat_dong = true;
     @Builder.Default
-    private String anh_nv = "photo.png";
+    private String anh_dai_dien = "photo.png"; // đổi từ anh_nv
 }

@@ -13,7 +13,9 @@ import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
 import poly.cinema.dao.QuanLyPhimDao;
+import poly.cinema.dao.impl.LoaiPhimDaoImpl;
 import poly.cinema.dao.impl.QuanLyPhimDaoImpl;
+import poly.cinema.entity.LoaiPhim;
 import poly.cinema.entity.Phim;
 import static poly.cinema.util.XAuth.user;
 import poly.cinema.util.XDate;
@@ -50,8 +52,6 @@ public class QuanLyPhim extends javax.swing.JPanel implements QuanLyPhimControll
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         txtTenPhim = new javax.swing.JTextField();
-        jLabel2 = new javax.swing.JLabel();
-        txtTheLoai = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         txtThoiLuong = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
@@ -67,6 +67,7 @@ public class QuanLyPhim extends javax.swing.JPanel implements QuanLyPhimControll
         jButton6 = new javax.swing.JButton();
         jButton7 = new javax.swing.JButton();
         jButton8 = new javax.swing.JButton();
+        cboLoaiPhim = new javax.swing.JComboBox<>();
         jLabel7 = new javax.swing.JLabel();
 
         setPreferredSize(new java.awt.Dimension(1110, 720));
@@ -104,6 +105,7 @@ public class QuanLyPhim extends javax.swing.JPanel implements QuanLyPhimControll
             }
         });
         tblPhim.setGridColor(new java.awt.Color(0, 0, 0));
+        tblPhim.setRowHeight(25);
         tblPhim.setShowGrid(true);
         tblPhim.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -122,15 +124,6 @@ public class QuanLyPhim extends javax.swing.JPanel implements QuanLyPhimControll
         txtTenPhim.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtTenPhimActionPerformed(evt);
-            }
-        });
-
-        jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jLabel2.setText("Thể loại: ");
-
-        txtTheLoai.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtTheLoaiActionPerformed(evt);
             }
         });
 
@@ -212,6 +205,8 @@ public class QuanLyPhim extends javax.swing.JPanel implements QuanLyPhimControll
             }
         });
 
+        cboLoaiPhim.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -222,9 +217,7 @@ public class QuanLyPhim extends javax.swing.JPanel implements QuanLyPhimControll
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtMoTa, javax.swing.GroupLayout.DEFAULT_SIZE, 251, Short.MAX_VALUE)
-                    .addComponent(txtTenPhim)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtTheLoai))
+                    .addComponent(txtTenPhim))
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(63, 63, 63)
@@ -233,7 +226,9 @@ public class QuanLyPhim extends javax.swing.JPanel implements QuanLyPhimControll
                             .addComponent(txtNgayKhoiChieu, javax.swing.GroupLayout.PREFERRED_SIZE, 265, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(79, 79, 79)
-                        .addComponent(lblAnh, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(cboLoaiPhim, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblAnh, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
@@ -284,10 +279,7 @@ public class QuanLyPhim extends javax.swing.JPanel implements QuanLyPhimControll
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel2)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(txtTheLoai)
-                                .addGap(32, 32, 32)
+                                .addGap(0, 81, Short.MAX_VALUE)
                                 .addComponent(jLabel4)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(txtMoTa, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -308,7 +300,10 @@ public class QuanLyPhim extends javax.swing.JPanel implements QuanLyPhimControll
                                     .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(0, 0, Short.MAX_VALUE))))
-                    .addComponent(lblAnh, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(lblAnh, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(cboLoaiPhim, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
 
@@ -366,10 +361,6 @@ public class QuanLyPhim extends javax.swing.JPanel implements QuanLyPhimControll
 
     }//GEN-LAST:event_btnLamMoiActionPerformed
 
-    private void txtTheLoaiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTheLoaiActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtTheLoaiActionPerformed
-
     private void btnXoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSuaActionPerformed
 
     }//GEN-LAST:event_btnSuaActionPerformed
@@ -412,12 +403,12 @@ public class QuanLyPhim extends javax.swing.JPanel implements QuanLyPhimControll
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup btgTrangThai;
+    private javax.swing.JComboBox<String> cboLoaiPhim;
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
     private javax.swing.JButton jButton7;
     private javax.swing.JButton jButton8;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -434,15 +425,24 @@ public class QuanLyPhim extends javax.swing.JPanel implements QuanLyPhimControll
     private javax.swing.JTextField txtMoTa;
     private javax.swing.JTextField txtNgayKhoiChieu;
     private javax.swing.JTextField txtTenPhim;
-    private javax.swing.JTextField txtTheLoai;
     private javax.swing.JTextField txtThoiLuong;
     // End of variables declaration//GEN-END:variables
 
     QuanLyPhimDao dao = new QuanLyPhimDaoImpl();
     List<Phim> items = new ArrayList<>();
+    private List<LoaiPhim> loaiPhimList;
+
+    private void loadLoaiPhimToComboBox() {
+        loaiPhimList = new LoaiPhimDaoImpl().findAll();
+        cboLoaiPhim.removeAllItems();
+        for (LoaiPhim loai : loaiPhimList) {
+            cboLoaiPhim.addItem(loai.getTenLoai()); // ✅ String
+        }
+    }
 
     @Override
     public void open() {
+        loadLoaiPhimToComboBox();
         fillToTable();
         clear();
     }
@@ -464,7 +464,20 @@ public class QuanLyPhim extends javax.swing.JPanel implements QuanLyPhimControll
     public Phim getForm() {
         Phim p = new Phim();
         p.setTenPhim(txtTenPhim.getText());
-        p.setTheLoai(txtTheLoai.getText());
+        String tenLoai = (String) cboLoaiPhim.getSelectedItem();
+        int maLoai = -1;
+        for (LoaiPhim loai : loaiPhimList) {
+            if (loai.getTenLoai().equals(tenLoai)) {
+                maLoai = loai.getMaLoai();
+                break;
+            }
+        }
+        if (maLoai == -1) {
+            XDialog.alert("Không tìm thấy mã thể loại tương ứng!");
+            return null;
+        }
+        p.setMaLoai(maLoai); // ✅ đúng mã loại
+
         try {
             p.setThoiLuong(Integer.parseInt(txtThoiLuong.getText()));
         } catch (NumberFormatException e) {
@@ -495,7 +508,13 @@ public class QuanLyPhim extends javax.swing.JPanel implements QuanLyPhimControll
     @Override
     public void setForm(Phim entity) {
         txtTenPhim.setText(entity.getTenPhim());
-        txtTheLoai.setText(entity.getTheLoai());
+        for (LoaiPhim loai : loaiPhimList) {
+            if (loai.getMaLoai() == entity.getMaLoai()) {
+                cboLoaiPhim.setSelectedItem(loai.getTenLoai());
+                break;
+            }
+        }
+
         txtThoiLuong.setText(String.valueOf(entity.getThoiLuong()));
         txtMoTa.setText(entity.getMoTa());
         txtNgayKhoiChieu.setText(XDate.format(entity.getNgayKhoiChieu(), "dd/MM/yyyy"));
@@ -525,21 +544,32 @@ public class QuanLyPhim extends javax.swing.JPanel implements QuanLyPhimControll
             lblAnh.setIcon(null);
         }
     }
-
-    @Override
-    public void fillToTable() {
-        DefaultTableModel model = (DefaultTableModel) tblPhim.getModel();
-        model.setRowCount(0);
-        items = dao.findAll();
-
-        for (Phim p : items) {
-            model.addRow(new Object[]{
-                p.getMaPhim(), p.getTenPhim(), p.getTheLoai(), p.getThoiLuong(),
-                p.getMoTa(), XDate.format(p.getNgayKhoiChieu(), "dd/MM/yyyy"),
-                p.getTrangThai(), p.getHinhAnh()
-            });
+private String getTenLoaiByMaLoai(int maLoai) {
+    for (LoaiPhim loai : loaiPhimList) {
+        if (loai.getMaLoai() == maLoai) {
+            return loai.getTenLoai();
         }
     }
+    return "Không xác định";
+}
+
+    @Override
+public void fillToTable() {
+    DefaultTableModel model = (DefaultTableModel) tblPhim.getModel();
+    model.setRowCount(0);
+    items = dao.findAll();
+
+    for (Phim p : items) {
+        String tenLoai = getTenLoaiByMaLoai(p.getMaLoai()); // ✅ tên thể loại
+        model.addRow(new Object[]{
+            p.getMaPhim(), p.getTenPhim(), tenLoai, // ✅ đúng tên
+            p.getThoiLuong(), p.getMoTa(),
+            XDate.format(p.getNgayKhoiChieu(), "dd/MM/yyyy"),
+            p.getTrangThai(), p.getHinhAnh()
+        });
+    }
+}
+
 
     @Override
     public void create() {
@@ -588,7 +618,8 @@ public class QuanLyPhim extends javax.swing.JPanel implements QuanLyPhimControll
     @Override
     public void clear() {
         txtTenPhim.setText("");
-        txtTheLoai.setText("");
+        cboLoaiPhim.setSelectedIndex(-1); // reset selection
+
         txtThoiLuong.setText("");
         txtMoTa.setText("");
         txtNgayKhoiChieu.setText("");
@@ -601,7 +632,6 @@ public class QuanLyPhim extends javax.swing.JPanel implements QuanLyPhimControll
     @Override
     public void setEditable(boolean editable) {
         txtTenPhim.setEditable(editable);
-        txtTheLoai.setEditable(editable);
         txtThoiLuong.setEditable(editable);
         txtMoTa.setEditable(editable);
         txtNgayKhoiChieu.setEditable(editable);

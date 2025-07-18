@@ -12,9 +12,13 @@ import poly.cinema.entity.Phim;
  * @author Admin
  */
 public interface QuanLyPhimDao extends CrudDAO<Phim, Integer> {
-    // Bạn có thể bổ sung các phương thức mở rộng tại đây nếu cần
+    // Tìm theo trạng thái (nếu có)
     List<Phim> findByTrangThai(String trangThai);
-
+    
+    // Tìm các phim có suất chiếu trong hôm nay
+    List<Phim> findPhimChieuHomNay();
+    
+    // Tìm theo tên phim
     List<Phim> findByTenPhim(String keyword);
 }
 

@@ -21,10 +21,15 @@ import lombok.NoArgsConstructor;
 public class Phim {
     private int maPhim;
     private String tenPhim;
-    private String theLoai;
+    private int maLoai;
     private int thoiLuong;
     private String moTa;
     private Date ngayKhoiChieu;
     private String trangThai;
     private String hinhAnh;
+    @Override
+    public String toString() {
+    return tenPhim; // hoặc "P" + maPhim + " - " + tenPhim
+}
+    
 }
