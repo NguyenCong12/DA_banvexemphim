@@ -4,19 +4,57 @@
  */
 package poly.cinema.ui.manager;
 
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Container;
+import java.awt.Cursor;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.Font;
+import java.awt.GridLayout;
+import java.awt.Image;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseWheelEvent;
+import java.io.File;
+import java.net.URL;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
+import java.util.List;
+import javax.swing.BorderFactory;
+import javax.swing.Box;
+import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JScrollBar;
+import javax.swing.JScrollPane;
+import javax.swing.JSeparator;
+import javax.swing.JViewport;
+import javax.swing.SwingConstants;
+import javax.swing.SwingUtilities;
+import javax.swing.Timer;
+import poly.cinema.dao.QuanLyPhimDao;
+import poly.cinema.dao.QuanLySuatChieuDao;
+import poly.cinema.dao.impl.QuanLyPhimDaoImpl;
+import poly.cinema.dao.impl.QuanLySuatChieuDaoImpl;
+import poly.cinema.entity.Phim;
+import poly.cinema.entity.SuatChieu;
+
 /**
  *
  * @author Admin
  */
 public class XemLichChieu extends javax.swing.JPanel {
+// ==== CARD CONSTANTS ====
 
     /**
      * Creates new form XemLichChieu
      */
-    public XemLichChieu() {
-        initComponents();
-    }
-
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -28,70 +66,33 @@ public class XemLichChieu extends javax.swing.JPanel {
 
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        jTable2 = new javax.swing.JTable();
+        pnlChiTiet = new javax.swing.JPanel();
+        scpDanhSachPhim = new javax.swing.JScrollPane();
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Xem Lịch Chiếu");
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 14, 343, 70));
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
-        jScrollPane1.setViewportView(jTable1);
+        pnlChiTiet.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        pnlChiTiet.setDebugGraphicsOptions(javax.swing.DebugGraphics.BUFFERED_OPTION);
 
-        jTable2.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
-        jScrollPane2.setViewportView(jTable2);
-
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(382, 382, 382)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 343, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(34, 34, 34)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 411, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 606, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(41, Short.MAX_VALUE))
+        javax.swing.GroupLayout pnlChiTietLayout = new javax.swing.GroupLayout(pnlChiTiet);
+        pnlChiTiet.setLayout(pnlChiTietLayout);
+        pnlChiTietLayout.setHorizontalGroup(
+            pnlChiTietLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 320, Short.MAX_VALUE)
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(34, 34, 34)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 590, Short.MAX_VALUE)
-                    .addComponent(jScrollPane2))
-                .addContainerGap(20, Short.MAX_VALUE))
+        pnlChiTietLayout.setVerticalGroup(
+            pnlChiTietLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 606, Short.MAX_VALUE)
         );
+
+        jPanel1.add(pnlChiTiet, new org.netbeans.lib.awtextra.AbsoluteConstraints(787, 110, 320, -1));
+        jPanel1.add(scpDanhSachPhim, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 110, 785, 606));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -105,14 +106,290 @@ public class XemLichChieu extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-public void open() {
-    }
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTable jTable2;
+    private javax.swing.JPanel pnlChiTiet;
+    private javax.swing.JScrollPane scpDanhSachPhim;
     // End of variables declaration//GEN-END:variables
+private static final int CARD_W = 150;
+    private static final int CARD_H = 240;
+    private static final int POSTER_H = 190;
+
+// ==== STYLE ====
+    private static final Color CARD_BORDER = Color.GRAY;
+    private static final Color CARD_BG = Color.WHITE;
+    private static final Color CARD_BG_HOVER = new Color(245, 245, 245);
+    private static final Font TITLE_FONT = new Font("Arial", Font.BOLD, 14);
+    private static final Font SCHEDULE_FONT = new Font("Arial", Font.PLAIN, 14);
+
+// ==== SCROLL WRAPPER ====
+    private JPanel pnlGrid; // Panel mới để đặt vào ScrollPane
+
+    public XemLichChieu() {
+        initComponents();
+
+        // Tạo panel mới thay cho pnlDanhSachPhim
+        pnlGrid = new JPanel();
+        pnlGrid.setBackground(new Color(0xE0E3EB));
+
+        // Set layout mặc định (GridLayout sẽ set lại trong open)
+        pnlGrid.setLayout(new GridLayout(0, 5, 5, 5));
+
+        // Gắn panel này vào ScrollPane
+        scpDanhSachPhim.setViewportView(pnlGrid);
+        scpDanhSachPhim.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        scpDanhSachPhim.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+        scpDanhSachPhim.getVerticalScrollBar().setUnitIncrement(16);
+
+        pnlChiTiet.setLayout(new BoxLayout(pnlChiTiet, BoxLayout.Y_AXIS));
+        pnlChiTiet.setBackground(Color.WHITE);
+
+        SwingUtilities.invokeLater(this::open);
+    }
+
+    public void open() {
+        pnlGrid.removeAll();
+
+        QuanLyPhimDao phimDao = new QuanLyPhimDaoImpl();
+        List<Phim> dsPhim = phimDao.findPhimChieuHomNay();
+
+        int cols = 5;
+        int rows = (int) Math.ceil(dsPhim.size() / (double) cols);
+        pnlGrid.setLayout(new GridLayout(rows, cols, 5, 5));
+
+        for (Phim phim : dsPhim) {
+            pnlGrid.add(taoCardPhim(phim));
+        }
+
+        pnlGrid.revalidate();
+        pnlGrid.repaint();
+    }
+
+    private JPanel taoCardPhim(Phim phim) {
+        JPanel pnlPhim = new JPanel(new BorderLayout());
+        pnlPhim.setPreferredSize(new Dimension(CARD_W, CARD_H));
+        pnlPhim.setBorder(BorderFactory.createLineBorder(CARD_BORDER));
+        pnlPhim.setBackground(CARD_BG);
+        pnlPhim.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+
+        JLabel lblHinh = new JLabel("", JLabel.CENTER);
+        lblHinh.setPreferredSize(new Dimension(CARD_W, POSTER_H));
+        ImageIcon icon = loadPosterIcon(phim.getHinhAnh(), CARD_W, POSTER_H);
+        if (icon != null) {
+            lblHinh.setIcon(icon);
+        } else {
+            lblHinh.setText("<html><center>Không có<br>ảnh</center></html>");
+        }
+
+        JLabel lblTenPhim = new JLabel(
+                "<html><div style='text-align:center;white-space:normal;'>"
+                + escapeHtml(phim.getTenPhim()) + "</div></html>", JLabel.CENTER
+        );
+
+        lblTenPhim.setFont(TITLE_FONT);
+        lblTenPhim.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
+
+        pnlPhim.add(lblHinh, BorderLayout.CENTER);
+        pnlPhim.add(lblTenPhim, BorderLayout.SOUTH);
+
+        pnlPhim.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                hienThiLichChieu(phim);
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                pnlPhim.setBackground(CARD_BG_HOVER);
+                pnlPhim.setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY));
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                pnlPhim.setBackground(CARD_BG);
+                pnlPhim.setBorder(BorderFactory.createLineBorder(CARD_BORDER));
+            }
+        });
+
+        return pnlPhim;
+    }
+
+    private ImageIcon loadPosterIcon(String fileName, int targetW, int targetH) {
+        if (fileName == null || fileName.isBlank()) {
+            return null;
+        }
+
+        File f = new File("images", fileName);
+        if (f.exists()) {
+            return scaleIcon(new ImageIcon(f.getAbsolutePath()), targetW, targetH);
+        }
+
+        URL url = getClass().getResource("/images/" + fileName);
+        if (url != null) {
+            return scaleIcon(new ImageIcon(url), targetW, targetH);
+        }
+        return null;
+    }
+
+    private ImageIcon scaleIcon(ImageIcon raw, int targetW, int targetH) {
+        if (raw.getIconWidth() <= 0 || raw.getIconHeight() <= 0) {
+            return null;
+        }
+        double scale = Math.min((double) targetW / raw.getIconWidth(), (double) targetH / raw.getIconHeight());
+        int w = (int) (raw.getIconWidth() * scale);
+        int h = (int) (raw.getIconHeight() * scale);
+        Image scaled = raw.getImage().getScaledInstance(w, h, Image.SCALE_SMOOTH);
+        return new ImageIcon(scaled);
+    }
+
+    private void hienThiLichChieu(Phim phim) {
+    pnlChiTiet.removeAll();
+    pnlChiTiet.setLayout(new BoxLayout(pnlChiTiet, BoxLayout.Y_AXIS));
+    pnlChiTiet.setBackground(Color.WHITE);
+
+    // --- Tên phim (giống card) ---
+    String tenPhim = phim.getTenPhim() == null ? "" : phim.getTenPhim();
+    JLabel lblTitle = new JLabel(); // set text sau (để chắc CARD_W đã có)
+    lblTitle.setFont(new Font("Arial", Font.BOLD, 18)); // có thể đổi TITLE_FONT nếu muốn y hệt card
+    lblTitle.setAlignmentX(Component.CENTER_ALIGNMENT);
+    lblTitle.setBorder(BorderFactory.createEmptyBorder(10, 10, 5, 10));
+    lblTitle.setToolTipText(tenPhim);
+    pnlChiTiet.add(lblTitle);
+
+    // --- Separator ---
+    pnlChiTiet.add(Box.createVerticalStrut(4));
+    pnlChiTiet.add(taoFullWidthSeparator()); // dùng helper full-width; nếu chưa có, tạm dùng taoSeparator(300)
+    pnlChiTiet.add(Box.createVerticalStrut(8));
+
+    // --- Ngày ---
+    LocalDate homNay = LocalDate.now();
+    JLabel lblNgay = new JLabel("Suất chiếu hôm nay: " + homNay);
+    lblNgay.setFont(new Font("Arial", Font.ITALIC, 13));
+    lblNgay.setForeground(Color.DARK_GRAY);
+    lblNgay.setAlignmentX(Component.CENTER_ALIGNMENT);
+    lblNgay.setBorder(BorderFactory.createEmptyBorder(0, 10, 10, 10));
+    pnlChiTiet.add(lblNgay);
+
+    // --- Data ---
+    QuanLySuatChieuDao dao = new QuanLySuatChieuDaoImpl();
+    java.sql.Date ngayHienTai = java.sql.Date.valueOf(homNay);
+    List<SuatChieu> dsXuat = dao.findByNgayVaPhim(ngayHienTai, phim.getMaPhim());
+
+    if (dsXuat == null || dsXuat.isEmpty()) {
+        JLabel lbl = new JLabel("Không có suất chiếu hôm nay.", JLabel.CENTER);
+        lbl.setFont(new Font("Arial", Font.ITALIC, 14));
+        lbl.setForeground(Color.GRAY);
+        lbl.setAlignmentX(Component.CENTER_ALIGNMENT);
+        lbl.setBorder(BorderFactory.createEmptyBorder(20, 10, 20, 10));
+        pnlChiTiet.add(lbl);
+    } else {
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm");
+        JPanel listPanel = new JPanel();
+        listPanel.setLayout(new BoxLayout(listPanel, BoxLayout.Y_AXIS));
+        listPanel.setOpaque(false);
+        listPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        for (SuatChieu x : dsXuat) {
+            String text = x.getGioChieu().format(dtf) + "  •  Phòng " + x.getMaPhong();
+            JLabel lblShow = new JLabel(text, JLabel.CENTER);
+            lblShow.setFont(SCHEDULE_FONT);
+            lblShow.setOpaque(true);
+            lblShow.setBackground(Color.WHITE);
+            lblShow.setBorder(BorderFactory.createCompoundBorder(
+                    BorderFactory.createLineBorder(Color.LIGHT_GRAY),
+                    BorderFactory.createEmptyBorder(5, 10, 5, 10)
+            ));
+            lblShow.setAlignmentX(Component.CENTER_ALIGNMENT);
+            listPanel.add(lblShow);
+            listPanel.add(Box.createVerticalStrut(8));
+        }
+        pnlChiTiet.add(listPanel);
+    }
+
+    pnlChiTiet.add(Box.createVerticalStrut(20));
+
+    // --- Đặt text tiêu đề SAU khi layout, dùng width giống card ---
+    SwingUtilities.invokeLater(() -> {
+        lblTitle.setText("<html><div style='text-align:center;width:" + (CARD_W - 10) + "px;'>"
+                + escapeHtml(tenPhim) + "</div></html>");
+    });
+
+    pnlChiTiet.revalidate();
+    pnlChiTiet.repaint();
+}
+
+
+
+
+
+
+    /**
+     * Lấy chiều rộng khả dụng để bọc text trong pnlChiTiet.
+     */
+    private int getChiTietContentWidth() {
+        Container parent = pnlChiTiet.getParent();
+        if (parent instanceof JViewport vp) {
+            return vp.getWidth();
+        }
+        // fallback: dùng chính pnlChiTiet (nếu chưa layout sẽ trả 0, nên caller phải kiểm tra)
+        return pnlChiTiet.getWidth();
+    }
+
+    private Component taoDongSuatChieu(SuatChieu x, DateTimeFormatter dtf) {
+        String text = x.getGioChieu().format(dtf) + "  •  Phòng " + x.getMaPhong();
+
+        JLabel lblShow = new JLabel(text);
+        lblShow.setFont(SCHEDULE_FONT);
+        lblShow.setOpaque(true);
+        lblShow.setBackground(Color.WHITE);
+        lblShow.setBorder(BorderFactory.createCompoundBorder(
+                BorderFactory.createLineBorder(Color.LIGHT_GRAY),
+                BorderFactory.createEmptyBorder(5, 10, 5, 10)
+        ));
+
+        lblShow.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                lblShow.setBackground(new Color(245, 245, 245));
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                lblShow.setBackground(Color.WHITE);
+            }
+        });
+
+        JPanel row = new JPanel(new BorderLayout());
+        row.setOpaque(false);
+        row.setAlignmentX(Component.LEFT_ALIGNMENT);
+        row.setBorder(BorderFactory.createEmptyBorder(0, 10, 5, 10)); // padding 2 bên
+        row.add(lblShow, BorderLayout.CENTER);
+
+        // Cho phép row giãn hết ngang trong BoxLayout
+        row.setMaximumSize(new Dimension(Integer.MAX_VALUE, row.getPreferredSize().height));
+        return row;
+    }
+
+    private String escapeHtml(String s) {
+        if (s == null) {
+            return "";
+        }
+        return s.replace("&", "&amp;")
+                .replace("<", "&lt;")
+                .replace(">", "&gt;")
+                .replace("\"", "&quot;");
+    }
+
+    private Component taoFullWidthSeparator() {
+        JPanel wrap = new JPanel(new BorderLayout());
+        wrap.setOpaque(false);
+        JSeparator sep = new JSeparator(SwingConstants.HORIZONTAL);
+        wrap.add(sep, BorderLayout.CENTER);
+        wrap.setMaximumSize(new Dimension(Integer.MAX_VALUE, 1));
+        wrap.setAlignmentX(Component.LEFT_ALIGNMENT);
+        return wrap;
+    }
+
 }

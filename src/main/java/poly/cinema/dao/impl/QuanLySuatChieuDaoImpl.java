@@ -13,14 +13,15 @@ import java.util.List;
 import poly.cinema.dao.QuanLySuatChieuDao;
 import poly.cinema.entity.SuatChieu;
 import poly.cinema.util.XJdbc;
-
+import poly.cinema.util.XQuery;
 
 /**
  *
  * @author Admin
  */
-public class QuanLySuatChieuDaoImpl  implements QuanLySuatChieuDao{
-private final String INSERT_SQL = "INSERT INTO XuatChieu (ma_phim, ma_phong, ngay_chieu, gio_chieu, gia_ve) VALUES (?, ?, ?, ?, ?)";
+public class QuanLySuatChieuDaoImpl implements QuanLySuatChieuDao {
+
+    private final String INSERT_SQL = "INSERT INTO XuatChieu (ma_phim, ma_phong, ngay_chieu, gio_chieu, gia_ve) VALUES (?, ?, ?, ?, ?)";
     private final String UPDATE_SQL = "UPDATE XuatChieu SET ma_phim = ?, ma_phong = ?, ngay_chieu = ?, gio_chieu = ?, gia_ve = ? WHERE ma_xuat = ?";
     private final String DELETE_SQL = "DELETE FROM XuatChieu WHERE ma_xuat = ?";
     private final String SELECT_ALL_SQL = "SELECT * FROM XuatChieu";
@@ -55,27 +56,25 @@ private final String INSERT_SQL = "INSERT INTO XuatChieu (ma_phim, ma_phong, nga
 
     @Override
     public List<SuatChieu> findAll() {
-        List<SuatChieu> list = new ArrayList<>();
-        try (ResultSet rs = XJdbc.executeQuery(SELECT_ALL_SQL)) {
-            while (rs.next()) {
-                list.add(readFromResultSet(rs));
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return list;
+        return selectBySql(SELECT_ALL_SQL);
     }
 
     @Override
     public SuatChieu findById(Integer id) {
-        try (ResultSet rs = XJdbc.executeQuery(SELECT_BY_ID_SQL, id)) {
-            if (rs.next()) {
-                return readFromResultSet(rs);
+        List<SuatChieu> list = selectBySql(SELECT_BY_ID_SQL, id);
+        return list.isEmpty() ? null : list.get(0);
+    }
+
+    private List<SuatChieu> selectBySql(String sql, Object... args) {
+        List<SuatChieu> list = new ArrayList<>();
+        try (ResultSet rs = XJdbc.executeQuery(sql, args)) {
+            while (rs.next()) {
+                list.add(readFromResultSet(rs));
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            throw new RuntimeException(e);
         }
-        return null;
+        return list;
     }
 
     private SuatChieu readFromResultSet(ResultSet rs) throws SQLException {
@@ -83,9 +82,16 @@ private final String INSERT_SQL = "INSERT INTO XuatChieu (ma_phim, ma_phong, nga
                 .maXuat(rs.getInt("ma_xuat"))
                 .maPhim(rs.getInt("ma_phim"))
                 .maPhong(rs.getString("ma_phong"))
-                .ngayChieu(rs.getDate("ngay_chieu").toLocalDate())  // LocalDate
-                .gioChieu(rs.getTime("gio_chieu").toLocalTime())    // LocalTime
+                .ngayChieu(rs.getDate("ngay_chieu").toLocalDate()) // LocalDate
+                .gioChieu(rs.getTime("gio_chieu").toLocalTime()) // LocalTime
                 .giaVe(rs.getBigDecimal("gia_ve"))
                 .build();
     }
+
+    @Override
+    public List<SuatChieu> findByNgayVaPhim(Date ngay, int maPhim) {
+        String sql = "SELECT * FROM XuatChieu WHERE ma_phim = ? AND CAST(ngay_chieu AS DATE) = ?";
+        return selectBySql(sql, maPhim, new java.sql.Date(ngay.getTime()));
+    }
+
 }

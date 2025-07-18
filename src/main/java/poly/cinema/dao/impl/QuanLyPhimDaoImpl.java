@@ -9,6 +9,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.List;
 import poly.cinema.dao.QuanLyPhimDao;
 import poly.cinema.entity.Phim;
@@ -20,6 +21,36 @@ import poly.cinema.util.XQuery;
  * @author Admin
  */
 public class QuanLyPhimDaoImpl implements QuanLyPhimDao {
+
+    @Override
+    public List<Phim> findPhimChieuHomNay() {
+        List<Phim> list = new ArrayList<>();
+        String sql = """
+        SELECT DISTINCT p.* 
+        FROM Phim p
+        JOIN XuatChieu x ON p.ma_phim = x.ma_phim
+        WHERE CAST(x.ngay_chieu AS DATE) = CAST(GETDATE() AS DATE)
+    """;
+
+        try (ResultSet rs = XJdbc.executeQuery(sql)) {
+            while (rs.next()) {
+                Phim phim = new Phim();
+                phim.setMaPhim(rs.getInt("ma_phim"));
+                phim.setTenPhim(rs.getString("ten_phim"));
+                phim.setMaLoai(rs.getInt("ma_loai"));
+                phim.setThoiLuong(rs.getInt("thoi_luong"));
+                phim.setMoTa(rs.getString("mo_ta"));
+                phim.setNgayKhoiChieu(rs.getDate("ngay_khoi_chieu"));
+                phim.setTrangThai(rs.getString("trang_thai")); // sửa từ getBoolean thành getString
+                phim.setHinhAnh(rs.getString("hinh_anh"));     // sửa tên cột từ "hinh" thành "hinh_anh"
+
+                list.add(phim);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
 
     private final String INSERT_SQL = """
 INSERT INTO Phim (ten_phim, ma_loai, thoi_luong, mo_ta, ngay_khoi_chieu, trang_thai, hinh_anh)

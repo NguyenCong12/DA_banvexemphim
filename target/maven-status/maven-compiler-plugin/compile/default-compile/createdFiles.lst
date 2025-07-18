@@ -12,6 +12,7 @@ poly\cinema\ui\manager\LichSuBanHang$3.class
 poly\cinema\ui\manager\QuanLyPhim$2.class
 poly\cinema\dao\impl\LichSuDAOImpl.class
 poly\cinema\ui\manager\QuanLyPhim$8.class
+poly\cinema\ui\manager\XemLichChieu$2.class
 poly\cinema\ui\FCinema_Frame$12.class
 poly\cinema\util\XDate.class
 poly\cinema\dao\impl\UserDAOImpl.class
@@ -150,6 +151,7 @@ poly\cinema\ui\manager\QuanLyPhim$6.class
 poly\cinema\ui\FCinema_Frame$22.class
 poly\cinema\ui\NewJFrame$1.class
 poly\cinema\dao\QuanLyPhongChieuDao.class
+poly\cinema\ui\manager\XemLichChieu$1.class
 poly\cinema\ui\manager\QuanLyXuatChieu$3.class
 poly\cinema\dao\LichSuDAO.class
 poly\cinema\ui\WelcomeJDialog$1.class

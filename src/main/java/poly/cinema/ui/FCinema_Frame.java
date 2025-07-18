@@ -115,6 +115,8 @@ public class FCinema_Frame extends javax.swing.JFrame implements FCinema_Control
         pnlLichSuBanHang = new javax.swing.JPanel();
         pnlQuanLySuatChieu = new javax.swing.JPanel();
         pnlDoiMatKhau = new javax.swing.JPanel();
+        pnlLoaiPhim = new javax.swing.JPanel();
+        pnlLoaiGhe = new javax.swing.JPanel();
         lblFullname = new javax.swing.JLabel();
         lblMenu = new javax.swing.JLabel();
 
@@ -492,6 +494,32 @@ public class FCinema_Frame extends javax.swing.JFrame implements FCinema_Control
 
         pnlMainContent.add(pnlDoiMatKhau, "card13");
 
+        javax.swing.GroupLayout pnlLoaiPhimLayout = new javax.swing.GroupLayout(pnlLoaiPhim);
+        pnlLoaiPhim.setLayout(pnlLoaiPhimLayout);
+        pnlLoaiPhimLayout.setHorizontalGroup(
+            pnlLoaiPhimLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 1110, Short.MAX_VALUE)
+        );
+        pnlLoaiPhimLayout.setVerticalGroup(
+            pnlLoaiPhimLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 720, Short.MAX_VALUE)
+        );
+
+        pnlMainContent.add(pnlLoaiPhim, "card15");
+
+        javax.swing.GroupLayout pnlLoaiGheLayout = new javax.swing.GroupLayout(pnlLoaiGhe);
+        pnlLoaiGhe.setLayout(pnlLoaiGheLayout);
+        pnlLoaiGheLayout.setHorizontalGroup(
+            pnlLoaiGheLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 1110, Short.MAX_VALUE)
+        );
+        pnlLoaiGheLayout.setVerticalGroup(
+            pnlLoaiGheLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 720, Short.MAX_VALUE)
+        );
+
+        pnlMainContent.add(pnlLoaiGhe, "card16");
+
         pnlCenter.add(pnlMainContent, new org.netbeans.lib.awtextra.AbsoluteConstraints(4, 40, 1110, 720));
 
         lblFullname.setText("jLabel5");
@@ -741,6 +769,8 @@ public class FCinema_Frame extends javax.swing.JFrame implements FCinema_Control
     private javax.swing.JPanel pnlCenter;
     private javax.swing.JPanel pnlDoiMatKhau;
     private javax.swing.JPanel pnlLichSuBanHang;
+    private javax.swing.JPanel pnlLoaiGhe;
+    private javax.swing.JPanel pnlLoaiPhim;
     private javax.swing.JPanel pnlMainContent;
     private javax.swing.JPanel pnlManager;
     private javax.swing.JPanel pnlQuanLyGhe;
