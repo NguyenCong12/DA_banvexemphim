@@ -76,19 +76,12 @@ public class QuanLiNhanVien extends javax.swing.JPanel implements QuanLiNhanVien
 
             },
             new String [] {
-                "Tên nhân viên", "Mật khẩu", "Email", "Số điện thoại", "Vai trò", "Trạng thái", ""
+                "Tên nhân viên", "Mật khẩu", "Email", "Số điện thoại", "Vai trò", "Trạng thái"
             }
         ) {
-            Class[] types = new Class [] {
-                java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Boolean.class
-            };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, true
+                false, false, false, false, false, false
             };
-
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
