@@ -47,7 +47,8 @@ public class QuanLyHoaDonJpanel extends javax.swing.JPanel implements QuanLyHoaD
 
     private void init() {
         modelHoaDon = (DefaultTableModel) jTable1.getModel();
-        modelChiTiet = (DefaultTableModel) tblBillDetails.getModel();
+        modelChiTietVe = (DefaultTableModel) tblChiTietVe.getModel();
+        modelChiTietHang = (DefaultTableModel) tblChiTietHang.getModel();
         fillToTable();
 
         if (!hoaDonList.isEmpty()) {
@@ -71,7 +72,7 @@ public class QuanLyHoaDonJpanel extends javax.swing.JPanel implements QuanLyHoaD
         jTable1 = new javax.swing.JTable();
         jLabel10 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        tblBillDetails = new javax.swing.JTable();
+        tblChiTietVe = new javax.swing.JTable();
         jPanel2 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
@@ -86,7 +87,7 @@ public class QuanLyHoaDonJpanel extends javax.swing.JPanel implements QuanLyHoaD
         btnMoveNext = new javax.swing.JButton();
         btnMoveLast = new javax.swing.JButton();
         jScrollPane3 = new javax.swing.JScrollPane();
-        tblBillDetails1 = new javax.swing.JTable();
+        tblChiTietHang = new javax.swing.JTable();
         jLabel11 = new javax.swing.JLabel();
 
         setPreferredSize(new java.awt.Dimension(1110, 720));
@@ -116,7 +117,7 @@ public class QuanLyHoaDonJpanel extends javax.swing.JPanel implements QuanLyHoaD
         jLabel10.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel10.setText("Chi tiết vé");
 
-        tblBillDetails.setModel(new javax.swing.table.DefaultTableModel(
+        tblChiTietVe.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -132,12 +133,12 @@ public class QuanLyHoaDonJpanel extends javax.swing.JPanel implements QuanLyHoaD
                 return canEdit [columnIndex];
             }
         });
-        tblBillDetails.addMouseListener(new java.awt.event.MouseAdapter() {
+        tblChiTietVe.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                tblBillDetailsMouseClicked(evt);
+                tblChiTietVeMouseClicked(evt);
             }
         });
-        jScrollPane2.setViewportView(tblBillDetails);
+        jScrollPane2.setViewportView(tblChiTietVe);
 
         jLabel4.setText("Mã hóa đơn");
 
@@ -260,7 +261,7 @@ public class QuanLyHoaDonJpanel extends javax.swing.JPanel implements QuanLyHoaD
                 .addGap(13, 13, 13))
         );
 
-        tblBillDetails1.setModel(new javax.swing.table.DefaultTableModel(
+        tblChiTietHang.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -276,12 +277,12 @@ public class QuanLyHoaDonJpanel extends javax.swing.JPanel implements QuanLyHoaD
                 return canEdit [columnIndex];
             }
         });
-        tblBillDetails1.addMouseListener(new java.awt.event.MouseAdapter() {
+        tblChiTietHang.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                tblBillDetails1MouseClicked(evt);
+                tblChiTietHangMouseClicked(evt);
             }
         });
-        jScrollPane3.setViewportView(tblBillDetails1);
+        jScrollPane3.setViewportView(tblChiTietHang);
 
         jLabel11.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel11.setText("Chi tiết hàng");
@@ -370,15 +371,15 @@ public class QuanLyHoaDonJpanel extends javax.swing.JPanel implements QuanLyHoaD
         this.moveLast();
     }//GEN-LAST:event_btnMoveLastActionPerformed
 
-    private void tblBillDetailsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblBillDetailsMouseClicked
+    private void tblChiTietVeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblChiTietVeMouseClicked
         if (evt.getClickCount() == 2) {
             this.edit();
         }
-    }//GEN-LAST:event_tblBillDetailsMouseClicked
+    }//GEN-LAST:event_tblChiTietVeMouseClicked
 
-    private void tblBillDetails1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblBillDetails1MouseClicked
+    private void tblChiTietHangMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblChiTietHangMouseClicked
         // TODO add your handling code here:
-    }//GEN-LAST:event_tblBillDetails1MouseClicked
+    }//GEN-LAST:event_tblChiTietHangMouseClicked
 
     public void open() {
     }
@@ -400,8 +401,8 @@ public class QuanLyHoaDonJpanel extends javax.swing.JPanel implements QuanLyHoaD
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTable jTable1;
-    private javax.swing.JTable tblBillDetails;
-    private javax.swing.JTable tblBillDetails1;
+    private javax.swing.JTable tblChiTietHang;
+    private javax.swing.JTable tblChiTietVe;
     private javax.swing.JTextField txtGiaBan;
     private javax.swing.JTextField txtMaHoaDon;
     private javax.swing.JTextField txtMaNhanVien;
@@ -419,7 +420,8 @@ public class QuanLyHoaDonJpanel extends javax.swing.JPanel implements QuanLyHoaD
     private QuanLyGheDao gheDAO = new QuanLyGheDaoImpl();
 
     private DefaultTableModel modelHoaDon;
-    private DefaultTableModel modelChiTiet;
+    private DefaultTableModel modelChiTietVe;
+    private DefaultTableModel modelChiTietHang;
 
     @Override
     public void setForm(HoaDon entity) {
@@ -496,50 +498,66 @@ public class QuanLyHoaDonJpanel extends javax.swing.JPanel implements QuanLyHoaD
             return;
         }
 
+        // Lấy hóa đơn hiện tại
         HoaDon hd = hoaDonList.get(currentRow);
         setForm(hd);
 
-        modelChiTiet.setRowCount(0);
+        // ⭐ Reset dữ liệu cũ trên bảng
+        modelChiTietVe.setRowCount(0);
+        modelChiTietHang.setRowCount(0);
 
+        // =======================
+        // 🟢 Load chi tiết vé
+        // =======================
         List<ChiTietVe> chiTietVeList = chiTietVeDAO.selectByMaHD(hd.getMaHD());
         for (ChiTietVe ct : chiTietVeList) {
+            // Lấy thông tin ghế
             String seatInfo = "N/A";
             QuanLyGhe ghe = gheDAO.findById(ct.getMaGhe());
             if (ghe != null) {
                 seatInfo = "Ghế " + ghe.getSoGhe() + " (Phòng " + ghe.getMaPhong() + ")";
             }
+
+            // Lấy thông tin suất chiếu
             String showtimeInfo = "N/A";
             XuatChieu xc = xuatChieuDAO.findById(ct.getMaXuat());
             if (xc != null) {
                 showtimeInfo = "Suất " + xc.getMaXuat() + " - Phim " + xc.getMaPhim();
             }
-            modelChiTiet.addRow(new Object[]{
-                ct.getMaHD(),
-                "Vé",
+
+            // Thêm vào bảng Chi Tiết Vé
+            modelChiTietVe.addRow(new Object[]{
                 ct.getMaCTV(),
+                ct.getMaHD(),
+                ct.getMaXuat(),
                 seatInfo,
-                showtimeInfo,
                 ct.getGiaVe()
             });
         }
 
+        // =======================
+        // 🟢 Load chi tiết hàng
+        // =======================
         List<ChiTietHang> chiTietHangList = chiTietHangDAO.selectByMaHD(hd.getMaHD());
         for (ChiTietHang ct : chiTietHangList) {
+            // Lấy tên mặt hàng
             String itemName = "N/A";
             MatHang mh = matHangDAO.findById(ct.getMaHang());
             if (mh != null) {
                 itemName = mh.getTenHang();
             }
-            modelChiTiet.addRow(new Object[]{
-                ct.getMaHD(),
-                "Hàng",
+
+            // Thêm vào bảng Chi Tiết Hàng
+            modelChiTietHang.addRow(new Object[]{
                 ct.getMaCTH(),
-                itemName,
+                ct.getMaHD(),
+                ct.getMaHang(),
+                //itemName,
                 ct.getSoLuong(),
-                ct.getGia()
+                ct.getGia(),
+                ct.getThanhTien()
             });
         }
-
     }
 
     @Override
@@ -624,8 +642,10 @@ public class QuanLyHoaDonJpanel extends javax.swing.JPanel implements QuanLyHoaD
         txtNgayMua.setText("");
         txtGiaBan.setText("");
         jTable1.clearSelection();
-        tblBillDetails.clearSelection();
-        modelChiTiet.setRowCount(0);
+        tblChiTietVe.clearSelection();
+        tblChiTietHang.clearSelection();
+        modelChiTietVe.setRowCount(0);
+        modelChiTietHang.setRowCount(0);
         currentRow = -1;
     }
 

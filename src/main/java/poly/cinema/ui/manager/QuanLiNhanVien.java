@@ -445,11 +445,11 @@ public class QuanLiNhanVien extends javax.swing.JPanel implements QuanLiNhanVien
 
     @Override
     public void setForm(User entity) {
-        txtTennhanvien.setText(entity.getTen_nd());
-        txtMatkhau.setText(entity.getMat_khau());
+        txtTennhanvien.setText(entity.getTenNd());
+        txtMatkhau.setText(entity.getMatKhau());
         txtSodienthoai.setText(entity.getSdt());
 
-        String hinh = entity.getAnh_dai_dien(); // đổi tên field
+        String hinh = entity.getAnhDaiDien(); // đổi tên field
 
         if (hinh != null && !hinh.isBlank()) {
             File imageFile = new File("images", hinh);
@@ -465,11 +465,11 @@ public class QuanLiNhanVien extends javax.swing.JPanel implements QuanLiNhanVien
             lblAnh.setIcon(null);
         }
         txtEmail.setText(entity.getEmail());
-        rdoHoatDong.setSelected(entity.isHoat_dong());
-        rdoDaNgung.setSelected(!entity.isHoat_dong());
+        rdoHoatDong.setSelected(entity.isHoatDong());
+        rdoDaNgung.setSelected(!entity.isHoatDong());
 
-        rdoQuanLy.setSelected(entity.isVai_tro());
-        rdoNhanVien.setSelected(!entity.isVai_tro());
+        rdoQuanLy.setSelected(entity.isVaiTro());
+        rdoNhanVien.setSelected(!entity.isVaiTro());
     }
 
     @Override
@@ -480,17 +480,17 @@ public class QuanLiNhanVien extends javax.swing.JPanel implements QuanLiNhanVien
             // Lấy lại ma_nv từ entity cũ
             String email = tblQLnhanvien.getValueAt(row, 2).toString();
             User existing = dao.findByEmail(email);
-            user.setMa_nd(existing.getMa_nd());
+            user.setMaNd(existing.getMaNd());
         }
 
-        user.setTen_nd(txtTennhanvien.getText());
+        user.setTenNd(txtTennhanvien.getText());
         user.setEmail(txtEmail.getText());
-        user.setMat_khau(txtMatkhau.getText());
+        user.setMatKhau(txtMatkhau.getText());
         user.setSdt(txtSodienthoai.getText());
-        user.setVai_tro(rdoQuanLy.isSelected());
-        user.setHoat_dong(rdoHoatDong.isSelected());
+        user.setVaiTro(rdoQuanLy.isSelected());
+        user.setHoatDong(rdoHoatDong.isSelected());
         String anh = lblAnh.getToolTipText();
-        user.setAnh_dai_dien(anh == null ? "" : anh);
+        user.setAnhDaiDien(anh == null ? "" : anh);
         return user;
     }
 
@@ -502,12 +502,12 @@ public class QuanLiNhanVien extends javax.swing.JPanel implements QuanLiNhanVien
         items = dao.findAll();
         for (User item : items) {
             Object[] rowData = {
-                item.getTen_nd(),
-                item.getMat_khau(),
+                item.getTenNd(),
+                item.getMatKhau(),
                 item.getEmail(),
                 item.getSdt(),
-                item.isVai_tro() ? "Quản lý" : "Nhân viên",
-                item.isHoat_dong() ? "Hoạt động" : "Tạm dừng",
+                item.isVaiTro() ? "Quản lý" : "Nhân viên",
+                item.isHoatDong() ? "Hoạt động" : "Tạm dừng",
                 false
             };
             model.addRow(rowData);

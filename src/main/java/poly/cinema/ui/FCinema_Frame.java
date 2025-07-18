@@ -84,7 +84,6 @@ public class FCinema_Frame extends javax.swing.JFrame implements FCinema_Control
         pnlManager = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
-        lblExit = new javax.swing.JLabel();
         lblsuatchieu = new javax.swing.JLabel();
         lblLichSuBanHang = new javax.swing.JLabel();
         lblQLNHANVIEN = new javax.swing.JLabel();
@@ -118,7 +117,6 @@ public class FCinema_Frame extends javax.swing.JFrame implements FCinema_Control
         pnlLoaiPhim = new javax.swing.JPanel();
         pnlLoaiGhe = new javax.swing.JPanel();
         lblFullname = new javax.swing.JLabel();
-        lblMenu = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -135,20 +133,11 @@ public class FCinema_Frame extends javax.swing.JFrame implements FCinema_Control
                 jLabel3MouseClicked(evt);
             }
         });
-        pnlManager.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 10, 127, 111));
+        pnlManager.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 0, 127, 111));
 
         jSeparator1.setBackground(new java.awt.Color(255, 255, 255));
         jSeparator1.setForeground(new java.awt.Color(255, 255, 255));
-        pnlManager.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 670, 240, 10));
-
-        lblExit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/poly/cafe/icons/Menu.png"))); // NOI18N
-        lblExit.setText("jLabel2");
-        lblExit.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                lblExitMouseClicked(evt);
-            }
-        });
-        pnlManager.add(lblExit, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 50, 40));
+        pnlManager.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 640, 240, 10));
 
         lblsuatchieu.setBackground(new java.awt.Color(255, 255, 255));
         lblsuatchieu.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
@@ -159,7 +148,7 @@ public class FCinema_Frame extends javax.swing.JFrame implements FCinema_Control
                 lblsuatchieuMouseClicked(evt);
             }
         });
-        pnlManager.add(lblsuatchieu, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 510, 240, 37));
+        pnlManager.add(lblsuatchieu, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 480, 240, 37));
 
         lblLichSuBanHang.setBackground(new java.awt.Color(255, 255, 255));
         lblLichSuBanHang.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
@@ -170,7 +159,7 @@ public class FCinema_Frame extends javax.swing.JFrame implements FCinema_Control
                 lblLichSuBanHangMouseClicked(evt);
             }
         });
-        pnlManager.add(lblLichSuBanHang, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 270, 240, 37));
+        pnlManager.add(lblLichSuBanHang, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 240, 240, 37));
 
         lblQLNHANVIEN.setBackground(new java.awt.Color(255, 255, 255));
         lblQLNHANVIEN.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
@@ -181,7 +170,7 @@ public class FCinema_Frame extends javax.swing.JFrame implements FCinema_Control
                 lblQLNHANVIENMouseClicked(evt);
             }
         });
-        pnlManager.add(lblQLNHANVIEN, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 470, 240, 37));
+        pnlManager.add(lblQLNHANVIEN, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 440, 240, 37));
 
         lblQLDoanhthu.setBackground(new java.awt.Color(255, 255, 255));
         lblQLDoanhthu.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
@@ -195,7 +184,7 @@ public class FCinema_Frame extends javax.swing.JFrame implements FCinema_Control
                 lblQLDoanhthuMouseEntered(evt);
             }
         });
-        pnlManager.add(lblQLDoanhthu, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 230, 240, 37));
+        pnlManager.add(lblQLDoanhthu, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 200, 240, 37));
 
         lblQLHoaDon.setBackground(new java.awt.Color(255, 255, 255));
         lblQLHoaDon.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
@@ -206,7 +195,7 @@ public class FCinema_Frame extends javax.swing.JFrame implements FCinema_Control
                 lblQLHoaDonMouseClicked(evt);
             }
         });
-        pnlManager.add(lblQLHoaDon, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 430, 240, 37));
+        pnlManager.add(lblQLHoaDon, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 400, 240, 37));
 
         lblBanVe.setBackground(new java.awt.Color(255, 255, 255));
         lblBanVe.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
@@ -217,7 +206,7 @@ public class FCinema_Frame extends javax.swing.JFrame implements FCinema_Control
                 lblBanVeMouseClicked(evt);
             }
         });
-        pnlManager.add(lblBanVe, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 150, 240, 37));
+        pnlManager.add(lblBanVe, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 120, 240, 37));
 
         lblQLGhe.setBackground(new java.awt.Color(255, 255, 255));
         lblQLGhe.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
@@ -228,7 +217,7 @@ public class FCinema_Frame extends javax.swing.JFrame implements FCinema_Control
                 lblQLGheMouseClicked(evt);
             }
         });
-        pnlManager.add(lblQLGhe, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 390, 240, 37));
+        pnlManager.add(lblQLGhe, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 360, 240, 37));
 
         lblQLPhongChieu.setBackground(new java.awt.Color(255, 255, 255));
         lblQLPhongChieu.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
@@ -239,7 +228,7 @@ public class FCinema_Frame extends javax.swing.JFrame implements FCinema_Control
                 lblQLPhongChieuMouseClicked(evt);
             }
         });
-        pnlManager.add(lblQLPhongChieu, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 550, 240, 37));
+        pnlManager.add(lblQLPhongChieu, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 520, 240, 37));
 
         lblQLSanPham.setBackground(new java.awt.Color(255, 255, 255));
         lblQLSanPham.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
@@ -250,7 +239,7 @@ public class FCinema_Frame extends javax.swing.JFrame implements FCinema_Control
                 lblQLSanPhamMouseClicked(evt);
             }
         });
-        pnlManager.add(lblQLSanPham, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 310, 240, 37));
+        pnlManager.add(lblQLSanPham, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 280, 240, 37));
 
         lblQLPhim.setBackground(new java.awt.Color(255, 255, 255));
         lblQLPhim.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
@@ -261,7 +250,7 @@ public class FCinema_Frame extends javax.swing.JFrame implements FCinema_Control
                 lblQLPhimMouseClicked(evt);
             }
         });
-        pnlManager.add(lblQLPhim, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 350, 240, 37));
+        pnlManager.add(lblQLPhim, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 320, 240, 37));
 
         lblXemLichChieu.setBackground(new java.awt.Color(255, 255, 255));
         lblXemLichChieu.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
@@ -272,7 +261,7 @@ public class FCinema_Frame extends javax.swing.JFrame implements FCinema_Control
                 lblXemLichChieuMouseClicked(evt);
             }
         });
-        pnlManager.add(lblXemLichChieu, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 190, 240, 37));
+        pnlManager.add(lblXemLichChieu, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 160, 240, 37));
 
         lbldoimk.setBackground(new java.awt.Color(255, 255, 255));
         lbldoimk.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
@@ -283,7 +272,7 @@ public class FCinema_Frame extends javax.swing.JFrame implements FCinema_Control
                 lbldoimkMouseClicked(evt);
             }
         });
-        pnlManager.add(lbldoimk, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 680, 234, 37));
+        pnlManager.add(lbldoimk, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 640, 240, 40));
 
         lbldãnguat.setBackground(new java.awt.Color(255, 255, 255));
         lbldãnguat.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
@@ -294,7 +283,7 @@ public class FCinema_Frame extends javax.swing.JFrame implements FCinema_Control
                 lbldãnguatMouseClicked(evt);
             }
         });
-        pnlManager.add(lbldãnguat, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 720, 234, 37));
+        pnlManager.add(lbldãnguat, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 680, 240, 40));
 
         lblQLPhongChieu1.setBackground(new java.awt.Color(255, 255, 255));
         lblQLPhongChieu1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
@@ -305,7 +294,7 @@ public class FCinema_Frame extends javax.swing.JFrame implements FCinema_Control
                 lblQLPhongChieu1MouseClicked(evt);
             }
         });
-        pnlManager.add(lblQLPhongChieu1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 630, 240, 37));
+        pnlManager.add(lblQLPhongChieu1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 600, 240, 37));
 
         lblQLPhongChieu2.setBackground(new java.awt.Color(255, 255, 255));
         lblQLPhongChieu2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
@@ -316,9 +305,9 @@ public class FCinema_Frame extends javax.swing.JFrame implements FCinema_Control
                 lblQLPhongChieu2MouseClicked(evt);
             }
         });
-        pnlManager.add(lblQLPhongChieu2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 590, 240, 37));
+        pnlManager.add(lblQLPhongChieu2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 560, 240, 37));
 
-        pnlCenter.add(pnlManager, new org.netbeans.lib.awtextra.AbsoluteConstraints(4, 0, 0, 760));
+        pnlCenter.add(pnlManager, new org.netbeans.lib.awtextra.AbsoluteConstraints(4, 0, 240, 720));
 
         pnlMainContent.setLayout(new java.awt.CardLayout());
 
@@ -326,7 +315,7 @@ public class FCinema_Frame extends javax.swing.JFrame implements FCinema_Control
         pnlQuanLyPhongChieu.setLayout(pnlQuanLyPhongChieuLayout);
         pnlQuanLyPhongChieuLayout.setHorizontalGroup(
             pnlQuanLyPhongChieuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1110, Short.MAX_VALUE)
+            .addGap(0, 1120, Short.MAX_VALUE)
         );
         pnlQuanLyPhongChieuLayout.setVerticalGroup(
             pnlQuanLyPhongChieuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -339,7 +328,7 @@ public class FCinema_Frame extends javax.swing.JFrame implements FCinema_Control
         pnlQuanLyGhe.setLayout(pnlQuanLyGheLayout);
         pnlQuanLyGheLayout.setHorizontalGroup(
             pnlQuanLyGheLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1110, Short.MAX_VALUE)
+            .addGap(0, 1120, Short.MAX_VALUE)
         );
         pnlQuanLyGheLayout.setVerticalGroup(
             pnlQuanLyGheLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -352,7 +341,7 @@ public class FCinema_Frame extends javax.swing.JFrame implements FCinema_Control
         pnlBanVe.setLayout(pnlBanVeLayout);
         pnlBanVeLayout.setHorizontalGroup(
             pnlBanVeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1110, Short.MAX_VALUE)
+            .addGap(0, 1120, Short.MAX_VALUE)
         );
         pnlBanVeLayout.setVerticalGroup(
             pnlBanVeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -365,7 +354,7 @@ public class FCinema_Frame extends javax.swing.JFrame implements FCinema_Control
         pnlQuanLyHoaDon.setLayout(pnlQuanLyHoaDonLayout);
         pnlQuanLyHoaDonLayout.setHorizontalGroup(
             pnlQuanLyHoaDonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1110, Short.MAX_VALUE)
+            .addGap(0, 1120, Short.MAX_VALUE)
         );
         pnlQuanLyHoaDonLayout.setVerticalGroup(
             pnlQuanLyHoaDonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -378,7 +367,7 @@ public class FCinema_Frame extends javax.swing.JFrame implements FCinema_Control
         pnlQuanLyNhanVien.setLayout(pnlQuanLyNhanVienLayout);
         pnlQuanLyNhanVienLayout.setHorizontalGroup(
             pnlQuanLyNhanVienLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1110, Short.MAX_VALUE)
+            .addGap(0, 1120, Short.MAX_VALUE)
         );
         pnlQuanLyNhanVienLayout.setVerticalGroup(
             pnlQuanLyNhanVienLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -394,7 +383,7 @@ public class FCinema_Frame extends javax.swing.JFrame implements FCinema_Control
         pnlTrangchu.setLayout(pnlTrangchuLayout);
         pnlTrangchuLayout.setHorizontalGroup(
             pnlTrangchuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 1110, Short.MAX_VALUE)
+            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 1120, Short.MAX_VALUE)
         );
         pnlTrangchuLayout.setVerticalGroup(
             pnlTrangchuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -407,7 +396,7 @@ public class FCinema_Frame extends javax.swing.JFrame implements FCinema_Control
         pnlQuanLySanPham.setLayout(pnlQuanLySanPhamLayout);
         pnlQuanLySanPhamLayout.setHorizontalGroup(
             pnlQuanLySanPhamLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1110, Short.MAX_VALUE)
+            .addGap(0, 1120, Short.MAX_VALUE)
         );
         pnlQuanLySanPhamLayout.setVerticalGroup(
             pnlQuanLySanPhamLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -420,7 +409,7 @@ public class FCinema_Frame extends javax.swing.JFrame implements FCinema_Control
         pnlQuanLyPhim.setLayout(pnlQuanLyPhimLayout);
         pnlQuanLyPhimLayout.setHorizontalGroup(
             pnlQuanLyPhimLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1110, Short.MAX_VALUE)
+            .addGap(0, 1120, Short.MAX_VALUE)
         );
         pnlQuanLyPhimLayout.setVerticalGroup(
             pnlQuanLyPhimLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -433,7 +422,7 @@ public class FCinema_Frame extends javax.swing.JFrame implements FCinema_Control
         pnlXemLichChieu.setLayout(pnlXemLichChieuLayout);
         pnlXemLichChieuLayout.setHorizontalGroup(
             pnlXemLichChieuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1110, Short.MAX_VALUE)
+            .addGap(0, 1120, Short.MAX_VALUE)
         );
         pnlXemLichChieuLayout.setVerticalGroup(
             pnlXemLichChieuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -446,7 +435,7 @@ public class FCinema_Frame extends javax.swing.JFrame implements FCinema_Control
         pnlThongKeDoanhThu.setLayout(pnlThongKeDoanhThuLayout);
         pnlThongKeDoanhThuLayout.setHorizontalGroup(
             pnlThongKeDoanhThuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1110, Short.MAX_VALUE)
+            .addGap(0, 1120, Short.MAX_VALUE)
         );
         pnlThongKeDoanhThuLayout.setVerticalGroup(
             pnlThongKeDoanhThuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -459,7 +448,7 @@ public class FCinema_Frame extends javax.swing.JFrame implements FCinema_Control
         pnlLichSuBanHang.setLayout(pnlLichSuBanHangLayout);
         pnlLichSuBanHangLayout.setHorizontalGroup(
             pnlLichSuBanHangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1110, Short.MAX_VALUE)
+            .addGap(0, 1120, Short.MAX_VALUE)
         );
         pnlLichSuBanHangLayout.setVerticalGroup(
             pnlLichSuBanHangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -472,7 +461,7 @@ public class FCinema_Frame extends javax.swing.JFrame implements FCinema_Control
         pnlQuanLySuatChieu.setLayout(pnlQuanLySuatChieuLayout);
         pnlQuanLySuatChieuLayout.setHorizontalGroup(
             pnlQuanLySuatChieuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1110, Short.MAX_VALUE)
+            .addGap(0, 1120, Short.MAX_VALUE)
         );
         pnlQuanLySuatChieuLayout.setVerticalGroup(
             pnlQuanLySuatChieuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -485,7 +474,7 @@ public class FCinema_Frame extends javax.swing.JFrame implements FCinema_Control
         pnlDoiMatKhau.setLayout(pnlDoiMatKhauLayout);
         pnlDoiMatKhauLayout.setHorizontalGroup(
             pnlDoiMatKhauLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1110, Short.MAX_VALUE)
+            .addGap(0, 1120, Short.MAX_VALUE)
         );
         pnlDoiMatKhauLayout.setVerticalGroup(
             pnlDoiMatKhauLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -498,7 +487,7 @@ public class FCinema_Frame extends javax.swing.JFrame implements FCinema_Control
         pnlLoaiPhim.setLayout(pnlLoaiPhimLayout);
         pnlLoaiPhimLayout.setHorizontalGroup(
             pnlLoaiPhimLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1110, Short.MAX_VALUE)
+            .addGap(0, 1120, Short.MAX_VALUE)
         );
         pnlLoaiPhimLayout.setVerticalGroup(
             pnlLoaiPhimLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -511,7 +500,7 @@ public class FCinema_Frame extends javax.swing.JFrame implements FCinema_Control
         pnlLoaiGhe.setLayout(pnlLoaiGheLayout);
         pnlLoaiGheLayout.setHorizontalGroup(
             pnlLoaiGheLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1110, Short.MAX_VALUE)
+            .addGap(0, 1120, Short.MAX_VALUE)
         );
         pnlLoaiGheLayout.setVerticalGroup(
             pnlLoaiGheLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -520,41 +509,24 @@ public class FCinema_Frame extends javax.swing.JFrame implements FCinema_Control
 
         pnlMainContent.add(pnlLoaiGhe, "card16");
 
-        pnlCenter.add(pnlMainContent, new org.netbeans.lib.awtextra.AbsoluteConstraints(4, 40, 1110, 720));
+        pnlCenter.add(pnlMainContent, new org.netbeans.lib.awtextra.AbsoluteConstraints(244, 0, 1120, 720));
 
         lblFullname.setText("jLabel5");
         pnlCenter.add(lblFullname, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 630, 60, 50));
-
-        lblMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/poly/cafe/icons/Menu.png"))); // NOI18N
-        lblMenu.setText("jLabel2");
-        lblMenu.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                lblMenuMouseClicked(evt);
-            }
-        });
-        pnlCenter.add(lblMenu, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 50, 40));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(pnlCenter, javax.swing.GroupLayout.DEFAULT_SIZE, 1122, Short.MAX_VALUE)
+            .addComponent(pnlCenter, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(pnlCenter, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(pnlCenter, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void lblMenuMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblMenuMouseClicked
-        OpenMenuBar();
-    }//GEN-LAST:event_lblMenuMouseClicked
-
-    private void lblExitMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblExitMouseClicked
-        ExitMenuBar();
-    }//GEN-LAST:event_lblExitMouseClicked
 
     private void lblsuatchieuMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblsuatchieuMouseClicked
         CardLayout cl = (CardLayout) pnlMainContent.getLayout();
@@ -648,8 +620,7 @@ public class FCinema_Frame extends javax.swing.JFrame implements FCinema_Control
     }//GEN-LAST:event_lblQLPhongChieu2MouseClicked
     private void addHoverEffectToPanelLabels(JPanel panel) {
         for (Component comp : panel.getComponents()) {
-            if (comp instanceof JLabel) {
-                JLabel lbl = (JLabel) comp;
+            if (comp instanceof JLabel lbl) {
 
                 lbl.setOpaque(true); // Bắt buộc để hiện màu nền
                 lbl.setBackground(Color.LIGHT_GRAY);
@@ -671,41 +642,6 @@ public class FCinema_Frame extends javax.swing.JFrame implements FCinema_Control
                 });
             }
         }
-    }
-
-    int width = 240;
-    int height = 760;
-
-    void OpenMenuBar() {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                for (int i = 0; i < width; i++) {
-                    pnlManager.setSize(i, height);
-                    try {
-                        Thread.sleep(1);
-                    } catch (InterruptedException ex) {
-                        Logger.getLogger(FCinema_Frame.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-                }
-            }
-        }).start();
-    }
-
-    void ExitMenuBar() {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                for (int i = width; i > 0; i--) {
-                    pnlManager.setSize(i, height);
-                    try {
-                        Thread.sleep(2);
-                    } catch (InterruptedException ex) {
-                        Logger.getLogger(FCinema_Frame.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-                }
-            }
-        }).start();
     }
 
     /**
@@ -748,10 +684,8 @@ public class FCinema_Frame extends javax.swing.JFrame implements FCinema_Control
     private javax.swing.JLabel jLabel3;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JLabel lblBanVe;
-    private javax.swing.JLabel lblExit;
     private javax.swing.JLabel lblFullname;
     private javax.swing.JLabel lblLichSuBanHang;
-    private javax.swing.JLabel lblMenu;
     private javax.swing.JLabel lblQLDoanhthu;
     private javax.swing.JLabel lblQLGhe;
     private javax.swing.JLabel lblQLHoaDon;
@@ -792,8 +726,8 @@ public class FCinema_Frame extends javax.swing.JFrame implements FCinema_Control
         this.showWelcomeJDialog(this);
         this.showLoginJDialog(this);
 
-        lblFullname.setText(XAuth.user.getTen_nd());
-        if (!XAuth.user.isVai_tro()) {
+        lblFullname.setText(XAuth.user.getTenNd());
+        if (!XAuth.user.isVaiTro()) {
             pnlCenter.remove(pnlManager);
         }
 //        if (XAuth.user.isVai_tro()) {
@@ -806,8 +740,8 @@ public class FCinema_Frame extends javax.swing.JFrame implements FCinema_Control
             this.dispose();
             if (XAuth.user != null) {
                 FCinema_Frame main = new FCinema_Frame();
-                lblFullname.setText(XAuth.user.getTen_nd());
-                if (!XAuth.user.isVai_tro()) {
+                lblFullname.setText(XAuth.user.getTenNd());
+                if (!XAuth.user.isVaiTro()) {
                     pnlCenter.remove(pnlManager);
                 }
                 main.setVisible(true);

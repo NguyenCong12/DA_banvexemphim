@@ -4,6 +4,7 @@
  */
 package poly.cinema.dao;
 
+import java.time.LocalDate;
 import java.util.List;
 import poly.cinema.entity.Phim;
 
@@ -20,5 +21,7 @@ public interface QuanLyPhimDao extends CrudDAO<Phim, Integer> {
     
     // Tìm theo tên phim
     List<Phim> findByTenPhim(String keyword);
+    List<Phim> findPhimChieuTheoNgay(LocalDate ngay);
+
 }
 

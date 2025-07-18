@@ -322,7 +322,7 @@ public class DoiMatKhau extends javax.swing.JPanel implements DoiMatKhauControll
             isValid = false;
         }
 
-        if (!matKhau.equals(XAuth.user.getMat_khau())) {
+        if (!matKhau.equals(XAuth.user.getMatKhau())) {
             lblLoiPassword.setText("Sai mật khẩu");
             isValid = false;
         }
@@ -362,7 +362,7 @@ public class DoiMatKhau extends javax.swing.JPanel implements DoiMatKhauControll
         }
 
         if (isValid) {
-            XAuth.user.setMat_khau(newpass);
+            XAuth.user.setMatKhau(newpass);
             dao.update(XAuth.user);
             JOptionPane.showMessageDialog(this, "Đổi mật khẩu thành công!");
             loadCaptcha();

@@ -12,5 +12,4 @@ import poly.cinema.entity.LoaiPhim;
  * @author Admin
  */
 public interface LoaiPhimDao extends CrudDAO<LoaiPhim, Integer>{
-    
 }

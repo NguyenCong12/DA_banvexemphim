@@ -38,12 +38,12 @@ public class UserDAOImpl implements UserDAO {
     public void update(User entity) {
         XJdbc.executeUpdate(updateSql,
                 entity.getTenNd(),
-    entity.getEmail(),
-    entity.getMatKhau(),
-    entity.isVaiTro(),
-    entity.getSdt(),
-    entity.isHoatDong(),
-    entity.getAnhDaiDien()
+                entity.getEmail(),
+                entity.getMatKhau(),
+                entity.isVaiTro(),
+                entity.getSdt(),
+                entity.isHoatDong(),
+                entity.getAnhDaiDien()
         );
     }
 

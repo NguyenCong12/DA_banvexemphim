@@ -5,8 +5,11 @@
 package poly.cinema.dao.impl;
 
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 import poly.cinema.dao.LoaiPhimDao;
 import poly.cinema.entity.LoaiPhim;
 import poly.cinema.util.XJdbc;
@@ -16,6 +19,48 @@ import poly.cinema.util.XJdbc;
  * @author Admin
  */
 public class LoaiPhimDaoImpl implements LoaiPhimDao {
+
+    private static final Map<Integer, String> CACHE = new ConcurrentHashMap<>();
+
+    // Static tiện dụng (bạn đang gọi kiểu này)
+    public static List<String> findAllTenLoai() {
+    List<String> list = new ArrayList<>();
+    String sql = "SELECT ten_loai FROM LoaiPhim";
+    try (ResultSet rs = XJdbc.executeQuery(sql)) {
+        while (rs.next()) {
+            list.add(rs.getString("ten_loai"));
+        }
+    } catch (SQLException ex) {
+        ex.printStackTrace();
+    }
+    return list;
+}
+
+    public static String getTenLoaiById(int maLoai) {
+        // Đã có cache?
+        String cached = CACHE.get(maLoai);
+        if (cached != null) {
+            return cached;
+        }
+
+        String sql = "SELECT ten_loai FROM LoaiPhim WHERE ma_loai = ?";
+        try (ResultSet rs = XJdbc.executeQuery(sql, maLoai)) {
+            if (rs.next()) {
+                String ten = rs.getString("ten_loai");
+                if (ten == null || ten.isBlank()) {
+                    ten = "Không rõ";
+                }
+                CACHE.put(maLoai, ten);
+                return ten;
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        // fallback: put & trả
+        String fallback = "Loại #" + maLoai;
+        CACHE.put(maLoai, fallback);
+        return fallback;
+    }
 
     private final String INSERT_SQL = "INSERT INTO LoaiPhim (ten_loai) VALUES (?)";
     private final String UPDATE_SQL = "UPDATE LoaiPhim SET ten_loai = ? WHERE ma_loai = ?";
@@ -78,4 +123,3 @@ public class LoaiPhimDaoImpl implements LoaiPhimDao {
         return null;
     }
 }
-
