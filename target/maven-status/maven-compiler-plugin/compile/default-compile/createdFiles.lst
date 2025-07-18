@@ -8,6 +8,7 @@ poly\cinema\dao\ThongKeDAO.class
 poly\cinema\ui\DoiMatKhau$3.class
 poly\cinema\entity\Phim$PhimBuilder.class
 poly\cinema\ui\manager\QuanLySanPham$5.class
+poly\cinema\ui\manager\BanHang$2.class
 poly\cinema\ui\manager\LichSuBanHang$3.class
 poly\cinema\ui\manager\QuanLyPhim$2.class
 poly\cinema\dao\impl\LichSuDAOImpl.class
@@ -24,6 +25,7 @@ poly\cinema\ui\NewJFrame.class
 poly\cinema\ui\manager\QuanLiNhanVien$2.class
 poly\cinema\ui\manager\QuanLySanPham$6.class
 poly\cinema\ui\DoiMatKhau$2.class
+poly\cinema\ui\manager\BanHang$1.class
 poly\cinema\ui\manager\LichSuBanHang$2.class
 poly\cinema\ui\manager\XemLichChieu$3.class
 poly\cinema\ui\manager\QuanLiNhanVienController.class
@@ -45,6 +47,7 @@ poly\cinema\ui\manager\ThongKePanel$5.class
 poly\cinema\dao\QuanLySuatChieuDao.class
 poly\cinema\ui\manager\QuanLiPhongChieu$5.class
 poly\cinema\ui\manager\QuanLySanPham$1.class
+poly\cinema\ui\manager\BanHang.class
 poly\cinema\ui\manager\QuanLySanPham.class
 poly\cinema\entity\ThongKe$DoanhThuPhim.class
 poly\cinema\entity\LoaiPhim.class
