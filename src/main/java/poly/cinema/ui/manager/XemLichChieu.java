@@ -10,34 +10,29 @@ import java.awt.Component;
 import java.awt.Container;
 import java.awt.Cursor;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseWheelEvent;
 import java.io.File;
 import java.net.URL;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Date;
 import java.util.List;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
-import javax.swing.JButton;
+import javax.swing.JComponent;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
 import javax.swing.JViewport;
 import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
-import javax.swing.Timer;
 import poly.cinema.dao.QuanLyPhimDao;
 import poly.cinema.dao.QuanLySuatChieuDao;
 import poly.cinema.dao.impl.QuanLyPhimDaoImpl;
@@ -244,32 +239,51 @@ private static final int CARD_W = 150;
         return new ImageIcon(scaled);
     }
 
-    private void hienThiLichChieu(Phim phim) {
+    // ==== helper: escape + center HTML ====
+private String escapeHtmlHtmlCenter(String s, int maxWidthPx) {
+    return "<html><div style='text-align:center;width:" + maxWidthPx + "px;word-wrap:break-word;'>"
+            + escapeHtml(s == null ? "" : s) + "</div></html>";
+}
+
+// ==== helper: ép component chiếm full chiều ngang pnlChiTiet ====
+private void makeFullWidth(JComponent c) {
+    c.setAlignmentX(Component.CENTER_ALIGNMENT); // giữ toàn bộ block ở trung tâm dọc theo Y_AXIS
+    Dimension pref = c.getPreferredSize();
+    // rộng vô hạn để BoxLayout choãn hết; cao theo pref
+    c.setMaximumSize(new Dimension(Integer.MAX_VALUE, pref.height));
+}
+
+// ==== hiển thị chi tiết lịch chiếu ====
+private void hienThiLichChieu(Phim phim) {
     pnlChiTiet.removeAll();
     pnlChiTiet.setLayout(new BoxLayout(pnlChiTiet, BoxLayout.Y_AXIS));
     pnlChiTiet.setBackground(Color.WHITE);
 
-    // --- Tên phim (giống card) ---
     String tenPhim = phim.getTenPhim() == null ? "" : phim.getTenPhim();
-    JLabel lblTitle = new JLabel(); // set text sau (để chắc CARD_W đã có)
-    lblTitle.setFont(new Font("Arial", Font.BOLD, 18)); // có thể đổi TITLE_FONT nếu muốn y hệt card
-    lblTitle.setAlignmentX(Component.CENTER_ALIGNMENT);
-    lblTitle.setBorder(BorderFactory.createEmptyBorder(10, 10, 5, 10));
-    lblTitle.setToolTipText(tenPhim);
-    pnlChiTiet.add(lblTitle);
+
+    // --- Title ---
+    // CARD_W = 150, trừ padding → lấy khoảng 140
+JLabel lblTitle = new JLabel(escapeHtmlHtmlCenter(tenPhim, 140), JLabel.CENTER);
+lblTitle.setFont(new Font("Arial", Font.BOLD, 18));
+lblTitle.setBorder(BorderFactory.createEmptyBorder(10, 10, 5, 10));
+lblTitle.setToolTipText(tenPhim);
+makeFullWidth(lblTitle);
+pnlChiTiet.add(lblTitle);
+
 
     // --- Separator ---
     pnlChiTiet.add(Box.createVerticalStrut(4));
-    pnlChiTiet.add(taoFullWidthSeparator()); // dùng helper full-width; nếu chưa có, tạm dùng taoSeparator(300)
+    Component sep = taoFullWidthSeparator();
+    pnlChiTiet.add(sep);
     pnlChiTiet.add(Box.createVerticalStrut(8));
 
     // --- Ngày ---
     LocalDate homNay = LocalDate.now();
-    JLabel lblNgay = new JLabel("Suất chiếu hôm nay: " + homNay);
+    JLabel lblNgay = new JLabel("Suất chiếu hôm nay: " + homNay, JLabel.CENTER);
     lblNgay.setFont(new Font("Arial", Font.ITALIC, 13));
     lblNgay.setForeground(Color.DARK_GRAY);
-    lblNgay.setAlignmentX(Component.CENTER_ALIGNMENT);
     lblNgay.setBorder(BorderFactory.createEmptyBorder(0, 10, 10, 10));
+    makeFullWidth(lblNgay);
     pnlChiTiet.add(lblNgay);
 
     // --- Data ---
@@ -277,100 +291,78 @@ private static final int CARD_W = 150;
     java.sql.Date ngayHienTai = java.sql.Date.valueOf(homNay);
     List<SuatChieu> dsXuat = dao.findByNgayVaPhim(ngayHienTai, phim.getMaPhim());
 
+    // // DEBUG (bật khi cần)
+    // System.out.println("DEBUG >> phim=" + phim.getMaPhim() + ", homNay=" + homNay
+    //         + ", soSuat=" + (dsXuat == null ? "null" : dsXuat.size()));
+
     if (dsXuat == null || dsXuat.isEmpty()) {
         JLabel lbl = new JLabel("Không có suất chiếu hôm nay.", JLabel.CENTER);
         lbl.setFont(new Font("Arial", Font.ITALIC, 14));
         lbl.setForeground(Color.GRAY);
-        lbl.setAlignmentX(Component.CENTER_ALIGNMENT);
         lbl.setBorder(BorderFactory.createEmptyBorder(20, 10, 20, 10));
+        makeFullWidth(lbl);
         pnlChiTiet.add(lbl);
     } else {
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm");
+
         JPanel listPanel = new JPanel();
         listPanel.setLayout(new BoxLayout(listPanel, BoxLayout.Y_AXIS));
         listPanel.setOpaque(false);
-        listPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        listPanel.setAlignmentX(Component.CENTER_ALIGNMENT); // block giữa
 
-        for (SuatChieu x : dsXuat) {
-            String text = x.getGioChieu().format(dtf) + "  •  Phòng " + x.getMaPhong();
-            JLabel lblShow = new JLabel(text, JLabel.CENTER);
-            lblShow.setFont(SCHEDULE_FONT);
-            lblShow.setOpaque(true);
-            lblShow.setBackground(Color.WHITE);
-            lblShow.setBorder(BorderFactory.createCompoundBorder(
-                    BorderFactory.createLineBorder(Color.LIGHT_GRAY),
-                    BorderFactory.createEmptyBorder(5, 10, 5, 10)
-            ));
-            lblShow.setAlignmentX(Component.CENTER_ALIGNMENT);
-            listPanel.add(lblShow);
-            listPanel.add(Box.createVerticalStrut(8));
+        for (int i = 0; i < dsXuat.size(); i++) {
+            Component row = taoDongSuatChieuCenter(dsXuat.get(i), dtf);
+            listPanel.add(row);
+            if (i < dsXuat.size() - 1) {
+                listPanel.add(Box.createVerticalStrut(15)); // <<< KHOẢNG CÁCH 15PX
+            }
         }
+
+        makeFullWidth(listPanel);
         pnlChiTiet.add(listPanel);
     }
 
     pnlChiTiet.add(Box.createVerticalStrut(20));
-
-    // --- Đặt text tiêu đề SAU khi layout, dùng width giống card ---
-    SwingUtilities.invokeLater(() -> {
-        lblTitle.setText("<html><div style='text-align:center;width:" + (CARD_W - 10) + "px;'>"
-                + escapeHtml(tenPhim) + "</div></html>");
-    });
-
     pnlChiTiet.revalidate();
     pnlChiTiet.repaint();
 }
 
+// ==== tạo 1 dòng suất chiếu, căn giữa ====
+private Component taoDongSuatChieuCenter(SuatChieu x, DateTimeFormatter dtf) {
+    LocalTime gio = x.getGioChieu();
+    String gioText = (gio != null ? gio.format(dtf) : "??:??");
+    String phong = (x.getMaPhong() != null ? x.getMaPhong() : "?");
+    String text = gioText + "  •  Phòng " + phong;
+
+    JLabel lblShow = new JLabel(text, JLabel.CENTER);
+    lblShow.setFont(SCHEDULE_FONT);
+    lblShow.setOpaque(true);
+    lblShow.setBackground(Color.WHITE);
+    lblShow.setBorder(BorderFactory.createCompoundBorder(
+            BorderFactory.createLineBorder(Color.LIGHT_GRAY),
+            BorderFactory.createEmptyBorder(5, 25, 5, 25) // padding trong nút; tăng chút cho dễ click
+    ));
+
+    lblShow.addMouseListener(new MouseAdapter() {
+        @Override public void mouseEntered(MouseEvent e) { lblShow.setBackground(CARD_BG_HOVER); }
+        @Override public void mouseExited (MouseEvent e) { lblShow.setBackground(Color.WHITE); }
+        // @Override public void mouseClicked(MouseEvent e) { openBooking(x); } // nếu cần
+    });
+
+    JPanel row = new JPanel(new BorderLayout());
+    row.setOpaque(false);
+    row.setAlignmentX(Component.CENTER_ALIGNMENT); // hàng giữa
+    row.add(lblShow, BorderLayout.CENTER);
+
+    // Không ép max width vô hạn ở đây; để row rộng = lblShow → nhìn đúng “nút giữa”
+    // Nếu muốn hàng kéo full ngang: bỏ comment dưới
+    // row.setMaximumSize(new Dimension(Integer.MAX_VALUE, row.getPreferredSize().height));
+
+    return row;
+}
 
 
 
-
-
-    /**
-     * Lấy chiều rộng khả dụng để bọc text trong pnlChiTiet.
-     */
-    private int getChiTietContentWidth() {
-        Container parent = pnlChiTiet.getParent();
-        if (parent instanceof JViewport vp) {
-            return vp.getWidth();
-        }
-        // fallback: dùng chính pnlChiTiet (nếu chưa layout sẽ trả 0, nên caller phải kiểm tra)
-        return pnlChiTiet.getWidth();
-    }
-
-    private Component taoDongSuatChieu(SuatChieu x, DateTimeFormatter dtf) {
-        String text = x.getGioChieu().format(dtf) + "  •  Phòng " + x.getMaPhong();
-
-        JLabel lblShow = new JLabel(text);
-        lblShow.setFont(SCHEDULE_FONT);
-        lblShow.setOpaque(true);
-        lblShow.setBackground(Color.WHITE);
-        lblShow.setBorder(BorderFactory.createCompoundBorder(
-                BorderFactory.createLineBorder(Color.LIGHT_GRAY),
-                BorderFactory.createEmptyBorder(5, 10, 5, 10)
-        ));
-
-        lblShow.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseEntered(MouseEvent e) {
-                lblShow.setBackground(new Color(245, 245, 245));
-            }
-
-            @Override
-            public void mouseExited(MouseEvent e) {
-                lblShow.setBackground(Color.WHITE);
-            }
-        });
-
-        JPanel row = new JPanel(new BorderLayout());
-        row.setOpaque(false);
-        row.setAlignmentX(Component.LEFT_ALIGNMENT);
-        row.setBorder(BorderFactory.createEmptyBorder(0, 10, 5, 10)); // padding 2 bên
-        row.add(lblShow, BorderLayout.CENTER);
-
-        // Cho phép row giãn hết ngang trong BoxLayout
-        row.setMaximumSize(new Dimension(Integer.MAX_VALUE, row.getPreferredSize().height));
-        return row;
-    }
 
     private String escapeHtml(String s) {
         if (s == null) {
