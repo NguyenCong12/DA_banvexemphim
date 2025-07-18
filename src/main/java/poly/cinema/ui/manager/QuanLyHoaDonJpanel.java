@@ -4,17 +4,56 @@
  */
 package poly.cinema.ui.manager;
 
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import poly.cinema.dao.ChiTietHangDAO;
+import poly.cinema.dao.ChiTietVeDAO;
+import poly.cinema.dao.HoaDonDAO;
+import poly.cinema.dao.MatHangDAO;
+import poly.cinema.dao.NguoiDungDAO;
+import poly.cinema.dao.QuanLyGheDao;
+import poly.cinema.dao.XuatChieuDAO;
+import poly.cinema.dao.impl.ChiTietHangDAOImpl;
+import poly.cinema.dao.impl.ChiTietVeDAOImpl;
+import poly.cinema.dao.impl.HoaDonDaoImpl;
+import poly.cinema.dao.impl.MatHangDAOImpl;
+import poly.cinema.dao.impl.NguoiDungDAOImpl;
+import poly.cinema.dao.impl.QuanLyGheDaoImpl;
+import poly.cinema.dao.impl.XuatChieuDAOImpl;
+import poly.cinema.entity.ChiTietHang;
+import poly.cinema.entity.ChiTietVe;
+import poly.cinema.entity.HoaDon;
+import poly.cinema.entity.MatHang;
+import poly.cinema.entity.NguoiDung;
+import poly.cinema.entity.QuanLyGhe;
+import poly.cinema.entity.XuatChieu;
+
 /**
  *
  * @author Admin
  */
-public class QuanLyHoaDonJpanel extends javax.swing.JPanel {
+public class QuanLyHoaDonJpanel extends javax.swing.JPanel implements QuanLyHoaDonController {
 
     /**
      * Creates new form QuanLyHoaDon
      */
     public QuanLyHoaDonJpanel() {
         initComponents();
+        init();
+    }
+
+    private void init() {
+        modelHoaDon = (DefaultTableModel) jTable1.getModel();
+        modelChiTiet = (DefaultTableModel) tblBillDetails.getModel();
+        fillToTable();
+
+        if (!hoaDonList.isEmpty()) {
+            currentRow = 0;
+            moveTo(currentRow);
+        }
     }
 
     /**
@@ -46,6 +85,9 @@ public class QuanLyHoaDonJpanel extends javax.swing.JPanel {
         btnMovePrevious = new javax.swing.JButton();
         btnMoveNext = new javax.swing.JButton();
         btnMoveLast = new javax.swing.JButton();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        tblBillDetails1 = new javax.swing.JTable();
+        jLabel11 = new javax.swing.JLabel();
 
         setPreferredSize(new java.awt.Dimension(1110, 720));
 
@@ -71,18 +113,18 @@ public class QuanLyHoaDonJpanel extends javax.swing.JPanel {
         jScrollPane1.setViewportView(jTable1);
 
         jLabel10.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabel10.setText("Hóa đơn chi tiết");
+        jLabel10.setText("Chi tiết vé");
 
         tblBillDetails.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "Mã hóa đơn", "Mã ghế", "Xuất chiếu", "Tên Hàng", "Số lượng", "Giá"
+                "Mã chi tiết vé", "Mã hóa đơn", "Mã xuất", "Mã ghế", "Giá vé"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false
+                false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -173,7 +215,7 @@ public class QuanLyHoaDonJpanel extends javax.swing.JPanel {
                             .addComponent(jLabel4)
                             .addComponent(jLabel9)
                             .addComponent(txtNgayMua, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel7)
                     .addComponent(txtGiaBan, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -217,6 +259,32 @@ public class QuanLyHoaDonJpanel extends javax.swing.JPanel {
                 .addGap(13, 13, 13))
         );
 
+        tblBillDetails1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Mã chi tiết hàng", "Mã hóa đơn", "Mã hàng", "Số lượng", "Giá", "Thành tiền"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, true
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        tblBillDetails1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblBillDetails1MouseClicked(evt);
+            }
+        });
+        jScrollPane3.setViewportView(tblBillDetails1);
+
+        jLabel11.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel11.setText("Chi tiết hàng");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -228,19 +296,23 @@ public class QuanLyHoaDonJpanel extends javax.swing.JPanel {
                         .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap())
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 685, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(0, 0, Short.MAX_VALUE)
-                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 1072, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 685, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGap(18, 18, 18))))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 343, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(377, 377, 377))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 343, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(377, 377, 377))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 501, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(46, 46, 46)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 525, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -255,9 +327,13 @@ public class QuanLyHoaDonJpanel extends javax.swing.JPanel {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(81, 81, 81)))
-                .addComponent(jLabel10)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel10)
+                    .addComponent(jLabel11))
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(45, Short.MAX_VALUE))
         );
 
@@ -278,26 +354,30 @@ public class QuanLyHoaDonJpanel extends javax.swing.JPanel {
     }//GEN-LAST:event_txtGiaBanActionPerformed
 
     private void btnMoveFirstActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMoveFirstActionPerformed
-//        this.moveFirst();
+        this.moveFirst();
     }//GEN-LAST:event_btnMoveFirstActionPerformed
 
     private void btnMovePreviousActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMovePreviousActionPerformed
-//        this.movePrevious();
+        this.movePrevious();
     }//GEN-LAST:event_btnMovePreviousActionPerformed
 
     private void btnMoveNextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMoveNextActionPerformed
-//        this.moveNext();
+        this.moveNext();
     }//GEN-LAST:event_btnMoveNextActionPerformed
 
     private void btnMoveLastActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMoveLastActionPerformed
-//        this.moveLast();
+        this.moveLast();
     }//GEN-LAST:event_btnMoveLastActionPerformed
 
     private void tblBillDetailsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblBillDetailsMouseClicked
-//        if (evt.getClickCount() == 2) {
-//            this.edit();
-//        }
+        if (evt.getClickCount() == 2) {
+            this.edit();
+        }
     }//GEN-LAST:event_tblBillDetailsMouseClicked
+
+    private void tblBillDetails1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblBillDetails1MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tblBillDetails1MouseClicked
 
     public void open() {
     }
@@ -308,6 +388,7 @@ public class QuanLyHoaDonJpanel extends javax.swing.JPanel {
     private javax.swing.JButton btnMovePrevious;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
@@ -316,11 +397,288 @@ public class QuanLyHoaDonJpanel extends javax.swing.JPanel {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTable jTable1;
     private javax.swing.JTable tblBillDetails;
+    private javax.swing.JTable tblBillDetails1;
     private javax.swing.JTextField txtGiaBan;
     private javax.swing.JTextField txtMaHoaDon;
     private javax.swing.JTextField txtMaNhanVien;
     private javax.swing.JTextField txtNgayMua;
     // End of variables declaration//GEN-END:variables
+
+    private int currentRow = -1;
+    private List<HoaDon> hoaDonList = new ArrayList<>();
+    private HoaDonDAO hoaDonDAO = new HoaDonDaoImpl();
+    private ChiTietVeDAO chiTietVeDAO = new ChiTietVeDAOImpl();
+    private ChiTietHangDAO chiTietHangDAO = new ChiTietHangDAOImpl();
+    private NguoiDungDAO nguoiDungDAO = new NguoiDungDAOImpl();
+    private MatHangDAO matHangDAO = new MatHangDAOImpl();
+    private XuatChieuDAO xuatChieuDAO = new XuatChieuDAOImpl();
+    private QuanLyGheDao gheDAO = new QuanLyGheDaoImpl();
+
+    private DefaultTableModel modelHoaDon;
+    private DefaultTableModel modelChiTiet;
+
+    @Override
+    public void setForm(HoaDon entity) {
+        txtMaHoaDon.setText(String.valueOf(entity.getMaHD()));
+
+        NguoiDung nv = nguoiDungDAO.findById(entity.getMaNguoiDung());
+        if (nv != null) {
+            txtMaNhanVien.setText(nv.getTenNd());
+        } else {
+            txtMaNhanVien.setText("Không tìm thấy");
+        }
+
+        txtNgayMua.setText(new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").format(entity.getNgayLap()));
+        txtGiaBan.setText(String.valueOf(entity.getTongTien()));
+    }
+
+    @Override
+    public HoaDon getForm() {
+        HoaDon hd = new HoaDon();
+        try {
+            hd.setMaHD(Integer.parseInt(txtMaHoaDon.getText()));
+        } catch (NumberFormatException e) {
+            hd.setMaHD(null);
+        }
+
+        if (currentRow != -1 && !hoaDonList.isEmpty()) {
+            hd.setMaNguoiDung(hoaDonList.get(currentRow).getMaNguoiDung());
+        } else {
+            JOptionPane.showMessageDialog(this, "Không tìm thấy thông tin nhân viên lập hóa đơn.", "Lỗi", JOptionPane.ERROR_MESSAGE);
+            return null;
+        }
+
+        try {
+            hd.setNgayLap(new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").parse(txtNgayMua.getText()));
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Ngày lập không hợp lệ! Vui lòng nhập đúng định dạng dd/MM/yyyy HH:mm:ss", "Lỗi", JOptionPane.ERROR_MESSAGE);
+            e.printStackTrace();
+            return null;
+        }
+
+        try {
+            hd.setTongTien(Double.parseDouble(txtGiaBan.getText()));
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Tổng tiền không hợp lệ! Vui lòng nhập số.", "Lỗi", JOptionPane.ERROR_MESSAGE);
+            e.printStackTrace();
+            return null;
+        }
+        return hd;
+    }
+
+    @Override
+    public void fillToTable() {
+        hoaDonList = hoaDonDAO.findAll();
+        modelHoaDon.setRowCount(0);
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+        for (HoaDon hd : hoaDonList) {
+            String tenNhanVien = "Không xác định";
+            NguoiDung nv = nguoiDungDAO.findById(hd.getMaNguoiDung());
+            if (nv != null) {
+                tenNhanVien = nv.getTenNd();
+            }
+            modelHoaDon.addRow(new Object[]{
+                hd.getMaHD(),
+                tenNhanVien,
+                sdf.format(hd.getNgayLap()),
+                hd.getTongTien()
+            });
+        }
+    }
+
+    @Override
+    public void edit() {
+        if (currentRow < 0 || currentRow >= hoaDonList.size()) {
+            return;
+        }
+
+        HoaDon hd = hoaDonList.get(currentRow);
+        setForm(hd);
+
+        modelChiTiet.setRowCount(0);
+
+        List<ChiTietVe> chiTietVeList = chiTietVeDAO.selectByMaHD(hd.getMaHD());
+        for (ChiTietVe ct : chiTietVeList) {
+            String seatInfo = "N/A";
+            QuanLyGhe ghe = gheDAO.findById(ct.getMaGhe());
+            if (ghe != null) {
+                seatInfo = "Ghế " + ghe.getSoGhe() + " (Phòng " + ghe.getMaPhong() + ")";
+            }
+            String showtimeInfo = "N/A";
+            XuatChieu xc = xuatChieuDAO.findById(ct.getMaXuat());
+            if (xc != null) {
+                showtimeInfo = "Suất " + xc.getMaXuat() + " - Phim " + xc.getMaPhim();
+            }
+            modelChiTiet.addRow(new Object[]{
+                ct.getMaHD(),
+                "Vé",
+                ct.getMaCTV(),
+                seatInfo,
+                showtimeInfo,
+                ct.getGiaVe()
+            });
+        }
+
+        List<ChiTietHang> chiTietHangList = chiTietHangDAO.selectByMaHD(hd.getMaHD());
+        for (ChiTietHang ct : chiTietHangList) {
+            String itemName = "N/A";
+            MatHang mh = matHangDAO.findById(ct.getMaHang());
+            if (mh != null) {
+                itemName = mh.getTenHang();
+            }
+            modelChiTiet.addRow(new Object[]{
+                ct.getMaHD(),
+                "Hàng",
+                ct.getMaCTH(),
+                itemName,
+                ct.getSoLuong(),
+                ct.getGia()
+            });
+        }
+
+    }
+
+    @Override
+    public void create() {
+        HoaDon hd = getForm();
+        if (hd == null) {
+            return;
+        }
+
+        try {
+            hd.setMaHD(null);
+            hoaDonDAO.create(hd);
+            fillToTable();
+            clear();
+            JOptionPane.showMessageDialog(this, "Thêm hóa đơn thành công!");
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Thêm hóa đơn thất bại! " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void update() {
+        HoaDon hd = getForm();
+        if (hd == null || hd.getMaHD() == null) {
+            JOptionPane.showMessageDialog(this, "Không có hóa đơn được chọn để cập nhật hoặc mã hóa đơn không hợp lệ!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        try {
+            hoaDonDAO.update(hd);
+            fillToTable();
+            JOptionPane.showMessageDialog(this, "Cập nhật hóa đơn thành công!");
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Cập nhật hóa đơn thất bại! " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void delete() {
+        if (txtMaHoaDon.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Vui lòng chọn hóa đơn để xóa!", "Lỗi", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        int maHD;
+        try {
+            maHD = Integer.parseInt(txtMaHoaDon.getText());
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Mã hóa đơn không hợp lệ!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        int confirm = JOptionPane.showConfirmDialog(this, "Bạn có chắc chắn muốn xóa hóa đơn này và tất cả chi tiết của nó?", "Xác nhận xóa", JOptionPane.YES_NO_OPTION);
+        if (confirm == JOptionPane.YES_OPTION) {
+            try {
+                List<ChiTietVe> chiTietVeList = chiTietVeDAO.selectByMaHD(maHD);
+                for (ChiTietVe ct : chiTietVeList) {
+                    chiTietVeDAO.deleteById(ct.getMaCTV());
+                }
+
+                List<ChiTietHang> chiTietHangList = chiTietHangDAO.selectByMaHD(maHD);
+                for (ChiTietHang ct : chiTietHangList) {
+                    chiTietHangDAO.deleteById(ct.getMaCTH());
+                }
+
+                hoaDonDAO.deleteById(maHD);
+
+                fillToTable();
+                clear();
+                JOptionPane.showMessageDialog(this, "Xóa hóa đơn thành công!");
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(this, "Xóa hóa đơn thất bại! " + e.getMessage());
+                e.printStackTrace();
+            }
+        }
+    }
+
+    @Override
+    public void clear() {
+        txtMaHoaDon.setText("");
+        txtMaNhanVien.setText("");
+        txtNgayMua.setText("");
+        txtGiaBan.setText("");
+        jTable1.clearSelection();
+        tblBillDetails.clearSelection();
+        modelChiTiet.setRowCount(0);
+        currentRow = -1;
+    }
+
+    @Override
+    public void setEditable(boolean editable) {
+        txtMaHoaDon.setEditable(false);
+        txtMaNhanVien.setEditable(editable);
+        txtNgayMua.setEditable(editable);
+        txtGiaBan.setEditable(editable);
+    }
+
+    @Override
+    public void moveFirst() {
+        if (!hoaDonList.isEmpty()) {
+            currentRow = 0;
+            moveTo(currentRow);
+        }
+    }
+
+    @Override
+    public void movePrevious() {
+        if (currentRow > 0) {
+            currentRow--;
+            moveTo(currentRow);
+        }
+    }
+
+    @Override
+    public void moveNext() {
+        if (currentRow < hoaDonList.size() - 1) {
+            currentRow++;
+            moveTo(currentRow);
+        }
+    }
+
+    @Override
+    public void moveLast() {
+        if (!hoaDonList.isEmpty()) {
+            currentRow = hoaDonList.size() - 1;
+            moveTo(currentRow);
+        }
+    }
+
+    @Override
+    public void moveTo(int rowIndex) {
+        if (rowIndex >= 0 && rowIndex < hoaDonList.size()) {
+            currentRow = rowIndex;
+            jTable1.setRowSelectionInterval(currentRow, currentRow);
+            edit();
+        }
+    }
+
+    @Override
+    public void selectTimeRange() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
 }
