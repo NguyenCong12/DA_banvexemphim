@@ -18,66 +18,67 @@ public class QuanLyPhimDaoImpl implements QuanLyPhimDao {
     /* =========================================================
        CRUD + FIND CƠ BẢN
        ========================================================= */
-
     private static final String INSERT_SQL = """
-        INSERT INTO Phim (ten_phim, ma_loai, thoi_luong, mo_ta, ngay_khoi_chieu, trang_thai, hinh_anh)
-        VALUES (?, ?, ?, ?, ?, ?, ?)
-        """;
+    INSERT INTO Phim (ten_phim, ma_loai, thoi_luong, mo_ta, ngay_khoi_chieu, ngay_ket_thuc, trang_thai, hinh_anh)
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+    """;
 
     private static final String UPDATE_SQL = """
-        UPDATE Phim
-        SET ten_phim = ?, ma_loai = ?, thoi_luong = ?, mo_ta = ?, ngay_khoi_chieu = ?, trang_thai = ?, hinh_anh = ?
-        WHERE ma_phim = ?
-        """;
+    UPDATE Phim
+    SET ten_phim = ?, ma_loai = ?, thoi_luong = ?, mo_ta = ?, ngay_khoi_chieu = ?, ngay_ket_thuc = ?, trang_thai = ?, hinh_anh = ?
+    WHERE ma_phim = ?
+    """;
 
     private static final String DELETE_SQL = "DELETE FROM Phim WHERE ma_phim = ?";
 
-    /** 
-     * SELECT chuẩn: alias cột snake_case -> camelCase tương ứng với field trong entity (nếu dùng XQuery map theo tên cột).
-     * Nếu entity Phim vẫn dùng tên snake_case, bạn có thể bỏ alias.
+    /**
+     * SELECT chuẩn: alias cột snake_case -> camelCase tương ứng với field trong
+     * entity (nếu dùng XQuery map theo tên cột). Nếu entity Phim vẫn dùng tên
+     * snake_case, bạn có thể bỏ alias.
      */
     private static final String SELECT_ALL_SQL = """
-        SELECT 
-            p.ma_phim         AS maPhim,
-            p.ten_phim        AS tenPhim,
-            p.ma_loai         AS maLoai,
-            p.thoi_luong      AS thoiLuong,
-            p.mo_ta           AS moTa,
-            p.ngay_khoi_chieu AS ngayKhoiChieu,
-            p.trang_thai      AS trangThai,
-            p.hinh_anh        AS hinhAnh,
-            lp.ten_loai       AS tenLoai
-        FROM Phim p
-        JOIN LoaiPhim lp ON p.ma_loai = lp.ma_loai
-        """;
+    SELECT 
+        p.ma_phim         AS maPhim,
+        p.ten_phim        AS tenPhim,
+        p.ma_loai         AS maLoai,
+        p.thoi_luong      AS thoiLuong,
+        p.mo_ta           AS moTa,
+        p.ngay_khoi_chieu AS ngayKhoiChieu,
+        p.ngay_ket_thuc   AS ngayKetThuc, 
+        p.trang_thai      AS trangThai,
+        p.hinh_anh        AS hinhAnh,
+        lp.ten_loai       AS tenLoai
+    FROM Phim p
+    JOIN LoaiPhim lp ON p.ma_loai = lp.ma_loai
+    """;
+
 
     // ---- Các câu WHERE dùng tên bảng/cột thật, KHÔNG dùng alias ở trên ----
-    private static final String SELECT_BY_ID_SQL =
-            SELECT_ALL_SQL + " WHERE p.ma_phim = ?";
+    private static final String SELECT_BY_ID_SQL
+            = SELECT_ALL_SQL + " WHERE p.ma_phim = ?";
 
-    private static final String SELECT_BY_TENPHIM_SQL =
-            SELECT_ALL_SQL + " WHERE p.ten_phim LIKE ?";
+    private static final String SELECT_BY_TENPHIM_SQL
+            = SELECT_ALL_SQL + " WHERE p.ten_phim LIKE ?";
 
-    private static final String SELECT_BY_TRANGTHAI_SQL =
-            SELECT_ALL_SQL + " WHERE p.trang_thai = ?";
+    private static final String SELECT_BY_TRANGTHAI_SQL
+            = SELECT_ALL_SQL + " WHERE p.trang_thai = ?";
 
 
     /* =========================================================
        IMPLEMENT DAO
        ========================================================= */
-
     @Override
     public Phim create(Phim entity) {
-        try (Connection conn = XJdbc.openConnection();
-             PreparedStatement stmt = conn.prepareStatement(INSERT_SQL, Statement.RETURN_GENERATED_KEYS)) {
+        try (Connection conn = XJdbc.openConnection(); PreparedStatement stmt = conn.prepareStatement(INSERT_SQL, Statement.RETURN_GENERATED_KEYS)) {
 
             stmt.setString(1, entity.getTenPhim());
             stmt.setInt(2, entity.getMaLoai());
             stmt.setInt(3, entity.getThoiLuong());
             stmt.setString(4, entity.getMoTa());
-            stmt.setDate  (5, new java.sql.Date(entity.getNgayKhoiChieu().getTime()));
-            stmt.setString(6, entity.getTrangThai());
-            stmt.setString(7, entity.getHinhAnh());
+            stmt.setDate(5, new java.sql.Date(entity.getNgayKhoiChieu().getTime()));
+            stmt.setDate(6, new java.sql.Date(entity.getNgayKetThuc().getTime())); // thêm dòng này
+            stmt.setString(7, entity.getTrangThai());
+            stmt.setString(8, entity.getHinhAnh());
 
             stmt.executeUpdate();
 
@@ -100,10 +101,12 @@ public class QuanLyPhimDaoImpl implements QuanLyPhimDao {
             entity.getThoiLuong(),
             entity.getMoTa(),
             new java.sql.Date(entity.getNgayKhoiChieu().getTime()),
+            new java.sql.Date(entity.getNgayKetThuc().getTime()), // ➕
             entity.getTrangThai(),
             entity.getHinhAnh(),
             entity.getMaPhim()
         };
+
         XJdbc.executeUpdate(UPDATE_SQL, values);
     }
 
@@ -181,14 +184,34 @@ public class QuanLyPhimDaoImpl implements QuanLyPhimDao {
 
     private Phim readFromResultSet(ResultSet rs) throws SQLException {
         Phim phim = new Phim();
-        phim.setMaPhim      (rs.getInt   ("ma_phim"));
-        phim.setTenPhim     (rs.getString("ten_phim"));
-        phim.setMaLoai      (rs.getInt   ("ma_loai"));
-        phim.setThoiLuong   (rs.getInt   ("thoi_luong"));
-        phim.setMoTa        (rs.getString("mo_ta"));
-        phim.setNgayKhoiChieu(rs.getDate ("ngay_khoi_chieu"));
-        phim.setTrangThai   (rs.getString("trang_thai"));
-        phim.setHinhAnh     (rs.getString("hinh_anh"));
+        phim.setMaPhim(rs.getInt("ma_phim"));
+        phim.setTenPhim(rs.getString("ten_phim"));
+        phim.setMaLoai(rs.getInt("ma_loai"));
+        phim.setThoiLuong(rs.getInt("thoi_luong"));
+        phim.setMoTa(rs.getString("mo_ta"));
+        phim.setNgayKhoiChieu(rs.getDate("ngay_khoi_chieu"));
+        phim.setNgayKetThuc(rs.getDate("ngay_ket_thuc")); // ➕
+        phim.setTrangThai(rs.getString("trang_thai"));
+        phim.setHinhAnh(rs.getString("hinh_anh"));
         return phim;
     }
+public String getTenLoaiByMaLoai(int maLoai) {
+    String sql = "SELECT ten_loai FROM LoaiPhim WHERE ma_loai = ?";
+    try (
+        Connection con = XJdbc.openConnection();
+        PreparedStatement ps = con.prepareStatement(sql)
+    ) {
+        ps.setInt(1, maLoai);
+        try (ResultSet rs = ps.executeQuery()) {
+            if (rs.next()) {
+                return rs.getString("ten_loai");
+            }
+        }
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+    return null;
+}
+
+
 }

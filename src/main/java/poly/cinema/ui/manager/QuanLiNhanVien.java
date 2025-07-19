@@ -11,9 +11,9 @@ import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
-import poly.cinema.dao.UserDAO;
-import poly.cinema.dao.impl.UserDAOImpl;
-import poly.cinema.entity.User;
+import poly.cinema.dao.NguoiDungDAO;
+import poly.cinema.dao.impl.NguoiDungDAOImpl;
+import poly.cinema.entity.NguoiDung;
 import static poly.cinema.util.XAuth.user;
 import poly.cinema.util.XIcon;
 
@@ -380,7 +380,7 @@ public class QuanLiNhanVien extends javax.swing.JPanel implements QuanLiNhanVien
         int row = tblQLnhanvien.getSelectedRow();
         if (row >= 0) {
             String email = tblQLnhanvien.getValueAt(row, 2).toString(); // Cột 2 là email
-            User nhanVien = dao.findByEmail(email); // Tìm theo email, không dùng ID nữa
+            NguoiDung nhanVien = dao.findByEmail(email); // Tìm theo email, không dùng ID nữa
 
             if (nhanVien != null) {
                 setForm(nhanVien);
@@ -426,8 +426,8 @@ public class QuanLiNhanVien extends javax.swing.JPanel implements QuanLiNhanVien
     private javax.swing.JTextField txtTennhanvien;
     // End of variables declaration//GEN-END:variables
 
-    UserDAO dao = new UserDAOImpl();
-    List<User> items = new ArrayList<>();
+    NguoiDungDAO dao = new NguoiDungDAOImpl();
+    List<NguoiDung> items = new ArrayList<>();
 
     @Override
     public void open() {
@@ -437,12 +437,12 @@ public class QuanLiNhanVien extends javax.swing.JPanel implements QuanLiNhanVien
     }
 
     @Override
-    public void setForm(User entity) {
+    public void setForm(NguoiDung entity) {
         txtTennhanvien.setText(entity.getTenNd());
         txtMatkhau.setText(entity.getMatKhau());
         txtSodienthoai.setText(entity.getSdt());
 
-        String hinh = entity.getAnhDaiDien(); // đổi tên field
+        String hinh = entity.getAnh_dai_dien(); // đổi tên field
 
         if (hinh != null && !hinh.isBlank()) {
             File imageFile = new File("images", hinh);
@@ -458,34 +458,37 @@ public class QuanLiNhanVien extends javax.swing.JPanel implements QuanLiNhanVien
             lblAnh.setIcon(null);
         }
         txtEmail.setText(entity.getEmail());
-        rdoHoatDong.setSelected(entity.isHoatDong());
-        rdoDaNgung.setSelected(!entity.isHoatDong());
+        rdoHoatDong.setSelected(entity.isHoat_dong());
+        rdoDaNgung.setSelected(!entity.isHoat_dong());
 
-        rdoQuanLy.setSelected(entity.isVaiTro());
-        rdoNhanVien.setSelected(!entity.isVaiTro());
+        rdoQuanLy.setSelected(entity.isVai_tro());
+        rdoNhanVien.setSelected(!entity.isVai_tro());
     }
 
     @Override
-    public User getForm() {
-        User user = new User();
-        int row = tblQLnhanvien.getSelectedRow();
-        if (row >= 0) {
-            // Lấy lại ma_nv từ entity cũ
-            String email = tblQLnhanvien.getValueAt(row, 2).toString();
-            User existing = dao.findByEmail(email);
-            user.setMaNd(existing.getMaNd());
-        }
-
-        user.setTenNd(txtTennhanvien.getText());
-        user.setEmail(txtEmail.getText());
-        user.setMatKhau(txtMatkhau.getText());
-        user.setSdt(txtSodienthoai.getText());
-        user.setVaiTro(rdoQuanLy.isSelected());
-        user.setHoatDong(rdoHoatDong.isSelected());
-        String anh = lblAnh.getToolTipText();
-        user.setAnhDaiDien(anh == null ? "" : anh);
-        return user;
+public NguoiDung getForm() {
+    NguoiDung user = new NguoiDung();
+    int row = tblQLnhanvien.getSelectedRow();
+    if (row >= 0) {
+        // Lấy lại ma_nd từ entity cũ
+        String email = tblQLnhanvien.getValueAt(row, 2).toString();
+        NguoiDung existing = dao.findByEmail(email);
+        user.setMaNd(existing.getMaNd());
     }
+
+    user.setTenNd(txtTennhanvien.getText());
+    user.setEmail(txtEmail.getText());
+    user.setMatKhau(txtMatkhau.getText());
+    user.setSdt(txtSodienthoai.getText());
+    user.setVai_tro(rdoQuanLy.isSelected());  // sửa ở đây
+    user.setHoat_dong(rdoHoatDong.isSelected());
+
+    String anh = lblAnh.getToolTipText();
+    user.setAnh_dai_dien(anh == null ? "" : anh);
+
+    return user;
+}
+
 
     @Override
     public void fillToTable() {
@@ -493,14 +496,14 @@ public class QuanLiNhanVien extends javax.swing.JPanel implements QuanLiNhanVien
         model.setRowCount(0);
 
         items = dao.findAll();
-        for (User item : items) {
+        for (NguoiDung item : items) {
             Object[] rowData = {
                 item.getTenNd(),
                 item.getMatKhau(),
                 item.getEmail(),
                 item.getSdt(),
-                item.isVaiTro() ? "Quản lý" : "Nhân viên",
-                item.isHoatDong() ? "Hoạt động" : "Tạm dừng",
+                item.isVai_tro()? "Quản lý" : "Nhân viên",
+                item.isHoat_dong()? "Hoạt động" : "Tạm dừng",
                 false
             };
             model.addRow(rowData);
@@ -515,7 +518,7 @@ public class QuanLiNhanVien extends javax.swing.JPanel implements QuanLiNhanVien
             return;
         }
         String email = tblQLnhanvien.getValueAt(row, 2).toString();
-        User entity = dao.findByEmail(email);
+        NguoiDung entity = dao.findByEmail(email);
         if (entity != null) {
             this.setForm(entity);
             this.setEditable(true);
@@ -556,7 +559,7 @@ public class QuanLiNhanVien extends javax.swing.JPanel implements QuanLiNhanVien
         }
 
         try {
-            User entity = getForm();
+            NguoiDung entity = getForm();
             dao.create(entity);
             fillToTable();
             clear();
@@ -574,9 +577,9 @@ public class QuanLiNhanVien extends javax.swing.JPanel implements QuanLiNhanVien
             JOptionPane.showMessageDialog(this, "Vui lòng chọn một dòng để cập nhật!");
             return;
         }
-        User newUser = getForm();
+        NguoiDung newUser = getForm();
         String email = tblQLnhanvien.getValueAt(row, 2).toString();
-        User oldUser = dao.findByEmail(email);
+        NguoiDung oldUser = dao.findByEmail(email);
 
         if (oldUser != null && newUser.equals(oldUser)) {
             JOptionPane.showMessageDialog(this, "Không có thay đổi nào để cập nhật!");
@@ -593,25 +596,32 @@ public class QuanLiNhanVien extends javax.swing.JPanel implements QuanLiNhanVien
     }
 
     @Override
-    public void delete() {
-        int row = tblQLnhanvien.getSelectedRow();
-        if (row == -1) {
-            JOptionPane.showMessageDialog(this, "Vui lòng chọn một dòng để xóa!");
-            return;
-        }
-        int choice = JOptionPane.showConfirmDialog(this, "Bạn có chắc muốn xóa?", "Xác nhận", JOptionPane.YES_NO_OPTION);
-        if (choice == JOptionPane.YES_OPTION) {
-            String email = tblQLnhanvien.getValueAt(row, 2).toString();
-            dao.deleteById(email);
+public void delete() {
+    int row = tblQLnhanvien.getSelectedRow();
+    if (row == -1) {
+        JOptionPane.showMessageDialog(this, "Vui lòng chọn một dòng để xóa!");
+        return;
+    }
+
+    int choice = JOptionPane.showConfirmDialog(this, "Bạn có chắc muốn xóa?", "Xác nhận", JOptionPane.YES_NO_OPTION);
+    if (choice == JOptionPane.YES_OPTION) {
+        String email = tblQLnhanvien.getValueAt(row, 2).toString();
+        NguoiDung user = dao.findByEmail(email);
+        if (user != null) {
+            dao.deleteById(user.getMaNd());
             fillToTable();
             clear();
             JOptionPane.showMessageDialog(this, "Xóa thành công!");
+        } else {
+            JOptionPane.showMessageDialog(this, "Không tìm thấy người dùng để xóa!");
         }
     }
+}
+
 
     @Override
     public void clear() {
-        this.setForm(new User());
+        this.setForm(new NguoiDung());
         setEditable(false);
         lblAnh.setIcon(null);
     }

@@ -25,11 +25,13 @@ public class Phim {
     private int thoiLuong;
     private String moTa;
     private Date ngayKhoiChieu;
+    private Date ngayKetThuc; // ➕ Mới thêm
     private String trangThai;
     private String hinhAnh;
+
     @Override
     public String toString() {
-    return tenPhim; // hoặc "P" + maPhim + " - " + tenPhim
+        return tenPhim; // hoặc "P" + maPhim + " - " + tenPhim
+    }
 }
-    
-}
+

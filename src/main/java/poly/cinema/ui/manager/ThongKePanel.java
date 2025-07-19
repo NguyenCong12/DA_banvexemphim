@@ -17,6 +17,7 @@ import org.apache.poi.xwpf.usermodel.XWPFParagraph;
 import org.apache.poi.xwpf.usermodel.XWPFRun;
 import org.apache.poi.xwpf.usermodel.XWPFTable;
 import org.apache.poi.xwpf.usermodel.XWPFTableRow;
+import static org.apache.xmlbeans.impl.schema.StscState.end;
 import poly.cinema.dao.ThongKeDAO;
 import poly.cinema.dao.impl.ThongKeDAOImpl;
 import poly.cinema.entity.ThongKe;
@@ -24,12 +25,11 @@ import poly.cinema.util.TimeRange;
 import poly.cinema.util.XDate;
 import poly.cinema.util.XDialog;
 
-
 /**
  *
  * @author Bao Nhien
  */
-public class ThongKePanel extends javax.swing.JPanel implements ThongKeController{
+public class ThongKePanel extends javax.swing.JPanel implements ThongKeController {
 
     /**
      * Creates new form ThongKe
@@ -308,31 +308,10 @@ public class ThongKePanel extends javax.swing.JPanel implements ThongKeControlle
     }//GEN-LAST:event_cboTimeRangesActionPerformed
 
     private void btnLocActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLocActionPerformed
-//        Date begin = XDate.parse(txtBegin.getText(), "dd-MM-yyyy");
-//        Date end = XDate.parse(txtEnd.getText(), "dd-MM-yyyy");
-//
-//        // Cập nhật giờ đầu ngày và cuối ngày
-//        Calendar cal = Calendar.getInstance();
-//
-//        cal.setTime(begin);
-//        cal.set(Calendar.HOUR_OF_DAY, 0);
-//        cal.set(Calendar.MINUTE, 0);
-//        cal.set(Calendar.SECOND, 0);
-//        cal.set(Calendar.MILLISECOND, 0);
-//        begin = cal.getTime();
-//
-//        cal.setTime(end);
-//        cal.set(Calendar.HOUR_OF_DAY, 23);
-//        cal.set(Calendar.MINUTE, 59);
-//        cal.set(Calendar.SECOND, 59);
-//        cal.set(Calendar.MILLISECOND, 999);
-//        end = cal.getTime();
-//
-//        fillRevenue(begin, end);
+        fillRevenue();
         if (tblDoanhthuPhim.getRowCount() == 0 && tblDoanhthubapnuov.getRowCount() == 0) {
-    JOptionPane.showMessageDialog(this, "Không có dữ liệu trong khoảng thời gian đã chọn.");
-}
-
+            JOptionPane.showMessageDialog(this, "Không có dữ liệu trong khoảng thời gian đã chọn.");
+        }
     }//GEN-LAST:event_btnLocActionPerformed
 
     private void tblDoanhthuPhimMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblDoanhthuPhimMouseClicked
@@ -346,7 +325,7 @@ public class ThongKePanel extends javax.swing.JPanel implements ThongKeControlle
     }//GEN-LAST:event_formMouseClicked
 
     private void btnXuatWordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXuatWordActionPerformed
-        this. xuatWord();
+        this.xuatWord();
     }//GEN-LAST:event_btnXuatWordActionPerformed
 
 
@@ -370,137 +349,142 @@ public class ThongKePanel extends javax.swing.JPanel implements ThongKeControlle
     private javax.swing.JTextField txtEnd;
     // End of variables declaration//GEN-END:variables
 
-  private final ThongKeDAO dao = new ThongKeDAOImpl();
+    private final ThongKeDAO dao = new ThongKeDAOImpl();
 
-@Override
-public void open() {
-    this.selectTimeRange(); // Gán mặc định thời gian
-    this.fillRevenue();     // Load dữ liệu doanh thu phim và bắp nước
-}
-
-@Override
-public void selectTimeRange() {
-    TimeRange range = TimeRange.today();
-    switch (cboTimeRanges.getSelectedIndex()) {
-        case 0 -> range = TimeRange.today();         // Hôm nay
-        case 1 -> range = TimeRange.thisWeek();      // Tuần này
-        case 2 -> range = TimeRange.thisMonth();     // Tháng này
-        case 3 -> range = TimeRange.thisQuarter();   // Quý này
-        case 4 -> range = TimeRange.thisYear();      // Năm này
+    @Override
+    public void open() {
+        this.selectTimeRange(); // Gán mặc định thời gian
+        this.fillRevenue();     // Load dữ liệu doanh thu phim và bắp nước
     }
-    txtBegin.setText(XDate.format(range.getBegin(), "dd-MM-yyyy"));
-    txtEnd.setText(XDate.format(range.getEnd(), "dd-MM-yyyy"));
-}
 
-@Override
-public void fillRevenue() {
-    Date begin = XDate.parse(txtBegin.getText(), "dd-MM-yyyy");
-    Date end = XDate.parse(txtEnd.getText(), "dd-MM-yyyy");
-
-    Calendar cal = Calendar.getInstance();
-    cal.setTime(begin);
-    cal.set(Calendar.HOUR_OF_DAY, 0);
-    cal.set(Calendar.MINUTE, 0);
-    cal.set(Calendar.SECOND, 0);
-    cal.set(Calendar.MILLISECOND, 0);
-    begin = cal.getTime();
-
-    cal.setTime(end);
-    cal.set(Calendar.HOUR_OF_DAY, 23);
-    cal.set(Calendar.MINUTE, 59);
-    cal.set(Calendar.SECOND, 59);
-    cal.set(Calendar.MILLISECOND, 999);
-    end = cal.getTime();
-
-    fillMovieRevenue(begin, end);
-    fillFoodRevenue(begin, end);
-}
-
-public void fillMovieRevenue(Date begin, Date end) {
-    List<ThongKe.DoanhThuPhim> list = dao.getDoanhThuPhim(begin, end);
-    DefaultTableModel model = (DefaultTableModel) tblDoanhthuPhim.getModel();
-    model.setRowCount(0);
-    for (ThongKe.DoanhThuPhim item : list) {
-        model.addRow(new Object[]{
-            item.getTenPhim(),
-            String.format("%,.0f VNĐ", item.getDoanhThu())
-        });
+    @Override
+    public void selectTimeRange() {
+        TimeRange range = TimeRange.today();
+        switch (cboTimeRanges.getSelectedIndex()) {
+            case 0 ->
+                range = TimeRange.today();         // Hôm nay
+            case 1 ->
+                range = TimeRange.thisWeek();      // Tuần này
+            case 2 ->
+                range = TimeRange.thisMonth();     // Tháng này
+            case 3 ->
+                range = TimeRange.thisQuarter();   // Quý này
+            case 4 ->
+                range = TimeRange.thisYear();      // Năm này
+        }
+        txtBegin.setText(XDate.format(range.getBegin(), "dd-MM-yyyy"));
+        txtEnd.setText(XDate.format(range.getEnd(), "dd-MM-yyyy"));
     }
-}
 
+    @Override
+    public void fillRevenue() {
+        Date begin = XDate.parse(txtBegin.getText(), "dd-MM-yyyy");
+        Date end = XDate.parse(txtEnd.getText(), "dd-MM-yyyy");
 
-public void fillFoodRevenue(Date begin, Date end) {
-    List<ThongKe.DoanhThuSanPham> list = dao.getDoanhThuSanPham(begin, end);
-    DefaultTableModel model = (DefaultTableModel) tblDoanhthubapnuov.getModel();
-    model.setRowCount(0);
-    for (ThongKe.DoanhThuSanPham item : list) {
-        model.addRow(new Object[]{
-            item.getLoai(),
-            String.format("%,.0f VNĐ", item.getDoanhThu())
-        });
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(begin);
+        cal.set(Calendar.HOUR_OF_DAY, 0);
+        cal.set(Calendar.MINUTE, 0);
+        cal.set(Calendar.SECOND, 0);
+        cal.set(Calendar.MILLISECOND, 0);
+        begin = cal.getTime();
+
+        cal.setTime(end);
+        cal.set(Calendar.HOUR_OF_DAY, 0);
+        cal.set(Calendar.MINUTE, 0);
+        cal.set(Calendar.SECOND, 0);
+        cal.set(Calendar.MILLISECOND, 0);
+        cal.add(Calendar.DATE, 1); // +1 ngày
+        end = cal.getTime();
+
+        fillMovieRevenue(begin, end);
+        fillFoodRevenue(begin, end);
     }
-}
 
-@Override
-public void edit() {
-    int row = tblDoanhthuPhim.getSelectedRow();
-    if (row != -1) {
-        String movie = tblDoanhthuPhim.getValueAt(row, 0).toString();
-        JOptionPane.showMessageDialog(this, "Xem thống kê của phim: " + movie);
+    public void fillMovieRevenue(Date begin, Date end) {
+        List<ThongKe.DoanhThuPhim> list = dao.getDoanhThuPhim(begin, end);
+        DefaultTableModel model = (DefaultTableModel) tblDoanhthuPhim.getModel();
+        model.setRowCount(0);
+        for (ThongKe.DoanhThuPhim item : list) {
+            model.addRow(new Object[]{
+                item.getTenPhim(),
+                String.format("%,.0f VNĐ", item.getDoanhThu())
+            });
+        }
     }
-}
+
+    public void fillFoodRevenue(Date begin, Date end) {
+        List<ThongKe.DoanhThuSanPham> list = dao.getDoanhThuSanPham(begin, end);
+        DefaultTableModel model = (DefaultTableModel) tblDoanhthubapnuov.getModel();
+        model.setRowCount(0);
+        for (ThongKe.DoanhThuSanPham item : list) {
+            model.addRow(new Object[]{
+                item.getLoai(),
+                String.format("%,.0f VNĐ", item.getDoanhThu())
+            });
+        }
+    }
+
+    @Override
+    public void edit() {
+        int row = tblDoanhthuPhim.getSelectedRow();
+        if (row != -1) {
+            String movie = tblDoanhthuPhim.getValueAt(row, 0).toString();
+            JOptionPane.showMessageDialog(this, "Xem thống kê của phim: " + movie);
+        }
+    }
+
     private void xuatWord() {
-    try (XWPFDocument doc = new XWPFDocument()) {
-        XWPFParagraph p = doc.createParagraph();
-        XWPFRun r = p.createRun();
-        r.setText("THỐNG KÊ DOANH THU PHIM");
-        r.setBold(true);
-        r.setFontSize(16);
+        try (XWPFDocument doc = new XWPFDocument()) {
+            XWPFParagraph p = doc.createParagraph();
+            XWPFRun r = p.createRun();
+            r.setText("THỐNG KÊ DOANH THU PHIM");
+            r.setBold(true);
+            r.setFontSize(16);
 
-        // Table phim
-        XWPFTable tablePhim = doc.createTable();
-        XWPFTableRow headerPhim = tablePhim.getRow(0);
-        headerPhim.getCell(0).setText("Tên phim");
-        headerPhim.addNewTableCell().setText("Doanh thu");
+            // Table phim
+            XWPFTable tablePhim = doc.createTable();
+            XWPFTableRow headerPhim = tablePhim.getRow(0);
+            headerPhim.getCell(0).setText("Tên phim");
+            headerPhim.addNewTableCell().setText("Doanh thu");
 
-        for (int i = 0; i < tblDoanhthuPhim.getRowCount(); i++) {
-            XWPFTableRow row = tablePhim.createRow();
-            row.getCell(0).setText(tblDoanhthuPhim.getValueAt(i, 0).toString());
-            row.getCell(1).setText(tblDoanhthuPhim.getValueAt(i, 1).toString());
-        }
-
-        doc.createParagraph().createRun().addBreak();
-
-        XWPFParagraph p2 = doc.createParagraph();
-        XWPFRun r2 = p2.createRun();
-        r2.setText("THỐNG KÊ DOANH THU SẢN PHẨM");
-        r2.setBold(true);
-        r2.setFontSize(16);
-
-        XWPFTable tableHang = doc.createTable();
-        XWPFTableRow headerHang = tableHang.getRow(0);
-        headerHang.getCell(0).setText("Loại sản phẩm");
-        headerHang.addNewTableCell().setText("Doanh thu");
-
-        for (int i = 0; i < tblDoanhthubapnuov.getRowCount(); i++) {
-            XWPFTableRow row = tableHang.createRow();
-            row.getCell(0).setText(tblDoanhthubapnuov.getValueAt(i, 0).toString());
-            row.getCell(1).setText(tblDoanhthubapnuov.getValueAt(i, 1).toString());
-        }
-
-        JFileChooser chooser = new JFileChooser();
-        chooser.setSelectedFile(new File("ThongKeDoanhThu.docx"));
-        if (chooser.showSaveDialog(null) == JFileChooser.APPROVE_OPTION) {
-            try (FileOutputStream fos = new FileOutputStream(chooser.getSelectedFile())) {
-                doc.write(fos);
-                XDialog.alert("Xuất file Word thành công!");
+            for (int i = 0; i < tblDoanhthuPhim.getRowCount(); i++) {
+                XWPFTableRow row = tablePhim.createRow();
+                row.getCell(0).setText(tblDoanhthuPhim.getValueAt(i, 0).toString());
+                row.getCell(1).setText(tblDoanhthuPhim.getValueAt(i, 1).toString());
             }
-        }
-    } catch (Exception e) {
-        XDialog.alert("Xuất Word thất bại: " + e.getMessage());
-    }
-}
 
+            doc.createParagraph().createRun().addBreak();
+
+            XWPFParagraph p2 = doc.createParagraph();
+            XWPFRun r2 = p2.createRun();
+            r2.setText("THỐNG KÊ DOANH THU SẢN PHẨM");
+            r2.setBold(true);
+            r2.setFontSize(16);
+
+            XWPFTable tableHang = doc.createTable();
+            XWPFTableRow headerHang = tableHang.getRow(0);
+            headerHang.getCell(0).setText("Loại sản phẩm");
+            headerHang.addNewTableCell().setText("Doanh thu");
+
+            for (int i = 0; i < tblDoanhthubapnuov.getRowCount(); i++) {
+                XWPFTableRow row = tableHang.createRow();
+                row.getCell(0).setText(tblDoanhthubapnuov.getValueAt(i, 0).toString());
+                row.getCell(1).setText(tblDoanhthubapnuov.getValueAt(i, 1).toString());
+            }
+
+            JFileChooser chooser = new JFileChooser();
+            chooser.setSelectedFile(new File("ThongKeDoanhThu.docx"));
+            if (chooser.showSaveDialog(null) == JFileChooser.APPROVE_OPTION) {
+                try (FileOutputStream fos = new FileOutputStream(chooser.getSelectedFile())) {
+                    doc.write(fos);
+                    XDialog.alert("Xuất file Word thành công!");
+                }
+            }
+        } catch (Exception e) {
+            XDialog.alert("Xuất Word thất bại: " + e.getMessage());
+        }
+    }
 
     @Override
     public void setForm(ThongKe entity) {
@@ -516,8 +500,6 @@ public void edit() {
     public void fillToTable() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
-
-  
 
     @Override
     public void create() {
