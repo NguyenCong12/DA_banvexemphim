@@ -81,7 +81,6 @@
                 <configuration>
                     <outfile>target/PolyCinemaApp.exe</outfile>
                     <jar>target/DA_banvexemphim-1.0-SNAPSHOT.jar</jar>
-
                     <dontWrapJar>false</dontWrapJar>
                     <headerType>gui</headerType>
                     <classPath>

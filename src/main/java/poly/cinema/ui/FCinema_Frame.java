@@ -1,6 +1,5 @@
 package poly.cinema.ui;
 
-import poly.cinema.ui.manager.BanHang;
 import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Component;
@@ -25,6 +24,7 @@ import poly.cinema.util.XIcon;
  */
 public class FCinema_Frame extends javax.swing.JFrame implements FCinema_Controller {
 
+    private CardLayout cardLayout = new CardLayout();
     /**
      * Creates new form FCinema_Frame
      */
@@ -32,7 +32,7 @@ public class FCinema_Frame extends javax.swing.JFrame implements FCinema_Control
         initComponents();
         init();
         setLocationRelativeTo(null);
-        pnlBanHang = new BanHang();
+        pnlBanHang = new BanHang(pnlMainContent);
         pnlMainContent.removeAll();
         pnlMainContent.setLayout(new CardLayout());
 
@@ -48,8 +48,14 @@ public class FCinema_Frame extends javax.swing.JFrame implements FCinema_Control
         pnlQuanLySanPham = new poly.cinema.ui.manager.QuanLySanPham();
         pnlQuanLySuatChieu = new poly.cinema.ui.manager.QuanLyXuatChieu();
         
-        pnlBanHang = new poly.cinema.ui.manager.BanHang();
+        pnlBanHang = new poly.cinema.ui.BanHang(pnlMainContent);
         pnlMainContent.add(pnlBanHang, "pnlBanHang");
+        pnlChonPhim = new poly.cinema.ui.chonPhimJpanel(pnlMainContent);
+        pnlMainContent.add(pnlChonPhim, "pnlChonPhim");
+        pnlchonGhe = new poly.cinema.ui.chonGheJPanel();
+        pnlMainContent.add(pnlchonGhe, "pnlchonGhe");
+        pnlBanSanPham = new poly.cinema.ui.BanSanPham();
+        pnlMainContent.add(pnlBanSanPham, "pnlBanSanPham");
 
         pnlMainContent.add(pnlQuanLyPhim, "pnlQuanLyPhim");
         pnlMainContent.add(pnlQuanLyPhongChieu, "pnlQuanLyPhongChieu");
@@ -69,9 +75,7 @@ public class FCinema_Frame extends javax.swing.JFrame implements FCinema_Control
         CardLayout cl = (CardLayout) pnlMainContent.getLayout();
         cl.show(pnlMainContent, "pnlTrangchu");
         addHoverEffectToPanelLabels(pnlManager);
-
     }
-
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -118,6 +122,9 @@ public class FCinema_Frame extends javax.swing.JFrame implements FCinema_Control
         pnlLoaiPhim = new javax.swing.JPanel();
         pnlLoaiGhe = new javax.swing.JPanel();
         pnlBanHang = new javax.swing.JPanel();
+        pnlchonGhe = new javax.swing.JPanel();
+        pnlChonPhim = new javax.swing.JPanel();
+        pnlBanSanPham = new javax.swing.JPanel();
         lblFullname = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -524,6 +531,45 @@ public class FCinema_Frame extends javax.swing.JFrame implements FCinema_Control
 
         pnlMainContent.add(pnlBanHang, "card17");
 
+        javax.swing.GroupLayout pnlchonGheLayout = new javax.swing.GroupLayout(pnlchonGhe);
+        pnlchonGhe.setLayout(pnlchonGheLayout);
+        pnlchonGheLayout.setHorizontalGroup(
+            pnlchonGheLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 1120, Short.MAX_VALUE)
+        );
+        pnlchonGheLayout.setVerticalGroup(
+            pnlchonGheLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 720, Short.MAX_VALUE)
+        );
+
+        pnlMainContent.add(pnlchonGhe, "card18");
+
+        javax.swing.GroupLayout pnlChonPhimLayout = new javax.swing.GroupLayout(pnlChonPhim);
+        pnlChonPhim.setLayout(pnlChonPhimLayout);
+        pnlChonPhimLayout.setHorizontalGroup(
+            pnlChonPhimLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 1120, Short.MAX_VALUE)
+        );
+        pnlChonPhimLayout.setVerticalGroup(
+            pnlChonPhimLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 720, Short.MAX_VALUE)
+        );
+
+        pnlMainContent.add(pnlChonPhim, "card19");
+
+        javax.swing.GroupLayout pnlBanSanPhamLayout = new javax.swing.GroupLayout(pnlBanSanPham);
+        pnlBanSanPham.setLayout(pnlBanSanPhamLayout);
+        pnlBanSanPhamLayout.setHorizontalGroup(
+            pnlBanSanPhamLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 1120, Short.MAX_VALUE)
+        );
+        pnlBanSanPhamLayout.setVerticalGroup(
+            pnlBanSanPhamLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 720, Short.MAX_VALUE)
+        );
+
+        pnlMainContent.add(pnlBanSanPham, "card20");
+
         pnlCenter.add(pnlMainContent, new org.netbeans.lib.awtextra.AbsoluteConstraints(244, 0, 1120, 720));
 
         lblFullname.setText("jLabel5");
@@ -581,7 +627,7 @@ public class FCinema_Frame extends javax.swing.JFrame implements FCinema_Control
     private void lblBanVeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblBanVeMouseClicked
         CardLayout cl = (CardLayout) pnlMainContent.getLayout();
         cl.show(pnlMainContent, "pnlBanHang");
-        ((poly.cinema.ui.manager.BanHang) pnlBanHang).open();
+        ((poly.cinema.ui.BanHang) pnlBanHang).open();
     }//GEN-LAST:event_lblBanVeMouseClicked
 
     private void lblQLGheMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblQLGheMouseClicked
@@ -717,8 +763,10 @@ public class FCinema_Frame extends javax.swing.JFrame implements FCinema_Control
     private javax.swing.JLabel lbldãnguat;
     private javax.swing.JLabel lblsuatchieu;
     private javax.swing.JPanel pnlBanHang;
+    private javax.swing.JPanel pnlBanSanPham;
     private javax.swing.JPanel pnlBanVe;
     private javax.swing.JPanel pnlCenter;
+    private javax.swing.JPanel pnlChonPhim;
     private javax.swing.JPanel pnlDoiMatKhau;
     private javax.swing.JPanel pnlLichSuBanHang;
     private javax.swing.JPanel pnlLoaiGhe;
@@ -735,6 +783,7 @@ public class FCinema_Frame extends javax.swing.JFrame implements FCinema_Control
     private javax.swing.JPanel pnlThongKeDoanhThu;
     private javax.swing.JPanel pnlTrangchu;
     private javax.swing.JPanel pnlXemLichChieu;
+    private javax.swing.JPanel pnlchonGhe;
     // End of variables declaration//GEN-END:variables
 
     @Override
