@@ -18,7 +18,18 @@ public class UserDAOImpl implements UserDAO {
 
     String createSql = "INSERT INTO NguoiDung(ten_nd, email, mat_khau, vai_tro, sdt, hoat_dong, anh_dai_dien) VALUES (?, ?, ?, ?, ?, ?, ?)";
     String updateSql = "UPDATE NguoiDung SET ten_nd=?, email=?, mat_khau=?, vai_tro=?, sdt=?, hoat_dong=?, anh_dai_dien=? WHERE ma_nd=?";
-    String findAllSql = "SELECT * FROM NguoiDung";
+    String findAllSql = """
+                    SELECT 
+                        ma_nd AS maNd, 
+                        ten_nd AS tenNd, 
+                        email, 
+                        mat_khau AS matKhau, 
+                        vai_tro AS vaiTro, 
+                        sdt, 
+                        hoat_dong AS hoatDong, 
+                        anh_dai_dien AS anhDaiDien 
+                    FROM NguoiDung
+                """;
 
     @Override
     public User create(User entity) {
@@ -43,7 +54,8 @@ public class UserDAOImpl implements UserDAO {
                 entity.isVaiTro(),
                 entity.getSdt(),
                 entity.isHoatDong(),
-                entity.getAnhDaiDien()
+                entity.getAnhDaiDien(),
+                entity.getMaNd()
         );
     }
 

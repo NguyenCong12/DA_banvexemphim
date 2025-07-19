@@ -50,7 +50,7 @@ public class FCinema_Frame extends javax.swing.JFrame implements FCinema_Control
         pnlQuanLySanPham = new poly.cinema.ui.manager.QuanLySanPham();
         pnlQuanLySuatChieu = new poly.cinema.ui.manager.QuanLyXuatChieu();
         
-        pnlQuanLySuatChieu = new poly.cinema.ui.manager.BanHang();
+        pnlBanHang = new poly.cinema.ui.manager.BanHang();
         pnlMainContent.add(pnlBanHang, "pnlBanHang");
 
         pnlMainContent.add(pnlQuanLyPhim, "pnlQuanLyPhim");
