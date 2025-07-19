@@ -64,6 +64,7 @@ public class QuanLyPhim extends javax.swing.JPanel implements QuanLyPhimControll
         rdoNgungChieu = new javax.swing.JRadioButton();
         lblAnh = new javax.swing.JLabel();
         cboLoaiPhim = new javax.swing.JComboBox<>();
+        txtNgayKetThuc = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
         jButton5 = new javax.swing.JButton();
         jButton6 = new javax.swing.JButton();
@@ -81,23 +82,23 @@ public class QuanLyPhim extends javax.swing.JPanel implements QuanLyPhimControll
         tblPhim.setAutoCreateRowSorter(true);
         tblPhim.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null}
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "Mã phim", "Tên phim", "Thể loại", "Thời lượng", "Mô tả", "Ngày khởi chiếu", "Trạng thái"
+                "Mã phim", "Tên phim", "Thể loại", "Thời lượng", "Mô tả", "Ngày khởi chiếu", "Trạng thái", "Title 8"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false
+                false, false, false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -175,6 +176,8 @@ public class QuanLyPhim extends javax.swing.JPanel implements QuanLyPhimControll
 
         cboLoaiPhim.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
+        txtNgayKetThuc.setText("jTextField1");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -185,12 +188,15 @@ public class QuanLyPhim extends javax.swing.JPanel implements QuanLyPhimControll
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtMoTa, javax.swing.GroupLayout.DEFAULT_SIZE, 251, Short.MAX_VALUE)
-                    .addComponent(txtTenPhim))
+                    .addComponent(txtTenPhim)
+                    .addComponent(txtNgayKetThuc))
                 .addGap(103, 103, 103)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtNgayKhoiChieu, javax.swing.GroupLayout.PREFERRED_SIZE, 265, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblAnh, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(79, 79, 79)
+                        .addComponent(lblAnh, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(91, 91, 91)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -219,7 +225,7 @@ public class QuanLyPhim extends javax.swing.JPanel implements QuanLyPhimControll
                     .addComponent(cboLoaiPhim, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 19, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jLabel3)
                         .addGap(18, 18, 18)
                         .addComponent(txtThoiLuong, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -229,18 +235,16 @@ public class QuanLyPhim extends javax.swing.JPanel implements QuanLyPhimControll
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(rdoDangChieu)
                             .addComponent(rdoSapChieu)
-                            .addComponent(rdoNgungChieu))
+                            .addComponent(rdoNgungChieu)
+                            .addComponent(lblAnh, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(70, 70, 70))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(29, 29, 29)
-                                .addComponent(jLabel4)
-                                .addGap(18, 18, 18)
-                                .addComponent(txtMoTa, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(lblAnh, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(29, 29, 29)
+                        .addComponent(jLabel4)
+                        .addGap(18, 18, 18)
+                        .addComponent(txtMoTa, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(txtNgayKetThuc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
 
@@ -356,7 +360,6 @@ public class QuanLyPhim extends javax.swing.JPanel implements QuanLyPhimControll
             Phim phim = items.get(row);
             setForm(phim);
         }
-        updateButtonStatus();
     }//GEN-LAST:event_tblPhimMouseClicked
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemActionPerformed
@@ -409,6 +412,7 @@ public class QuanLyPhim extends javax.swing.JPanel implements QuanLyPhimControll
     private javax.swing.JRadioButton rdoSapChieu;
     private javax.swing.JTable tblPhim;
     private javax.swing.JTextField txtMoTa;
+    private javax.swing.JTextField txtNgayKetThuc;
     private javax.swing.JTextField txtNgayKhoiChieu;
     private javax.swing.JTextField txtTenPhim;
     private javax.swing.JTextField txtThoiLuong;
@@ -417,14 +421,6 @@ public class QuanLyPhim extends javax.swing.JPanel implements QuanLyPhimControll
     QuanLyPhimDao dao = new QuanLyPhimDaoImpl();
     List<Phim> items = new ArrayList<>();
     private List<LoaiPhim> loaiPhimList;
-
-    private void updateButtonStatus() {
-        boolean isRowSelected = tblPhim.getSelectedRow() >= 0;
-
-        jButton5.setEnabled(!isRowSelected); // Thêm chỉ bật khi không chọn dòng nào
-        jButton6.setEnabled(isRowSelected);  // Sửa bật khi chọn dòng
-        jButton7.setEnabled(isRowSelected);  // Xóa bật khi chọn dòng
-    }
 
     private void loadLoaiPhimToComboBox() {
         loaiPhimList = new LoaiPhimDaoImpl().findAll();
@@ -455,49 +451,74 @@ public class QuanLyPhim extends javax.swing.JPanel implements QuanLyPhimControll
     }
 
     @Override
-    public Phim getForm() {
-        Phim p = new Phim();
-        p.setTenPhim(txtTenPhim.getText());
-        String tenLoai = (String) cboLoaiPhim.getSelectedItem();
-        int maLoai = -1;
-        for (LoaiPhim loai : loaiPhimList) {
-            if (loai.getTenLoai().equals(tenLoai)) {
-                maLoai = loai.getMaLoai();
-                break;
-            }
-        }
-        if (maLoai == -1) {
-            XDialog.alert("Không tìm thấy mã thể loại tương ứng!");
-            return null;
-        }
-        p.setMaLoai(maLoai); // ✅ đúng mã loại
+public Phim getForm() {
+    String tenPhim = txtTenPhim.getText().trim();
+    String thoiLuongStr = txtThoiLuong.getText().trim();
+    String moTa = txtMoTa.getText().trim();
 
-        try {
-            p.setThoiLuong(Integer.parseInt(txtThoiLuong.getText()));
-        } catch (NumberFormatException e) {
-            XDialog.alert("Thời lượng không hợp lệ!");
-            return null;
-        }
-        p.setMoTa(txtMoTa.getText());
-
-        // Ngày chiếu kiểm tra định dạng và ngày
-        Date ngayChieu = XDate.parse(txtNgayKhoiChieu.getText().trim(), "dd/MM/yyyy");
-        if (ngayChieu == null) {
-            XDialog.alert("Ngày chiếu không đúng định dạng (dd/MM/yyyy).");
-            return null;
-        }
-        Date today = new Date();
-        if (ngayChieu.before(today)) {
-            XDialog.alert("Ngày chiếu không được nhỏ hơn ngày hôm nay.");
-            return null;
-        }
-        p.setNgayKhoiChieu(ngayChieu);
-
-        p.setTrangThai(getTrangThai());
-        String photoName = lblAnh.getToolTipText();
-        p.setHinhAnh(photoName != null ? photoName : null);
-        return p;
+    // Validate tên phim
+    if (tenPhim.isEmpty()) {
+        XDialog.alert("Tên phim không được để trống!");
+        return null;
     }
+
+    // Lấy mã loại phim từ combo box
+    LoaiPhim selectedLoai = (LoaiPhim) cboLoaiPhim.getSelectedItem();
+    if (selectedLoai == null) {
+        XDialog.alert("Vui lòng chọn thể loại phim!");
+        return null;
+    }
+
+    // Parse thời lượng
+    int thoiLuong;
+    try {
+        thoiLuong = Integer.parseInt(thoiLuongStr);
+        if (thoiLuong <= 0) throw new NumberFormatException();
+    } catch (NumberFormatException e) {
+        XDialog.alert("Thời lượng phải là số nguyên dương!");
+        return null;
+    }
+
+    // Kiểm tra ngày chiếu và ngày kết thúc
+    Date ngayKhoiChieu = XDate.parse(txtNgayKhoiChieu.getText().trim(), "dd/MM/yyyy");
+    Date ngayKetThuc = XDate.parse(txtNgayKetThuc.getText().trim(), "dd/MM/yyyy");
+    if (ngayKhoiChieu == null || ngayKetThuc == null) {
+        XDialog.alert("Ngày khởi chiếu hoặc ngày kết thúc không đúng định dạng (dd/MM/yyyy).");
+        return null;
+    }
+    Date today = new Date();
+    if (ngayKhoiChieu.before(today)) {
+        XDialog.alert("Ngày khởi chiếu không được nhỏ hơn ngày hôm nay.");
+        return null;
+    }
+    if (ngayKetThuc.before(ngayKhoiChieu)) {
+        XDialog.alert("Ngày kết thúc phải sau ngày khởi chiếu.");
+        return null;
+    }
+
+    // Lấy trạng thái
+    String trangThai = getTrangThai();
+    if (trangThai == null) {
+        XDialog.alert("Vui lòng chọn trạng thái phim!");
+        return null;
+    }
+
+    // Hình ảnh
+    String hinhAnh = lblAnh.getToolTipText();
+
+    // Build đối tượng Phim
+    return Phim.builder()
+            .tenPhim(tenPhim)
+            .maLoai(selectedLoai.getMaLoai())
+            .thoiLuong(thoiLuong)
+            .moTa(moTa)
+            .ngayKhoiChieu(ngayKhoiChieu)
+            .ngayKetThuc(ngayKetThuc)
+            .trangThai(trangThai)
+            .hinhAnh(hinhAnh)
+            .build();
+}
+
 
     @Override
     public void setForm(Phim entity) {
@@ -512,7 +533,7 @@ public class QuanLyPhim extends javax.swing.JPanel implements QuanLyPhimControll
         txtThoiLuong.setText(String.valueOf(entity.getThoiLuong()));
         txtMoTa.setText(entity.getMoTa());
         txtNgayKhoiChieu.setText(XDate.format(entity.getNgayKhoiChieu(), "dd/MM/yyyy"));
-
+        txtNgayKetThuc.setText(XDate.format(entity.getNgayKetThuc(), "dd/MM/yyyy"));
         switch (entity.getTrangThai()) {
             case "Đang chiếu" ->
                 rdoDangChieu.setSelected(true);
@@ -560,6 +581,7 @@ public class QuanLyPhim extends javax.swing.JPanel implements QuanLyPhimControll
                 p.getMaPhim(), p.getTenPhim(), tenLoai, // ✅ đúng tên
                 p.getThoiLuong(), p.getMoTa(),
                 XDate.format(p.getNgayKhoiChieu(), "dd/MM/yyyy"),
+                XDate.format(p.getNgayKetThuc(), "dd/MM/yyyy"),
                 p.getTrangThai(), p.getHinhAnh()
             });
         }
@@ -617,11 +639,11 @@ public class QuanLyPhim extends javax.swing.JPanel implements QuanLyPhimControll
         txtThoiLuong.setText("");
         txtMoTa.setText("");
         txtNgayKhoiChieu.setText("");
+        txtNgayKetThuc.setText("");
         rdoDangChieu.setSelected(true);
         lblAnh.setIcon(null);
         lblAnh.setToolTipText(null);
         tblPhim.clearSelection();
-        updateButtonStatus();
     }
 
     @Override
@@ -630,6 +652,7 @@ public class QuanLyPhim extends javax.swing.JPanel implements QuanLyPhimControll
         txtThoiLuong.setEditable(editable);
         txtMoTa.setEditable(editable);
         txtNgayKhoiChieu.setEditable(editable);
+        txtNgayKetThuc.setEditable(editable);
         rdoDangChieu.setEnabled(editable);
         rdoNgungChieu.setEnabled(editable);
         rdoSapChieu.setEnabled(editable);

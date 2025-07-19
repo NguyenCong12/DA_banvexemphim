@@ -4,9 +4,9 @@
  */
 package poly.cinema.ui;
 
-import poly.cinema.dao.UserDAO;
-import poly.cinema.dao.impl.UserDAOImpl;
-import poly.cinema.entity.User;
+import poly.cinema.dao.NguoiDungDAO;
+import poly.cinema.dao.impl.NguoiDungDAOImpl;
+import poly.cinema.entity.NguoiDung;
 import poly.cinema.util.XAuth;
 import poly.cinema.util.XDialog;
 import poly.cinema.util.XIcon;
@@ -300,16 +300,16 @@ public class DangNhapJDialog extends javax.swing.JDialog implements DangNhapCont
     @Override
     public void login() {
         try {
-            String username = txtTenDangNhap.getText().trim();
-            String password = txtMatKhau.getText();
+//            String email = txtTenDangNhap.getText().trim();
+//            String password = txtMatKhau.getText();
 //
-//            if (username.isEmpty() || password.isEmpty()) {
+//            if (email.isEmpty() || password.isEmpty()) {
 //                XDialog.alert("⚠️ Vui lòng nhập đầy đủ tên đăng nhập và mật khẩu!");
 //                return;
 //            }
 //
-//            UserDAO dao = new UserDAOImpl();
-//            User user = dao.findById(username);
+//            NguoiDungDAO dao = new NguoiDungDAOImpl();
+//            NguoiDung user = dao.findByEmail(email);
 //
 //            if (user == null) {
 //                XDialog.alert("❌ Tên đăng nhập không tồn tại!");
@@ -321,7 +321,7 @@ public class DangNhapJDialog extends javax.swing.JDialog implements DangNhapCont
 //                return;
 //            }
 //
-//            if (!user.isVaiTro()) {
+//            if (!user.isVai_tro()) {
 //                XDialog.alert("⚠️ Tài khoản đã bị khóa. Vui lòng liên hệ quản trị viên.");
 //                return;
 //            }

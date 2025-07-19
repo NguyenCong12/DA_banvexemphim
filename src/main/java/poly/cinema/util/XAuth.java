@@ -6,7 +6,7 @@ package poly.cinema.util;
 //
 //import poly.cafe.entity.User;
 
-import poly.cinema.entity.User;
+import poly.cinema.entity.NguoiDung;
 
 
 /**
@@ -14,14 +14,14 @@ import poly.cinema.entity.User;
  * @author Admin
  */
 public class XAuth {
-    public static User user1;
-    public static User user = User.builder()
+    public static NguoiDung user1;
+    public static NguoiDung user = NguoiDung.builder()
             .email("123")
             .matKhau("123")
-            .hoatDong(true)
-            .vaiTro(true)
+            .hoat_dong(true)
+            .vai_tro(true)
             .tenNd("Nguyễn Văn Tèo")
-            .anhDaiDien("trump.png")
+            .anh_dai_dien("trump.png")
             .build(); // biến user này sẽ được thay thế sau khi đăng nhập
 
 }

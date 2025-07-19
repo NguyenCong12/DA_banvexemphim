@@ -7,8 +7,8 @@ package poly.cinema.ui;
 import java.awt.image.BufferedImage;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
-import poly.cinema.dao.UserDAO;
-import poly.cinema.dao.impl.UserDAOImpl;
+import poly.cinema.dao.NguoiDungDAO;
+import poly.cinema.dao.impl.NguoiDungDAOImpl;
 import poly.cinema.util.CaptchaGenerator;
 import poly.cinema.util.XAuth;
 
@@ -303,7 +303,7 @@ public class DoiMatKhau extends javax.swing.JPanel implements DoiMatKhauControll
         // TODO add your handling code here:
     }//GEN-LAST:event_txtCaptchaActionPerformed
 
-    UserDAO dao = new UserDAOImpl();
+    NguoiDungDAO dao = new NguoiDungDAOImpl();
 
     @Override
     public void save() {

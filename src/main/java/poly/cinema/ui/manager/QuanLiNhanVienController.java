@@ -4,12 +4,12 @@
  */
 package poly.cinema.ui.manager;
 
-import poly.cinema.entity.User;
+import poly.cinema.entity.NguoiDung;
 
 /**
  *
  * @author BA HAO
  */
-public interface QuanLiNhanVienController extends CrudController<User> {
+public interface QuanLiNhanVienController extends CrudController<NguoiDung> {
     
 }

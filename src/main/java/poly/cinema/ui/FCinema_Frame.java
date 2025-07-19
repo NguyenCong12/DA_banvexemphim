@@ -7,8 +7,6 @@ import java.awt.Component;
 import java.awt.Cursor;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -50,7 +48,7 @@ public class FCinema_Frame extends javax.swing.JFrame implements FCinema_Control
         pnlQuanLySanPham = new poly.cinema.ui.manager.QuanLySanPham();
         pnlQuanLySuatChieu = new poly.cinema.ui.manager.QuanLyXuatChieu();
         
-        pnlQuanLySuatChieu = new poly.cinema.ui.manager.BanHang();
+        pnlBanHang = new poly.cinema.ui.manager.BanHang();
         pnlMainContent.add(pnlBanHang, "pnlBanHang");
 
         pnlMainContent.add(pnlQuanLyPhim, "pnlQuanLyPhim");
@@ -747,7 +745,7 @@ public class FCinema_Frame extends javax.swing.JFrame implements FCinema_Control
         this.showLoginJDialog(this);
 
         lblFullname.setText(XAuth.user.getTenNd());
-        if (!XAuth.user.isVaiTro()) {
+        if (!XAuth.user.isVai_tro()) {
             pnlCenter.remove(pnlManager);
         }
 //        if (XAuth.user.isVai_tro()) {
@@ -761,7 +759,7 @@ public class FCinema_Frame extends javax.swing.JFrame implements FCinema_Control
             if (XAuth.user != null) {
                 FCinema_Frame main = new FCinema_Frame();
                 lblFullname.setText(XAuth.user.getTenNd());
-                if (!XAuth.user.isVaiTro()) {
+                if (!XAuth.user.isVai_tro()) {
                     pnlCenter.remove(pnlManager);
                 }
                 main.setVisible(true);

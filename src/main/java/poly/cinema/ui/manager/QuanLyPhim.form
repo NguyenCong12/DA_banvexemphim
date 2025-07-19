@@ -112,7 +112,7 @@
               <Properties>
                 <Property name="autoCreateRowSorter" type="boolean" value="true"/>
                 <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-                  <Table columnCount="7" rowCount="10">
+                  <Table columnCount="8" rowCount="10">
                     <Column editable="false" title="M&#xe3; phim" type="java.lang.Object"/>
                     <Column editable="false" title="T&#xea;n phim" type="java.lang.Object"/>
                     <Column editable="false" title="Th&#x1ec3; lo&#x1ea1;i" type="java.lang.Object"/>
@@ -120,6 +120,7 @@
                     <Column editable="false" title="M&#xf4; t&#x1ea3;" type="java.lang.Object"/>
                     <Column editable="false" title="Ng&#xe0;y kh&#x1edf;i chi&#x1ebf;u" type="java.lang.Object"/>
                     <Column editable="false" title="Tr&#x1ea1;ng th&#xe1;i" type="java.lang.Object"/>
+                    <Column editable="false" title="Title 8" type="java.lang.Object"/>
                   </Table>
                 </Property>
                 <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
@@ -199,12 +200,16 @@
                           <Component id="jLabel4" min="-2" pref="67" max="-2" attributes="0"/>
                           <Component id="txtMoTa" alignment="0" pref="251" max="32767" attributes="0"/>
                           <Component id="txtTenPhim" max="32767" attributes="0"/>
+                          <Component id="txtNgayKetThuc" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace min="-2" pref="103" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="jLabel5" min="-2" pref="136" max="-2" attributes="0"/>
                           <Component id="txtNgayKhoiChieu" min="-2" pref="265" max="-2" attributes="0"/>
-                          <Component id="lblAnh" min="-2" pref="173" max="-2" attributes="0"/>
+                          <Group type="102" attributes="0">
+                              <EmptySpace min="-2" pref="79" max="-2" attributes="0"/>
+                              <Component id="lblAnh" min="-2" pref="173" max="-2" attributes="0"/>
+                          </Group>
                       </Group>
                       <EmptySpace min="-2" pref="91" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
@@ -240,7 +245,7 @@
                       </Group>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" alignment="0" attributes="0">
-                              <EmptySpace pref="19" max="32767" attributes="0"/>
+                              <EmptySpace max="32767" attributes="0"/>
                               <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
                               <EmptySpace type="separate" max="-2" attributes="0"/>
                               <Component id="txtThoiLuong" min="-2" max="-2" attributes="0"/>
@@ -251,22 +256,17 @@
                                   <Component id="rdoDangChieu" alignment="3" min="-2" max="-2" attributes="0"/>
                                   <Component id="rdoSapChieu" alignment="3" min="-2" max="-2" attributes="0"/>
                                   <Component id="rdoNgungChieu" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="lblAnh" alignment="3" min="-2" pref="185" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace min="-2" pref="70" max="-2" attributes="0"/>
                           </Group>
                           <Group type="102" attributes="0">
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Group type="102" alignment="0" attributes="0">
-                                      <EmptySpace min="-2" pref="29" max="-2" attributes="0"/>
-                                      <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                                      <Component id="txtMoTa" min="-2" pref="75" max="-2" attributes="0"/>
-                                  </Group>
-                                  <Group type="102" alignment="0" attributes="0">
-                                      <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="lblAnh" min="-2" pref="185" max="-2" attributes="0"/>
-                                  </Group>
-                              </Group>
+                              <EmptySpace min="-2" pref="29" max="-2" attributes="0"/>
+                              <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace type="separate" max="-2" attributes="0"/>
+                              <Component id="txtMoTa" min="-2" pref="75" max="-2" attributes="0"/>
+                              <EmptySpace type="separate" max="-2" attributes="0"/>
+                              <Component id="txtNgayKetThuc" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="32767" attributes="0"/>
                           </Group>
                       </Group>
@@ -381,6 +381,11 @@
               <AuxValues>
                 <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
               </AuxValues>
+            </Component>
+            <Component class="javax.swing.JTextField" name="txtNgayKetThuc">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="jTextField1"/>
+              </Properties>
             </Component>
           </SubComponents>
         </Container>

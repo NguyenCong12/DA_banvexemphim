@@ -15,7 +15,6 @@ E:\DA1\DA_BANVEXEMPHIM\DA_banvexemphim\src\main\java\poly\cinema\dao\impl\QuanLy
 E:\DA1\DA_BANVEXEMPHIM\DA_banvexemphim\src\main\java\poly\cinema\dao\impl\QuanLySanPhamDAOImpl.java
 E:\DA1\DA_BANVEXEMPHIM\DA_banvexemphim\src\main\java\poly\cinema\dao\impl\QuanLySuatChieuDaoImpl.java
 E:\DA1\DA_BANVEXEMPHIM\DA_banvexemphim\src\main\java\poly\cinema\dao\impl\ThongKeDAOImpl.java
-E:\DA1\DA_BANVEXEMPHIM\DA_banvexemphim\src\main\java\poly\cinema\dao\impl\UserDAOImpl.java
 E:\DA1\DA_BANVEXEMPHIM\DA_banvexemphim\src\main\java\poly\cinema\dao\impl\XuatChieuDAOImpl.java
 E:\DA1\DA_BANVEXEMPHIM\DA_banvexemphim\src\main\java\poly\cinema\dao\LichSuDAO.java
 E:\DA1\DA_BANVEXEMPHIM\DA_banvexemphim\src\main\java\poly\cinema\dao\LoaiPhimDao.java
@@ -27,7 +26,6 @@ E:\DA1\DA_BANVEXEMPHIM\DA_banvexemphim\src\main\java\poly\cinema\dao\QuanLyPhong
 E:\DA1\DA_BANVEXEMPHIM\DA_banvexemphim\src\main\java\poly\cinema\dao\QuanLySanPhamDAO.java
 E:\DA1\DA_BANVEXEMPHIM\DA_banvexemphim\src\main\java\poly\cinema\dao\QuanLySuatChieuDao.java
 E:\DA1\DA_BANVEXEMPHIM\DA_banvexemphim\src\main\java\poly\cinema\dao\ThongKeDAO.java
-E:\DA1\DA_BANVEXEMPHIM\DA_banvexemphim\src\main\java\poly\cinema\dao\UserDAO.java
 E:\DA1\DA_BANVEXEMPHIM\DA_banvexemphim\src\main\java\poly\cinema\dao\XuatChieuDAO.java
 E:\DA1\DA_BANVEXEMPHIM\DA_banvexemphim\src\main\java\poly\cinema\entity\ChiTietHang.java
 E:\DA1\DA_BANVEXEMPHIM\DA_banvexemphim\src\main\java\poly\cinema\entity\ChiTietVe.java
@@ -42,7 +40,6 @@ E:\DA1\DA_BANVEXEMPHIM\DA_banvexemphim\src\main\java\poly\cinema\entity\QuanLyGh
 E:\DA1\DA_BANVEXEMPHIM\DA_banvexemphim\src\main\java\poly\cinema\entity\SanPham.java
 E:\DA1\DA_BANVEXEMPHIM\DA_banvexemphim\src\main\java\poly\cinema\entity\SuatChieu.java
 E:\DA1\DA_BANVEXEMPHIM\DA_banvexemphim\src\main\java\poly\cinema\entity\ThongKe.java
-E:\DA1\DA_BANVEXEMPHIM\DA_banvexemphim\src\main\java\poly\cinema\entity\User.java
 E:\DA1\DA_BANVEXEMPHIM\DA_banvexemphim\src\main\java\poly\cinema\entity\XuatChieu.java
 E:\DA1\DA_BANVEXEMPHIM\DA_banvexemphim\src\main\java\poly\cinema\ui\DangNhapController.java
 E:\DA1\DA_BANVEXEMPHIM\DA_banvexemphim\src\main\java\poly\cinema\ui\DangNhapJDialog.java

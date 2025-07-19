@@ -20,6 +20,8 @@ import lombok.NoArgsConstructor;
 public class HoaDon {
     private Integer maHD;
     private Integer maNguoiDung;
-    private Date ngayLap;
+    private Date ngayLap;       // java.util.Date
     private double tongTien;
+    private String trangThai;   // Thêm trạng thái
 }
+

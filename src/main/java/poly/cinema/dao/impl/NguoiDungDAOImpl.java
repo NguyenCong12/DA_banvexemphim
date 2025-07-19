@@ -28,8 +28,13 @@ public class NguoiDungDAOImpl implements NguoiDungDAO {
     public NguoiDung create(NguoiDung entity) {
         String sql = "INSERT INTO NguoiDung (ten_nd, email, mat_khau, vai_tro, sdt, hoat_dong, anh_dai_dien) VALUES (?, ?, ?, ?, ?, ?, ?)";
         XJdbc.executeUpdate(sql,
-                entity.getTenNd(), entity.getEmail(), entity.getMatKhau(),
-                entity.getVaiTro(), entity.getSdt(), entity.getHoatDong(), entity.getAnhDaiDien()
+                entity.getTenNd(),
+                entity.getEmail(),
+                entity.getMatKhau(),
+                entity.isVai_tro(),           // sửa ở đây
+                entity.getSdt(),
+                entity.isHoat_dong(),        // sửa ở đây
+                entity.getAnh_dai_dien()
         );
         return entity;
     }
@@ -38,8 +43,13 @@ public class NguoiDungDAOImpl implements NguoiDungDAO {
     public void update(NguoiDung entity) {
         String sql = "UPDATE NguoiDung SET ten_nd=?, email=?, mat_khau=?, vai_tro=?, sdt=?, hoat_dong=?, anh_dai_dien=? WHERE ma_nd=?";
         XJdbc.executeUpdate(sql,
-                entity.getTenNd(), entity.getEmail(), entity.getMatKhau(),
-                entity.getVaiTro(), entity.getSdt(), entity.getHoatDong(), entity.getAnhDaiDien(),
+                entity.getTenNd(),
+                entity.getEmail(),
+                entity.getMatKhau(),
+                entity.isVai_tro(),           // boolean -> is
+                entity.getSdt(),
+                entity.isHoat_dong(),         // boolean -> is
+                entity.getAnh_dai_dien(),
                 entity.getMaNd()
         );
     }
@@ -73,16 +83,17 @@ public class NguoiDungDAOImpl implements NguoiDungDAO {
                 nd.setTenNd(rs.getString("ten_nd"));
                 nd.setEmail(rs.getString("email"));
                 nd.setMatKhau(rs.getString("mat_khau"));
-                nd.setVaiTro(rs.getBoolean("vai_tro"));
+                nd.setVai_tro(rs.getBoolean("vai_tro"));
                 nd.setSdt(rs.getString("sdt"));
-                nd.setHoatDong(rs.getBoolean("hoat_dong"));
-                nd.setAnhDaiDien(rs.getString("anh_dai_dien"));
+                nd.setHoat_dong(rs.getBoolean("hoat_dong"));
+                nd.setAnh_dai_dien(rs.getString("anh_dai_dien"));
                 list.add(nd);
             }
             rs.getStatement().getConnection().close();
         } catch (Exception e) {
-            e.printStackTrace();
+            e.printStackTrace(); // Có thể thay bằng log lỗi trong dự án thực tế
         }
         return list;
     }
 }
+
