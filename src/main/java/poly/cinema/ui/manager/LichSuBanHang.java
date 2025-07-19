@@ -169,6 +169,9 @@ public class LichSuBanHang extends javax.swing.JPanel implements LichSuBanHangCo
 
     private void btnLocActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLocActionPerformed
         this.locTheoNgay();
+        if (tblBills.getRowCount() == 0 && tblBills.getRowCount() == 0) {
+            JOptionPane.showMessageDialog(this, "Không có dữ liệu trong khoảng thời gian đã chọn.");
+        }
     }//GEN-LAST:event_btnLocActionPerformed
 
     private void cboTimeRangesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboTimeRangesActionPerformed
@@ -193,38 +196,44 @@ public class LichSuBanHang extends javax.swing.JPanel implements LichSuBanHangCo
     }
 
     private void initComboTimeRangeListener() {
-        cboTimeRanges.addActionListener(e -> {
-            Object selectedObj = cboTimeRanges.getSelectedItem();
-            if (selectedObj == null) {
-                return;
-            }
+        if (tblBills.getRowCount() == 0 && tblBills.getRowCount() == 0) {
+            JOptionPane.showMessageDialog(this, "Không có dữ liệu trong khoảng thời gian đã chọn.");
+        }else{
+            cboTimeRanges.addActionListener(e -> {
+                Object selectedObj = cboTimeRanges.getSelectedItem();
+                if (selectedObj == null) {
+                    return;
+                }
 
-            String selected = selectedObj.toString(); // hoặc (String) selectedObj nếu chắc chắn
-            TimeRange range = switch (selected) {
-                case "Hôm nay" ->
-                    TimeRange.today();
-                case "Tuần này" ->
-                    TimeRange.thisWeek();
-                case "Tháng này" ->
-                    TimeRange.thisMonth();
-                case "Quý này" ->
-                    TimeRange.thisQuarter();
-                case "Năm nay" ->
-                    TimeRange.thisYear();
-                default ->
-                    null;
-            };
+                String selected = selectedObj.toString(); // hoặc (String) selectedObj nếu chắc chắn
+                TimeRange range = switch (selected) {
+                    case "Hôm nay" ->
+                        TimeRange.today();
+                    case "Tuần này" ->
+                        TimeRange.thisWeek();
+                    case "Tháng này" ->
+                        TimeRange.thisMonth();
+                    case "Quý này" ->
+                        TimeRange.thisQuarter();
+                    case "Năm nay" ->
+                        TimeRange.thisYear();
+                    default ->
+                        null;
+                };
 
-            if (range != null) {
-                var sdf = new java.text.SimpleDateFormat("dd/MM/yyyy");
-                txtBegin.setText(sdf.format(range.getBegin()));
-                txtEnd.setText(sdf.format(range.getEnd()));
-            }
-        });
+                if (range != null) {
+                    var sdf = new java.text.SimpleDateFormat("dd-MM-yyyy");
+                    txtBegin.setText(sdf.format(range.getBegin()));
+                    txtEnd.setText(sdf.format(range.getEnd()));
+
+                    locTheoNgay();
+                }
+            });
+        }       
     }
 
     private void fillTableLichSu(List<LichSu> list) {
-        listLichSu = lichSuDAO.selectAll();
+        listLichSu = list;
         model = (DefaultTableModel) tblBills.getModel();
         model.setRowCount(0);
 
@@ -240,8 +249,8 @@ public class LichSuBanHang extends javax.swing.JPanel implements LichSuBanHangCo
 
     private void locTheoNgay() {
         try {
-            Date begin = XDate.parse(txtBegin.getText(), "dd/MM/yyyy");
-            Date end = XDate.parse(txtEnd.getText(), "dd/MM/yyyy");
+            Date begin = XDate.parse(txtBegin.getText(), "dd-MM-yyyy");
+            Date end = XDate.parse(txtEnd.getText(), "dd-MM-yyyy");
 
             // Đặt thời gian từ 00:00 đến 23:59
             Calendar cal = Calendar.getInstance();
@@ -253,10 +262,11 @@ public class LichSuBanHang extends javax.swing.JPanel implements LichSuBanHangCo
             begin = cal.getTime();
 
             cal.setTime(end);
-            cal.set(Calendar.HOUR_OF_DAY, 23);
-            cal.set(Calendar.MINUTE, 59);
-            cal.set(Calendar.SECOND, 59);
-            cal.set(Calendar.MILLISECOND, 999);
+            cal.set(Calendar.HOUR_OF_DAY, 0);
+            cal.set(Calendar.MINUTE, 0);
+            cal.set(Calendar.SECOND, 0);
+            cal.set(Calendar.MILLISECOND, 0);
+            cal.add(Calendar.DATE, 1); // +1 ngày
             end = cal.getTime();
 
             // Lọc dữ liệu
