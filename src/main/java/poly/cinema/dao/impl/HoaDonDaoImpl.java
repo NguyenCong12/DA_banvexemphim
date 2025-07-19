@@ -16,7 +16,7 @@ import poly.cinema.util.XJdbc;
  * @author ADMIN
  */
 public class HoaDonDaoImpl implements HoaDonDAO {
-
+// Ghi dòng này để Git nhận ra file là mới
     @Override
     public HoaDon create(HoaDon entity) {
         String sql = "INSERT INTO HoaDon (ma_nd, ngay_lap, tong_tien) VALUES (?, ?, ?)";

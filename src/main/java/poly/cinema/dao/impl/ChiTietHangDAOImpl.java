@@ -16,7 +16,7 @@ import poly.cinema.util.XJdbc;
  * @author ADMIN
  */
 public class ChiTietHangDAOImpl implements ChiTietHangDAO {
-
+// Ghi dòng này để Git nhận ra file là mới
     @Override
     public List<ChiTietHang> selectByMaHD(Integer maHD) {
         List<ChiTietHang> list = new ArrayList<>();

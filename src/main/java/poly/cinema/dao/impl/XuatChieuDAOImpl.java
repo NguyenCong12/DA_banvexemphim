@@ -17,7 +17,7 @@ import poly.cinema.util.XJdbc;
  * @author ADMIN
  */
 public class XuatChieuDAOImpl implements XuatChieuDAO {
-
+// Ghi dòng này để Git nhận ra file là mới
     @Override
     public XuatChieu create(XuatChieu entity) {
         String sql = "INSERT INTO XuatChieu (ma_phim, ma_phong, ngay_chieu, gio_chieu, gia_ve) VALUES (?, ?, ?, ?, ?)";

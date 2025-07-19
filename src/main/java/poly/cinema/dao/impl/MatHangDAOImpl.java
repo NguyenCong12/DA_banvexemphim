@@ -16,7 +16,7 @@ import poly.cinema.util.XJdbc;
  * @author ADMIN
  */
 public class MatHangDAOImpl implements MatHangDAO {
-
+// Ghi dòng này để Git nhận ra file là mới
     @Override
     public MatHang create(MatHang entity) {
         String sql = "INSERT INTO MatHang (ten_hang, loai, gia, anh_hang, trang_thai) VALUES (?, ?, ?, ?, ?)";

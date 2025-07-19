@@ -14,4 +14,5 @@ import poly.cinema.entity.XuatChieu;
  */
 public interface XuatChieuDAO extends CrudDAO<XuatChieu, Integer> {
     List<XuatChieu> selectByPhimAndPhongAndNgay(Integer maPhim, String maPhong, Date ngayChieu);
+    // Ghi dòng này để Git nhận ra file là mới
 }

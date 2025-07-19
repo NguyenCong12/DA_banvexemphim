@@ -13,4 +13,5 @@ import poly.cinema.entity.ChiTietHang;
  */
 public interface ChiTietHangDAO extends CrudDAO<ChiTietHang, Integer> {
     List<ChiTietHang> selectByMaHD(Integer maHD);
+    // Ghi dòng này để Git nhận ra file là mới
 }

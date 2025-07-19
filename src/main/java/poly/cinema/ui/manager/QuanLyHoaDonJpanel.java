@@ -100,13 +100,13 @@ public class QuanLyHoaDonJpanel extends javax.swing.JPanel implements QuanLyHoaD
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
             },
             new String [] {
-                "Mã hóa đơn", "Tên nhân viên", "Ngày lập", "Tổng tiền"
+                "Mã hóa đơn", "Tên nhân viên", "Ngày lập", "Tổng tiền", "Trạng thái"
             }
         ));
         jTable1.setGridColor(new java.awt.Color(0, 0, 0));

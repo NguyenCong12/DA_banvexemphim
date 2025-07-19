@@ -16,7 +16,7 @@ import poly.cinema.util.XJdbc;
  * @author ADMIN
  */
 public class NguoiDungDAOImpl implements NguoiDungDAO {
-
+// Ghi dòng này để Git nhận ra file là mới
     @Override
     public NguoiDung findByEmail(String email) {
         String sql = "SELECT * FROM NguoiDung WHERE email=?";
