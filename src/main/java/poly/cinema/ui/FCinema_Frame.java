@@ -47,6 +47,7 @@ public class FCinema_Frame extends javax.swing.JFrame implements FCinema_Control
         pnlQuanLyGhe = new poly.cinema.ui.manager.QuanLyGheJpanel();
         pnlQuanLySanPham = new poly.cinema.ui.manager.QuanLySanPham();
         pnlQuanLySuatChieu = new poly.cinema.ui.manager.QuanLyXuatChieu();
+        pnlLoaighe = new poly.cinema.ui.manager.LoaiGheJpanel();
         
         pnlBanHang = new poly.cinema.ui.BanHang(pnlMainContent);
         pnlMainContent.add(pnlBanHang, "pnlBanHang");
@@ -57,6 +58,7 @@ public class FCinema_Frame extends javax.swing.JFrame implements FCinema_Control
         pnlBanSanPham = new poly.cinema.ui.BanSanPham();
         pnlMainContent.add(pnlBanSanPham, "pnlBanSanPham");
 
+        pnlMainContent.add(pnlLoaighe, "pnlLoaighe");
         pnlMainContent.add(pnlQuanLyPhim, "pnlQuanLyPhim");
         pnlMainContent.add(pnlQuanLyPhongChieu, "pnlQuanLyPhongChieu");
         pnlMainContent.add(pnlQuanLyNhanVien, "pnlQuanLyNhanVien");
@@ -125,6 +127,7 @@ public class FCinema_Frame extends javax.swing.JFrame implements FCinema_Control
         pnlchonGhe = new javax.swing.JPanel();
         pnlChonPhim = new javax.swing.JPanel();
         pnlBanSanPham = new javax.swing.JPanel();
+        pnlLoaighe = new javax.swing.JPanel();
         lblFullname = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -570,6 +573,19 @@ public class FCinema_Frame extends javax.swing.JFrame implements FCinema_Control
 
         pnlMainContent.add(pnlBanSanPham, "card20");
 
+        javax.swing.GroupLayout pnlLoaigheLayout = new javax.swing.GroupLayout(pnlLoaighe);
+        pnlLoaighe.setLayout(pnlLoaigheLayout);
+        pnlLoaigheLayout.setHorizontalGroup(
+            pnlLoaigheLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 1120, Short.MAX_VALUE)
+        );
+        pnlLoaigheLayout.setVerticalGroup(
+            pnlLoaigheLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 720, Short.MAX_VALUE)
+        );
+
+        pnlMainContent.add(pnlLoaighe, "card21");
+
         pnlCenter.add(pnlMainContent, new org.netbeans.lib.awtextra.AbsoluteConstraints(244, 0, 1120, 720));
 
         lblFullname.setText("jLabel5");
@@ -675,7 +691,9 @@ public class FCinema_Frame extends javax.swing.JFrame implements FCinema_Control
     }//GEN-LAST:event_lbldãnguatMouseClicked
 
     private void lblQLPhongChieu1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblQLPhongChieu1MouseClicked
-        // TODO add your handling code here:
+       CardLayout cl = (CardLayout) pnlMainContent.getLayout();
+        cl.show(pnlMainContent, "pnlLoaighe");
+        ((poly.cinema.ui.manager.LoaiGheJpanel) pnlLoaighe).open();
     }//GEN-LAST:event_lblQLPhongChieu1MouseClicked
 
     private void lblQLPhongChieu2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblQLPhongChieu2MouseClicked
@@ -771,6 +789,7 @@ public class FCinema_Frame extends javax.swing.JFrame implements FCinema_Control
     private javax.swing.JPanel pnlLichSuBanHang;
     private javax.swing.JPanel pnlLoaiGhe;
     private javax.swing.JPanel pnlLoaiPhim;
+    private javax.swing.JPanel pnlLoaighe;
     private javax.swing.JPanel pnlMainContent;
     private javax.swing.JPanel pnlManager;
     private javax.swing.JPanel pnlQuanLyGhe;
