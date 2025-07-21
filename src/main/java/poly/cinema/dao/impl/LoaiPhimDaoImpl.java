@@ -1,6 +1,6 @@
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ * Click nbfs://nbhost/SystemSystem/Templates/Classes/Class.java to edit this template
  */
 package poly.cinema.dao.impl;
 
@@ -22,22 +22,20 @@ public class LoaiPhimDaoImpl implements LoaiPhimDao {
 
     private static final Map<Integer, String> CACHE = new ConcurrentHashMap<>();
 
-    // Static tiện dụng (bạn đang gọi kiểu này)
     public static List<String> findAllTenLoai() {
-    List<String> list = new ArrayList<>();
-    String sql = "SELECT ten_loai FROM LoaiPhim";
-    try (ResultSet rs = XJdbc.executeQuery(sql)) {
-        while (rs.next()) {
-            list.add(rs.getString("ten_loai"));
+        List<String> list = new ArrayList<>();
+        String sql = "SELECT ten_loai FROM LoaiPhim";
+        try (ResultSet rs = XJdbc.executeQuery(sql)) {
+            while (rs.next()) {
+                list.add(rs.getString("ten_loai"));
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
         }
-    } catch (SQLException ex) {
-        ex.printStackTrace();
+        return list;
     }
-    return list;
-}
 
     public static String getTenLoaiById(int maLoai) {
-        // Đã có cache?
         String cached = CACHE.get(maLoai);
         if (cached != null) {
             return cached;
@@ -56,27 +54,24 @@ public class LoaiPhimDaoImpl implements LoaiPhimDao {
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
-        // fallback: put & trả
         String fallback = "Loại #" + maLoai;
         CACHE.put(maLoai, fallback);
         return fallback;
     }
 
-    private final String INSERT_SQL = "INSERT INTO LoaiPhim (ten_loai) VALUES (?)";
-    private final String UPDATE_SQL = "UPDATE LoaiPhim SET ten_loai = ? WHERE ma_loai = ?";
-    private final String DELETE_SQL = "DELETE FROM LoaiPhim WHERE ma_loai = ?";
-    private final String SELECT_ALL_SQL = "SELECT * FROM LoaiPhim";
-    private final String SELECT_BY_ID_SQL = "SELECT * FROM LoaiPhim WHERE ma_loai = ?";
+    private static final String INSERT_SQL = "INSERT INTO LoaiPhim (ten_loai) VALUES (?)";
+    private static final String UPDATE_SQL = "UPDATE LoaiPhim SET ten_loai = ? WHERE ma_loai = ?";
+    private static final String DELETE_SQL = "DELETE FROM LoaiPhim WHERE ma_loai = ?";
+    private static final String SELECT_ALL_SQL = "SELECT * FROM LoaiPhim";
+    private static final String SELECT_BY_ID_SQL = "SELECT * FROM LoaiPhim WHERE ma_loai = ?";
 
     @Override
     public LoaiPhim create(LoaiPhim entity) {
         try {
-            ResultSet rs = XJdbc.executeQuery(INSERT_SQL, entity.getTenLoai());
-            if (rs.getStatement().getConnection().getMetaData().getDatabaseProductName().contains("Microsoft")) {
-                rs = XJdbc.executeQuery("SELECT TOP 1 * FROM LoaiPhim ORDER BY ma_loai DESC");
-                if (rs.next()) {
-                    return new LoaiPhim(rs.getInt("ma_loai"), rs.getString("ten_loai"));
-                }
+            XJdbc.executeUpdate(INSERT_SQL, entity.getTenLoai());
+            ResultSet rs = XJdbc.executeQuery("SELECT TOP 1 * FROM LoaiPhim ORDER BY ma_loai DESC");
+            if (rs.next()) {
+                return new LoaiPhim(rs.getInt("ma_loai"), rs.getString("ten_loai"));
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -97,12 +92,10 @@ public class LoaiPhimDaoImpl implements LoaiPhimDao {
     @Override
     public List<LoaiPhim> findAll() {
         List<LoaiPhim> list = new ArrayList<>();
-        try {
-            ResultSet rs = XJdbc.executeQuery(SELECT_ALL_SQL);
+        try (ResultSet rs = XJdbc.executeQuery(SELECT_ALL_SQL)) {
             while (rs.next()) {
                 list.add(new LoaiPhim(rs.getInt("ma_loai"), rs.getString("ten_loai")));
             }
-            rs.getStatement().close();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -111,12 +104,10 @@ public class LoaiPhimDaoImpl implements LoaiPhimDao {
 
     @Override
     public LoaiPhim findById(Integer id) {
-        try {
-            ResultSet rs = XJdbc.executeQuery(SELECT_BY_ID_SQL, id);
+        try (ResultSet rs = XJdbc.executeQuery(SELECT_BY_ID_SQL, id)) {
             if (rs.next()) {
                 return new LoaiPhim(rs.getInt("ma_loai"), rs.getString("ten_loai"));
             }
-            rs.getStatement().close();
         } catch (Exception e) {
             e.printStackTrace();
         }
