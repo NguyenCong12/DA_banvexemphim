@@ -19,8 +19,7 @@ import poly.cinema.util.XDialog;
  *
  * @author Admin
  */
-public class QuanLyGheJpanel extends javax.swing.JPanel
-        implements QuanLyGheController {
+public class QuanLyGheJpanel extends javax.swing.JPanel implements QuanLyGheController {
 
     /**
      * Creates new form QuanLyGheJpanel
