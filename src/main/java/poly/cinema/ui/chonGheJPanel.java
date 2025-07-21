@@ -8,7 +8,7 @@ package poly.cinema.ui;
  *
  * @author Admin
  */
-public class chonGheJPanel extends javax.swing.JPanel {
+public class chonGheJPanel extends javax.swing.JPanel implements chonGheController {
 
     /**
      * Creates new form chonGheJPanel
@@ -17,6 +17,7 @@ public class chonGheJPanel extends javax.swing.JPanel {
         initComponents();
     }
 
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -102,4 +103,14 @@ public class chonGheJPanel extends javax.swing.JPanel {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     // End of variables declaration//GEN-END:variables
+
+    @Override
+    public void open() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public void showBillJDialog(String soGhe) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
 }
