@@ -34,10 +34,6 @@ public class LoaiGheJpanel extends javax.swing.JPanel implements LoaiGheControll
                 moveTo(row);
             }
         });
-//        btnThem.addActionListener(e -> create());
-//        btnSua.addActionListener(e -> update());
-//        btnXoa.addActionListener(e -> delete());
-//        btnNhapMoi.addActionListener(e -> clear());
     }
 
     /**
@@ -55,7 +51,7 @@ public class LoaiGheJpanel extends javax.swing.JPanel implements LoaiGheControll
         tblBillDetaills = new javax.swing.JTable();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        txtMaGhe = new javax.swing.JTextField();
+        txtTenGhe = new javax.swing.JTextField();
         txtPhuPhi = new javax.swing.JTextField();
         btnSua = new javax.swing.JButton();
         btnThem = new javax.swing.JButton();
@@ -73,7 +69,7 @@ public class LoaiGheJpanel extends javax.swing.JPanel implements LoaiGheControll
 
             },
             new String [] {
-                "Mã ghế", "Phụ phí"
+                "Tên ghế", "Phụ phí"
             }
         ));
         tblBillDetaills.setRowHeight(25);
@@ -84,8 +80,13 @@ public class LoaiGheJpanel extends javax.swing.JPanel implements LoaiGheControll
         });
         jScrollPane1.setViewportView(tblBillDetaills);
 
+<<<<<<< HEAD
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel2.setText("Mã ghế ");
+=======
+        jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        jLabel2.setText("Tên ghế ");
+>>>>>>> 50279a67249d82d906f3270a3ef9778850e12a97
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel3.setText("Phụ phí");
@@ -125,8 +126,32 @@ public class LoaiGheJpanel extends javax.swing.JPanel implements LoaiGheControll
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
+<<<<<<< HEAD
                         .addGap(481, 481, 481)
                         .addComponent(jLabel1))
+=======
+                        .addGap(12, 12, 12)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(btnSua, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnThem, javax.swing.GroupLayout.DEFAULT_SIZE, 110, Short.MAX_VALUE))
+                        .addGap(111, 111, 111)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnXoa1, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnNhapMoi, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnMovePrevious, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnMoveFirst, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(15, 15, 15)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(78, 78, 78)
+                                .addComponent(btnMoveLast, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                .addGap(79, 79, 79)
+                                .addComponent(btnMoveNext, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(111, 111, 111))
+>>>>>>> 50279a67249d82d906f3270a3ef9778850e12a97
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(60, 60, 60)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -137,6 +162,7 @@ public class LoaiGheJpanel extends javax.swing.JPanel implements LoaiGheControll
                                     .addComponent(jLabel2))
                                 .addGap(51, 51, 51)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+<<<<<<< HEAD
                                     .addComponent(txtMaGhe, javax.swing.GroupLayout.PREFERRED_SIZE, 879, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(txtPhuPhi, javax.swing.GroupLayout.PREFERRED_SIZE, 879, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
@@ -148,12 +174,35 @@ public class LoaiGheJpanel extends javax.swing.JPanel implements LoaiGheControll
                                 .addGap(27, 27, 27)
                                 .addComponent(btnNhapMoi)))))
                 .addContainerGap(71, Short.MAX_VALUE))
+=======
+                                    .addComponent(jLabel2)
+                                    .addComponent(jLabel3))
+                                .addGap(18, 18, 18)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(txtTenGhe, javax.swing.GroupLayout.PREFERRED_SIZE, 600, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtPhuPhi, javax.swing.GroupLayout.PREFERRED_SIZE, 600, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1065, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addContainerGap(21, Short.MAX_VALUE))))
+>>>>>>> 50279a67249d82d906f3270a3ef9778850e12a97
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(25, 25, 25)
                 .addComponent(jLabel1)
+<<<<<<< HEAD
+=======
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 285, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(45, 45, 45)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(txtTenGhe, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(33, 33, 33)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel3)
+                    .addComponent(txtPhuPhi, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+>>>>>>> 50279a67249d82d906f3270a3ef9778850e12a97
                 .addGap(26, 26, 26)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 285, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(63, 63, 63)
@@ -204,13 +253,23 @@ public class LoaiGheJpanel extends javax.swing.JPanel implements LoaiGheControll
     private void tblBillDetaillsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblBillDetaillsMouseClicked
         // TODO add your handling code here:
         int row = tblBillDetaills.getSelectedRow();
-        if (row >= 0 && row < list.size()) {
-            moveTo(row); // đổ dữ liệu dòng được chọn vào form
+        if (row >= 0) {
+            String tenGhe = (String) tblBillDetaills.getValueAt(row, 0);
+            String phuPhi = tblBillDetaills.getValueAt(row, 1).toString();
+
+            txtTenGhe.setText(tenGhe);
+            txtPhuPhi.setText(phuPhi);
+
+            txtTenGhe.setEnabled(false);
         }
         updateButtonStatus();
     }//GEN-LAST:event_tblBillDetaillsMouseClicked
 
     private void btnXoa1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXoa1ActionPerformed
+<<<<<<< HEAD
+=======
+        // TODO add your handling code
+>>>>>>> 50279a67249d82d906f3270a3ef9778850e12a97
         this.delete();
     }//GEN-LAST:event_btnXoa1ActionPerformed
 
@@ -225,8 +284,8 @@ public class LoaiGheJpanel extends javax.swing.JPanel implements LoaiGheControll
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tblBillDetaills;
-    private javax.swing.JTextField txtMaGhe;
     private javax.swing.JTextField txtPhuPhi;
+    private javax.swing.JTextField txtTenGhe;
     // End of variables declaration//GEN-END:variables
 
     private final LoaiGheDAO dao = new LoaiGheDAOImpl();
@@ -250,13 +309,14 @@ public class LoaiGheJpanel extends javax.swing.JPanel implements LoaiGheControll
 
     @Override
     public void setForm(LoaiGhe entity) {
-        txtMaGhe.setText(entity.getLoaiGhe());
+        txtTenGhe.setText(entity.getLoaiGhe());
         txtPhuPhi.setText(String.valueOf(entity.getPhuPhi()));
+        txtTenGhe.setEnabled(false);
     }
 
     @Override
     public LoaiGhe getForm() {
-        String ma = txtMaGhe.getText().trim();
+        String ma = txtTenGhe.getText().trim();
         String phuPhiStr = txtPhuPhi.getText().trim();
 
         if (ma.isEmpty() || phuPhiStr.isEmpty()) {
@@ -310,12 +370,38 @@ public class LoaiGheJpanel extends javax.swing.JPanel implements LoaiGheControll
             JOptionPane.showMessageDialog(this, "Thêm mới thành công!");
         }
     }
+<<<<<<< HEAD
 @Override
 public void update() {
     int row = tblBillDetaills.getSelectedRow();
     if (row < 0 || row >= list.size()) {
         JOptionPane.showMessageDialog(this, "Vui lòng chọn loại ghế cần cập nhật.");
         return;
+=======
+
+    @Override
+    public void update() {
+        int row = tblBillDetaills.getSelectedRow();
+        if (row >= 0 && row < list.size()) {
+            try {
+                String loaiGhe = txtTenGhe.getText().trim();
+                double phuPhi = Double.parseDouble(txtPhuPhi.getText().trim());
+
+                LoaiGhe lg = new LoaiGhe();
+                lg.setLoaiGhe(loaiGhe);
+                lg.setPhuPhi(phuPhi);
+
+                dao.update(lg);
+                fillToTable();
+                clear();
+                JOptionPane.showMessageDialog(this, "Cập nhật thành công!");
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(this, "Lỗi cập nhật: " + e.getMessage());
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Vui lòng chọn loại ghế cần cập nhật.");
+        }
+>>>>>>> 50279a67249d82d906f3270a3ef9778850e12a97
     }
 
     LoaiGhe newEntity = getForm();
@@ -356,10 +442,15 @@ public void update() {
             int confirm = JOptionPane.showConfirmDialog(this, "Bạn có chắc muốn xóa loại ghế này?", "Xác nhận", JOptionPane.YES_NO_OPTION);
             if (confirm == JOptionPane.YES_OPTION) {
                 String ma = (String) tblBillDetaills.getValueAt(row, 0);
-                dao.deleteById(ma);
-                fillToTable();
-                clear();
-                JOptionPane.showMessageDialog(this, "Xóa thành công!");
+                try {
+                    dao.deleteById(ma);
+                    fillToTable();
+                    clear();
+                    JOptionPane.showMessageDialog(this, "Xóa thành công!");
+                } catch (Exception e) {
+                    JOptionPane.showMessageDialog(this, "Không thể xóa vì đang được sử dụng trong hệ thống!");
+                    // Hoặc: JOptionPane.showMessageDialog(this, e.getMessage());
+                }
             }
         } else {
             JOptionPane.showMessageDialog(this, "Vui lòng chọn loại ghế cần xóa.");
@@ -368,16 +459,20 @@ public void update() {
 
     @Override
     public void clear() {
-        txtMaGhe.setText("");
+        txtTenGhe.setText("");
         txtPhuPhi.setText("");
         tblBillDetaills.clearSelection();
         currentIndex = -1;
+<<<<<<< HEAD
         updateButtonStatus();
+=======
+        txtTenGhe.setEnabled(true);
+>>>>>>> 50279a67249d82d906f3270a3ef9778850e12a97
     }
 
     @Override
     public void setEditable(boolean editable) {
-        txtMaGhe.setEditable(editable);
+        txtTenGhe.setEditable(editable);
     }
 
     @Override

@@ -146,6 +146,7 @@ poly\cinema\ui\manager\LoaiPhimController.class
 poly\cinema\ui\manager\QuanLyGheJpanel$10.class
 poly\cinema\util\TimeRange.class
 poly\cinema\ui\manager\QuanLySanPham$2.class
+poly\cinema\ui\manager\LoaiGheJpanel$7.class
 poly\cinema\ui\manager\QuanLyPhongChieuController.class
 poly\cinema\entity\MatHang.class
 poly\cinema\ui\manager\QuanLySanPhamController.class
@@ -196,6 +197,10 @@ poly\cinema\ui\manager\XemLichChieu$1.class
 poly\cinema\ui\manager\QuanLyXuatChieu$3.class
 poly\cinema\dao\LichSuDAO.class
 poly\cinema\ui\WelcomeJDialog$1.class
+<<<<<<< HEAD
+=======
+poly\cinema\ui\manager\LoaiGheJpanel$8.class
+>>>>>>> 50279a67249d82d906f3270a3ef9778850e12a97
 poly\cinema\ui\BanHang$2.class
 poly\cinema\ui\manager\QuanLyPhim$9.class
 poly\cinema\ui\FCinema_Frame$10.class

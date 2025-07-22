@@ -48,6 +48,7 @@
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace min="-2" pref="60" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
+<<<<<<< HEAD
                               <Component id="jScrollPane1" min="-2" pref="985" max="-2" attributes="0"/>
                               <Group type="102" alignment="0" attributes="0">
                                   <Group type="103" groupAlignment="1" attributes="0">
@@ -59,6 +60,21 @@
                                       <Component id="txtMaGhe" alignment="0" min="-2" pref="879" max="-2" attributes="0"/>
                                       <Component id="txtPhuPhi" alignment="0" min="-2" pref="879" max="-2" attributes="0"/>
                                   </Group>
+=======
+                              <Component id="btnXoa1" alignment="0" min="-2" pref="110" max="-2" attributes="0"/>
+                              <Component id="btnNhapMoi" alignment="0" min="-2" pref="110" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace max="32767" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Component id="btnMovePrevious" min="-2" pref="110" max="-2" attributes="0"/>
+                              <Component id="btnMoveFirst" min="-2" pref="110" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace min="-2" pref="15" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Group type="102" alignment="0" attributes="0">
+                                  <EmptySpace min="-2" pref="78" max="-2" attributes="0"/>
+                                  <Component id="btnMoveLast" min="-2" pref="112" max="-2" attributes="0"/>
+>>>>>>> 50279a67249d82d906f3270a3ef9778850e12a97
                               </Group>
                               <Group type="102" alignment="1" attributes="0">
                                   <Component id="btnThem" min="-2" pref="94" max="-2" attributes="0"/>
@@ -70,6 +86,27 @@
                                   <Component id="btnNhapMoi" min="-2" max="-2" attributes="0"/>
                               </Group>
                           </Group>
+<<<<<<< HEAD
+=======
+                          <EmptySpace min="-2" pref="111" max="-2" attributes="0"/>
+                      </Group>
+                      <Group type="102" attributes="0">
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Group type="102" alignment="0" attributes="0">
+                                  <Group type="103" groupAlignment="0" attributes="0">
+                                      <Component id="jLabel2" alignment="0" min="-2" max="-2" attributes="0"/>
+                                      <Component id="jLabel3" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="0" attributes="0">
+                                      <Component id="txtTenGhe" alignment="0" min="-2" pref="600" max="-2" attributes="0"/>
+                                      <Component id="txtPhuPhi" alignment="0" min="-2" pref="600" max="-2" attributes="0"/>
+                                  </Group>
+                              </Group>
+                              <Component id="jScrollPane1" min="-2" pref="1065" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace pref="21" max="32767" attributes="0"/>
+>>>>>>> 50279a67249d82d906f3270a3ef9778850e12a97
                       </Group>
                   </Group>
                   <EmptySpace pref="71" max="32767" attributes="0"/>
@@ -81,6 +118,21 @@
               <Group type="102" attributes="0">
                   <EmptySpace min="-2" pref="25" max="-2" attributes="0"/>
                   <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
+<<<<<<< HEAD
+=======
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Component id="jScrollPane1" min="-2" pref="285" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="45" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="jLabel2" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="txtTenGhe" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace min="-2" pref="33" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="1" attributes="0">
+                      <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
+                      <Component id="txtPhuPhi" min="-2" pref="40" max="-2" attributes="0"/>
+                  </Group>
+>>>>>>> 50279a67249d82d906f3270a3ef9778850e12a97
                   <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
                   <Component id="jScrollPane1" min="-2" pref="285" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="63" max="-2" attributes="0"/>
@@ -125,7 +177,7 @@
               <Properties>
                 <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
                   <Table columnCount="2" rowCount="0">
-                    <Column editable="true" title="M&#xe3; gh&#x1ebf;" type="java.lang.Object"/>
+                    <Column editable="true" title="T&#xea;n gh&#x1ebf;" type="java.lang.Object"/>
                     <Column editable="true" title="Ph&#x1ee5; ph&#xed;" type="java.lang.Object"/>
                   </Table>
                 </Property>
@@ -159,7 +211,7 @@
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Segoe UI" size="14" style="1"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="M&#xe3; gh&#x1ebf; "/>
+            <Property name="text" type="java.lang.String" value="T&#xea;n gh&#x1ebf; "/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel3">
@@ -170,7 +222,7 @@
             <Property name="text" type="java.lang.String" value="Ph&#x1ee5; ph&#xed;"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="txtMaGhe">
+        <Component class="javax.swing.JTextField" name="txtTenGhe">
         </Component>
         <Component class="javax.swing.JTextField" name="txtPhuPhi">
         </Component>
