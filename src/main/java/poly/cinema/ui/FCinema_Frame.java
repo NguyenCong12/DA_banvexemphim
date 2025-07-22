@@ -48,6 +48,7 @@ public class FCinema_Frame extends javax.swing.JFrame implements FCinema_Control
         pnlQuanLySanPham = new poly.cinema.ui.manager.QuanLySanPham();
         pnlQuanLySuatChieu = new poly.cinema.ui.manager.QuanLyXuatChieu();
         pnlLoaighe = new poly.cinema.ui.manager.LoaiGheJpanel();
+        pnlLoaiPhim = new poly.cinema.ui.manager.LoaiPhimPanel();
         
         pnlBanHang = new poly.cinema.ui.BanHang(pnlMainContent);
         pnlMainContent.add(pnlBanHang, "pnlBanHang");
@@ -58,6 +59,7 @@ public class FCinema_Frame extends javax.swing.JFrame implements FCinema_Control
         pnlBanSanPham = new poly.cinema.ui.BanSanPham();
         pnlMainContent.add(pnlBanSanPham, "pnlBanSanPham");
 
+        pnlMainContent.add(pnlLoaiPhim, "pnlLoaiPhim");
         pnlMainContent.add(pnlLoaighe, "pnlLoaighe");
         pnlMainContent.add(pnlQuanLyPhim, "pnlQuanLyPhim");
         pnlMainContent.add(pnlQuanLyPhongChieu, "pnlQuanLyPhongChieu");
@@ -697,7 +699,9 @@ public class FCinema_Frame extends javax.swing.JFrame implements FCinema_Control
     }//GEN-LAST:event_lblQLPhongChieu1MouseClicked
 
     private void lblQLPhongChieu2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblQLPhongChieu2MouseClicked
-        // TODO add your handling code here:
+        CardLayout cl = (CardLayout) pnlMainContent.getLayout();
+        cl.show(pnlMainContent, "pnlLoaiPhim");
+        ((poly.cinema.ui.manager.LoaiPhimPanel) pnlLoaiPhim).open();
     }//GEN-LAST:event_lblQLPhongChieu2MouseClicked
     private void addHoverEffectToPanelLabels(JPanel panel) {
         for (Component comp : panel.getComponents()) {

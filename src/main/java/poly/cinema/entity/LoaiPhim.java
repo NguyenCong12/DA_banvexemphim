@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package poly.cinema.entity;
 
 import lombok.AllArgsConstructor;
@@ -10,8 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
- *
- * @author Admin
+ * Entity đại diện cho loại phim (thể loại)
  */
 @Data
 @NoArgsConstructor
@@ -26,4 +21,8 @@ public class LoaiPhim {
     public String toString() {
         return tenLoai;
     }
+    public Integer getMaLoai() {
+    return maLoai;
+}
+
 }
