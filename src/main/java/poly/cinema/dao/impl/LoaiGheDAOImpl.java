@@ -17,37 +17,35 @@ import poly.cinema.util.XJdbc;
  */
 public class LoaiGheDAOImpl implements LoaiGheDAO {
     
-    private final String INSERT_SQL = "INSERT INTO LoaiGhe (MaLoaiGhe, TenLoaiGhe, Gia) VALUES (?, ?, ?)";
-    private final String UPDATE_SQL = "UPDATE LoaiGhe SET TenLoaiGhe=?, Gia=? WHERE MaLoaiGhe=?";
-    private final String DELETE_SQL = "DELETE FROM LoaiGhe WHERE MaLoaiGhe=?";
-    private final String SELECT_BY_ID_SQL = "SELECT * FROM LoaiGhe WHERE MaLoaiGhe=?";
+    private final String INSERT_SQL = "INSERT INTO LoaiGhe (loai_ghe, phu_phi) VALUES (?, ?)";
+    private final String UPDATE_SQL = "UPDATE LoaiGhe SET phu_phi = ? WHERE loai_ghe = ?";
+    private final String DELETE_SQL = "DELETE FROM LoaiGhe WHERE loai_ghe = ?";
+    private final String SELECT_BY_ID_SQL = "SELECT * FROM LoaiGhe WHERE loai_ghe = ?";
     private final String SELECT_ALL_SQL = "SELECT * FROM LoaiGhe";
-    
+
     @Override
     public LoaiGhe create(LoaiGhe loaiGhe) {
         XJdbc.executeUpdate(INSERT_SQL,
-            loaiGhe.getMaLoaiGhe(),
-            loaiGhe.getTenLoaiGhe(),
-            loaiGhe.getGia());
+            loaiGhe.getLoaiGhe(),
+            loaiGhe.getPhuPhi());
         return loaiGhe;
     }
 
     @Override
     public void update(LoaiGhe loaiGhe) {
         XJdbc.executeUpdate(UPDATE_SQL,
-            loaiGhe.getTenLoaiGhe(),
-            loaiGhe.getGia(),
-            loaiGhe.getMaLoaiGhe());
+            loaiGhe.getPhuPhi(),
+            loaiGhe.getLoaiGhe());
     }
 
     @Override
-    public void deleteById(String maLoaiGhe) {
-        XJdbc.executeUpdate(DELETE_SQL, maLoaiGhe);
+    public void deleteById(String loaiGhe) {
+        XJdbc.executeUpdate(DELETE_SQL, loaiGhe);
     }
 
     @Override
-    public LoaiGhe findById(String maLoaiGhe) {
-        List<LoaiGhe> list = selectBySql(SELECT_BY_ID_SQL, maLoaiGhe);
+    public LoaiGhe findById(String loaiGhe) {
+        List<LoaiGhe> list = selectBySql(SELECT_BY_ID_SQL, loaiGhe);
         return list.isEmpty() ? null : list.get(0);
     }
 
@@ -61,15 +59,14 @@ public class LoaiGheDAOImpl implements LoaiGheDAO {
         try {
             ResultSet rs = XJdbc.executeQuery(sql, args);
             while (rs.next()) {
-                LoaiGhe loaiGhe = new LoaiGhe();
-                loaiGhe.setMaLoaiGhe(rs.getString("MaLoaiGhe"));
-                loaiGhe.setTenLoaiGhe(rs.getString("TenLoaiGhe"));
-                loaiGhe.setGia(rs.getDouble("Gia"));
-                list.add(loaiGhe);
+                LoaiGhe entity = new LoaiGhe();
+                entity.setLoaiGhe(rs.getString("loai_ghe"));
+                entity.setPhuPhi(rs.getDouble("phu_phi"));
+                list.add(entity);
             }
             rs.getStatement().getConnection().close();
         } catch (Exception e) {
-            throw new RuntimeException("Lỗi truy vấn LoaiGhe",e);
+            throw new RuntimeException("Lỗi truy vấn LoaiGhe", e);
         }
         return list;
     }

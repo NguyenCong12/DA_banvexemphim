@@ -6,24 +6,85 @@ package poly.cinema.ui;
 
 import java.awt.CardLayout;
 import javax.swing.JPanel;
+import poly.cinema.entity.HoaDon;
 
 /**
  *
  * @author KhanhLinh
  */
-public class BanHang extends javax.swing.JPanel {
+public class BanHang extends javax.swing.JPanel implements QL_BanHang_Controler {
 
     private JPanel pnlMainContent;
 
-public BanHang(JPanel pnlMainContent) {
-    this.pnlMainContent = pnlMainContent;
-    initComponents();
-}
+    public BanHang(JPanel pnlMainContent) {
+        this.pnlMainContent = pnlMainContent;
+        initComponents();
+    }
 
-private void chuyenPanel(String panelName) {
-    CardLayout cl = (CardLayout) pnlMainContent.getLayout();
-    cl.show(pnlMainContent, panelName);
-}
+    private void chuyenPanel(String panelName) {
+        CardLayout cl = (CardLayout) pnlMainContent.getLayout();
+        cl.show(pnlMainContent, panelName);
+    }
+
+    @Override
+    public void open() {
+
+    }
+
+    @Override
+    public void fillBillDetails() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public void selectTimeRange() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public void setBill(HoaDon bill) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public void close() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public void showQLPhimDialog() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public void showQLSanphamDialog() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public void showQLkhachhang() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public void remove() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public void updateQuantity() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public void checkout() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public void cancel() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -36,12 +97,12 @@ private void chuyenPanel(String panelName) {
 
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        chonphim = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
+        lblchonphim = new javax.swing.JLabel();
+        lblchonsanpham = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tblchitietve = new javax.swing.JTable();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTable2 = new javax.swing.JTable();
+        tblchitiethang = new javax.swing.JTable();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jTextField1 = new javax.swing.JTextField();
@@ -61,23 +122,23 @@ private void chuyenPanel(String panelName) {
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 28)); // NOI18N
         jLabel1.setText("BÁN HÀNG");
 
-        chonphim.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        chonphim.setText("MUA VÉ");
-        chonphim.addMouseListener(new java.awt.event.MouseAdapter() {
+        lblchonphim.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        lblchonphim.setText("MUA VÉ");
+        lblchonphim.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                chonphimMouseClicked(evt);
+                lblchonphimMouseClicked(evt);
             }
         });
 
-        jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel3.setText("MUA SẢN PHẨM");
-        jLabel3.addMouseListener(new java.awt.event.MouseAdapter() {
+        lblchonsanpham.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        lblchonsanpham.setText("MUA SẢN PHẨM");
+        lblchonsanpham.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel3MouseClicked(evt);
+                lblchonsanphamMouseClicked(evt);
             }
         });
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tblchitietve.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null},
                 {null, null, null, null, null},
@@ -96,10 +157,10 @@ private void chuyenPanel(String panelName) {
                 return canEdit [columnIndex];
             }
         });
-        jTable1.setRowHeight(25);
-        jScrollPane1.setViewportView(jTable1);
+        tblchitietve.setRowHeight(25);
+        jScrollPane1.setViewportView(tblchitietve);
 
-        jTable2.setModel(new javax.swing.table.DefaultTableModel(
+        tblchitiethang.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null},
                 {null, null, null, null, null},
@@ -110,8 +171,8 @@ private void chuyenPanel(String panelName) {
                 "Mã sản phẩm", "Mã hóa đơn", "Tên sản phẩm", "Số lượng", "Giá sản phẩm"
             }
         ));
-        jTable2.setRowHeight(25);
-        jScrollPane2.setViewportView(jTable2);
+        tblchitiethang.setRowHeight(25);
+        jScrollPane2.setViewportView(tblchitiethang);
 
         jLabel4.setText("Tiền vé:");
 
@@ -147,9 +208,9 @@ private void chuyenPanel(String panelName) {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(259, 259, 259)
-                .addComponent(chonphim)
+                .addComponent(lblchonphim)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel3)
+                .addComponent(lblchonsanpham)
                 .addGap(234, 234, 234))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(71, 71, 71)
@@ -204,8 +265,8 @@ private void chuyenPanel(String panelName) {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(44, 44, 44)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(chonphim)
-                            .addComponent(jLabel3))
+                            .addComponent(lblchonphim)
+                            .addComponent(lblchonsanpham))
                         .addGap(45, 45, 45)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 243, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -255,22 +316,18 @@ private void chuyenPanel(String panelName) {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField2ActionPerformed
 
-    private void chonphimMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_chonphimMouseClicked
-        chuyenPanel("pnlChonPhim");
-    }//GEN-LAST:event_chonphimMouseClicked
+    private void lblchonphimMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblchonphimMouseClicked
+        chuyenPanel("chonPhim");
+    }//GEN-LAST:event_lblchonphimMouseClicked
 
-    private void jLabel3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel3MouseClicked
+    private void lblchonsanphamMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblchonsanphamMouseClicked
         chuyenPanel("pnlBanSanPham");
-    }//GEN-LAST:event_jLabel3MouseClicked
-    public void open() {
+    }//GEN-LAST:event_lblchonsanphamMouseClicked
 
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel chonphim;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
@@ -280,12 +337,15 @@ private void chuyenPanel(String panelName) {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTable jTable2;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField3;
     private javax.swing.JTextField jTextField4;
     private javax.swing.JTextField jTextField5;
+    private javax.swing.JLabel lblchonphim;
+    private javax.swing.JLabel lblchonsanpham;
+    private javax.swing.JTable tblchitiethang;
+    private javax.swing.JTable tblchitietve;
     // End of variables declaration//GEN-END:variables
+
 }

@@ -24,7 +24,9 @@ poly\cinema\ui\manager\LoaiGheJpanel$2.class
 poly\cinema\entity\XuatChieu.class
 poly\cinema\dao\MatHangDAO.class
 poly\cinema\ui\manager\LoaiGheJpanel$1.class
+poly\cinema\ui\manager\LoaiGheJpanel$7.class
 poly\cinema\entity\MatHang.class
+poly\cinema\ui\manager\LoaiGheJpanel$6.class
 poly\cinema\entity\XuatChieu$XuatChieuBuilder.class
 poly\cinema\dao\impl\NguoiDungDAOImpl.class
 poly\cinema\ui\BanHang$1.class
@@ -38,6 +40,7 @@ poly\cinema\entity\LoaiGhe.class
 poly\cinema\ui\manager\XemLichChieu$4.class
 poly\cinema\ui\BanHang.class
 poly\cinema\ui\manager\XemLichChieu$1.class
+poly\cinema\ui\manager\LoaiGheJpanel$8.class
 poly\cinema\ui\BanHang$2.class
 poly\cinema\ui\chonPhimJpanel.class
 poly\cinema\dao\impl\MatHangDAOImpl.class
@@ -45,6 +48,8 @@ poly\cinema\entity\ChiTietHang.class
 poly\cinema\dao\ChiTietHangDAO.class
 poly\cinema\dao\impl\ChiTietHangDAOImpl.class
 poly\cinema\ui\BanHang$4.class
+poly\cinema\ui\manager\LoaiGheJpanel$9.class
+poly\cinema\ui\QL_BanHang_Controler.class
 poly\cinema\ui\manager\LoaiGheJpanel.class
 poly\cinema\ui\chonPhimJpanel$1.class
 poly\cinema\dao\HoaDonDAO.class

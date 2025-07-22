@@ -18,7 +18,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 public class LoaiGhe {
-    private String maLoaiGhe;
-    private String tenLoaiGhe;
-    private double gia;
+
+    private String loaiGhe;    // tương ứng cột loai_ghe
+    private double phuPhi;
 }

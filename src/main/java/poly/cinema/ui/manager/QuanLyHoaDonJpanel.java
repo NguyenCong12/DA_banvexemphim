@@ -407,6 +407,9 @@ public class QuanLyHoaDonJpanel extends javax.swing.JPanel implements QuanLyHoaD
 
     private void tblChiTietHangMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblChiTietHangMouseClicked
         // TODO add your handling code here:
+        if (evt.getClickCount() == 2) {
+            this.edit();
+        }
     }//GEN-LAST:event_tblChiTietHangMouseClicked
 
     public void open() {
