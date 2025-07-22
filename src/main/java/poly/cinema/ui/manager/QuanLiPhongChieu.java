@@ -261,7 +261,7 @@ public class QuanLiPhongChieu extends javax.swing.JPanel implements QuanLyPhongC
             PhongChieu phongChieu = items.get(row);
             setForm(phongChieu);
         }
-        updateButtonStatus();
+        updateButtonStatus();   
     }//GEN-LAST:event_tblPhongChieuMouseClicked
 
     private void btnThemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemActionPerformed

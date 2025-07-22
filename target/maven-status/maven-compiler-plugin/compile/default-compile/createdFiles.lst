@@ -41,7 +41,6 @@ poly\cinema\ui\manager\QuanLySanPham$1.class
 poly\cinema\ui\manager\QuanLySanPham.class
 poly\cinema\dao\XuatChieuDAO.class
 poly\cinema\dao\NguoiDungDAO.class
-poly\cinema\ui\manager\LoaiGhe.class
 poly\cinema\ui\WelcomeJDialog$3$1.class
 poly\cinema\ui\FCinema_Frame$13.class
 poly\cinema\entity\ChiTietVe$ChiTietVeBuilder.class
