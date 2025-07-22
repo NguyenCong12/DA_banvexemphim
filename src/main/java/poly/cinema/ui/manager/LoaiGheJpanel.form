@@ -58,15 +58,10 @@
                           </Group>
                           <EmptySpace min="111" pref="111" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Group type="102" alignment="0" attributes="0">
-                                  <Component id="btnXoa1" min="-2" pref="110" max="-2" attributes="0"/>
-                                  <EmptySpace max="32767" attributes="0"/>
-                              </Group>
-                              <Group type="102" alignment="0" attributes="0">
-                                  <Component id="btnNhapMoi" min="-2" pref="110" max="-2" attributes="0"/>
-                                  <EmptySpace min="83" max="32767" attributes="0"/>
-                              </Group>
+                              <Component id="btnXoa1" alignment="0" min="-2" pref="110" max="-2" attributes="0"/>
+                              <Component id="btnNhapMoi" alignment="0" min="-2" pref="110" max="-2" attributes="0"/>
                           </Group>
+                          <EmptySpace max="32767" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Component id="btnMovePrevious" min="-2" pref="110" max="-2" attributes="0"/>
                               <Component id="btnMoveFirst" min="-2" pref="110" max="-2" attributes="0"/>
@@ -93,7 +88,7 @@
                                   </Group>
                                   <EmptySpace type="separate" max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="0" attributes="0">
-                                      <Component id="txtMaGhe" alignment="0" min="-2" pref="600" max="-2" attributes="0"/>
+                                      <Component id="txtTenGhe" alignment="0" min="-2" pref="600" max="-2" attributes="0"/>
                                       <Component id="txtPhuPhi" alignment="0" min="-2" pref="600" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
@@ -115,7 +110,7 @@
                   <EmptySpace min="-2" pref="45" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="jLabel2" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="txtMaGhe" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
+                      <Component id="txtTenGhe" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace min="-2" pref="33" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="1" attributes="0">
@@ -176,7 +171,7 @@
               <Properties>
                 <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
                   <Table columnCount="2" rowCount="0">
-                    <Column editable="true" title="M&#xe3; gh&#x1ebf;" type="java.lang.Object"/>
+                    <Column editable="true" title="T&#xea;n gh&#x1ebf;" type="java.lang.Object"/>
                     <Column editable="true" title="Ph&#x1ee5; ph&#xed;" type="java.lang.Object"/>
                   </Table>
                 </Property>
@@ -209,7 +204,7 @@
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Segoe UI" size="24" style="1"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="M&#xe3; gh&#x1ebf; "/>
+            <Property name="text" type="java.lang.String" value="T&#xea;n gh&#x1ebf; "/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel3">
@@ -220,7 +215,7 @@
             <Property name="text" type="java.lang.String" value="Ph&#x1ee5; ph&#xed;"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="txtMaGhe">
+        <Component class="javax.swing.JTextField" name="txtTenGhe">
         </Component>
         <Component class="javax.swing.JTextField" name="txtPhuPhi">
         </Component>

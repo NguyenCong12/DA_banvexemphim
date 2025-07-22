@@ -34,10 +34,6 @@ public class LoaiGheJpanel extends javax.swing.JPanel implements LoaiGheControll
                 moveTo(row);
             }
         });
-//        btnThem.addActionListener(e -> create());
-//        btnSua.addActionListener(e -> update());
-//        btnXoa.addActionListener(e -> delete());
-//        btnNhapMoi.addActionListener(e -> clear());
     }
 
     /**
@@ -56,7 +52,7 @@ public class LoaiGheJpanel extends javax.swing.JPanel implements LoaiGheControll
         tblBillDetaills = new javax.swing.JTable();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        txtMaGhe = new javax.swing.JTextField();
+        txtTenGhe = new javax.swing.JTextField();
         txtPhuPhi = new javax.swing.JTextField();
         btnSua = new javax.swing.JButton();
         btnThem = new javax.swing.JButton();
@@ -84,7 +80,7 @@ public class LoaiGheJpanel extends javax.swing.JPanel implements LoaiGheControll
 
             },
             new String [] {
-                "Mã ghế", "Phụ phí"
+                "Tên ghế", "Phụ phí"
             }
         ));
         tblBillDetaills.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -95,7 +91,7 @@ public class LoaiGheJpanel extends javax.swing.JPanel implements LoaiGheControll
         jScrollPane1.setViewportView(tblBillDetaills);
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        jLabel2.setText("Mã ghế ");
+        jLabel2.setText("Tên ghế ");
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jLabel3.setText("Phụ phí");
@@ -170,12 +166,9 @@ public class LoaiGheJpanel extends javax.swing.JPanel implements LoaiGheControll
                             .addComponent(btnThem, javax.swing.GroupLayout.DEFAULT_SIZE, 110, Short.MAX_VALUE))
                         .addGap(111, 111, 111)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(btnXoa1, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(btnNhapMoi, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                            .addComponent(btnXoa1, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnNhapMoi, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(btnMovePrevious, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(btnMoveFirst, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -196,7 +189,7 @@ public class LoaiGheJpanel extends javax.swing.JPanel implements LoaiGheControll
                                     .addComponent(jLabel3))
                                 .addGap(18, 18, 18)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(txtMaGhe, javax.swing.GroupLayout.PREFERRED_SIZE, 600, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtTenGhe, javax.swing.GroupLayout.PREFERRED_SIZE, 600, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(txtPhuPhi, javax.swing.GroupLayout.PREFERRED_SIZE, 600, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1065, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addContainerGap(21, Short.MAX_VALUE))))
@@ -211,7 +204,7 @@ public class LoaiGheJpanel extends javax.swing.JPanel implements LoaiGheControll
                 .addGap(45, 45, 45)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(txtMaGhe, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtTenGhe, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(33, 33, 33)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel3)
@@ -268,8 +261,14 @@ public class LoaiGheJpanel extends javax.swing.JPanel implements LoaiGheControll
     private void tblBillDetaillsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblBillDetaillsMouseClicked
         // TODO add your handling code here:
         int row = tblBillDetaills.getSelectedRow();
-        if (row >= 0 && row < list.size()) {
-            moveTo(row); // đổ dữ liệu dòng được chọn vào form
+        if (row >= 0) {
+            String tenGhe = (String) tblBillDetaills.getValueAt(row, 0);
+            String phuPhi = tblBillDetaills.getValueAt(row, 1).toString();
+
+            txtTenGhe.setText(tenGhe);
+            txtPhuPhi.setText(phuPhi);
+
+            txtTenGhe.setEnabled(false);
         }
     }//GEN-LAST:event_tblBillDetaillsMouseClicked
 
@@ -290,7 +289,8 @@ public class LoaiGheJpanel extends javax.swing.JPanel implements LoaiGheControll
     }//GEN-LAST:event_btnMoveLastActionPerformed
 
     private void btnXoa1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXoa1ActionPerformed
-        // TODO add your handling code here:
+        // TODO add your handling code
+        this.delete();
     }//GEN-LAST:event_btnXoa1ActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -308,8 +308,8 @@ public class LoaiGheJpanel extends javax.swing.JPanel implements LoaiGheControll
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tblBillDetaills;
-    private javax.swing.JTextField txtMaGhe;
     private javax.swing.JTextField txtPhuPhi;
+    private javax.swing.JTextField txtTenGhe;
     // End of variables declaration//GEN-END:variables
 
     private final LoaiGheDAO dao = new LoaiGheDAOImpl();
@@ -325,13 +325,14 @@ public class LoaiGheJpanel extends javax.swing.JPanel implements LoaiGheControll
 
     @Override
     public void setForm(LoaiGhe entity) {
-        txtMaGhe.setText(entity.getLoaiGhe());
+        txtTenGhe.setText(entity.getLoaiGhe());
         txtPhuPhi.setText(String.valueOf(entity.getPhuPhi()));
+        txtTenGhe.setEnabled(false);
     }
 
     @Override
     public LoaiGhe getForm() {
-        String ma = txtMaGhe.getText().trim();
+        String ma = txtTenGhe.getText().trim();
         String phuPhiStr = txtPhuPhi.getText().trim();
 
         if (ma.isEmpty() || phuPhiStr.isEmpty()) {
@@ -385,16 +386,23 @@ public class LoaiGheJpanel extends javax.swing.JPanel implements LoaiGheControll
     public void update() {
         int row = tblBillDetaills.getSelectedRow();
         if (row >= 0 && row < list.size()) {
-            int confirm = JOptionPane.showConfirmDialog(this, "Bạn có chắc muốn xóa loại ghế này?", "Xác nhận", JOptionPane.YES_NO_OPTION);
-            if (confirm == JOptionPane.YES_OPTION) {
-                String ma = (String) tblBillDetaills.getValueAt(row, 0);
-                dao.deleteById(ma);
+            try {
+                String loaiGhe = txtTenGhe.getText().trim();
+                double phuPhi = Double.parseDouble(txtPhuPhi.getText().trim());
+
+                LoaiGhe lg = new LoaiGhe();
+                lg.setLoaiGhe(loaiGhe);
+                lg.setPhuPhi(phuPhi);
+
+                dao.update(lg);
                 fillToTable();
                 clear();
-                JOptionPane.showMessageDialog(this, "Xóa thành công!");
+                JOptionPane.showMessageDialog(this, "Cập nhật thành công!");
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(this, "Lỗi cập nhật: " + e.getMessage());
             }
         } else {
-            JOptionPane.showMessageDialog(this, "Vui lòng chọn loại ghế cần xóa.");
+            JOptionPane.showMessageDialog(this, "Vui lòng chọn loại ghế cần cập nhật.");
         }
     }
 
@@ -405,10 +413,15 @@ public class LoaiGheJpanel extends javax.swing.JPanel implements LoaiGheControll
             int confirm = JOptionPane.showConfirmDialog(this, "Bạn có chắc muốn xóa loại ghế này?", "Xác nhận", JOptionPane.YES_NO_OPTION);
             if (confirm == JOptionPane.YES_OPTION) {
                 String ma = (String) tblBillDetaills.getValueAt(row, 0);
-                dao.deleteById(ma);
-                fillToTable();
-                clear();
-                JOptionPane.showMessageDialog(this, "Xóa thành công!");
+                try {
+                    dao.deleteById(ma);
+                    fillToTable();
+                    clear();
+                    JOptionPane.showMessageDialog(this, "Xóa thành công!");
+                } catch (Exception e) {
+                    JOptionPane.showMessageDialog(this, "Không thể xóa vì đang được sử dụng trong hệ thống!");
+                    // Hoặc: JOptionPane.showMessageDialog(this, e.getMessage());
+                }
             }
         } else {
             JOptionPane.showMessageDialog(this, "Vui lòng chọn loại ghế cần xóa.");
@@ -417,15 +430,16 @@ public class LoaiGheJpanel extends javax.swing.JPanel implements LoaiGheControll
 
     @Override
     public void clear() {
-        txtMaGhe.setText("");
+        txtTenGhe.setText("");
         txtPhuPhi.setText("");
         tblBillDetaills.clearSelection();
         currentIndex = -1;
+        txtTenGhe.setEnabled(true);
     }
 
     @Override
     public void setEditable(boolean editable) {
-        txtMaGhe.setEditable(editable);
+        txtTenGhe.setEditable(editable);
     }
 
     @Override
