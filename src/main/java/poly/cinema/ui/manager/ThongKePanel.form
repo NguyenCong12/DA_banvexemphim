@@ -305,8 +305,8 @@
                 <Container class="javax.swing.JPanel" name="jPanel4">
                   <Constraints>
                     <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
-                      <JTabbedPaneConstraints tabName="B&#x1eae;P N&#x1af;&#x1eda;C">
-                        <Property name="tabTitle" type="java.lang.String" value="B&#x1eae;P N&#x1af;&#x1eda;C"/>
+                      <JTabbedPaneConstraints tabName="LO&#x1ea0;I M&#x1eb6;T H&#xc0;NG">
+                        <Property name="tabTitle" type="java.lang.String" value="LO&#x1ea0;I M&#x1eb6;T H&#xc0;NG"/>
                       </JTabbedPaneConstraints>
                     </Constraint>
                   </Constraints>

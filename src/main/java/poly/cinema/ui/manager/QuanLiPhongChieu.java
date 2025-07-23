@@ -319,16 +319,20 @@ public class QuanLiPhongChieu extends javax.swing.JPanel implements QuanLyPhongC
             return null;
         }
 
-        int soHang, soCot;
         try {
-            soHang = Integer.parseInt(soHangStr);
-            soCot = Integer.parseInt(soCotStr);
-        } catch (NumberFormatException e) {
-            XDialog.alert("Số hàng và số cột phải là số nguyên!");
+        int soHang = Integer.parseInt(soHangStr);
+        int soCot = Integer.parseInt(soCotStr);
+
+        if (soHang <= 0 || soCot <= 0) {
+            XDialog.alert("Số hàng và số cột phải > 0");
             return null;
         }
 
         return new PhongChieu(ma, ten, soHang, soCot);
+    } catch (NumberFormatException e) {
+        XDialog.alert("Số hàng và số cột phải là số nguyên!");
+        return null;
+    }
     }
 
     @Override
@@ -361,6 +365,13 @@ public class QuanLiPhongChieu extends javax.swing.JPanel implements QuanLyPhongC
         if (pc == null) {
             return;
         }
+
+        for (PhongChieu item : items) {
+            if (item.getMaPhong().equalsIgnoreCase(pc.getMaPhong())) {
+                XDialog.alert("Mã phòng đã tồn tại, vui lòng chọn mã khác.");
+                return;
+            }
+        }
         dao.create(pc);
         fillToTable();
         clear();
@@ -379,6 +390,17 @@ public class QuanLiPhongChieu extends javax.swing.JPanel implements QuanLyPhongC
         if (pc == null) {
             return;
         }
+
+        // Lấy bản gốc từ list để so sánh
+        PhongChieu old = items.get(row);
+        if (old.getMaPhong().equals(pc.getMaPhong())
+                && old.getTenPhong().equals(pc.getTenPhong())
+                && old.getSoHang() == pc.getSoHang()
+                && old.getSoCot() == pc.getSoCot()) {
+            XDialog.alert("Bạn chưa thay đổi thông tin nào để cập nhật.");
+            return;
+        }
+
         dao.update(pc);
         fillToTable();
         XDialog.alert("Cập nhật thành công!");

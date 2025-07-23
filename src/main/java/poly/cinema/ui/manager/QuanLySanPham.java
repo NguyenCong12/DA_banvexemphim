@@ -307,7 +307,7 @@ public class QuanLySanPham extends javax.swing.JPanel implements QuanLySanPhamCo
                 Files.copy(file.toPath(), dest.toPath(), StandardCopyOption.REPLACE_EXISTING);
             } catch (IOException ex) {
                 ex.printStackTrace();
-                JOptionPane.showMessageDialog(this, "❌ Lỗi khi sao chép ảnh!");
+                JOptionPane.showMessageDialog(this, "Lỗi khi sao chép ảnh!");
                 return;
             }
 
@@ -368,7 +368,7 @@ public class QuanLySanPham extends javax.swing.JPanel implements QuanLySanPhamCo
         String ten = txtTenHang.getText().trim();
         String loai = (String) cboLoai.getSelectedItem();
         double gia = Double.parseDouble(txtGia.getText().trim());
-        String anh = lblAnh.getText();
+        String anh = (lblAnh.getText() == null || lblAnh.getText().trim().isEmpty()) ? "" : lblAnh.getText().trim();
         boolean trangThai = rdoCon.isSelected();
         return new SanPham(null, ten, loai, gia, trangThai, anh);
     }
@@ -412,36 +412,47 @@ public class QuanLySanPham extends javax.swing.JPanel implements QuanLySanPhamCo
             String giaStr = txtGia.getText().trim();
             String anh = lblAnh.getText().trim();
 
+            // 1. Kiểm tra rỗng
             if (ten.isEmpty() || giaStr.isEmpty() || anh.isEmpty()) {
-                JOptionPane.showMessageDialog(this, "❌ Vui lòng nhập đầy đủ thông tin!");
+                JOptionPane.showMessageDialog(this, "Vui lòng nhập đầy đủ thông tin!");
                 return;
             }
 
-            double gia = Double.parseDouble(giaStr);
-
-            // Kiểm tra trùng tên
-            for (SanPham sp : dao.findAll()) {
-                if (sp.getTenSanPham().equalsIgnoreCase(ten)) {
-                    JOptionPane.showMessageDialog(this, "❌ Tên sản phẩm đã tồn tại!");
+            // 2. Kiểm tra giá có hợp lệ không
+            double gia;
+            try {
+                gia = Double.parseDouble(giaStr);
+                if (gia <= 0) {
+                    JOptionPane.showMessageDialog(this, "Giá phải lớn hơn 0!");
                     return;
+                }
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(this, "Giá phải là số hợp lệ!");
+                return;
+            }
+
+            // 3. Kiểm tra trùng tên (bỏ qua nếu dao trả null)
+            List<SanPham> danhSach = dao.findAll();
+            if (danhSach != null) {
+                for (SanPham sp : danhSach) {
+                    if (sp.getTenSanPham().equalsIgnoreCase(ten)) {
+                        JOptionPane.showMessageDialog(this, "Tên sản phẩm đã tồn tại!");
+                        return;
+                    }
                 }
             }
 
+            // 4. Tạo sản phẩm mới
             SanPham sp = new SanPham(null, ten, loai, gia, true, anh);
-
-            // Tạm thời khóa sự kiện click bảng
             isCreating = true;
-
             dao.create(sp);
             fillToTable();
             clear();
-            JOptionPane.showMessageDialog(this, "✔️ Thêm sản phẩm thành công!");
-        } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this, "❌ Giá phải là số!");
+            JOptionPane.showMessageDialog(this, "Thêm sản phẩm thành công!");
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "❌ Lỗi thêm sản phẩm: " + e.getMessage());
+            JOptionPane.showMessageDialog(this, "Lỗi thêm sản phẩm");
         } finally {
-            isCreating = false; // Mở lại sau khi xong
+            isCreating = false;
         }
     }
 
@@ -450,7 +461,7 @@ public class QuanLySanPham extends javax.swing.JPanel implements QuanLySanPhamCo
         try {
             int row = tblSanPham.getSelectedRow();
             if (row == -1) {
-                JOptionPane.showMessageDialog(this, "❌ Vui lòng chọn sản phẩm để cập nhật!");
+                JOptionPane.showMessageDialog(this, "Vui lòng chọn sản phẩm để cập nhật!");
                 return;
             }
 
@@ -460,29 +471,70 @@ public class QuanLySanPham extends javax.swing.JPanel implements QuanLySanPhamCo
             String giaStr = txtGia.getText().trim();
             String anh = lblAnh.getText().trim();
             boolean trangThai = rdoCon.isSelected();
+
+            // 1. Kiểm tra rỗng
             if (ten.isEmpty() || giaStr.isEmpty() || anh.isEmpty()) {
-                JOptionPane.showMessageDialog(this, "❌ Vui lòng nhập đầy đủ thông tin!");
+                JOptionPane.showMessageDialog(this, "Vui lòng nhập đầy đủ thông tin!");
                 return;
             }
 
-            double gia = Double.parseDouble(giaStr);
-
-            for (SanPham sp : dao.findAll()) {
-                if (sp.getTenSanPham().equalsIgnoreCase(ten) && !sp.getMaSanPham().equals(ma)) {
-                    JOptionPane.showMessageDialog(this, "❌ Tên sản phẩm đã tồn tại ở sản phẩm khác!");
+            // 2. Kiểm tra giá
+            double gia;
+            try {
+                gia = Double.parseDouble(giaStr);
+                if (gia <= 0) {
+                    JOptionPane.showMessageDialog(this, "Giá phải lớn hơn 0!");
                     return;
+                }
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(this, "Giá phải là số hợp lệ!");
+                return;
+            }
+
+            // 3. Lấy dữ liệu gốc từ DB
+            SanPham spCu = dao.findById(ma);
+            if (spCu == null) {
+                JOptionPane.showMessageDialog(this, "Sản phẩm không tồn tại!");
+                return;
+            }
+
+            // 4. Kiểm tra trùng tên với sản phẩm khác
+            List<SanPham> danhSach = dao.findAll();
+            if (danhSach != null) {
+                for (SanPham sp : danhSach) {
+                    if (sp.getTenSanPham().equalsIgnoreCase(ten)
+                            && !sp.getMaSanPham().equals(ma)) {
+                        JOptionPane.showMessageDialog(this, "Tên sản phẩm đã tồn tại ở sản phẩm khác!");
+                        return;
+                    }
                 }
             }
 
-            
-            SanPham sp = new SanPham(ma, ten, loai, gia, trangThai, anh);
-            dao.update(sp);
+            // 5. Kiểm tra chưa có thay đổi gì
+            if (ten.equalsIgnoreCase(spCu.getTenSanPham())
+                    && loai.equalsIgnoreCase(spCu.getLoai())
+                    && gia == spCu.getGia()
+                    && trangThai == spCu.isTrangThai()
+                    && anh.equals(spCu.getAnh())) {
+                JOptionPane.showMessageDialog(this, " Bạn chưa thay đổi thông tin nào để cập nhật!");
+                return;
+            }
+
+            // 6. Xác nhận cập nhật
+            int confirm = JOptionPane.showConfirmDialog(this,
+                    "Bạn chắc chắn muốn cập nhật sản phẩm này?",
+                    "Xác nhận", JOptionPane.YES_NO_OPTION);
+            if (confirm != JOptionPane.YES_OPTION) {
+                return;
+            }
+
+            // 7. Cập nhật
+            SanPham spMoi = new SanPham(ma, ten, loai, gia, trangThai, anh);
+            dao.update(spMoi);
             fillToTable();
-            JOptionPane.showMessageDialog(this, "✔️ Cập nhật thành công!");
-        } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this, "❌ Giá phải là số!");
+            JOptionPane.showMessageDialog(this, "Cập nhật thành công!");
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "❌ Cập nhật thất bại: " + e.getMessage());
+            JOptionPane.showMessageDialog(this, "Cập nhật thất bại: ");
         }
     }
 
@@ -505,7 +557,7 @@ public class QuanLySanPham extends javax.swing.JPanel implements QuanLySanPhamCo
                 JOptionPane.showMessageDialog(this, "Xóa sản phẩm thành công!");
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Xóa thất bại: " + e.getMessage());
+            JOptionPane.showMessageDialog(this, "Không thể xóa vì sản phẩm này đang được sử dụng!");
         }
     }
 
@@ -516,8 +568,10 @@ public class QuanLySanPham extends javax.swing.JPanel implements QuanLySanPhamCo
         cboLoai.setSelectedIndex(0);
         lblAnh.setText("");
         lblAnh.setIcon(null);
+        rdoCon.setSelected(true); // mặc định còn hàng
         index = -1;
         updateButtonStates(false);
+
     }
 
     @Override
