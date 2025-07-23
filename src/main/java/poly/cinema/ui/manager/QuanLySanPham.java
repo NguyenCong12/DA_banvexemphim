@@ -307,7 +307,7 @@ public class QuanLySanPham extends javax.swing.JPanel implements QuanLySanPhamCo
                 Files.copy(file.toPath(), dest.toPath(), StandardCopyOption.REPLACE_EXISTING);
             } catch (IOException ex) {
                 ex.printStackTrace();
-                JOptionPane.showMessageDialog(this, "❌ Lỗi khi sao chép ảnh!");
+                JOptionPane.showMessageDialog(this, "Lỗi khi sao chép ảnh!");
                 return;
             }
 
@@ -450,7 +450,7 @@ public class QuanLySanPham extends javax.swing.JPanel implements QuanLySanPhamCo
             clear();
             JOptionPane.showMessageDialog(this, "Thêm sản phẩm thành công!");
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Lỗi thêm sản phẩm: ");
+            JOptionPane.showMessageDialog(this, "Lỗi thêm sản phẩm");
         } finally {
             isCreating = false;
         }
@@ -557,7 +557,7 @@ public class QuanLySanPham extends javax.swing.JPanel implements QuanLySanPhamCo
                 JOptionPane.showMessageDialog(this, "Xóa sản phẩm thành công!");
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Xóa thất bại: ");
+            JOptionPane.showMessageDialog(this, "Không thể xóa vì sản phẩm này đang được sử dụng!");
         }
     }
 
