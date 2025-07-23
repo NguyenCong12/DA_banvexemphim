@@ -210,7 +210,7 @@ public class ThongKePanel extends javax.swing.JPanel implements ThongKeControlle
                 .addContainerGap(54, Short.MAX_VALUE))
         );
 
-        jTabbedPane1.addTab("BẮP NƯỚC", jPanel4);
+        jTabbedPane1.addTab("LOẠI MẶT HÀNG", jPanel4);
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
