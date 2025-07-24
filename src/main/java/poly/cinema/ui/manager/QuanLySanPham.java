@@ -326,7 +326,6 @@ public class QuanLySanPham extends javax.swing.JPanel implements QuanLySanPhamCo
     private final QuanLySanPhamDAOImpl dao = new QuanLySanPhamDAOImpl();
     private List<SanPham> list;
     private int index = -1;
-
     private boolean isCreating = false;
 
     @Override
@@ -418,7 +417,7 @@ public class QuanLySanPham extends javax.swing.JPanel implements QuanLySanPhamCo
                 return;
             }
 
-            // 2. Kiểm tra giá có hợp lệ không
+            // 2. Kiểm tra giá
             double gia;
             try {
                 gia = Double.parseDouble(giaStr);
@@ -427,30 +426,35 @@ public class QuanLySanPham extends javax.swing.JPanel implements QuanLySanPhamCo
                     return;
                 }
             } catch (NumberFormatException e) {
-                JOptionPane.showMessageDialog(this, "Giá phải là số hợp lệ!");
+                JOptionPane.showMessageDialog(this, "❌ Giá phải là số!");
                 return;
             }
 
-            // 3. Kiểm tra trùng tên (bỏ qua nếu dao trả null)
+            // 3. Kiểm tra trùng tên
             List<SanPham> danhSach = dao.findAll();
             if (danhSach != null) {
                 for (SanPham sp : danhSach) {
                     if (sp.getTenSanPham().equalsIgnoreCase(ten)) {
-                        JOptionPane.showMessageDialog(this, "Tên sản phẩm đã tồn tại!");
+                        JOptionPane.showMessageDialog(this, "❌ Tên sản phẩm đã tồn tại!");
                         return;
                     }
                 }
             }
 
-            // 4. Tạo sản phẩm mới
+            // 4. Tạo sản phẩm
             SanPham sp = new SanPham(null, ten, loai, gia, true, anh);
             isCreating = true;
-            dao.create(sp);
-            fillToTable();
-            clear();
-            JOptionPane.showMessageDialog(this, "Thêm sản phẩm thành công!");
+            SanPham spMoi = dao.create(sp);
+            if (spMoi != null && spMoi.getMaSanPham() != null) {
+                fillToTable();
+                clear();
+                JOptionPane.showMessageDialog(this, "✔️ Thêm sản phẩm thành công!");
+            } else {
+                JOptionPane.showMessageDialog(this, "❌ Không thể lấy ID sản phẩm mới!");
+            }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Lỗi thêm sản phẩm");
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(this, "❌ Lỗi thêm sản phẩm: " + e.getMessage());
         } finally {
             isCreating = false;
         }
@@ -472,13 +476,11 @@ public class QuanLySanPham extends javax.swing.JPanel implements QuanLySanPhamCo
             String anh = lblAnh.getText().trim();
             boolean trangThai = rdoCon.isSelected();
 
-            // 1. Kiểm tra rỗng
             if (ten.isEmpty() || giaStr.isEmpty() || anh.isEmpty()) {
                 JOptionPane.showMessageDialog(this, "Vui lòng nhập đầy đủ thông tin!");
                 return;
             }
 
-            // 2. Kiểm tra giá
             double gia;
             try {
                 gia = Double.parseDouble(giaStr);
@@ -491,14 +493,12 @@ public class QuanLySanPham extends javax.swing.JPanel implements QuanLySanPhamCo
                 return;
             }
 
-            // 3. Lấy dữ liệu gốc từ DB
             SanPham spCu = dao.findById(ma);
             if (spCu == null) {
                 JOptionPane.showMessageDialog(this, "Sản phẩm không tồn tại!");
                 return;
             }
 
-            // 4. Kiểm tra trùng tên với sản phẩm khác
             List<SanPham> danhSach = dao.findAll();
             if (danhSach != null) {
                 for (SanPham sp : danhSach) {
@@ -510,17 +510,15 @@ public class QuanLySanPham extends javax.swing.JPanel implements QuanLySanPhamCo
                 }
             }
 
-            // 5. Kiểm tra chưa có thay đổi gì
             if (ten.equalsIgnoreCase(spCu.getTenSanPham())
                     && loai.equalsIgnoreCase(spCu.getLoai())
                     && gia == spCu.getGia()
                     && trangThai == spCu.isTrangThai()
                     && anh.equals(spCu.getAnh())) {
-                JOptionPane.showMessageDialog(this, " Bạn chưa thay đổi thông tin nào để cập nhật!");
+                JOptionPane.showMessageDialog(this, "Bạn chưa thay đổi thông tin nào để cập nhật!");
                 return;
             }
 
-            // 6. Xác nhận cập nhật
             int confirm = JOptionPane.showConfirmDialog(this,
                     "Bạn chắc chắn muốn cập nhật sản phẩm này?",
                     "Xác nhận", JOptionPane.YES_NO_OPTION);
@@ -528,13 +526,12 @@ public class QuanLySanPham extends javax.swing.JPanel implements QuanLySanPhamCo
                 return;
             }
 
-            // 7. Cập nhật
             SanPham spMoi = new SanPham(ma, ten, loai, gia, trangThai, anh);
             dao.update(spMoi);
             fillToTable();
             JOptionPane.showMessageDialog(this, "Cập nhật thành công!");
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Cập nhật thất bại: ");
+            JOptionPane.showMessageDialog(this, "Cập nhật thất bại: " + e.getMessage());
         }
     }
 
@@ -568,10 +565,9 @@ public class QuanLySanPham extends javax.swing.JPanel implements QuanLySanPhamCo
         cboLoai.setSelectedIndex(0);
         lblAnh.setText("");
         lblAnh.setIcon(null);
-        rdoCon.setSelected(true); // mặc định còn hàng
+        rdoCon.setSelected(true);
         index = -1;
         updateButtonStates(false);
-
     }
 
     @Override
@@ -621,23 +617,36 @@ public class QuanLySanPham extends javax.swing.JPanel implements QuanLySanPhamCo
     }
 
     private void loadLoaiHang() {
-        cboLoai.setModel(new DefaultComboBoxModel<>(
-                new String[]{"bánh", "nước", "combo"}
-        ));
+        cboLoai.setModel(new DefaultComboBoxModel<>(new String[]{"bánh", "nước", "combo"}));
     }
 
     private void updateButtonStates(boolean isEditing) {
         btnThem.setEnabled(!isEditing);
-        btnLamMoi.setEnabled(true); // luôn bật
+        btnLamMoi.setEnabled(true);
         btnSua.setEnabled(isEditing);
         btnXoa.setEnabled(isEditing);
     }
 
     private void initListeners() {
-        btnThem.addActionListener(e -> create());
-        btnSua.addActionListener(e -> update());
-        btnXoa.addActionListener(e -> delete());
-        btnLamMoi.addActionListener(e -> clear());
+        btnThem.addActionListener(e -> {
+            create();
+            fillToTable();
+        });
+
+        btnSua.addActionListener(e -> {
+            update();
+            fillToTable();
+        });
+
+        btnXoa.addActionListener(e -> {
+            delete();
+            fillToTable();
+        });
+
+        btnLamMoi.addActionListener(e -> {
+            clear();
+            fillToTable();
+        });
 
         tblSanPham.addMouseListener(new MouseAdapter() {
             @Override

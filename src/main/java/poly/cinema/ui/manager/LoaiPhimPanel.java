@@ -240,6 +240,7 @@ public class LoaiPhimPanel extends javax.swing.JPanel implements CrudController<
         btnSua.setEnabled(isSelected);
         btnXoa.setEnabled(isSelected);
     }
+
     @Override
     public void setForm(LoaiPhim entity) {
         txtTheLoai.setText(entity.getTenLoai());

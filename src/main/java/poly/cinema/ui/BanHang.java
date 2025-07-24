@@ -8,6 +8,7 @@ import java.awt.CardLayout;
 import java.util.List;
 import javax.swing.JPanel;
 import poly.cinema.entity.DatVeSession;
+import javax.swing.table.DefaultTableModel;
 import poly.cinema.entity.HoaDon;
 
 /**
@@ -170,15 +171,20 @@ public void updateSauKhiChonGhe() {
 
         tblchitiethang.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+
             },
             new String [] {
-                "Mã sản phẩm", "Mã hóa đơn", "Tên sản phẩm", "Số lượng", "Giá sản phẩm"
+                "Tên sản phẩm", "Đơn giá", "Số lượng", "Thành tiền"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         tblchitiethang.setRowHeight(25);
         jScrollPane2.setViewportView(tblchitiethang);
 
@@ -331,6 +337,14 @@ public void updateSauKhiChonGhe() {
     private void lblchonsanphamMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblchonsanphamMouseClicked
         chuyenPanel("pnlBanSanPham");
     }//GEN-LAST:event_lblchonsanphamMouseClicked
+
+    public void setDanhSachHoaDon(List<Object[]> ds) {
+        DefaultTableModel model = (DefaultTableModel) tblchitiethang.getModel();
+        model.setRowCount(0); // Xoá hết dòng cũ
+        for (Object[] row : ds) {
+            model.addRow(row);
+        }
+    }
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
