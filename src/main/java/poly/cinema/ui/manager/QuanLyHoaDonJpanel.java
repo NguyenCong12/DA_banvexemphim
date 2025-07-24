@@ -55,6 +55,7 @@ public class QuanLyHoaDonJpanel extends javax.swing.JPanel implements QuanLyHoaD
             currentRow = 0;
             moveTo(currentRow);
         }
+
     }
 
     /**
@@ -101,6 +102,11 @@ public class QuanLyHoaDonJpanel extends javax.swing.JPanel implements QuanLyHoaD
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 28)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("QUẢN LÝ HÓA ĐƠN");
+        jLabel1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel1MouseClicked(evt);
+            }
+        });
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -116,6 +122,11 @@ public class QuanLyHoaDonJpanel extends javax.swing.JPanel implements QuanLyHoaD
         jTable1.setGridColor(new java.awt.Color(0, 0, 0));
         jTable1.setRowHeight(25);
         jTable1.setShowGrid(true);
+        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable1MouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(jTable1);
 
         jLabel10.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
@@ -412,6 +423,18 @@ public class QuanLyHoaDonJpanel extends javax.swing.JPanel implements QuanLyHoaD
         }
     }//GEN-LAST:event_tblChiTietHangMouseClicked
 
+    private void jLabel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jLabel1MouseClicked
+
+    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
+        // TODO add your handling code here:
+        int selectedRow = jTable1.getSelectedRow();
+        if (selectedRow >= 0) {
+            moveTo(selectedRow);
+        }
+    }//GEN-LAST:event_jTable1MouseClicked
+
     public void open() {
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -462,31 +485,31 @@ public class QuanLyHoaDonJpanel extends javax.swing.JPanel implements QuanLyHoaD
     public void setForm(HoaDon entity) {
         txtMaHoaDon.setText(String.valueOf(entity.getMaHD()));
 
-    NguoiDung nv = nguoiDungDAO.findById(entity.getMaNguoiDung());
-    if (nv != null) {
-        txtMaNhanVien.setText(nv.getTenNd());
-    } else {
-        txtMaNhanVien.setText("Không tìm thấy");
-    }
+        NguoiDung nv = nguoiDungDAO.findById(entity.getMaNguoiDung());
+        if (nv != null) {
+            txtMaNhanVien.setText(nv.getTenNd());
+        } else {
+            txtMaNhanVien.setText("Không tìm thấy");
+        }
 
-    txtNgayMua.setText(new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").format(entity.getNgayLap()));
-    txtGiaBan.setText(String.valueOf(entity.getTongTien()));
+        txtNgayMua.setText(new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").format(entity.getNgayLap()));
+        txtGiaBan.setText(String.valueOf(entity.getTongTien()));
 
-    // ✅ Xử lý và hiển thị trạng thái hóa đơn
-    String rawTrangThai = entity.getTrangThai();
-    if (rawTrangThai != null && (rawTrangThai.equalsIgnoreCase("1") || rawTrangThai.equalsIgnoreCase("Đã Thanh Toán"))) {
-        rdoDaThanhToan.setSelected(true);
-        rdoDaHuy.setSelected(false);
-    } else if (rawTrangThai != null && (rawTrangThai.equalsIgnoreCase("0") || rawTrangThai.equalsIgnoreCase("Đã Hủy"))) {
-        rdoDaThanhToan.setSelected(false);
-        rdoDaHuy.setSelected(true);
-    } else {
-        buttonGroup1.clearSelection(); // nếu trạng thái null hoặc không xác định
-    }
+        // ✅ Xử lý và hiển thị trạng thái hóa đơn
+        String rawTrangThai = entity.getTrangThai();
+        if (rawTrangThai != null && (rawTrangThai.equalsIgnoreCase("1") || rawTrangThai.equalsIgnoreCase("Đã Thanh Toán"))) {
+            rdoDaThanhToan.setSelected(true);
+            rdoDaHuy.setSelected(false);
+        } else if (rawTrangThai != null && (rawTrangThai.equalsIgnoreCase("0") || rawTrangThai.equalsIgnoreCase("Đã Hủy"))) {
+            rdoDaThanhToan.setSelected(false);
+            rdoDaHuy.setSelected(true);
+        } else {
+            buttonGroup1.clearSelection(); // nếu trạng thái null hoặc không xác định
+        }
 
-    // ✅ Khoá radio button để không chỉnh sửa
-    rdoDaThanhToan.setEnabled(false);
-    rdoDaHuy.setEnabled(false);
+        // ✅ Khoá radio button để không chỉnh sửa
+        rdoDaThanhToan.setEnabled(false);
+        rdoDaHuy.setEnabled(false);
     }
 
     @Override

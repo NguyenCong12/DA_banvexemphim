@@ -4,6 +4,7 @@ poly\cinema\ui\FCinema_Frame$5.class
 poly\cinema\ui\manager\QuanLyHoaDonJpanel$2.class
 poly\cinema\entity\ThongKe.class
 poly\cinema\ui\manager\QuanLiNhanVien$7.class
+poly\cinema\ui\manager\QuanLyHoaDonJpanel$10.class
 poly\cinema\ui\manager\LoaiGheJpanel$4.class
 poly\cinema\ui\manager\ThongKeController.class
 poly\cinema\ui\manager\LoaiPhimPanel$6.class
@@ -37,6 +38,7 @@ poly\cinema\ui\manager\XemLichChieu$3.class
 poly\cinema\ui\manager\QuanLiNhanVienController.class
 poly\cinema\ui\FCinema_Frame$18.class
 poly\cinema\ui\manager\QuanLyHoaDonJpanel$3.class
+poly\cinema\ui\manager\QuanLyHoaDonJpanel$11.class
 poly\cinema\ui\FCinema_Frame$11.class
 =======
 poly\cinema\ui\BanSanPham$2.class
