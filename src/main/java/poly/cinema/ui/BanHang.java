@@ -5,29 +5,74 @@
 package poly.cinema.ui;
 
 import java.awt.CardLayout;
+import java.text.NumberFormat;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import poly.cinema.entity.DatVeSession;
 import javax.swing.table.DefaultTableModel;
-import poly.cinema.entity.HoaDon;
+import poly.cinema.dao.impl.ChiTietVeDAOImpl;
+import poly.cinema.dao.impl.HoaDonDaoImpl;
+import poly.cinema.dao.impl.VeDaoImpl;
+import poly.cinema.entity.DangNhapSession;
+import poly.cinema.entity.NguoiDung;
 
 /**
  *
  * @author KhanhLinh
  */
-public class BanHang extends javax.swing.JPanel implements QL_BanHang_Controler {
-public void updateSauKhiChonGhe() {
-    // Lấy danh sách ghế từ session
-    List<String> danhSachGhe = DatVeSession.getDanhSachGheDaChon();
-    // Cập nhật bảng, label, hoặc logic tiếp theo tùy bạn
-    System.out.println("Ghế đã chọn: " + danhSachGhe);
-}
+public class BanHang extends javax.swing.JPanel {
 
     private JPanel pnlMainContent;
+    private List<String> gheDaChon = new ArrayList<>();
+    private int maXuatChieu;
 
     public BanHang(JPanel pnlMainContent) {
         this.pnlMainContent = pnlMainContent;
         initComponents();
+    }
+
+    public void updateSauKhiChonGhe() {
+        List<String> gheChon = DatVeSession.getDanhSachGheDaChon();
+        int maXuat = DatVeSession.getMaXuat();
+        List<Object[]> ds = layDanhSachVe(maXuat, gheChon);
+        fillThongTinVe(ds);
+    }
+
+    private List<Object[]> layDanhSachVe(int maXuat, List<String> gheChon) {
+        List<Object[]> ds = new ArrayList<>();
+
+        for (String maGhe : gheChon) {
+            Object[] row = layThongTinVe(maXuat, maGhe);
+            if (row != null) {
+                ds.add(row);
+            }
+        }
+
+        return ds;
+    }
+
+    private final VeDaoImpl veDao = new VeDaoImpl();
+
+    private Object[] layThongTinVe(int maXuat, String maGhe) {
+        return veDao.getThongTinVe(maXuat, maGhe);
+    }
+
+    public void fillThongTinVe(List<Object[]> ds) {
+        DefaultTableModel model = (DefaultTableModel) tblHoaDon.getModel();
+        model.setRowCount(0);
+
+        double tongTien = 0; // dùng double để khớp kiểu với giá vé
+
+        for (Object[] row : ds) {
+            model.addRow(row); // hiển thị nguyên hàng
+            tongTien += ((Number) row[6]).doubleValue(); // đúng là row[6]
+        }
+
+        NumberFormat nf = NumberFormat.getInstance(new Locale("vi", "VN"));
+        txtThanhTien.setText(nf.format(tongTien));
     }
 
     private void chuyenPanel(String panelName) {
@@ -35,64 +80,71 @@ public void updateSauKhiChonGhe() {
         cl.show(pnlMainContent, panelName);
     }
 
-    @Override
+    public void setGheDaChon(int maXuat, List<String> danhSach) {
+        this.maXuatChieu = maXuat;
+        this.gheDaChon = new ArrayList<>(danhSach);
+    }
+
+    public void setDanhSachVeTam(List<Object[]> danhSachVe) {
+        DefaultTableModel model = (DefaultTableModel) tblHoaDon.getModel();
+        for (Object[] row : danhSachVe) {
+            model.addRow(row);
+        }
+    }
+
     public void open() {
-
     }
 
-    @Override
-    public void fillBillDetails() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
+    public void thanhToan() {
+        int maXuat = DatVeSession.getMaXuat();
+        NguoiDung nguoiDung = DangNhapSession.getNguoiDung();
+        if (nguoiDung == null) {
+            JOptionPane.showMessageDialog(this, "Không tìm thấy người dùng!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        int maNguoiDung = nguoiDung.getMaNd(); // Lấy mã người dùng hiện tại
 
-    @Override
-    public void selectTimeRange() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
+        List<String> danhSachGhe = DatVeSession.getDanhSachGheDaChon();
 
-    @Override
-    public void setBill(HoaDon bill) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
+        if (danhSachGhe == null || danhSachGhe.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Bạn chưa chọn ghế!", "Lỗi", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
 
-    @Override
-    public void close() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
+        // Tính tổng tiền
+        double tongTien = 0;
+        List<Object[]> danhSachVe = layDanhSachVe(maXuat, danhSachGhe);
+        for (Object[] row : danhSachVe) {
+            tongTien += Double.parseDouble(row[6].toString()); // đúng: lấy giá vé
 
-    @Override
-    public void showQLPhimDialog() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
+        }
 
-    @Override
-    public void showQLSanphamDialog() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
+        HoaDonDaoImpl hoaDonDao = new HoaDonDaoImpl();
+        ChiTietVeDAOImpl ctVeDao = new ChiTietVeDAOImpl();
 
-    @Override
-    public void showQLkhachhang() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
+        try {
+            // 1. Tạo hóa đơn -> trả về mã hóa đơn
+            int maHoaDon = hoaDonDao.taoHoaDon(maNguoiDung, tongTien);
 
-    @Override
-    public void remove() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
+            // 2. Lưu chi tiết vé từng ghế
+            for (Object[] row : danhSachVe) {
+                int maGhe = (int) row[0];              // ✅ an toàn
+                double giaVe = (double) row[6];       // ✅ đúng
 
-    @Override
-    public void updateQuantity() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
+                ctVeDao.themChiTietVe(maHoaDon, maXuat, maGhe, giaVe);
+            }
 
-    @Override
-    public void checkout() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
+            // 3. Xóa bảng và UI
+            ((DefaultTableModel) tblHoaDon.getModel()).setRowCount(0);
+            txtThanhTien.setText("0");
+            DatVeSession.clear();
 
-    @Override
-    public void cancel() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+            JOptionPane.showMessageDialog(this, "Thanh toán thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Có lỗi khi thanh toán!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+        }
+
     }
 
     /**
@@ -109,13 +161,13 @@ public void updateSauKhiChonGhe() {
         lblchonphim = new javax.swing.JLabel();
         lblchonsanpham = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tblchitietve = new javax.swing.JTable();
+        tblHoaDon = new javax.swing.JTable();
         jScrollPane2 = new javax.swing.JScrollPane();
         tblchitiethang = new javax.swing.JTable();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jTextField1 = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
+        txtThanhTien = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
@@ -147,27 +199,27 @@ public void updateSauKhiChonGhe() {
             }
         });
 
-        tblchitietve.setModel(new javax.swing.table.DefaultTableModel(
+        tblHoaDon.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
             },
             new String [] {
-                "Mã chi tiết vé", "Mã hóa đơn", "Suất chiếu", "Số ghế", "Giá vé"
+                "Mã chi tiết vé", "Mã hóa đơn", "Suất chiếu", "Số ghế", "Giá vé", "Title 6"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false
+                false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
             }
         });
-        tblchitietve.setRowHeight(25);
-        jScrollPane1.setViewportView(tblchitietve);
+        tblHoaDon.setRowHeight(25);
+        jScrollPane1.setViewportView(tblHoaDon);
 
         tblchitiethang.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -198,9 +250,9 @@ public void updateSauKhiChonGhe() {
             }
         });
 
-        jTextField2.addActionListener(new java.awt.event.ActionListener() {
+        txtThanhTien.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField2ActionPerformed(evt);
+                txtThanhTienActionPerformed(evt);
             }
         });
 
@@ -215,6 +267,11 @@ public void updateSauKhiChonGhe() {
 
         jLabel10.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel10.setText("THANH TOÁN");
+        jLabel10.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel10MouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -238,7 +295,7 @@ public void updateSauKhiChonGhe() {
                         .addGap(56, 56, 56)
                         .addComponent(jLabel4)
                         .addGap(45, 45, 45)
-                        .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtThanhTien, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jLabel5)
                         .addGap(43, 43, 43)
@@ -297,7 +354,7 @@ public void updateSauKhiChonGhe() {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtThanhTien, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel4)
                             .addComponent(jLabel5)
                             .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -326,9 +383,9 @@ public void updateSauKhiChonGhe() {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField1ActionPerformed
 
-    private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
+    private void txtThanhTienActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtThanhTienActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField2ActionPerformed
+    }//GEN-LAST:event_txtThanhTienActionPerformed
 
     private void lblchonphimMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblchonphimMouseClicked
         chuyenPanel("pnlChonPhim");
@@ -337,6 +394,10 @@ public void updateSauKhiChonGhe() {
     private void lblchonsanphamMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblchonsanphamMouseClicked
         chuyenPanel("pnlBanSanPham");
     }//GEN-LAST:event_lblchonsanphamMouseClicked
+
+    private void jLabel10MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel10MouseClicked
+        thanhToan();
+    }//GEN-LAST:event_jLabel10MouseClicked
 
     public void setDanhSachHoaDon(List<Object[]> ds) {
         DefaultTableModel model = (DefaultTableModel) tblchitiethang.getModel();
@@ -360,14 +421,14 @@ public void updateSauKhiChonGhe() {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField3;
     private javax.swing.JTextField jTextField4;
     private javax.swing.JTextField jTextField5;
     private javax.swing.JLabel lblchonphim;
     private javax.swing.JLabel lblchonsanpham;
+    private javax.swing.JTable tblHoaDon;
     private javax.swing.JTable tblchitiethang;
-    private javax.swing.JTable tblchitietve;
+    private javax.swing.JTextField txtThanhTien;
     // End of variables declaration//GEN-END:variables
 
 }

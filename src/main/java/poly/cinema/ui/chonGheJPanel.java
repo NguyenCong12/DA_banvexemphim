@@ -4,35 +4,21 @@
  */
 package poly.cinema.ui;
 
-import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.Font;
-import java.awt.GridBagLayout;
-import java.awt.GridLayout;
 import java.awt.Insets;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
-import javax.swing.BorderFactory;
-import javax.swing.Box;
-import javax.swing.BoxLayout;
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
 import poly.cinema.dao.ChiTietVeDAO;
 import poly.cinema.dao.QuanLyGheDao;
-import poly.cinema.dao.QuanLyPhongChieuDao;
 import poly.cinema.dao.impl.ChiTietVeDAOImpl;
 import poly.cinema.dao.impl.QuanLyGheDaoImpl;
-import poly.cinema.dao.impl.QuanLyPhongChieuDaoImpl;
 import poly.cinema.entity.DatVeSession;
-import poly.cinema.entity.PhongChieu;
 import poly.cinema.entity.QuanLyGhe;
 
 /**
@@ -52,10 +38,7 @@ public class chonGheJPanel extends javax.swing.JPanel {
 
         jPanel3 = new javax.swing.JPanel();
         pnlGhe = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        lblGheDaChon = new javax.swing.JLabel();
-        lblMaXuat = new javax.swing.JLabel();
+        btnTiepTheo = new javax.swing.JButton();
 
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -70,18 +53,12 @@ public class chonGheJPanel extends javax.swing.JPanel {
             .addGap(0, 500, Short.MAX_VALUE)
         );
 
-        jLabel1.setText("Hủy");
-
-        jLabel2.setText("Tiếp theo");
-        jLabel2.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel2MouseClicked(evt);
+        btnTiepTheo.setText("jButton1");
+        btnTiepTheo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnTiepTheoActionPerformed(evt);
             }
         });
-
-        lblGheDaChon.setText("jLabel3");
-
-        lblMaXuat.setText("jLabel3");
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -91,132 +68,136 @@ public class chonGheJPanel extends javax.swing.JPanel {
                 .addContainerGap(274, Short.MAX_VALUE)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                        .addComponent(lblMaXuat)
-                        .addGap(75, 75, 75)
-                        .addComponent(lblGheDaChon)
-                        .addGap(376, 376, 376)
-                        .addComponent(jLabel2)
-                        .addGap(79, 79, 79)
-                        .addComponent(jLabel1)
-                        .addGap(61, 61, 61))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                         .addComponent(pnlGhe, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(136, 136, 136))))
+                        .addGap(136, 136, 136))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                        .addComponent(btnTiepTheo)
+                        .addGap(117, 117, 117))))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap(107, Short.MAX_VALUE)
                 .addComponent(pnlGhe, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(45, 45, 45)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel1)
-                            .addComponent(jLabel2))
-                        .addGap(44, 44, 44))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(lblGheDaChon)
-                            .addComponent(lblMaXuat))
-                        .addGap(52, 52, 52))))
+                .addGap(58, 58, 58)
+                .addComponent(btnTiepTheo)
+                .addGap(32, 32, 32))
         );
 
         add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1110, 720));
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jLabel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel2MouseClicked
-//        chuyenSangBanHang();
-    }//GEN-LAST:event_jLabel2MouseClicked
+    private void btnTiepTheoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTiepTheoActionPerformed
+       // ✅ Ghi dữ liệu vào session trước
+    DatVeSession.setDanhSachGheDaChon(gheDaChon);
+    
+    // ✅ Nếu maXuatChieu đang lưu là String → phải parse
+    DatVeSession.setMaXuat(Integer.parseInt(maXuatChieu)); // ép kiểu nếu cần
+
+    if (banHangPanel == null) {
+        banHangPanel = new BanHang(pnlMainContent);
+        pnlMainContent.add(banHangPanel, "pnlBanHang");
+    }
+
+    // Gọi update
+    banHangPanel.updateSauKhiChonGhe();
+
+    // Chuyển panel
+    chuyenPanel("pnlBanHang");
+    }//GEN-LAST:event_btnTiepTheoActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
+    private javax.swing.JButton btnTiepTheo;
     private javax.swing.JPanel jPanel3;
-    private javax.swing.JLabel lblGheDaChon;
-    private javax.swing.JLabel lblMaXuat;
     private javax.swing.JPanel pnlGhe;
     // End of variables declaration//GEN-END:variables
 
     private List<String> gheDaChon = new ArrayList<>();
     private JPanel pnlMainContent;
+    private String maXuatChieu;
+    private BanHang banHangPanel;
 
     public chonGheJPanel(JPanel pnlMainContent) {
         this.pnlMainContent = pnlMainContent;
-        initComponents(); // Giữ form bạn đã thiết kế bằng GUI
-    }
+        initComponents();
 
-    /**
-     * Load ghế dựa theo suất chiếu và phòng chiếu
-     */
-    public void loadGheTheoSuatChieu(String maXuat, String maPhong) {
-        QuanLyPhongChieuDao phongDao = new QuanLyPhongChieuDaoImpl();
-        PhongChieu phong = phongDao.findById(maPhong);
-
-        if (phong == null) {
-            JOptionPane.showMessageDialog(this, "Không tìm thấy phòng chiếu!");
-            return;
+        // ✅ Xóa tất cả listener cũ trước khi gắn mới
+        for (ActionListener al : btnTiepTheo.getActionListeners()) {
+            btnTiepTheo.removeActionListener(al);
         }
 
-        int soHang = phong.getSoHang();
-        int soCot = phong.getSoCot();
+        // ✅ Gắn listener một lần duy nhất
+        btnTiepTheo.addActionListener(this::btnTiepTheoActionPerformed);
+    }
+
+    public void setMaXuatChieu(String maXuat) {
+        this.maXuatChieu = maXuat;
+    }
+
+    public void loadGheTheoSuatChieu(String maXuat, String maPhong) {
+        this.maXuatChieu = maXuat;
+
+        QuanLyGheDao gheDao = new QuanLyGheDaoImpl();
+        List<QuanLyGhe> danhSachGhe = gheDao.findByMaPhong(maPhong);
 
         ChiTietVeDAO chiTietVeDao = new ChiTietVeDAOImpl();
         List<String> gheDaDat = chiTietVeDao.getGheDaDat(maXuat);
 
-        loadGhe(soHang, soCot, gheDaDat);
+        loadGhe(danhSachGhe, gheDaDat);
     }
 
-    /**
-     * Vẽ ghế vào pnlGhe đã có sẵn
-     */
-    private void loadGhe(int soHang, int soCot, List<String> gheDaDat) {
-    pnlGhe.removeAll();
-    gheDaChon.clear();
+    private void loadGhe(List<QuanLyGhe> danhSachGhe, List<String> gheDaDat) {
+        pnlGhe.removeAll();
+        gheDaChon.clear();
 
-    int panelWidth = pnlGhe.getWidth();
-    int panelHeight = pnlGhe.getHeight();
+        if (danhSachGhe.isEmpty()) {
+            return;
+        }
 
-    // fallback nếu chưa có kích thước
-    if (panelWidth == 0 || panelHeight == 0) {
-        panelWidth = 700;
-        panelHeight = 500;
-    }
+        int soHang = danhSachGhe.stream().mapToInt(g -> g.getHang().charAt(0)).max().orElse(0) - 'A' + 1;
+        int soCot = danhSachGhe.stream().mapToInt(QuanLyGhe::getCot).max().orElse(0);
 
-    // Tính kích thước ghế vừa với panel
-    int gap = 6;
-    int btnWidth = (panelWidth - (soCot - 1) * gap) / soCot;
-    int btnHeight = (panelHeight - (soHang - 1) * gap) / soHang;
-    int btnSize = Math.min(btnWidth, btnHeight); // vuông
+        int panelWidth = pnlGhe.getWidth() > 0 ? pnlGhe.getWidth() : 700;
+        int panelHeight = pnlGhe.getHeight() > 0 ? pnlGhe.getHeight() : 500;
 
-    int totalWidth = soCot * btnSize + (soCot - 1) * gap;
-    int totalHeight = soHang * btnSize + (soHang - 1) * gap;
+        int gap = 6;
+        int btnWidth = (panelWidth - (soCot - 1) * gap) / soCot;
+        int btnHeight = (panelHeight - (soHang - 1) * gap) / soHang;
+        int btnSize = Math.min(btnWidth, btnHeight);
 
-    int offsetX = (panelWidth - totalWidth) / 2;
-    int offsetY = (panelHeight - totalHeight) / 2;
+        int totalWidth = soCot * btnSize + (soCot - 1) * gap;
+        int totalHeight = soHang * btnSize + (soHang - 1) * gap;
+        int offsetX = (panelWidth - totalWidth) / 2;
+        int offsetY = (panelHeight - totalHeight) / 2;
 
-    for (int hang = 0; hang < soHang; hang++) {
-        for (int cot = 0; cot < soCot; cot++) {
-            String maGhe = (cot + 1) + "" + (char) ('A' + hang);
-            JButton btn = new JButton(maGhe);
-            btn.setFont(new Font("Arial", Font.BOLD, 10));
+        for (QuanLyGhe ghe : danhSachGhe) {
+            int hangIndex = ghe.getHang().charAt(0) - 'A';
+            int cotIndex = ghe.getCot() - 1;
+
+            String maGhe = String.valueOf(ghe.getMaGhe()); // ✅ chuyển từ Integer → String
+
+            String tenGhe = ghe.getSoGhe();
+
+            JButton btn = new JButton(tenGhe);
+            btn.setFont(new Font("Arial", Font.BOLD, 11));
             btn.setMargin(new Insets(0, 0, 0, 0));
             btn.setFocusable(false);
 
-            int x = offsetX + cot * (btnSize + gap);
-            int y = offsetY + hang * (btnSize + gap);
+            int x = offsetX + cotIndex * (btnSize + gap);
+            int y = offsetY + hangIndex * (btnSize + gap);
             btn.setBounds(x, y, btnSize, btnSize);
 
             if (gheDaDat.contains(maGhe)) {
                 btn.setEnabled(false);
                 btn.setBackground(Color.RED);
             } else {
-                btn.setBackground(Color.LIGHT_GRAY);
+                btn.setBackground("VIP".equalsIgnoreCase(ghe.getLoaiGhe()) ? Color.YELLOW : Color.LIGHT_GRAY);
+
                 btn.addActionListener(e -> {
                     if (gheDaChon.contains(maGhe)) {
                         gheDaChon.remove(maGhe);
-                        btn.setBackground(Color.LIGHT_GRAY);
+                        btn.setBackground("VIP".equalsIgnoreCase(ghe.getLoaiGhe()) ? Color.YELLOW : Color.LIGHT_GRAY);
                     } else {
                         gheDaChon.add(maGhe);
                         btn.setBackground(Color.ORANGE);
@@ -226,11 +207,23 @@ public class chonGheJPanel extends javax.swing.JPanel {
 
             pnlGhe.add(btn);
         }
+
+        pnlGhe.revalidate();
+        pnlGhe.repaint();
     }
 
-    pnlGhe.revalidate();
-    pnlGhe.repaint();
-}
+    private void chuyenPanel(String name) {
+        CardLayout cl = (CardLayout) pnlMainContent.getLayout();
+        cl.show(pnlMainContent, name);
+    }
 
+    public List<Object[]> getDanhSachVeTam() {
+        List<Object[]> ds = new ArrayList<>();
+        for (String maGhe : gheDaChon) {
+            double giaVe = 50000; // Ví dụ giá vé, có thể thay bằng lookup theo loại ghế
+            ds.add(new Object[]{"Ghế " + maGhe, giaVe, 1, giaVe});
+        }
+        return ds;
+    }
 
 }

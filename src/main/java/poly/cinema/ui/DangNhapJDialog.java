@@ -6,6 +6,7 @@ package poly.cinema.ui;
 
 import poly.cinema.dao.NguoiDungDAO;
 import poly.cinema.dao.impl.NguoiDungDAOImpl;
+import poly.cinema.entity.DangNhapSession;
 import poly.cinema.entity.NguoiDung;
 import poly.cinema.util.XAuth;
 import poly.cinema.util.XDialog;
@@ -207,7 +208,7 @@ public class DangNhapJDialog extends javax.swing.JDialog implements DangNhapCont
     }//GEN-LAST:event_formWindowOpened
 
     private void btnKetThucActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnKetThucActionPerformed
-       this.exit();
+        this.exit();
     }//GEN-LAST:event_btnKetThucActionPerformed
 
     private void btnDangNhapActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDangNhapActionPerformed
@@ -219,11 +220,11 @@ public class DangNhapJDialog extends javax.swing.JDialog implements DangNhapCont
     }//GEN-LAST:event_txtTenDangNhapActionPerformed
 
     private void chkHienMatKhauActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chkHienMatKhauActionPerformed
-         if (chkHienMatKhau.isSelected()) {
-        txtMatKhau.setEchoChar((char) 0); // Hiện mật khẩu
-    } else {
-        txtMatKhau.setEchoChar('*'); // Ẩn mật khẩu
-    }
+        if (chkHienMatKhau.isSelected()) {
+            txtMatKhau.setEchoChar((char) 0); // Hiện mật khẩu
+        } else {
+            txtMatKhau.setEchoChar('*'); // Ẩn mật khẩu
+        }
 
     }//GEN-LAST:event_chkHienMatKhauActionPerformed
 
@@ -294,48 +295,50 @@ public class DangNhapJDialog extends javax.swing.JDialog implements DangNhapCont
 
     @Override
     public void open() {
-         this.setLocationRelativeTo(null);
+        this.setLocationRelativeTo(null);
     }
 
     @Override
-    public void login() {
-        try {
-//            String email = txtTenDangNhap.getText().trim();
-//            String password = txtMatKhau.getText();
-//
-//            if (email.isEmpty() || password.isEmpty()) {
-//                XDialog.alert("⚠️ Vui lòng nhập đầy đủ tên đăng nhập và mật khẩu!");
-//                return;
-//            }
-//
-//            NguoiDungDAO dao = new NguoiDungDAOImpl();
-//            NguoiDung user = dao.findByEmail(email);
-//
-//            if (user == null) {
-//                XDialog.alert("❌ Tên đăng nhập không tồn tại!");
-//                return;
-//            }
-//
-//            if (!password.equals(user.getMatKhau())) {
-//                XDialog.alert("❌ Mật khẩu không đúng!");
-//                return;
-//            }
-//
-//            if (!user.isVai_tro()) {
-//                XDialog.alert("⚠️ Tài khoản đã bị khóa. Vui lòng liên hệ quản trị viên.");
-//                return;
-//            }
-//
-//            XAuth.user = user;
+public void login() {
+    try {
+        String email = txtTenDangNhap.getText().trim();
+        String password = txtMatKhau.getText(); // từ JTextField, nếu dùng JPasswordField thì dùng: new String(txtMatKhau.getPassword());
 
-            this.dispose();
-
-        } catch (Exception e) {
-            e.printStackTrace();  // log ra console để debug
-            XDialog.alert("❗ Đã xảy ra lỗi khi kết nối đến hệ thống. Vui lòng thử lại!");
+        if (email.isEmpty() || password.isEmpty()) {
+            XDialog.alert("⚠️ Vui lòng nhập đầy đủ tên đăng nhập và mật khẩu!");
+            return;
         }
 
+        NguoiDungDAO dao = new NguoiDungDAOImpl();
+        NguoiDung user = dao.findByEmail(email);
+
+        if (user == null) {
+            XDialog.alert("❌ Tên đăng nhập không tồn tại!");
+            return;
+        }
+
+        if (!password.equals(user.getMatKhau())) {
+            XDialog.alert("❌ Mật khẩu không đúng!");
+            return;
+        }
+
+        if (!user.isVai_tro()) {
+            XDialog.alert("⚠️ Tài khoản đã bị khóa. Vui lòng liên hệ quản trị viên.");
+            return;
+        }
+
+        // Lưu user vào session
+        DangNhapSession.setNguoiDung(user);
+        XAuth.user = user;
+
+        this.dispose(); // đóng form đăng nhập
+
+    } catch (Exception e) {
+        e.printStackTrace();
+        XDialog.alert("❗ Đã xảy ra lỗi khi kết nối đến hệ thống. Vui lòng thử lại!");
     }
+}
+
 
     @Override
     public void exit() {
@@ -343,7 +346,7 @@ public class DangNhapJDialog extends javax.swing.JDialog implements DangNhapCont
             System.exit(0);
         }
     }
-    
+
     private void setupTogglePassword() {
         chkHienMatKhau.addActionListener(new java.awt.event.ActionListener() {
             @Override

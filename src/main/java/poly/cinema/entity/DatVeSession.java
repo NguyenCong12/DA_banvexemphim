@@ -12,19 +12,20 @@ import java.util.List;
  * @author Admin
  */
 public class DatVeSession {
-    private static String maXuat;
+
     private static String maPhong;
     private static String ngayChieu;
     private static String gioChieu;
     private static String tenPhim;
     private static SuatChieu suatChieuDuocChon;
     private static List<String> danhSachGheDaChon = new ArrayList<>();
+    private static Integer maXuat;
 
-    public static String getMaXuat() {
+    public static Integer getMaXuat() {
         return maXuat;
     }
 
-    public static void setMaXuat(String maXuat) {
+    public static void setMaXuat(Integer maXuat) {
         DatVeSession.maXuat = maXuat;
     }
 
@@ -77,7 +78,6 @@ public class DatVeSession {
     }
 
     public static void clear() {
-        maXuat = null;
         maPhong = null;
         ngayChieu = null;
         gioChieu = null;

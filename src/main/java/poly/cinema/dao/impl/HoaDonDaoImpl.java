@@ -21,7 +21,33 @@ import poly.cinema.util.XJdbc;
  * @author ADMIN
  */
 public class HoaDonDaoImpl implements HoaDonDAO {
+public int taoHoaDon(int maNguoiDung, double tongTien) {
+    int maHoaDon = -1;
 
+    String sql = """
+        INSERT INTO HoaDon (ma_nd, tong_tien, ngay_lap)
+        OUTPUT INSERTED.ma_hd
+        VALUES (?, ?, GETDATE())
+    """;
+
+    try (Connection conn = XJdbc.openConnection();
+         PreparedStatement ps = conn.prepareStatement(sql)) {
+
+        ps.setInt(1, maNguoiDung);
+        ps.setDouble(2, tongTien);
+
+        try (ResultSet rs = ps.executeQuery()) {
+            if (rs.next()) {
+                maHoaDon = rs.getInt(1);
+            }
+        }
+
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+
+    return maHoaDon;
+}
     private static final String INSERT_SQL = """
         INSERT INTO HoaDon (ma_nd, ngay_lap, tong_tien, trang_thai)
         VALUES (?, ?, ?, ?)

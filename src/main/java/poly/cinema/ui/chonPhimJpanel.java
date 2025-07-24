@@ -179,7 +179,7 @@ public class chonPhimJpanel extends javax.swing.JPanel implements chonPhimContro
 
         // Tạo và cấu hình panel chọn ghế
         chonGheJPanel chonGhePanel = new chonGheJPanel(pnlMainContent);
-        chonGhePanel.loadGheTheoSuatChieu(DatVeSession.getMaXuat(), maPhong);
+        chonGhePanel.loadGheTheoSuatChieu(DatVeSession.getMaXuat().toString(), maPhong);
 
         // Thêm panel vào pnlMainContent nếu chưa có
         pnlMainContent.add(chonGhePanel, "chonGhePanel");
@@ -347,7 +347,7 @@ private JPanel pnlMainContent;
         }
 
         DatVeSession.setSuatChieuDuocChon(suat);
-        DatVeSession.setMaXuat(String.valueOf(suat.getMaXuat()));
+        DatVeSession.setMaXuat(suat.getMaXuat());
         DatVeSession.setMaPhong(suat.getMaPhong());
         DatVeSession.setNgayChieu(suat.getNgayChieu().toString());
         DatVeSession.setGioChieu(suat.getGioChieu().toString());

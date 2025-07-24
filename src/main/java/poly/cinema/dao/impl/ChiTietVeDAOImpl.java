@@ -20,6 +20,19 @@ import poly.cinema.util.XJdbc;
  */
 public class ChiTietVeDAOImpl implements ChiTietVeDAO {
 // Ghi dòng này để Git nhận ra file là mới
+public void themChiTietVe(int maHoaDon, int maXuat, int maGhe, double giaVe) {
+    String sql = "INSERT INTO ChiTietVe(ma_hd, ma_xuat, ma_ghe, gia_ve) VALUES (?, ?, ?, ?)";
+    try (Connection conn = XJdbc.openConnection(); PreparedStatement stmt = conn.prepareStatement(sql)) {
+        stmt.setInt(1, maHoaDon);
+        stmt.setInt(2, maXuat);
+        stmt.setInt(3, maGhe);
+        stmt.setDouble(4, giaVe);
+        stmt.executeUpdate();
+    } catch (SQLException e) {
+        e.printStackTrace();
+        throw new RuntimeException("Lỗi khi thêm chi tiết vé: " + e.getMessage());
+    }
+}
 
     @Override
     public List<String> getGheDaDat(String maXuat) {
