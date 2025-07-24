@@ -288,8 +288,7 @@ private JPanel pnlMainContent;
                     p.getMaPhim(),
                     p.getTenPhim(),
                     p.getThoiLuong(),
-                    p.getNgayKhoiChieu(),
-                    p.getNgayKetThuc()
+                    p.getNgayKhoiChieu()
                 });
             }
         } catch (Exception e) {

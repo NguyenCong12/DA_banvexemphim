@@ -25,7 +25,6 @@ public class Phim {
     private int thoiLuong;
     private String moTa;
     private Date ngayKhoiChieu;
-    private Date ngayKetThuc; // ➕ Mới thêm
     private String trangThai;
     private String hinhAnh;
 

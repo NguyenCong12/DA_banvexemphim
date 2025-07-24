@@ -57,12 +57,9 @@ public class QuanLyPhim extends javax.swing.JPanel implements QuanLyPhimControll
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         rdoDangChieu = new javax.swing.JRadioButton();
-        rdoSapChieu = new javax.swing.JRadioButton();
         rdoNgungChieu = new javax.swing.JRadioButton();
         lblAnh = new javax.swing.JLabel();
         cboLoaiPhim = new javax.swing.JComboBox<>();
-        txtNgayKetThuc = new javax.swing.JTextField();
-        jLabel8 = new javax.swing.JLabel();
         txtNgayKhoiChieu = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
         btnThemm = new javax.swing.JButton();
@@ -81,23 +78,23 @@ public class QuanLyPhim extends javax.swing.JPanel implements QuanLyPhimControll
         tblPhim.setAutoCreateRowSorter(true);
         tblPhim.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null}
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null}
             },
             new String [] {
-                "Mã phim", "Tên phim", "Thể loại", "Thời lượng", "Mô tả", "Ngày khởi chiếu", " Ngày kết thúc", "Trạng thái"
+                "Mã phim", "Tên phim", "Thể loại", "Thời lượng", "Mô tả", "Ngày khởi chiếu", "Trạng thái"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false
+                false, false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -154,9 +151,6 @@ public class QuanLyPhim extends javax.swing.JPanel implements QuanLyPhimControll
         btgTrangThai.add(rdoDangChieu);
         rdoDangChieu.setText("Đang chiếu");
 
-        btgTrangThai.add(rdoSapChieu);
-        rdoSapChieu.setText("Sắp chiếu");
-
         btgTrangThai.add(rdoNgungChieu);
         rdoNgungChieu.setText("Ngưng chiếu");
 
@@ -168,9 +162,6 @@ public class QuanLyPhim extends javax.swing.JPanel implements QuanLyPhimControll
         });
 
         cboLoaiPhim.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
-        jLabel8.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jLabel8.setText("Ngày kết thúc:");
 
         txtNgayKhoiChieu.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -193,38 +184,28 @@ public class QuanLyPhim extends javax.swing.JPanel implements QuanLyPhimControll
                     .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtNgayKhoiChieu, javax.swing.GroupLayout.PREFERRED_SIZE, 265, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(107, 107, 107)
+                .addComponent(lblAnh, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(183, 183, 183)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cboLoaiPhim, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lblAnh, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtNgayKetThuc, javax.swing.GroupLayout.PREFERRED_SIZE, 251, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(105, 105, 105)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(cboLoaiPhim, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(rdoDangChieu)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(rdoSapChieu)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(rdoNgungChieu))
-                            .addComponent(txtThoiLuong, javax.swing.GroupLayout.PREFERRED_SIZE, 248, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(rdoDangChieu)
+                        .addGap(86, 86, 86)
+                        .addComponent(rdoNgungChieu))
+                    .addComponent(txtThoiLuong, javax.swing.GroupLayout.PREFERRED_SIZE, 248, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(17, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(jLabel8))
+                .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtTenPhim, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cboLoaiPhim, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtNgayKetThuc, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cboLoaiPhim, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -236,7 +217,6 @@ public class QuanLyPhim extends javax.swing.JPanel implements QuanLyPhimControll
                         .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(rdoDangChieu)
-                            .addComponent(rdoSapChieu)
                             .addComponent(rdoNgungChieu))
                         .addGap(180, 180, 180))
                     .addGroup(jPanel1Layout.createSequentialGroup()
@@ -423,17 +403,14 @@ public class QuanLyPhim extends javax.swing.JPanel implements QuanLyPhimControll
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblAnh;
     private javax.swing.JRadioButton rdoDangChieu;
     private javax.swing.JRadioButton rdoNgungChieu;
-    private javax.swing.JRadioButton rdoSapChieu;
     private javax.swing.JTable tblPhim;
     private javax.swing.JTextField txtMoTa;
-    private javax.swing.JTextField txtNgayKetThuc;
     private javax.swing.JTextField txtNgayKhoiChieu;
     private javax.swing.JTextField txtTenPhim;
     private javax.swing.JTextField txtThoiLuong;
@@ -480,9 +457,6 @@ public class QuanLyPhim extends javax.swing.JPanel implements QuanLyPhimControll
         if (rdoNgungChieu.isSelected()) {
             return "Ngừng chiếu";
         }
-        if (rdoSapChieu.isSelected()) {
-            return "Sắp chiếu";
-        }
         return null; // ❌ Nếu không chọn gì => null => lỗi CHECK constraint
     }
 
@@ -519,21 +493,11 @@ public class QuanLyPhim extends javax.swing.JPanel implements QuanLyPhimControll
 
         // Kiểm tra ngày chiếu và ngày kết thúc
         Date ngayKhoiChieu = XDate.parse(txtNgayKhoiChieu.getText().trim(), "dd/MM/yyyy");
-        Date ngayKetThuc = XDate.parse(txtNgayKetThuc.getText().trim(), "dd/MM/yyyy");
-        if (ngayKhoiChieu == null || ngayKetThuc == null) {
-            XDialog.alert("Ngày khởi chiếu hoặc ngày kết thúc không đúng định dạng (dd/MM/yyyy).");
-            return null;
-        }
         Date today = new Date();
         if (ngayKhoiChieu.before(today)) {
             XDialog.alert("Ngày khởi chiếu không được nhỏ hơn ngày hôm nay.");
             return null;
         }
-        if (ngayKetThuc.before(ngayKhoiChieu)) {
-            XDialog.alert("Ngày kết thúc phải sau ngày khởi chiếu.");
-            return null;
-        }
-
         // Lấy trạng thái
         String trangThai = getTrangThai();
         if (trangThai == null) {
@@ -551,7 +515,6 @@ public class QuanLyPhim extends javax.swing.JPanel implements QuanLyPhimControll
                 .thoiLuong(thoiLuong)
                 .moTa(moTa)
                 .ngayKhoiChieu(ngayKhoiChieu)
-                .ngayKetThuc(ngayKetThuc)
                 .trangThai(trangThai)
                 .hinhAnh(hinhAnh)
                 .build();
@@ -570,14 +533,11 @@ public class QuanLyPhim extends javax.swing.JPanel implements QuanLyPhimControll
         txtThoiLuong.setText(String.valueOf(entity.getThoiLuong()));
         txtMoTa.setText(entity.getMoTa());
         txtNgayKhoiChieu.setText(XDate.format(entity.getNgayKhoiChieu(), "dd/MM/yyyy"));
-        txtNgayKetThuc.setText(XDate.format(entity.getNgayKetThuc(), "dd/MM/yyyy"));
         switch (entity.getTrangThai()) {
             case "Đang chiếu" ->
                 rdoDangChieu.setSelected(true);
             case "Ngừng chiếu" ->
                 rdoNgungChieu.setSelected(true);
-            case "Sắp chiếu" ->
-                rdoSapChieu.setSelected(true);
         }
 
         // Hiển thị hình ảnh nếu tồn tại
@@ -618,7 +578,6 @@ public class QuanLyPhim extends javax.swing.JPanel implements QuanLyPhimControll
                 p.getMaPhim(), p.getTenPhim(), tenLoai, // ✅ đúng tên
                 p.getThoiLuong(), p.getMoTa(),
                 XDate.format(p.getNgayKhoiChieu(), "dd/MM/yyyy"),
-                XDate.format(p.getNgayKetThuc(), "dd/MM/yyyy"),
                 p.getTrangThai(), p.getHinhAnh()
             });
         }
@@ -693,7 +652,6 @@ public class QuanLyPhim extends javax.swing.JPanel implements QuanLyPhimControll
                 && phimMoi.getThoiLuong() == phimCu.getThoiLuong()
                 && phimMoi.getMoTa().equals(phimCu.getMoTa())
                 && phimMoi.getNgayKhoiChieu().equals(phimCu.getNgayKhoiChieu())
-                && phimMoi.getNgayKetThuc().equals(phimCu.getNgayKetThuc())
                 && phimMoi.getTrangThai().equals(phimCu.getTrangThai())
                 && ((phimMoi.getHinhAnh() == null && phimCu.getHinhAnh() == null)
                 || (phimMoi.getHinhAnh() != null && phimMoi.getHinhAnh().equals(phimCu.getHinhAnh())))) {
@@ -751,7 +709,6 @@ public class QuanLyPhim extends javax.swing.JPanel implements QuanLyPhimControll
         txtThoiLuong.setText("");
         txtMoTa.setText("");
         txtNgayKhoiChieu.setText("");
-        txtNgayKetThuc.setText("");
         rdoDangChieu.setSelected(true);
         lblAnh.setIcon(null);
         lblAnh.setToolTipText(null);
@@ -765,10 +722,8 @@ public class QuanLyPhim extends javax.swing.JPanel implements QuanLyPhimControll
         txtThoiLuong.setEditable(editable);
         txtMoTa.setEditable(editable);
         txtNgayKhoiChieu.setEditable(editable);
-        txtNgayKetThuc.setEditable(editable);
         rdoDangChieu.setEnabled(editable);
         rdoNgungChieu.setEnabled(editable);
-        rdoSapChieu.setEnabled(editable);
         // Nếu có nút hoặc hình ảnh thì xử lý thêm ở đây
     }
 

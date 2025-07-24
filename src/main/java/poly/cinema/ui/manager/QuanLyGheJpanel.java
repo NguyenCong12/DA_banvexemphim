@@ -49,15 +49,10 @@ public class QuanLyGheJpanel extends javax.swing.JPanel implements QuanLyGheCont
         txtSoHang = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         txtSoCot = new javax.swing.JTextField();
-        jButton5 = new javax.swing.JButton();
         jLabel9 = new javax.swing.JLabel();
-        jCheckBox1 = new javax.swing.JCheckBox();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblGhe = new javax.swing.JTable();
-        btnThem = new javax.swing.JButton();
         btnSua = new javax.swing.JButton();
-        btnXoa = new javax.swing.JButton();
-        btnMoi = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setPreferredSize(new java.awt.Dimension(1110, 720));
@@ -73,6 +68,7 @@ public class QuanLyGheJpanel extends javax.swing.JPanel implements QuanLyGheCont
 
         jLabel5.setText("Số ghế");
 
+        txtSoGhe.setEditable(false);
         txtSoGhe.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtSoGheActionPerformed(evt);
@@ -97,6 +93,7 @@ public class QuanLyGheJpanel extends javax.swing.JPanel implements QuanLyGheCont
 
         jLabel3.setText("Số hàng");
 
+        txtSoHang.setEditable(false);
         txtSoHang.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtSoHangActionPerformed(evt);
@@ -105,22 +102,14 @@ public class QuanLyGheJpanel extends javax.swing.JPanel implements QuanLyGheCont
 
         jLabel4.setText("Số cột");
 
+        txtSoCot.setEditable(false);
         txtSoCot.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtSoCotActionPerformed(evt);
             }
         });
 
-        jButton5.setText("Tạo ghế");
-        jButton5.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton5ActionPerformed(evt);
-            }
-        });
-
         jLabel9.setText("Loại ghế");
-
-        jCheckBox1.setText("Tạo Ghế Nhanh");
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -144,17 +133,13 @@ public class QuanLyGheJpanel extends javax.swing.JPanel implements QuanLyGheCont
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(txtSoGhe, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton5)
-                        .addGap(71, 71, 71))
+                        .addGap(71, 244, Short.MAX_VALUE))
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGap(137, 137, 137)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(txtSoCot, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 92, Short.MAX_VALUE)
-                        .addComponent(jCheckBox1)
-                        .addGap(319, 319, 319))))
+                        .addGap(319, 516, Short.MAX_VALUE))))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -184,16 +169,11 @@ public class QuanLyGheJpanel extends javax.swing.JPanel implements QuanLyGheCont
                                 .addComponent(cboPhongChieu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(2, 2, 2))))
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGap(40, 40, 40)
-                        .addComponent(jCheckBox1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addComponent(jLabel5)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(txtSoGhe, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(6, 6, 6))
-                            .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGap(40, 102, Short.MAX_VALUE)
+                        .addComponent(jLabel5)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(txtSoGhe, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(6, 6, 6)))
                 .addGap(52, 52, 52))
         );
 
@@ -225,14 +205,6 @@ public class QuanLyGheJpanel extends javax.swing.JPanel implements QuanLyGheCont
 
         add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 100, 1040, 240));
 
-        btnThem.setText("Thêm");
-        btnThem.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnThemActionPerformed(evt);
-            }
-        });
-        add(btnThem, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 610, -1, 30));
-
         btnSua.setText("Sửa");
         btnSua.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -240,39 +212,11 @@ public class QuanLyGheJpanel extends javax.swing.JPanel implements QuanLyGheCont
             }
         });
         add(btnSua, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 610, -1, 30));
-
-        btnXoa.setText("Xóa");
-        btnXoa.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnXoaActionPerformed(evt);
-            }
-        });
-        add(btnXoa, new org.netbeans.lib.awtextra.AbsoluteConstraints(880, 610, -1, 30));
-
-        btnMoi.setText("Nhập Mới");
-        btnMoi.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnMoiActionPerformed(evt);
-            }
-        });
-        add(btnMoi, new org.netbeans.lib.awtextra.AbsoluteConstraints(990, 610, -1, 30));
     }// </editor-fold>//GEN-END:initComponents
-
-    private void btnThemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemActionPerformed
-        create();
-    }//GEN-LAST:event_btnThemActionPerformed
-
-    private void btnXoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXoaActionPerformed
-        delete();
-    }//GEN-LAST:event_btnXoaActionPerformed
 
     private void btnSuaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSuaActionPerformed
         update();
     }//GEN-LAST:event_btnSuaActionPerformed
-
-    private void btnMoiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMoiActionPerformed
-        clear();
-    }//GEN-LAST:event_btnMoiActionPerformed
 
     private void txtSoGheActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSoGheActionPerformed
         // TODO add your handling code here:
@@ -307,20 +251,11 @@ public class QuanLyGheJpanel extends javax.swing.JPanel implements QuanLyGheCont
         });
     }//GEN-LAST:event_cboPhongChieuActionPerformed
 
-    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-        taoSoDoGhe();
-    }//GEN-LAST:event_jButton5ActionPerformed
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnMoi;
     private javax.swing.JButton btnSua;
-    private javax.swing.JButton btnThem;
-    private javax.swing.JButton btnXoa;
     private javax.swing.JComboBox<String> cboLoaiGhe;
     private javax.swing.JComboBox<String> cboPhongChieu;
-    private javax.swing.JButton jButton5;
-    private javax.swing.JCheckBox jCheckBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -341,71 +276,8 @@ public class QuanLyGheJpanel extends javax.swing.JPanel implements QuanLyGheCont
     private void updateButtonState() {
     boolean isRowSelected = tblGhe.getSelectedRow() >= 0;
 
-    btnThem.setEnabled(!isRowSelected);
     btnSua.setEnabled(isRowSelected);
-    btnXoa.setEnabled(isRowSelected);
 }
-
-    private void taoSoDoGhe() {
-    String maPhong = (String) cboPhongChieu.getSelectedItem();
-    int soHang, soCot;
-    try {
-        soHang = Integer.parseInt(txtSoHang.getText().trim());
-        soCot = Integer.parseInt(txtSoCot.getText().trim());
-    } catch (NumberFormatException e) {
-        XDialog.alert("Số hàng và cột phải là số nguyên!");
-        return;
-    }
-
-    if (soHang <= 0 || soCot <= 0 || soHang > 26) {
-        XDialog.alert("Số hàng phải > 0 và ≤ 26, số cột > 0");
-        return;
-    }
-
-    // Lấy thông tin phòng chiếu từ DB
-    PhongChieu phong = new QuanLyPhongChieuDaoImpl().findByMaPhong(maPhong);
-    if (phong == null) {
-        XDialog.alert("Không tìm thấy thông tin phòng chiếu: " + maPhong);
-        return;
-    }
-
-    // Kiểm tra vượt cấu hình của phòng
-    if (soHang > phong.getSoHang() || soCot > phong.getSoCot()) {
-        XDialog.alert("Phòng chiếu không đủ số ghế đó!\n" +
-                      "Cấu hình tối đa: " + phong.getSoHang() + " hàng, " + phong.getSoCot() + " cột.");
-        return;
-    }
-
-    int gheDaTao = 0;
-    for (int i = 0; i < soHang; i++) {
-        char hang = (char) ('A' + i);
-        String loaiGhe = (i < 3) ? "Thường" : "VIP";
-
-        for (int cot = 1; cot <= soCot; cot++) {
-            String soGhe = hang + String.valueOf(cot);
-            if (dao.findBySoGheAndPhong(soGhe, maPhong) != null) {
-                continue;
-            }
-
-            QuanLyGhe ghe = QuanLyGhe.builder()
-                    .maPhong(maPhong)
-                    .soGhe(soGhe)
-                    .hang(String.valueOf(hang))
-                    .cot(cot)
-                    .loaiGhe(loaiGhe)
-                    .build();
-
-            dao.create(ghe);
-            gheDaTao++;
-        }
-    }
-
-    XDialog.alert("Đã tạo " + gheDaTao + " ghế cho phòng " + maPhong);
-    fillToTable();
-}
-
-
-
     @Override
     public void open() {
         addListeners();

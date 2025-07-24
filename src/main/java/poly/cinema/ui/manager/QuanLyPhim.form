@@ -114,14 +114,13 @@
               <Properties>
                 <Property name="autoCreateRowSorter" type="boolean" value="true"/>
                 <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-                  <Table columnCount="8" rowCount="10">
+                  <Table columnCount="7" rowCount="10">
                     <Column editable="false" title="M&#xe3; phim" type="java.lang.Object"/>
                     <Column editable="false" title="T&#xea;n phim" type="java.lang.Object"/>
                     <Column editable="false" title="Th&#x1ec3; lo&#x1ea1;i" type="java.lang.Object"/>
                     <Column editable="false" title="Th&#x1edd;i l&#x1b0;&#x1ee3;ng" type="java.lang.Object"/>
                     <Column editable="false" title="M&#xf4; t&#x1ea3;" type="java.lang.Object"/>
                     <Column editable="false" title="Ng&#xe0;y kh&#x1edf;i chi&#x1ebf;u" type="java.lang.Object"/>
-                    <Column editable="false" title=" Ng&#xe0;y k&#x1ebf;t th&#xfa;c" type="java.lang.Object"/>
                     <Column editable="false" title="Tr&#x1ea1;ng th&#xe1;i" type="java.lang.Object"/>
                   </Table>
                 </Property>
@@ -213,28 +212,18 @@
                           <Component id="txtNgayKhoiChieu" min="-2" pref="265" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace min="-2" pref="107" max="-2" attributes="0"/>
+                      <Component id="lblAnh" min="-2" pref="173" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="183" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" attributes="0">
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="lblAnh" min="-2" pref="173" max="-2" attributes="0"/>
-                                  <Component id="txtNgayKetThuc" min="-2" pref="251" max="-2" attributes="0"/>
-                              </Group>
-                              <EmptySpace min="-2" pref="105" max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="jLabel6" min="-2" pref="136" max="-2" attributes="0"/>
-                                  <Component id="jLabel3" alignment="0" min="-2" pref="67" max="-2" attributes="0"/>
-                                  <Component id="cboLoaiPhim" min="-2" max="-2" attributes="0"/>
-                                  <Group type="102" alignment="0" attributes="0">
-                                      <Component id="rdoDangChieu" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="rdoSapChieu" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="rdoNgungChieu" min="-2" max="-2" attributes="0"/>
-                                  </Group>
-                                  <Component id="txtThoiLuong" alignment="0" min="-2" pref="248" max="-2" attributes="0"/>
-                              </Group>
+                          <Component id="jLabel6" min="-2" pref="136" max="-2" attributes="0"/>
+                          <Component id="jLabel3" alignment="0" min="-2" pref="67" max="-2" attributes="0"/>
+                          <Component id="cboLoaiPhim" min="-2" max="-2" attributes="0"/>
+                          <Group type="102" alignment="0" attributes="0">
+                              <Component id="rdoDangChieu" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="86" max="-2" attributes="0"/>
+                              <Component id="rdoNgungChieu" min="-2" max="-2" attributes="0"/>
                           </Group>
-                          <Component id="jLabel8" min="-2" pref="136" max="-2" attributes="0"/>
+                          <Component id="txtThoiLuong" alignment="0" min="-2" pref="248" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace pref="17" max="32767" attributes="0"/>
                   </Group>
@@ -244,15 +233,11 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="-2" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="jLabel1" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="jLabel8" alignment="3" min="-2" max="-2" attributes="0"/>
-                      </Group>
+                      <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="txtTenPhim" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
                           <Component id="cboLoaiPhim" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="txtNgayKetThuc" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
                       </Group>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" alignment="0" attributes="0">
@@ -265,7 +250,6 @@
                               <EmptySpace type="separate" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="3" attributes="0">
                                   <Component id="rdoDangChieu" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="rdoSapChieu" alignment="3" min="-2" max="-2" attributes="0"/>
                                   <Component id="rdoNgungChieu" alignment="3" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace min="-2" pref="180" max="-2" attributes="0"/>
@@ -358,14 +342,6 @@
                 <Property name="text" type="java.lang.String" value="&#x110;ang chi&#x1ebf;u"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JRadioButton" name="rdoSapChieu">
-              <Properties>
-                <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
-                  <ComponentRef name="btgTrangThai"/>
-                </Property>
-                <Property name="text" type="java.lang.String" value="S&#x1eaf;p chi&#x1ebf;u"/>
-              </Properties>
-            </Component>
             <Component class="javax.swing.JRadioButton" name="rdoNgungChieu">
               <Properties>
                 <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
@@ -396,16 +372,6 @@
               <AuxValues>
                 <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
               </AuxValues>
-            </Component>
-            <Component class="javax.swing.JTextField" name="txtNgayKetThuc">
-            </Component>
-            <Component class="javax.swing.JLabel" name="jLabel8">
-              <Properties>
-                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                  <Font name="Segoe UI" size="12" style="1"/>
-                </Property>
-                <Property name="text" type="java.lang.String" value="Ng&#xe0;y k&#x1ebf;t th&#xfa;c:"/>
-              </Properties>
             </Component>
             <Component class="javax.swing.JTextField" name="txtNgayKhoiChieu">
               <Events>

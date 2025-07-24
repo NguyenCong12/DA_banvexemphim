@@ -19,13 +19,13 @@ public class QuanLyPhimDaoImpl implements QuanLyPhimDao {
        CRUD + FIND CƠ BẢN
        ========================================================= */
     private static final String INSERT_SQL = """
-    INSERT INTO Phim (ten_phim, ma_loai, thoi_luong, mo_ta, ngay_khoi_chieu, ngay_ket_thuc, trang_thai, hinh_anh)
+    INSERT INTO Phim (ten_phim, ma_loai, thoi_luong, mo_ta, ngay_khoi_chieu, trang_thai, hinh_anh)
     VALUES (?, ?, ?, ?, ?, ?, ?, ?)
     """;
 
     private static final String UPDATE_SQL = """
     UPDATE Phim
-    SET ten_phim = ?, ma_loai = ?, thoi_luong = ?, mo_ta = ?, ngay_khoi_chieu = ?, ngay_ket_thuc = ?, trang_thai = ?, hinh_anh = ?
+    SET ten_phim = ?, ma_loai = ?, thoi_luong = ?, mo_ta = ?, ngay_khoi_chieu = ?, trang_thai = ?, hinh_anh = ?
     WHERE ma_phim = ?
     """;
 
@@ -44,7 +44,6 @@ public class QuanLyPhimDaoImpl implements QuanLyPhimDao {
         p.thoi_luong      AS thoiLuong,
         p.mo_ta           AS moTa,
         p.ngay_khoi_chieu AS ngayKhoiChieu,
-        p.ngay_ket_thuc   AS ngayKetThuc, 
         p.trang_thai      AS trangThai,
         p.hinh_anh        AS hinhAnh,
         lp.ten_loai       AS tenLoai
@@ -76,9 +75,8 @@ public class QuanLyPhimDaoImpl implements QuanLyPhimDao {
             stmt.setInt(3, entity.getThoiLuong());
             stmt.setString(4, entity.getMoTa());
             stmt.setDate(5, new java.sql.Date(entity.getNgayKhoiChieu().getTime()));
-            stmt.setDate(6, new java.sql.Date(entity.getNgayKetThuc().getTime())); // thêm dòng này
-            stmt.setString(7, entity.getTrangThai());
-            stmt.setString(8, entity.getHinhAnh());
+            stmt.setString(6, entity.getTrangThai());
+            stmt.setString(7, entity.getHinhAnh());
 
             stmt.executeUpdate();
 
@@ -101,7 +99,6 @@ public class QuanLyPhimDaoImpl implements QuanLyPhimDao {
             entity.getThoiLuong(),
             entity.getMoTa(),
             new java.sql.Date(entity.getNgayKhoiChieu().getTime()),
-            new java.sql.Date(entity.getNgayKetThuc().getTime()),
             entity.getTrangThai(),
             entity.getHinhAnh(),
             entity.getMaPhim()
@@ -190,7 +187,6 @@ public class QuanLyPhimDaoImpl implements QuanLyPhimDao {
         phim.setThoiLuong(rs.getInt("thoi_luong"));
         phim.setMoTa(rs.getString("mo_ta"));
         phim.setNgayKhoiChieu(rs.getDate("ngay_khoi_chieu"));
-        phim.setNgayKetThuc(rs.getDate("ngay_ket_thuc")); // ➕
         phim.setTrangThai(rs.getString("trang_thai"));
         phim.setHinhAnh(rs.getString("hinh_anh"));
         return phim;
