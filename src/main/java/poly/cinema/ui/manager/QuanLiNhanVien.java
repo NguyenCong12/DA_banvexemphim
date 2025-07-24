@@ -389,6 +389,7 @@ public class QuanLiNhanVien extends javax.swing.JPanel implements QuanLiNhanVien
                 JOptionPane.showMessageDialog(this, "Không tìm thấy nhân viên!");
             }
         }
+        
     }//GEN-LAST:event_tblQLnhanvienMouseClicked
 
     private void lblAnhMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblAnhMouseClicked
@@ -434,7 +435,10 @@ public class QuanLiNhanVien extends javax.swing.JPanel implements QuanLiNhanVien
         this.setVisible(true);
         clear();
         fillToTable();
+        
     }
+
+
 
     @Override
     public void setForm(NguoiDung entity) {
@@ -466,29 +470,28 @@ public class QuanLiNhanVien extends javax.swing.JPanel implements QuanLiNhanVien
     }
 
     @Override
-public NguoiDung getForm() {
-    NguoiDung user = new NguoiDung();
-    int row = tblQLnhanvien.getSelectedRow();
-    if (row >= 0) {
-        // Lấy lại ma_nd từ entity cũ
-        String email = tblQLnhanvien.getValueAt(row, 2).toString();
-        NguoiDung existing = dao.findByEmail(email);
-        user.setMaNd(existing.getMaNd());
+    public NguoiDung getForm() {
+        NguoiDung user = new NguoiDung();
+        int row = tblQLnhanvien.getSelectedRow();
+        if (row >= 0) {
+            // Lấy lại ma_nd từ entity cũ
+            String email = tblQLnhanvien.getValueAt(row, 2).toString();
+            NguoiDung existing = dao.findByEmail(email);
+            user.setMaNd(existing.getMaNd());
+        }
+
+        user.setTenNd(txtTennhanvien.getText());
+        user.setEmail(txtEmail.getText());
+        user.setMatKhau(txtMatkhau.getText());
+        user.setSdt(txtSodienthoai.getText());
+        user.setVai_tro(rdoQuanLy.isSelected());  // sửa ở đây
+        user.setHoat_dong(rdoHoatDong.isSelected());
+
+        String anh = lblAnh.getToolTipText();
+        user.setAnh_dai_dien(anh == null ? "" : anh);
+
+        return user;
     }
-
-    user.setTenNd(txtTennhanvien.getText());
-    user.setEmail(txtEmail.getText());
-    user.setMatKhau(txtMatkhau.getText());
-    user.setSdt(txtSodienthoai.getText());
-    user.setVai_tro(rdoQuanLy.isSelected());  // sửa ở đây
-    user.setHoat_dong(rdoHoatDong.isSelected());
-
-    String anh = lblAnh.getToolTipText();
-    user.setAnh_dai_dien(anh == null ? "" : anh);
-
-    return user;
-}
-
 
     @Override
     public void fillToTable() {
@@ -502,8 +505,8 @@ public NguoiDung getForm() {
                 item.getMatKhau(),
                 item.getEmail(),
                 item.getSdt(),
-                item.isVai_tro()? "Quản lý" : "Nhân viên",
-                item.isHoat_dong()? "Hoạt động" : "Tạm dừng",
+                item.isVai_tro() ? "Quản lý" : "Nhân viên",
+                item.isHoat_dong() ? "Hoạt động" : "Tạm dừng",
                 false
             };
             model.addRow(rowData);
@@ -533,31 +536,61 @@ public NguoiDung getForm() {
         String taikhoan = txtEmail.getText().trim();
         String anh = lblAnh.getToolTipText();
 
+        // Kiểm tra rỗng
         if (tennhanvien.isEmpty() || matkhau.isEmpty() || taikhoan.isEmpty() || sodienthoai.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Vui lòng nhập đầy đủ thông tin!");
             return;
         }
+
+        // Kiểm tra ảnh
         if (anh == null || anh.trim().isEmpty()) {
             JOptionPane.showMessageDialog(this, "Vui lòng chọn ảnh!");
             return;
         }
+
+        // Kiểm tra độ dài tên
         if (tennhanvien.length() < 3) {
             JOptionPane.showMessageDialog(this, "Tên đăng nhập phải có ít nhất 3 ký tự!");
             return;
         }
+
+        // Kiểm tra độ dài mật khẩu
+        if (matkhau.length() < 6) {
+            JOptionPane.showMessageDialog(this, "Mật khẩu phải có ít nhất 6 ký tự!");
+            return;
+        }
+
+        // Kiểm tra định dạng email
+        if (!taikhoan.matches("^[\\w.-]+@[\\w.-]+\\.[a-zA-Z]{2,}$")) {
+            JOptionPane.showMessageDialog(this, "Định dạng email không hợp lệ!");
+            return;
+        }
+
+        // Kiểm tra định dạng số điện thoại (10–11 số)
+        if (!sodienthoai.matches("^\\d{10,11}$")) {
+            JOptionPane.showMessageDialog(this, "Số điện thoại không hợp lệ (phải có 10–11 chữ số)!");
+            return;
+        }
+
+        // Kiểm tra vai trò
         if (!rdoNhanVien.isSelected() && !rdoQuanLy.isSelected()) {
             JOptionPane.showMessageDialog(this, "Vui lòng chọn vai trò!");
             return;
         }
+
+        // Kiểm tra trạng thái
         if (!rdoHoatDong.isSelected() && !rdoDaNgung.isSelected()) {
             JOptionPane.showMessageDialog(this, "Vui lòng chọn trạng thái!");
             return;
         }
+
+        // Kiểm tra email đã tồn tại chưa
         if (dao.findByEmail(taikhoan) != null) {
             JOptionPane.showMessageDialog(this, "Tài khoản đã tồn tại!");
             return;
         }
 
+        // Thêm vào CSDL
         try {
             NguoiDung entity = getForm();
             dao.create(entity);
@@ -566,7 +599,7 @@ public NguoiDung getForm() {
             JOptionPane.showMessageDialog(this, "Thêm mới thành công!");
         } catch (Exception e) {
             e.printStackTrace();
-            JOptionPane.showMessageDialog(this, "Thêm mới thất bại!");
+            JOptionPane.showMessageDialog(this, "Thêm mới thất bại: ");
         }
     }
 
@@ -577,47 +610,120 @@ public NguoiDung getForm() {
             JOptionPane.showMessageDialog(this, "Vui lòng chọn một dòng để cập nhật!");
             return;
         }
-        NguoiDung newUser = getForm();
-        String email = tblQLnhanvien.getValueAt(row, 2).toString();
-        NguoiDung oldUser = dao.findByEmail(email);
 
-        if (oldUser != null && newUser.equals(oldUser)) {
-            JOptionPane.showMessageDialog(this, "Không có thay đổi nào để cập nhật!");
+        // Lấy dữ liệu từ form
+        String tennhanvien = txtTennhanvien.getText().trim();
+        String matkhau = txtMatkhau.getText().trim();
+        String sodienthoai = txtSodienthoai.getText().trim();
+        String taikhoan = txtEmail.getText().trim();
+        String anh = lblAnh.getToolTipText();
+
+        // Kiểm tra rỗng
+        if (tennhanvien.isEmpty() || matkhau.isEmpty() || taikhoan.isEmpty() || sodienthoai.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Vui lòng nhập đầy đủ thông tin!");
+            return;
+        }
+
+        // Kiểm tra ảnh
+        if (anh == null || anh.trim().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Vui lòng chọn ảnh!");
+            return;
+        }
+
+        // Kiểm tra tên nhân viên
+        if (tennhanvien.length() < 3) {
+            JOptionPane.showMessageDialog(this, "Tên phải có ít nhất 3 ký tự!");
+            return;
+        }
+
+        // Kiểm tra mật khẩu
+        if (matkhau.length() < 6) {
+            JOptionPane.showMessageDialog(this, "Mật khẩu phải có ít nhất 6 ký tự!");
+            return;
+        }
+
+        // Kiểm tra định dạng email
+        if (!taikhoan.matches("^[\\w.-]+@[\\w.-]+\\.[a-zA-Z]{2,}$")) {
+            JOptionPane.showMessageDialog(this, "Email không hợp lệ!");
+            return;
+        }
+
+        // Kiểm tra số điện thoại
+        if (!sodienthoai.matches("^\\d{10,11}$")) {
+            JOptionPane.showMessageDialog(this, "Số điện thoại không hợp lệ!");
+            return;
+        }
+
+        // Kiểm tra vai trò
+        if (!rdoNhanVien.isSelected() && !rdoQuanLy.isSelected()) {
+            JOptionPane.showMessageDialog(this, "Vui lòng chọn vai trò!");
+            return;
+        }
+
+        // Kiểm tra trạng thái
+        if (!rdoHoatDong.isSelected() && !rdoDaNgung.isSelected()) {
+            JOptionPane.showMessageDialog(this, "Vui lòng chọn trạng thái!");
             return;
         }
 
         try {
+            NguoiDung newUser = getForm();
+            String oldEmail = tblQLnhanvien.getValueAt(row, 2).toString();
+            NguoiDung oldUser = dao.findByEmail(oldEmail);
+
+            // Nếu người dùng sửa email, kiểm tra trùng email với người dùng khác
+            if (!taikhoan.equals(oldEmail) && dao.findByEmail(taikhoan) != null) {
+                JOptionPane.showMessageDialog(this, "Email đã tồn tại, không thể cập nhật!");
+                return;
+            }
+
+            // So sánh dữ liệu cũ và mới
+            if (oldUser != null && newUser.equals(oldUser)) {
+                JOptionPane.showMessageDialog(this, "Không có thay đổi nào để cập nhật!");
+                return;
+            }
+
             dao.update(newUser);
             fillToTable();
             JOptionPane.showMessageDialog(this, "Cập nhật thành công!");
+
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Cập nhật thất bại!");
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Cập nhật thất bại: ");
         }
     }
 
     @Override
-public void delete() {
-    int row = tblQLnhanvien.getSelectedRow();
-    if (row == -1) {
-        JOptionPane.showMessageDialog(this, "Vui lòng chọn một dòng để xóa!");
-        return;
-    }
+    public void delete() {
+        int row = tblQLnhanvien.getSelectedRow();
+        if (row == -1) {
+            JOptionPane.showMessageDialog(this, "Vui lòng chọn một dòng để xóa!");
+            return;
+        }
 
-    int choice = JOptionPane.showConfirmDialog(this, "Bạn có chắc muốn xóa?", "Xác nhận", JOptionPane.YES_NO_OPTION);
-    if (choice == JOptionPane.YES_OPTION) {
         String email = tblQLnhanvien.getValueAt(row, 2).toString();
-        NguoiDung user = dao.findByEmail(email);
-        if (user != null) {
+
+        int choice = JOptionPane.showConfirmDialog(this, "Bạn có chắc muốn xóa người dùng này?", "Xác nhận", JOptionPane.YES_NO_OPTION);
+        if (choice != JOptionPane.YES_OPTION) {
+            return;
+        }
+
+        try {
+            NguoiDung user = dao.findByEmail(email);
+            if (user == null) {
+                JOptionPane.showMessageDialog(this, "Không tìm thấy người dùng để xóa!");
+                return;
+            }
+
             dao.deleteById(user.getMaNd());
             fillToTable();
             clear();
             JOptionPane.showMessageDialog(this, "Xóa thành công!");
-        } else {
-            JOptionPane.showMessageDialog(this, "Không tìm thấy người dùng để xóa!");
+        } catch (Exception e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Xóa thất bại: ");
         }
     }
-}
-
 
     @Override
     public void clear() {

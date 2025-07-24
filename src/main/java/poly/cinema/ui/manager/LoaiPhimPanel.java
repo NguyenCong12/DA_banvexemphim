@@ -3,6 +3,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
  */
 package poly.cinema.ui.manager;
+
+import java.util.Comparator;
+import java.util.List;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import poly.cinema.dao.LoaiPhimDao;
@@ -14,15 +17,19 @@ import poly.cinema.entity.LoaiPhim;
  * @author BA HAO
  */
 public class LoaiPhimPanel extends javax.swing.JPanel implements CrudController<LoaiPhim> {
+
     private final LoaiPhimDao loaiPhimDao = new LoaiPhimDaoImpl();
 
     public LoaiPhimPanel() {
         initComponents();
         open();
         tblLoaiPhim.getSelectionModel().addListSelectionListener(e -> {
-            if (!e.getValueIsAdjusting()) edit();
+            if (!e.getValueIsAdjusting()) {
+                edit();
+            }
         });
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -33,11 +40,9 @@ public class LoaiPhimPanel extends javax.swing.JPanel implements CrudController<
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         btnThem = new javax.swing.JButton();
         txtTheLoai = new javax.swing.JTextField();
-        txtMaLoai = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblLoaiPhim = new javax.swing.JTable();
@@ -48,11 +53,9 @@ public class LoaiPhimPanel extends javax.swing.JPanel implements CrudController<
         setPreferredSize(new java.awt.Dimension(1110, 720));
         setVerifyInputWhenFocusTarget(false);
 
+        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setForeground(new java.awt.Color(255, 255, 255));
         jPanel1.setPreferredSize(new java.awt.Dimension(1110, 720));
-
-        jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        jLabel4.setText("Mã loại");
 
         jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 48)); // NOI18N
         jLabel5.setText("LOẠI PHIM");
@@ -70,12 +73,6 @@ public class LoaiPhimPanel extends javax.swing.JPanel implements CrudController<
             }
         });
 
-        txtMaLoai.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtMaLoaiActionPerformed(evt);
-            }
-        });
-
         jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jLabel3.setText("Thể loại");
 
@@ -84,22 +81,21 @@ public class LoaiPhimPanel extends javax.swing.JPanel implements CrudController<
 
             },
             new String [] {
-                "Mã loại", "Thể loại", ""
+                "Mã loại", "Thể loại"
             }
         ) {
-            Class[] types = new Class [] {
-                java.lang.Object.class, java.lang.Object.class, java.lang.Boolean.class
-            };
             boolean[] canEdit = new boolean [] {
-                false, true, true
+                false, false
             };
-
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
+            }
+        });
+        tblLoaiPhim.setRowHeight(25);
+        tblLoaiPhim.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblLoaiPhimMouseClicked(evt);
             }
         });
         jScrollPane1.setViewportView(tblLoaiPhim);
@@ -140,15 +136,9 @@ public class LoaiPhimPanel extends javax.swing.JPanel implements CrudController<
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1080, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addContainerGap(15, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel4)
-                                .addGap(18, 18, 18)
-                                .addComponent(txtMaLoai))
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel3)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(txtTheLoai, javax.swing.GroupLayout.PREFERRED_SIZE, 577, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jLabel3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(txtTheLoai, javax.swing.GroupLayout.PREFERRED_SIZE, 577, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(28, 28, 28)
@@ -167,17 +157,12 @@ public class LoaiPhimPanel extends javax.swing.JPanel implements CrudController<
                 .addContainerGap()
                 .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel3)
-                            .addComponent(txtTheLoai, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(33, 33, 33)
-                        .addComponent(jLabel4))
-                    .addComponent(txtMaLoai, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(65, 65, 65)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
+                    .addComponent(txtTheLoai, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(130, 130, 130)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnThem, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnXoa, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -209,25 +194,26 @@ public class LoaiPhimPanel extends javax.swing.JPanel implements CrudController<
         // TODO add your handling code here:
     }//GEN-LAST:event_txtTheLoaiActionPerformed
 
-    private void txtMaLoaiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtMaLoaiActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtMaLoaiActionPerformed
-
     private void btnThemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemActionPerformed
-     create(); 
+        create();
     }//GEN-LAST:event_btnThemActionPerformed
 
     private void btnSuaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSuaActionPerformed
-     update();
+        update();
     }//GEN-LAST:event_btnSuaActionPerformed
 
     private void btnXoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXoaActionPerformed
-      delete();
+        delete();
     }//GEN-LAST:event_btnXoaActionPerformed
 
     private void btnNhapMoiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNhapMoiActionPerformed
-   clear(); 
+        clear();
     }//GEN-LAST:event_btnNhapMoiActionPerformed
+
+    private void tblLoaiPhimMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblLoaiPhimMouseClicked
+        // TODO add your handling code here:
+      updateButtonStatus();
+    }//GEN-LAST:event_tblLoaiPhimMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -236,132 +222,181 @@ public class LoaiPhimPanel extends javax.swing.JPanel implements CrudController<
     private javax.swing.JButton btnThem;
     private javax.swing.JButton btnXoa;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tblLoaiPhim;
-    private javax.swing.JTextField txtMaLoai;
     private javax.swing.JTextField txtTheLoai;
     // End of variables declaration//GEN-END:variables
 @Override
-public void open() {
-    fillToTable();
-}
-
-public void setForm(LoaiPhim entity) {
-    txtMaLoai.setText(String.valueOf(entity.getMaLoai()));
-    txtTheLoai.setText(entity.getTenLoai());
-}
-
-public LoaiPhim getForm() {
-    String tenLoai = txtTheLoai.getText().trim();
-    String maLoaiText = txtMaLoai.getText().trim();
-
-    if (tenLoai.isEmpty()) {
-        JOptionPane.showMessageDialog(this, "Tên thể loại không được để trống!");
-        return null;
+    public void open() {
+        fillToTable();
+        updateButtonStatus();
     }
 
-    Integer maLoai = null;
-    if (!maLoaiText.isEmpty()) {
-        try {
-            maLoai = Integer.parseInt(maLoaiText);
-        } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this, "Mã loại không hợp lệ!");
+    private void updateButtonStatus() {
+    boolean isSelected = tblLoaiPhim.getSelectedRow() >= 0;
+    btnThem.setEnabled(!isSelected); // Chỉ bật khi KHÔNG chọn dòng
+    btnSua.setEnabled(isSelected);   // Bật khi có chọn dòng
+    btnXoa.setEnabled(isSelected);  // Bật khi có chọn dòng
+}
+    public void setForm(LoaiPhim entity) {
+        txtTheLoai.setText(entity.getTenLoai());
+    }
+
+    public LoaiPhim getForm() {
+        String tenLoai = txtTheLoai.getText().trim();
+
+        if (tenLoai.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Tên thể loại không được để trống!");
             return null;
+        }
+
+        Integer maLoai = null;
+
+        return LoaiPhim.builder()
+                .maLoai(maLoai)
+                .tenLoai(tenLoai)
+                .build();
+    }
+
+    @Override
+    public void fillToTable() {
+
+        DefaultTableModel model = (DefaultTableModel) tblLoaiPhim.getModel();
+        model.setRowCount(0);
+
+        // Lấy danh sách và sắp xếp theo mã loại tăng dần
+        List<LoaiPhim> danhSach = loaiPhimDao.findAll();
+        danhSach.sort(Comparator.comparing(LoaiPhim::getMaLoai)); // Sắp xếp tăng dần theo mã
+
+        // Đổ dữ liệu vào bảng
+        for (LoaiPhim loai : danhSach) {
+            model.addRow(new Object[]{
+                loai.getMaLoai(), loai.getTenLoai()
+            });
+        }
+        updateButtonStatus();
+    }
+
+    @Override
+    public void edit() {
+        int row = tblLoaiPhim.getSelectedRow();
+        if (row == -1) {
+            return;
+        }
+
+        Integer maLoai = (Integer) tblLoaiPhim.getValueAt(row, 0);
+        LoaiPhim loai = loaiPhimDao.findById(maLoai);
+        if (loai != null) {
+            setForm(loai);
+        } else {
+            JOptionPane.showMessageDialog(this, "Không tìm thấy bản ghi này trong CSDL!");
         }
     }
 
-    return LoaiPhim.builder()
-        .maLoai(maLoai)
-        .tenLoai(tenLoai)
-        .build();
-}
+    @Override
+    public void create() {
+        String tenLoai = txtTheLoai.getText().trim();
 
+        if (tenLoai.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Tên thể loại không được để trống.");
+            return;
+        }
 
+        // Kiểm tra trùng tên
+        LoaiPhim existing = loaiPhimDao.findByName(tenLoai);
+        if (existing != null) {
+            JOptionPane.showMessageDialog(this, "Tên thể loại đã tồn tại.");
+            return;
+        }
 
-   @Override
-public void fillToTable() {
-    DefaultTableModel model = (DefaultTableModel) tblLoaiPhim.getModel();
-    model.setRowCount(0);
-    for (LoaiPhim  loai : loaiPhimDao.findAll()) {
-        model.addRow(new Object[]{
-            loai.getMaLoai(), loai.getTenLoai(), false
-        });
+        // Tạo đối tượng và thêm mới
+        LoaiPhim entity = new LoaiPhim(null, tenLoai); // giả sử ID được tự tăng trong DB
+        try {
+            LoaiPhim created = loaiPhimDao.create(entity);
+            if (created != null) {
+                JOptionPane.showMessageDialog(this, "Thêm thành công!");
+                fillToTable();
+                updateButtonStatus();
+                clear();
+            } else {
+                JOptionPane.showMessageDialog(this, "Thêm thất bại!");
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Lỗi khi thêm: " + e.getMessage());
+            e.printStackTrace();
+        }
     }
-}
-
 
     @Override
-public void edit() {
-    int row = tblLoaiPhim.getSelectedRow();
-    if (row == -1) return;
+    public void update() {
+        int row = tblLoaiPhim.getSelectedRow();
+        if (row == -1) {
+            JOptionPane.showMessageDialog(this, "Vui lòng chọn một bản ghi để sửa.");
+            return;
+        }
 
-    Integer maLoai = (Integer) tblLoaiPhim.getValueAt(row, 0);
-    LoaiPhim  loai = loaiPhimDao.findById(maLoai);
-    if (loai != null) {
-        setForm(loai);
+        Integer maLoai = (Integer) tblLoaiPhim.getValueAt(row, 0);
+        String tenLoai = txtTheLoai.getText().trim();
+
+        if (tenLoai.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Tên thể loại không được để trống.");
+            return;
+        }
+
+        LoaiPhim entity = LoaiPhim.builder()
+                .maLoai(maLoai)
+                .tenLoai(tenLoai)
+                .build();
+
+        try {
+            loaiPhimDao.update(entity);
+            JOptionPane.showMessageDialog(this, "Cập nhật thành công!");
+            fillToTable();
+            clear();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Lỗi khi cập nhật: " + e.getMessage());
+            e.printStackTrace();
+        }
+
+        LoaiPhim old = loaiPhimDao.findById(maLoai);
+        if (old != null && old.getTenLoai().equalsIgnoreCase(tenLoai)) {
+            JOptionPane.showMessageDialog(this, "Tên thể loại không có thay đổi.");
+            return;
+        }
     }
-}
-
-
-   @Override
-public void create() {
-//    LoaiPhim  entity = getForm();
-//    if (entity == null) return;
-//
-//    LoaiPhim  created = loaiPhimDao.create(entity);
-//    if (created != null) {
-//        JOptionPane.showMessageDialog(this, "Thêm thành công!");
-//        fillToTable();
-//        clear();
-//    } else {
-//        JOptionPane.showMessageDialog(this, "Thêm thất bại!");
-//    }
-}
-
-
-  @Override
-public void update() {
-//    LoaiPhimPanel entity = getForm();
-//    if (entity == null || entity.getMaLoai() == null) {
-//        JOptionPane.showMessageDialog(this, "Vui lòng chọn bản ghi để sửa.");
-//        return;
-//    }
-//
-//    loaiPhimDao.update(entity);
-//    JOptionPane.showMessageDialog(this, "Cập nhật thành công!");
-//    fillToTable();
-//    clear();
-}
-
 
     @Override
-public void delete() {
-    String maLoaiText = txtMaLoai.getText().trim();
-    if (maLoaiText.isEmpty()) {
-        JOptionPane.showMessageDialog(this, "Vui lòng chọn bản ghi để xóa.");
-        return;
+    public void delete() {
+        int row = tblLoaiPhim.getSelectedRow();
+        if (row == -1) {
+            JOptionPane.showMessageDialog(this, "Vui lòng chọn một bản ghi để xoá.");
+            return;
+        }
+
+        Integer maLoai = (Integer) tblLoaiPhim.getValueAt(row, 0);
+        int confirm = JOptionPane.showConfirmDialog(this, "Bạn chắc chắn muốn xóa?", "Xác nhận", JOptionPane.YES_NO_OPTION);
+        if (confirm != JOptionPane.YES_OPTION) {
+            return;
+        }
+
+        try {
+            loaiPhimDao.deleteById(maLoai);
+            JOptionPane.showMessageDialog(this, "Xóa thành công!");
+            fillToTable();
+            clear();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Xóa thất bại: ");
+            e.printStackTrace();
+        }
     }
 
-    int confirm = JOptionPane.showConfirmDialog(this, "Bạn chắc chắn muốn xóa?", "Xác nhận", JOptionPane.YES_NO_OPTION);
-    if (confirm != JOptionPane.YES_OPTION) return;
-
-    int maLoai = Integer.parseInt(maLoaiText);
-    loaiPhimDao.deleteById(maLoai);
-    JOptionPane.showMessageDialog(this, "Xóa thành công!");
-    fillToTable();
-    clear();
-}
-
-
- @Override
-public void clear() {
-    txtMaLoai.setText("");
-    txtTheLoai.setText("");
-}
-
+    @Override
+    public void clear() {
+        txtTheLoai.setText("");
+        updateButtonStatus();
+    }
 
     @Override
     public void setEditable(boolean editable) {
@@ -397,10 +432,4 @@ public void clear() {
     public void selectTimeRange() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
-
-
-
-
-
 }
- 

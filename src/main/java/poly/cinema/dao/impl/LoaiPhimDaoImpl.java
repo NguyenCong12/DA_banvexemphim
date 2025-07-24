@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemSystem/Templates/Classes/Class.java to edit this template
- */
 package poly.cinema.dao.impl;
 
 import java.sql.ResultSet;
@@ -14,10 +10,6 @@ import poly.cinema.dao.LoaiPhimDao;
 import poly.cinema.entity.LoaiPhim;
 import poly.cinema.util.XJdbc;
 
-/**
- *
- * @author Admin
- */
 public class LoaiPhimDaoImpl implements LoaiPhimDao {
 
     private static final Map<Integer, String> CACHE = new ConcurrentHashMap<>();
@@ -112,5 +104,26 @@ public class LoaiPhimDaoImpl implements LoaiPhimDao {
             e.printStackTrace();
         }
         return null;
+    }
+
+    @Override
+    public LoaiPhim findByName(String tenLoai) {
+        String sql = "SELECT * FROM LoaiPhim WHERE ten_loai = ?";
+        List<LoaiPhim> list = select(sql, tenLoai);
+        return list.isEmpty() ? null : list.get(0);
+    }
+
+    // ✅ Hàm select chung, dùng cho findByName và có thể tái sử dụng
+    private List<LoaiPhim> select(String sql, Object... args) {
+        List<LoaiPhim> list = new ArrayList<>();
+        try (ResultSet rs = XJdbc.executeQuery(sql, args)) {
+            while (rs.next()) {
+                LoaiPhim lp = new LoaiPhim(rs.getInt("ma_loai"), rs.getString("ten_loai"));
+                list.add(lp);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return list;
     }
 }

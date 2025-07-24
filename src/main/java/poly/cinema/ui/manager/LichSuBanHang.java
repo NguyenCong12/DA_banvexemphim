@@ -4,6 +4,7 @@
  */
 package poly.cinema.ui.manager;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -67,6 +68,7 @@ public class LichSuBanHang extends javax.swing.JPanel implements LichSuBanHangCo
                 return canEdit [columnIndex];
             }
         });
+        tblBills.setRowHeight(25);
         jScrollPane1.setViewportView(tblBills);
 
         txtBegin.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153), 2));
@@ -198,7 +200,7 @@ public class LichSuBanHang extends javax.swing.JPanel implements LichSuBanHangCo
     private void initComboTimeRangeListener() {
         if (tblBills.getRowCount() == 0 && tblBills.getRowCount() == 0) {
             JOptionPane.showMessageDialog(this, "Không có dữ liệu trong khoảng thời gian đã chọn.");
-        }else{
+        } else {
             cboTimeRanges.addActionListener(e -> {
                 Object selectedObj = cboTimeRanges.getSelectedItem();
                 if (selectedObj == null) {
@@ -229,7 +231,7 @@ public class LichSuBanHang extends javax.swing.JPanel implements LichSuBanHangCo
                     locTheoNgay();
                 }
             });
-        }       
+        }
     }
 
     private void fillTableLichSu(List<LichSu> list) {
@@ -249,10 +251,22 @@ public class LichSuBanHang extends javax.swing.JPanel implements LichSuBanHangCo
 
     private void locTheoNgay() {
         try {
-            Date begin = XDate.parse(txtBegin.getText(), "dd-MM-yyyy");
-            Date end = XDate.parse(txtEnd.getText(), "dd-MM-yyyy");
+            if (txtBegin.getText().trim().isEmpty() || txtEnd.getText().trim().isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Vui lòng nhập đầy đủ ngày bắt đầu và kết thúc.");
+                return;
+            }
 
-            // Đặt thời gian từ 00:00 đến 23:59
+            SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+            sdf.setLenient(false);
+            Date begin = sdf.parse(txtBegin.getText());
+            Date end = sdf.parse(txtEnd.getText());
+
+            if (begin.after(end)) {
+                JOptionPane.showMessageDialog(this, "Ngày bắt đầu không được lớn hơn ngày kết thúc.");
+                return;
+            }
+
+            // Đặt thời gian
             Calendar cal = Calendar.getInstance();
             cal.setTime(begin);
             cal.set(Calendar.HOUR_OF_DAY, 0);
@@ -266,15 +280,21 @@ public class LichSuBanHang extends javax.swing.JPanel implements LichSuBanHangCo
             cal.set(Calendar.MINUTE, 0);
             cal.set(Calendar.SECOND, 0);
             cal.set(Calendar.MILLISECOND, 0);
-            cal.add(Calendar.DATE, 1); // +1 ngày
+            cal.add(Calendar.DATE, 1);
             end = cal.getTime();
 
-            // Lọc dữ liệu
             List<LichSu> list = lichSuDAO.getByDate(begin, end);
             fillTableLichSu(list);
 
-        } catch (Exception e) {
+            if (list == null || list.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Không có dữ liệu trong khoảng thời gian đã chọn.");
+            }
+
+        } catch (java.text.ParseException ex) {
             JOptionPane.showMessageDialog(this, "Ngày không hợp lệ. Định dạng đúng: dd-MM-yyyy");
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Lỗi truy vấn dữ liệu. Vui lòng kiểm tra kết nối.");
+            e.printStackTrace();
         }
     }
 

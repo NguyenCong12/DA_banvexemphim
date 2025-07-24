@@ -29,6 +29,8 @@ public class XJdbc {
         var password = "123";
 
 
+
+
         try {
             if (!XJdbc.isReady()) {
                 Class.forName(driver);
