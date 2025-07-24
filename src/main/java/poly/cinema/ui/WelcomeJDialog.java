@@ -67,7 +67,7 @@ public class WelcomeJDialog extends javax.swing.JDialog implements WelcomeContro
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
 
         prb.setBackground(new java.awt.Color(255, 255, 255));
-        prb.setForeground(new java.awt.Color(204, 204, 204));
+        prb.setForeground(new java.awt.Color(255, 51, 51));
         prb.setValue(40);
         prb.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         prb.setStringPainted(true);
