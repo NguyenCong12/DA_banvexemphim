@@ -11,5 +11,5 @@ import poly.cinema.entity.PhongChieu;
  * @author Admin
  */
 public interface QuanLyPhongChieuDao extends CrudDAO<PhongChieu, Integer>{
-    
+    PhongChieu findById(String maPhong);
 }

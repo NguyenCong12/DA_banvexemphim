@@ -13,5 +13,5 @@ import poly.cinema.entity.ChiTietVe;
  */
 public interface ChiTietVeDAO extends CrudDAO<ChiTietVe, Integer> {
     List<ChiTietVe> selectByMaHD(Integer maHD);
-    // Ghi dòng này để Git nhận ra file là mới
+    List<String> getGheDaDat(String maXuat);
 }

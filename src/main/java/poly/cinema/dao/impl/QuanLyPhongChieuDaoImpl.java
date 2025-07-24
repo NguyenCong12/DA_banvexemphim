@@ -4,11 +4,15 @@
  */
 package poly.cinema.dao.impl;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import poly.cinema.dao.QuanLyPhongChieuDao;
 import poly.cinema.entity.PhongChieu;
+import poly.cinema.entity.QuanLyGhe;
 import poly.cinema.util.XJdbc;
 
 /**
@@ -88,6 +92,25 @@ private final String INSERT_SQL = "INSERT INTO PhongChieu (ma_phong, ten_phong, 
                         .soHang(rs.getInt("so_hang"))
                         .soCot(rs.getInt("so_cot"))
                         .build();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    private final String SELECT_BY_ID_SQL1 = "SELECT * FROM PhongChieu WHERE ma_phong = ?";
+
+    @Override
+    public PhongChieu findById(String maPhong) {
+        try (ResultSet rs = XJdbc.executeQuery(SELECT_BY_ID_SQL1, maPhong)) {
+            if (rs.next()) {
+                return new PhongChieu(
+                    rs.getString("ma_phong"),
+                    rs.getString("ten_phong"),
+                    rs.getInt("so_hang"),
+                    rs.getInt("so_cot")
+                );
             }
         } catch (Exception e) {
             e.printStackTrace();

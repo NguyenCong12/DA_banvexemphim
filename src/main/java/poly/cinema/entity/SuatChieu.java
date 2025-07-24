@@ -22,10 +22,14 @@ import lombok.NoArgsConstructor;
 @Builder
 public class SuatChieu {
 
-    private int maXuat;         // ma_xuat INT PRIMARY KEY IDENTITY(1,1)
-    private int maPhim;         // ma_phim INT
-    private String maPhong;     // ma_phong VARCHAR(5)
-    private LocalDate ngayChieu; // ✅ dùng java.time.LocalDate
-    private LocalTime gioChieu;  // ✅ dùng java.time.LocalTime
-    private BigDecimal giaVe;    // gia_ve DECIMAL(10,2)
+    private int maXuat;
+    private int maPhim;
+    private String maPhong;
+    private LocalDate ngayChieu;
+    private LocalTime gioChieu;
+    private BigDecimal giaVe;
+
+    private PhongChieu phong; 
 }
+
+

@@ -18,9 +18,15 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 public class PhongChieu {
+
     private String maPhong;   // mã phòng (khóa chính)
     private String tenPhong;  // tên phòng chiếu
     private int soHang;       // số hàng ghế
     private int soCot;        // số cột ghế
-}
 
+    @Override
+    public String toString() {
+        return tenPhong;
+    }
+
+}

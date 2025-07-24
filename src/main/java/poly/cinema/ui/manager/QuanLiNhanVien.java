@@ -14,7 +14,6 @@ import javax.swing.table.DefaultTableModel;
 import poly.cinema.dao.NguoiDungDAO;
 import poly.cinema.dao.impl.NguoiDungDAOImpl;
 import poly.cinema.entity.NguoiDung;
-import static poly.cinema.util.XAuth.user;
 import poly.cinema.util.XIcon;
 
 /**

@@ -16,6 +16,7 @@ public interface QuanLyGheDao extends CrudDAO<QuanLyGhe, Integer> {
     QuanLyGhe findBySoGhe(String soGhe); 
     QuanLyGhe findBySoGheAndPhong(String soGhe, String maPhong);
     List<String> getAllMaPhong();
+    List<QuanLyGhe> findByMaPhong(String maPhong);
 }
 
 

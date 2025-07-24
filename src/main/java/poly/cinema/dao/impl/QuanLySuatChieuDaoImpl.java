@@ -94,4 +94,10 @@ public class QuanLySuatChieuDaoImpl implements QuanLySuatChieuDao {
         return selectBySql(sql, maPhim, new java.sql.Date(ngay.getTime()));
     }
 
+    @Override
+    public List<SuatChieu> findByMaPhim(int maPhim) {
+        String sql = "SELECT * FROM XuatChieu WHERE ma_phim = ?";
+        return selectBySql(sql, maPhim);
+    }
+
 }

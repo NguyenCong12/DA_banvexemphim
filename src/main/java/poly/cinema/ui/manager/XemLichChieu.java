@@ -181,7 +181,7 @@ public XemLichChieu() {
     // ===== Panel danh sách phim =====
     pnlGrid = new JPanel();
     pnlGrid.setBackground(new Color(0xE0E3EB));
-    pnlGrid.setLayout(new BoxLayout(pnlGrid, BoxLayout.Y_AXIS));
+//    pnlGrid.setLayout(new BoxLayout(pnlGrid, BoxLayout.Y_AXIS));
     pnlGrid.setAlignmentX(Component.CENTER_ALIGNMENT);
 
     scpDanhSachPhim.setViewportView(pnlGrid);

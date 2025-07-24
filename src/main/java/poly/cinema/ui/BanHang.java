@@ -5,7 +5,9 @@
 package poly.cinema.ui;
 
 import java.awt.CardLayout;
+import java.util.List;
 import javax.swing.JPanel;
+import poly.cinema.entity.DatVeSession;
 import poly.cinema.entity.HoaDon;
 
 /**
@@ -13,6 +15,12 @@ import poly.cinema.entity.HoaDon;
  * @author KhanhLinh
  */
 public class BanHang extends javax.swing.JPanel implements QL_BanHang_Controler {
+public void updateSauKhiChonGhe() {
+    // Lấy danh sách ghế từ session
+    List<String> danhSachGhe = DatVeSession.getDanhSachGheDaChon();
+    // Cập nhật bảng, label, hoặc logic tiếp theo tùy bạn
+    System.out.println("Ghế đã chọn: " + danhSachGhe);
+}
 
     private JPanel pnlMainContent;
 
@@ -317,7 +325,7 @@ public class BanHang extends javax.swing.JPanel implements QL_BanHang_Controler 
     }//GEN-LAST:event_jTextField2ActionPerformed
 
     private void lblchonphimMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblchonphimMouseClicked
-        chuyenPanel("chonPhim");
+        chuyenPanel("pnlChonPhim");
     }//GEN-LAST:event_lblchonphimMouseClicked
 
     private void lblchonsanphamMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblchonsanphamMouseClicked

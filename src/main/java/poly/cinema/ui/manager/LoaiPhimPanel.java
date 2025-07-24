@@ -212,7 +212,7 @@ public class LoaiPhimPanel extends javax.swing.JPanel implements CrudController<
 
     private void tblLoaiPhimMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblLoaiPhimMouseClicked
         // TODO add your handling code here:
-      updateButtonStatus();
+        updateButtonStatus();
     }//GEN-LAST:event_tblLoaiPhimMouseClicked
 
 
@@ -235,15 +235,17 @@ public class LoaiPhimPanel extends javax.swing.JPanel implements CrudController<
     }
 
     private void updateButtonStatus() {
-    boolean isSelected = tblLoaiPhim.getSelectedRow() >= 0;
-    btnThem.setEnabled(!isSelected); // Chỉ bật khi KHÔNG chọn dòng
-    btnSua.setEnabled(isSelected);   // Bật khi có chọn dòng
-    btnXoa.setEnabled(isSelected);  // Bật khi có chọn dòng
-}
+        boolean isSelected = tblLoaiPhim.getSelectedRow() >= 0;
+        btnThem.setEnabled(!isSelected);
+        btnSua.setEnabled(isSelected);
+        btnXoa.setEnabled(isSelected);
+    }
+    @Override
     public void setForm(LoaiPhim entity) {
         txtTheLoai.setText(entity.getTenLoai());
     }
 
+    @Override
     public LoaiPhim getForm() {
         String tenLoai = txtTheLoai.getText().trim();
 

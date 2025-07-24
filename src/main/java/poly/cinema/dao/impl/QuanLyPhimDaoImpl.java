@@ -101,7 +101,7 @@ public class QuanLyPhimDaoImpl implements QuanLyPhimDao {
             entity.getThoiLuong(),
             entity.getMoTa(),
             new java.sql.Date(entity.getNgayKhoiChieu().getTime()),
-            new java.sql.Date(entity.getNgayKetThuc().getTime()), // ➕
+            new java.sql.Date(entity.getNgayKetThuc().getTime()),
             entity.getTrangThai(),
             entity.getHinhAnh(),
             entity.getMaPhim()

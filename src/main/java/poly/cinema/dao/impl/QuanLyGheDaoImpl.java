@@ -127,7 +127,7 @@ public class QuanLyGheDaoImpl implements QuanLyGheDao {
     @Override
     public List<String> getAllMaPhong() {
         List<String> result = new ArrayList<>();
-        String sql = "SELECT ma_phong FROM PhongChieu"; // ✅ Lấy trực tiếp từ bảng PhongChieu
+        String sql = "SELECT ma_phong FROM PhongChieu";
         try (
                 Connection conn = XJdbc.openConnection(); PreparedStatement ps = conn.prepareStatement(sql); ResultSet rs = ps.executeQuery()) {
             while (rs.next()) {
@@ -139,4 +139,31 @@ public class QuanLyGheDaoImpl implements QuanLyGheDao {
         return result;
     }
 
+    @Override
+    public List<QuanLyGhe> findByMaPhong(String maPhong) {
+        List<QuanLyGhe> list = new ArrayList<>();
+        String sql = "SELECT * FROM Ghe WHERE ma_phong = ?";
+
+        try (
+                Connection conn = XJdbc.openConnection(); PreparedStatement stmt = conn.prepareStatement(sql);) {
+            stmt.setString(1, maPhong);
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                QuanLyGhe ghe = new QuanLyGhe();
+                ghe.setMaGhe(rs.getInt("ma_ghe"));
+                ghe.setMaPhong(rs.getString("ma_phong"));
+                ghe.setSoGhe(rs.getString("so_ghe"));
+                ghe.setHang(rs.getString("hang"));
+                ghe.setCot(rs.getInt("cot"));
+                ghe.setLoaiGhe(rs.getString("loai_ghe"));
+                list.add(ghe);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return list;
+    }
 }

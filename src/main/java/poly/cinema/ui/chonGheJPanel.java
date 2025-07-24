@@ -4,20 +4,43 @@
  */
 package poly.cinema.ui;
 
+import java.awt.BorderLayout;
+import java.awt.CardLayout;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.Font;
+import java.awt.GridBagLayout;
+import java.awt.GridLayout;
+import java.awt.Insets;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+import javax.swing.BorderFactory;
+import javax.swing.Box;
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import poly.cinema.dao.ChiTietVeDAO;
+import poly.cinema.dao.QuanLyGheDao;
+import poly.cinema.dao.QuanLyPhongChieuDao;
+import poly.cinema.dao.impl.ChiTietVeDAOImpl;
+import poly.cinema.dao.impl.QuanLyGheDaoImpl;
+import poly.cinema.dao.impl.QuanLyPhongChieuDaoImpl;
+import poly.cinema.entity.DatVeSession;
+import poly.cinema.entity.PhongChieu;
+import poly.cinema.entity.QuanLyGhe;
+
 /**
  *
  * @author Admin
  */
-public class chonGheJPanel extends javax.swing.JPanel implements chonGheController {
+public class chonGheJPanel extends javax.swing.JPanel {
 
-    /**
-     * Creates new form chonGheJPanel
-     */
-    public chonGheJPanel() {
-        initComponents();
-    }
-
-    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -28,89 +51,186 @@ public class chonGheJPanel extends javax.swing.JPanel implements chonGheControll
     private void initComponents() {
 
         jPanel3 = new javax.swing.JPanel();
-        jPanel1 = new javax.swing.JPanel();
-        jPanel2 = new javax.swing.JPanel();
+        pnlGhe = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
+        lblGheDaChon = new javax.swing.JLabel();
+        lblMaXuat = new javax.swing.JLabel();
 
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 740, Short.MAX_VALUE)
+        javax.swing.GroupLayout pnlGheLayout = new javax.swing.GroupLayout(pnlGhe);
+        pnlGhe.setLayout(pnlGheLayout);
+        pnlGheLayout.setHorizontalGroup(
+            pnlGheLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 700, Short.MAX_VALUE)
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 600, Short.MAX_VALUE)
-        );
-
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 352, Short.MAX_VALUE)
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 600, Short.MAX_VALUE)
+        pnlGheLayout.setVerticalGroup(
+            pnlGheLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 500, Short.MAX_VALUE)
         );
 
         jLabel1.setText("Hủy");
 
         jLabel2.setText("Tiếp theo");
+        jLabel2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel2MouseClicked(evt);
+            }
+        });
+
+        lblGheDaChon.setText("jLabel3");
+
+        lblMaXuat.setText("jLabel3");
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel2)
-                .addGap(82, 82, 82)
-                .addComponent(jLabel1)
-                .addGap(62, 62, 62))
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap(274, Short.MAX_VALUE)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                        .addComponent(lblMaXuat)
+                        .addGap(75, 75, 75)
+                        .addComponent(lblGheDaChon)
+                        .addGap(376, 376, 376)
+                        .addComponent(jLabel2)
+                        .addGap(79, 79, 79)
+                        .addComponent(jLabel1)
+                        .addGap(61, 61, 61))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                        .addComponent(pnlGhe, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(136, 136, 136))))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(55, 55, 55)
+                .addContainerGap(107, Short.MAX_VALUE)
+                .addComponent(pnlGhe, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(45, 45, 45)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(jLabel2))
-                .addGap(22, 22, 22))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel1)
+                            .addComponent(jLabel2))
+                        .addGap(44, 44, 44))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lblGheDaChon)
+                            .addComponent(lblMaXuat))
+                        .addGap(52, 52, 52))))
         );
 
         add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1110, 720));
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jLabel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel2MouseClicked
+//        chuyenSangBanHang();
+    }//GEN-LAST:event_jLabel2MouseClicked
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
+    private javax.swing.JLabel lblGheDaChon;
+    private javax.swing.JLabel lblMaXuat;
+    private javax.swing.JPanel pnlGhe;
     // End of variables declaration//GEN-END:variables
 
-    @Override
-    public void open() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    private List<String> gheDaChon = new ArrayList<>();
+    private JPanel pnlMainContent;
+
+    public chonGheJPanel(JPanel pnlMainContent) {
+        this.pnlMainContent = pnlMainContent;
+        initComponents(); // Giữ form bạn đã thiết kế bằng GUI
     }
 
-    @Override
-    public void showBillJDialog(String soGhe) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    /**
+     * Load ghế dựa theo suất chiếu và phòng chiếu
+     */
+    public void loadGheTheoSuatChieu(String maXuat, String maPhong) {
+        QuanLyPhongChieuDao phongDao = new QuanLyPhongChieuDaoImpl();
+        PhongChieu phong = phongDao.findById(maPhong);
+
+        if (phong == null) {
+            JOptionPane.showMessageDialog(this, "Không tìm thấy phòng chiếu!");
+            return;
+        }
+
+        int soHang = phong.getSoHang();
+        int soCot = phong.getSoCot();
+
+        ChiTietVeDAO chiTietVeDao = new ChiTietVeDAOImpl();
+        List<String> gheDaDat = chiTietVeDao.getGheDaDat(maXuat);
+
+        loadGhe(soHang, soCot, gheDaDat);
     }
+
+    /**
+     * Vẽ ghế vào pnlGhe đã có sẵn
+     */
+    private void loadGhe(int soHang, int soCot, List<String> gheDaDat) {
+    pnlGhe.removeAll();
+    gheDaChon.clear();
+
+    int panelWidth = pnlGhe.getWidth();
+    int panelHeight = pnlGhe.getHeight();
+
+    // fallback nếu chưa có kích thước
+    if (panelWidth == 0 || panelHeight == 0) {
+        panelWidth = 700;
+        panelHeight = 500;
+    }
+
+    // Tính kích thước ghế vừa với panel
+    int gap = 6;
+    int btnWidth = (panelWidth - (soCot - 1) * gap) / soCot;
+    int btnHeight = (panelHeight - (soHang - 1) * gap) / soHang;
+    int btnSize = Math.min(btnWidth, btnHeight); // vuông
+
+    int totalWidth = soCot * btnSize + (soCot - 1) * gap;
+    int totalHeight = soHang * btnSize + (soHang - 1) * gap;
+
+    int offsetX = (panelWidth - totalWidth) / 2;
+    int offsetY = (panelHeight - totalHeight) / 2;
+
+    for (int hang = 0; hang < soHang; hang++) {
+        for (int cot = 0; cot < soCot; cot++) {
+            String maGhe = (cot + 1) + "" + (char) ('A' + hang);
+            JButton btn = new JButton(maGhe);
+            btn.setFont(new Font("Arial", Font.BOLD, 10));
+            btn.setMargin(new Insets(0, 0, 0, 0));
+            btn.setFocusable(false);
+
+            int x = offsetX + cot * (btnSize + gap);
+            int y = offsetY + hang * (btnSize + gap);
+            btn.setBounds(x, y, btnSize, btnSize);
+
+            if (gheDaDat.contains(maGhe)) {
+                btn.setEnabled(false);
+                btn.setBackground(Color.RED);
+            } else {
+                btn.setBackground(Color.LIGHT_GRAY);
+                btn.addActionListener(e -> {
+                    if (gheDaChon.contains(maGhe)) {
+                        gheDaChon.remove(maGhe);
+                        btn.setBackground(Color.LIGHT_GRAY);
+                    } else {
+                        gheDaChon.add(maGhe);
+                        btn.setBackground(Color.ORANGE);
+                    }
+                });
+            }
+
+            pnlGhe.add(btn);
+        }
+    }
+
+    pnlGhe.revalidate();
+    pnlGhe.repaint();
+}
+
+
 }

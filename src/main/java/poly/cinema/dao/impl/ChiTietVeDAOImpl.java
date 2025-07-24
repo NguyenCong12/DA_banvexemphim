@@ -4,7 +4,10 @@
  */
 package poly.cinema.dao.impl;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import poly.cinema.dao.ChiTietVeDAO;
@@ -105,6 +108,28 @@ public class ChiTietVeDAOImpl implements ChiTietVeDAO {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        return list;
+    }
+    @Override
+    public List<String> getGheDaDat(String maXuat) {
+        List<String> list = new ArrayList<>();
+        String sql = "SELECT ma_ghe FROM ChiTietVe WHERE ma_xuat = ?";
+
+        try (
+            Connection conn = XJdbc.openConnection();
+            PreparedStatement stmt = conn.prepareStatement(sql);
+        ) {
+            stmt.setString(1, maXuat);
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                list.add(rs.getString("ma_ghe"));
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
         return list;
     }
 }

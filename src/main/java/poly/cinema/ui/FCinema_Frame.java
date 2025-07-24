@@ -54,7 +54,7 @@ public class FCinema_Frame extends javax.swing.JFrame implements FCinema_Control
         pnlMainContent.add(pnlBanHang, "pnlBanHang");
         pnlChonPhim = new poly.cinema.ui.chonPhimJpanel(pnlMainContent);
         pnlMainContent.add(pnlChonPhim, "pnlChonPhim");
-        pnlchonGhe = new poly.cinema.ui.chonGheJPanel();
+        pnlchonGhe = new poly.cinema.ui.chonGheJPanel(pnlMainContent);
         pnlMainContent.add(pnlchonGhe, "pnlchonGhe");
         pnlBanSanPham = new poly.cinema.ui.BanSanPham();
         pnlMainContent.add(pnlBanSanPham, "pnlBanSanPham");

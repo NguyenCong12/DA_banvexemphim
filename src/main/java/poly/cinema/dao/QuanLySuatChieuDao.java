@@ -14,5 +14,7 @@ import poly.cinema.entity.SuatChieu;
  */
 public interface QuanLySuatChieuDao extends CrudDAO<SuatChieu, Integer> {
     List<SuatChieu> findByNgayVaPhim(Date ngay, int maPhim);
+    List<SuatChieu> findByMaPhim(int maPhim);
+    
 }
 
