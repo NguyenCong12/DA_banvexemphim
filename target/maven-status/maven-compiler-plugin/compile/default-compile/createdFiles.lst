@@ -34,15 +34,12 @@ poly\cinema\ui\DoiMatKhau$2.class
 poly\cinema\dao\impl\ChiTietVeDAOImpl.class
 poly\cinema\ui\manager\LichSuBanHang$2.class
 poly\cinema\ui\manager\XemLichChieu$3.class
-<<<<<<< Updated upstream
 poly\cinema\ui\manager\QuanLiNhanVienController.class
 poly\cinema\ui\FCinema_Frame$18.class
 poly\cinema\ui\manager\QuanLyHoaDonJpanel$3.class
 poly\cinema\ui\manager\QuanLyHoaDonJpanel$11.class
-poly\cinema\ui\FCinema_Frame$11.class
-=======
 poly\cinema\ui\BanSanPham$2.class
->>>>>>> Stashed changes
+poly\cinema\ui\FCinema_Frame$11.class
 poly\cinema\ui\chonGheController.class
 poly\cinema\ui\manager\QuanLyPhim$7.class
 poly\cinema\ui\KhoiPhucMKJDialog$3$1.class
@@ -126,7 +123,6 @@ poly\cinema\ui\manager\QuanLyGheJpanel$12.class
 poly\cinema\ui\manager\QuanLySanPham$4.class
 poly\cinema\ui\manager\ThongKePanel$2.class
 poly\cinema\ui\manager\LoaiGheJpanel$2.class
-<<<<<<< Updated upstream
 poly\cinema\ui\manager\QuanLyGheJpanel$5.class
 poly\cinema\ui\manager\QuanLyXuatChieu.class
 poly\cinema\ui\DoiMatKhau.class
@@ -134,9 +130,7 @@ poly\cinema\ui\manager\QuanLyPhim$3.class
 poly\cinema\dao\QuanLyGheDao.class
 poly\cinema\ui\manager\QuanLyGheJpanel.class
 poly\cinema\entity\SuatChieu.class
-=======
 poly\cinema\ui\BanSanPham$4.class
->>>>>>> Stashed changes
 poly\cinema\entity\XuatChieu.class
 poly\cinema\entity\QuanLyGhe$QuanLyGheBuilder.class
 poly\cinema\ui\manager\QuanLyHoaDonJpanel$5.class
@@ -158,7 +152,6 @@ poly\cinema\ui\manager\LoaiPhimController.class
 poly\cinema\ui\manager\QuanLyGheJpanel$10.class
 poly\cinema\util\TimeRange.class
 poly\cinema\ui\manager\QuanLySanPham$2.class
-poly\cinema\ui\manager\LoaiGheJpanel$7.class
 poly\cinema\ui\manager\QuanLyPhongChieuController.class
 poly\cinema\entity\MatHang.class
 poly\cinema\ui\manager\QuanLySanPhamController.class
@@ -209,10 +202,6 @@ poly\cinema\ui\manager\XemLichChieu$1.class
 poly\cinema\ui\manager\QuanLyXuatChieu$3.class
 poly\cinema\dao\LichSuDAO.class
 poly\cinema\ui\WelcomeJDialog$1.class
-<<<<<<< Updated upstream
-=======
-poly\cinema\ui\manager\LoaiGheJpanel$8.class
->>>>>>> Stashed changes
 poly\cinema\ui\BanHang$2.class
 poly\cinema\ui\manager\QuanLyPhim$9.class
 poly\cinema\ui\FCinema_Frame$10.class
@@ -257,11 +246,8 @@ poly\cinema\ui\QL_BanHang_Controler.class
 poly\cinema\ui\WelcomeJDialog$2.class
 poly\cinema\util\XIcon.class
 poly\cinema\ui\manager\LoaiGheJpanel.class
-<<<<<<< Updated upstream
-poly\cinema\ui\DangNhapController.class
-=======
 poly\cinema\ui\BanSanPham$5.class
->>>>>>> Stashed changes
+poly\cinema\ui\DangNhapController.class
 poly\cinema\ui\chonPhimJpanel$1.class
 poly\cinema\util\CaptchaGenerator.class
 poly\cinema\ui\FCinema_Frame$6.class
