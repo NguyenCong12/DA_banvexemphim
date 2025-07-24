@@ -17,6 +17,7 @@ import poly.cinema.util.XJdbc;
  */
 public class ChiTietHangDAOImpl implements ChiTietHangDAO {
 // Ghi dòng này để Git nhận ra file là mới
+
     @Override
     public List<ChiTietHang> selectByMaHD(Integer maHD) {
         List<ChiTietHang> list = new ArrayList<>();
@@ -43,16 +44,21 @@ public class ChiTietHangDAOImpl implements ChiTietHangDAO {
         }
         return list;
     }
-
+    
     @Override
     public ChiTietHang create(ChiTietHang entity) {
         String sql = "INSERT INTO ChiTietHang (ma_hd, ma_hang, so_luong, gia) VALUES (?, ?, ?, ?)";
-        XJdbc.executeUpdate(sql,
+        int rows = XJdbc.executeUpdate(sql,
                 entity.getMaHD(),
                 entity.getMaHang(),
                 entity.getSoLuong(),
                 entity.getGia()
         );
+
+        if (rows > 0) {
+            Integer idMoi = XJdbc.getValue("SELECT SCOPE_IDENTITY()");
+            entity.setMaCTH(idMoi);
+        }
         return entity;
     }
 

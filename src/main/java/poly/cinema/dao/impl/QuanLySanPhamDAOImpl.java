@@ -4,7 +4,10 @@
  */
 package poly.cinema.dao.impl;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import poly.cinema.dao.QuanLySanPhamDAO;
@@ -27,21 +30,33 @@ public class QuanLySanPhamDAOImpl implements QuanLySanPhamDAO {
 
     @Override
     public SanPham create(SanPham sp) {
-        // Thêm mới không cần truyền mã
-        int rows = XJdbc.executeUpdate(INSERT_SQL,
-                sp.getTenSanPham(),
-                sp.getLoai(),
-                sp.getGia(),
-                sp.isTrangThai(),
-                sp.getAnh()
-        );
+        // Tạo kết nối
+        try (Connection con = XJdbc.openConnection(); PreparedStatement ps = con.prepareStatement(INSERT_SQL, Statement.RETURN_GENERATED_KEYS)) {
 
-        // Lấy lại ID mới chèn (nếu cần)
-        if (rows > 0) {
-            Integer idMoi = XJdbc.getValue("SELECT SCOPE_IDENTITY()");
-            sp.setMaSanPham(idMoi.toString()); // gán lại cho entity
-            return sp;
+            // Thiết lập tham số
+            ps.setString(1, sp.getTenSanPham());
+            ps.setString(2, sp.getLoai());
+            ps.setDouble(3, sp.getGia());
+            ps.setBoolean(4, sp.isTrangThai());
+            ps.setString(5, sp.getAnh());
+
+            // Thực thi lệnh
+            int rows = ps.executeUpdate();
+
+            if (rows > 0) {
+                try (ResultSet rs = ps.getGeneratedKeys()) {
+                    if (rs.next()) {
+                        int idMoi = rs.getInt(1);
+                        sp.setMaSanPham(String.valueOf(idMoi)); // Gán ID cho entity
+                        return sp;
+                    }
+                }
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
         }
+
         return null;
     }
 
