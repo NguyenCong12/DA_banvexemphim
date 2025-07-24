@@ -314,33 +314,33 @@ public class QuanLiPhongChieu extends javax.swing.JPanel implements QuanLyPhongC
         btnSua.setEnabled(isSelected);   // Bật khi có chọn dòng
         btnXoa.setEnabled(isSelected);   // Bật khi có chọn dòng
     }
-private void insertGheChoPhong(PhongChieu pc) {
-    QuanLyGheDao gheDao = new QuanLyGheDaoImpl();
-    int soHang = pc.getSoHang();
-    int soCot = pc.getSoCot();
-    String maPhong = pc.getMaPhong();
 
-    for (int hang = 1; hang <= soHang; hang++) {
-        String hangStr = String.valueOf((char) ('A' + hang - 1)); // A, B, C,...
-        
-        // Xác định loại ghế
-        String loaiGhe = (hang <= 3) ? "Thường" : "VIP";
+    private void insertGheChoPhong(PhongChieu pc) {
+        QuanLyGheDao gheDao = new QuanLyGheDaoImpl();
+        int soHang = pc.getSoHang();
+        int soCot = pc.getSoCot();
+        String maPhong = pc.getMaPhong();
 
-        for (int cot = 1; cot <= soCot; cot++) {
-            String soGhe = hangStr + cot; // Ví dụ: A1, A2, D5, E3,...
-            QuanLyGhe ghe = new QuanLyGhe(
-                null,
-                maPhong,
-                soGhe,
-                hangStr,
-                cot,
-                loaiGhe
-            );
-            gheDao.create(ghe);
+        for (int hang = 1; hang <= soHang; hang++) {
+            String hangStr = String.valueOf((char) ('A' + hang - 1)); // A, B, C,...
+
+            // Xác định loại ghế
+            String loaiGhe = (hang <= 3) ? "Thường" : "VIP";
+
+            for (int cot = 1; cot <= soCot; cot++) {
+                String soGhe = hangStr + cot; // Ví dụ: A1, A2, D5, E3,...
+                QuanLyGhe ghe = new QuanLyGhe(
+                        null,
+                        maPhong,
+                        soGhe,
+                        hangStr,
+                        cot,
+                        loaiGhe
+                );
+                gheDao.create(ghe);
+            }
         }
     }
-}
-
 
     @Override
     public PhongChieu getForm() {
@@ -395,104 +395,108 @@ private void insertGheChoPhong(PhongChieu pc) {
     }
 
     @Override
-public void create() {
-    PhongChieu pc = getForm();
-    if (pc == null) {
-        return;
-    }
-
-    for (PhongChieu item : items) {
-        if (item.getMaPhong().equalsIgnoreCase(pc.getMaPhong())) {
-            XDialog.alert("Mã phòng đã tồn tại, vui lòng chọn mã khác.");
+    public void create() {
+        PhongChieu pc = getForm();
+        if (pc == null) {
             return;
         }
-    }
 
-    dao.create(pc);
-    insertGheChoPhong(pc); // ✅ THÊM GHẾ NGAY SAU KHI TẠO PHÒNG
+// Kiểm tra số hàng và cột không vượt quá 15
+        if (pc.getSoHang() > 15 || pc.getSoCot() > 15) {
+            XDialog.alert("Số hàng và số cột không được vượt quá 15!");
+            return;
+        }
 
-    fillToTable();
-    clear();
-    updateButtonStatus();
-    XDialog.alert("Thêm thành công!");
-}
+// Kiểm tra mã phòng trùng
+        for (PhongChieu item : items) {
+            if (item.getMaPhong().equalsIgnoreCase(pc.getMaPhong())) {
+                XDialog.alert("Mã phòng đã tồn tại, vui lòng chọn mã khác.");
+                return;
+            }
+        }
 
-
-    @Override
-public void update() {
-    int row = tblPhongChieu.getSelectedRow();
-    if (row < 0) {
-        XDialog.alert("Vui lòng chọn phòng để cập nhật.");
-        return;
-    }
-
-    PhongChieu pc = getForm();
-    if (pc == null) {
-        return;
-    }
-
-    // Lấy bản gốc từ list để so sánh
-    PhongChieu old = items.get(row);
-    boolean isChanged = !old.getMaPhong().equals(pc.getMaPhong())
-                     || !old.getTenPhong().equals(pc.getTenPhong())
-                     || old.getSoHang() != pc.getSoHang()
-                     || old.getSoCot() != pc.getSoCot();
-
-    if (!isChanged) {
-        XDialog.alert("Bạn chưa thay đổi thông tin nào để cập nhật.");
-        return;
-    }
-
-    dao.update(pc); // Cập nhật phòng
-
-    // Nếu số hàng/cột thay đổi thì làm lại ghế
-    if (old.getSoHang() != pc.getSoHang() || old.getSoCot() != pc.getSoCot()) {
-        QuanLyGheDao gheDao = new QuanLyGheDaoImpl();
-        gheDao.deleteByMaPhong(pc.getMaPhong()); // ✅ Xóa ghế cũ
-        insertGheChoPhong(pc);                   // ✅ Sinh lại ghế mới
-    }
-
-    fillToTable();
-    XDialog.alert("Cập nhật thành công!");
-}
-
-
-    @Override
-public void delete() {
-    int row = tblPhongChieu.getSelectedRow();
-    if (row < 0) {
-        XDialog.alert("Vui lòng chọn phòng cần xóa.");
-        return;
-    }
-
-    String maPhong = (String) tblPhongChieu.getValueAt(row, 0);
-
-    // Xác nhận trước khi xóa
-    if (!XDialog.confirm("Bạn có chắc muốn xóa phòng này không?")) {
-        return;
-    }
-
-    try {
-        // Bước 1: Xóa ghế trước
-        QuanLyGheDao gheDao = new QuanLyGheDaoImpl();
-        gheDao.deleteByMaPhong(maPhong);
-
-        // Bước 2: Xóa phòng chiếu
-        dao.delete(maPhong); // delete theo mã phòng, phải có hàm này trong QuanLyPhongChieuDao
-
+        dao.create(pc);
+        insertGheChoPhong(pc); // ✅ Tạo ghế tự động
         fillToTable();
         clear();
-        XDialog.alert("Xóa thành công!");
-    } catch (Exception e) {
-        if (e.getMessage().contains("REFERENCE constraint") || e.getMessage().contains("conflicted")) {
-            XDialog.alert("Không thể xóa! Phòng chiếu này đang được sử dụng trong suất chiếu.");
-        } else {
-            e.printStackTrace();
-            XDialog.alert("Xóa thất bại: " + e.getMessage());
+        updateButtonStatus();
+        XDialog.alert("Thêm thành công!");
+
+    }
+
+    @Override
+    public void update() {
+        int row = tblPhongChieu.getSelectedRow();
+        if (row < 0) {
+            XDialog.alert("Vui lòng chọn phòng để cập nhật.");
+            return;
+        }
+
+        PhongChieu pc = getForm();
+        if (pc == null) {
+            return;
+        }
+
+        // Lấy bản gốc từ list để so sánh
+        PhongChieu old = items.get(row);
+        boolean isChanged = !old.getMaPhong().equals(pc.getMaPhong())
+                || !old.getTenPhong().equals(pc.getTenPhong())
+                || old.getSoHang() != pc.getSoHang()
+                || old.getSoCot() != pc.getSoCot();
+
+        if (!isChanged) {
+            XDialog.alert("Bạn chưa thay đổi thông tin nào để cập nhật.");
+            return;
+        }
+
+        dao.update(pc); // Cập nhật phòng
+
+        // Nếu số hàng/cột thay đổi thì làm lại ghế
+        if (old.getSoHang() != pc.getSoHang() || old.getSoCot() != pc.getSoCot()) {
+            QuanLyGheDao gheDao = new QuanLyGheDaoImpl();
+            gheDao.deleteByMaPhong(pc.getMaPhong()); // ✅ Xóa ghế cũ
+            insertGheChoPhong(pc);                   // ✅ Sinh lại ghế mới
+        }
+
+        fillToTable();
+        XDialog.alert("Cập nhật thành công!");
+    }
+
+    @Override
+    public void delete() {
+        int row = tblPhongChieu.getSelectedRow();
+        if (row < 0) {
+            XDialog.alert("Vui lòng chọn phòng cần xóa.");
+            return;
+        }
+
+        String maPhong = (String) tblPhongChieu.getValueAt(row, 0);
+
+        // Xác nhận trước khi xóa
+        if (!XDialog.confirm("Bạn có chắc muốn xóa phòng này không?")) {
+            return;
+        }
+
+        try {
+            // Bước 1: Xóa ghế trước
+            QuanLyGheDao gheDao = new QuanLyGheDaoImpl();
+            gheDao.deleteByMaPhong(maPhong);
+
+            // Bước 2: Xóa phòng chiếu
+            dao.delete(maPhong); // delete theo mã phòng, phải có hàm này trong QuanLyPhongChieuDao
+
+            fillToTable();
+            clear();
+            XDialog.alert("Xóa thành công!");
+        } catch (Exception e) {
+            if (e.getMessage().contains("REFERENCE constraint") || e.getMessage().contains("conflicted")) {
+                XDialog.alert("Không thể xóa! Phòng chiếu này đang được sử dụng trong suất chiếu.");
+            } else {
+                e.printStackTrace();
+                XDialog.alert("Xóa thất bại: " + e.getMessage());
+            }
         }
     }
-}
-
 
     @Override
     public void clear() {

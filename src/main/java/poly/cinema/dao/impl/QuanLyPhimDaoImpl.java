@@ -20,7 +20,7 @@ public class QuanLyPhimDaoImpl implements QuanLyPhimDao {
        ========================================================= */
     private static final String INSERT_SQL = """
     INSERT INTO Phim (ten_phim, ma_loai, thoi_luong, mo_ta, ngay_khoi_chieu, trang_thai, hinh_anh)
-    VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+    VALUES (?, ?, ?, ?, ?, ?, ?)
     """;
 
     private static final String UPDATE_SQL = """
@@ -50,7 +50,6 @@ public class QuanLyPhimDaoImpl implements QuanLyPhimDao {
     FROM Phim p
     JOIN LoaiPhim lp ON p.ma_loai = lp.ma_loai
     """;
-
 
     // ---- Các câu WHERE dùng tên bảng/cột thật, KHÔNG dùng alias ở trên ----
     private static final String SELECT_BY_ID_SQL
@@ -191,23 +190,37 @@ public class QuanLyPhimDaoImpl implements QuanLyPhimDao {
         phim.setHinhAnh(rs.getString("hinh_anh"));
         return phim;
     }
-public String getTenLoaiByMaLoai(int maLoai) {
-    String sql = "SELECT ten_loai FROM LoaiPhim WHERE ma_loai = ?";
-    try (
-        Connection con = XJdbc.openConnection();
-        PreparedStatement ps = con.prepareStatement(sql)
-    ) {
-        ps.setInt(1, maLoai);
-        try (ResultSet rs = ps.executeQuery()) {
-            if (rs.next()) {
-                return rs.getString("ten_loai");
-            }
-        }
-    } catch (SQLException e) {
-        e.printStackTrace();
-    }
-    return null;
-}
 
+    public String getTenLoaiByMaLoai(int maLoai) {
+        String sql = "SELECT ten_loai FROM LoaiPhim WHERE ma_loai = ?";
+        try (
+                Connection con = XJdbc.openConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setInt(1, maLoai);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getString("ten_loai");
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public boolean isTenPhimTrung(String tenPhim) {
+        String sql = "SELECT COUNT(*) FROM Phim WHERE ten_phim = ?";
+        try (
+                Connection con = XJdbc.openConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setString(1, tenPhim);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getInt(1) > 0;
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("Lỗi kiểm tra trùng tên phim.", e);
+        }
+        return false;
+    }
 
 }

@@ -388,7 +388,7 @@ public class QuanLiNhanVien extends javax.swing.JPanel implements QuanLiNhanVien
                 JOptionPane.showMessageDialog(this, "Không tìm thấy nhân viên!");
             }
         }
-        
+
     }//GEN-LAST:event_tblQLnhanvienMouseClicked
 
     private void lblAnhMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblAnhMouseClicked
@@ -434,10 +434,8 @@ public class QuanLiNhanVien extends javax.swing.JPanel implements QuanLiNhanVien
         this.setVisible(true);
         clear();
         fillToTable();
-        
+
     }
-
-
 
     @Override
     public void setForm(NguoiDung entity) {
@@ -566,8 +564,8 @@ public class QuanLiNhanVien extends javax.swing.JPanel implements QuanLiNhanVien
         }
 
         // Kiểm tra định dạng số điện thoại (10–11 số)
-        if (!sodienthoai.matches("^\\d{10,11}$")) {
-            JOptionPane.showMessageDialog(this, "Số điện thoại không hợp lệ (phải có 10–11 chữ số)!");
+        if (!sodienthoai.matches("^\\d{10}$")) {
+            JOptionPane.showMessageDialog(this, "Số điện thoại không hợp lệ (phải có 10 chữ số)!");
             return;
         }
 
@@ -581,6 +579,19 @@ public class QuanLiNhanVien extends javax.swing.JPanel implements QuanLiNhanVien
         if (!rdoHoatDong.isSelected() && !rdoDaNgung.isSelected()) {
             JOptionPane.showMessageDialog(this, "Vui lòng chọn trạng thái!");
             return;
+        }
+
+        // Kiểm tra chỉ được có 1 quản lý
+        if (rdoQuanLy.isSelected()) {
+            List<NguoiDung> list = dao.findAll();
+            for (NguoiDung nd : list) {
+                // Giả sử vai trò quản lý là true, nhân viên là false (boolean)
+                // Nếu bạn dùng kiểu String thì sửa thành: nd.getVaitro().equalsIgnoreCase("Quản lý")
+                if (nd.isVai_tro()) {
+                    JOptionPane.showMessageDialog(this, "Hệ thống chỉ cho phép một người quản lý!");
+                    return;
+                }
+            }
         }
 
         // Kiểm tra email đã tồn tại chưa

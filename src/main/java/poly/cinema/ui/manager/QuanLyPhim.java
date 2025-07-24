@@ -7,7 +7,9 @@ package poly.cinema.ui.manager;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
@@ -419,12 +421,17 @@ public class QuanLyPhim extends javax.swing.JPanel implements QuanLyPhimControll
     QuanLyPhimDao dao = new QuanLyPhimDaoImpl();
     List<Phim> items = new ArrayList<>();
     private List<LoaiPhim> loaiPhimList;
+    private Map<String, LoaiPhim> loaiPhimMap = new HashMap<>();
 
     private void loadLoaiPhimToComboBox() {
-        loaiPhimList = new LoaiPhimDaoImpl().findAll();
+        loaiPhimList = new LoaiPhimDaoImpl().findAll(); // vẫn là List<LoaiPhim>
         cboLoaiPhim.removeAllItems();
+        loaiPhimMap.clear(); // clear trước khi nạp mới
+
         for (LoaiPhim loai : loaiPhimList) {
-            cboLoaiPhim.addItem(loai.getTenLoai()); // ✅ String
+            String ten = loai.getTenLoai();
+            cboLoaiPhim.addItem(ten); // ✅ hiển thị tên
+            loaiPhimMap.put(ten, loai); // ✅ ánh xạ tên -> đối tượng
         }
     }
 
@@ -433,11 +440,11 @@ public class QuanLyPhim extends javax.swing.JPanel implements QuanLyPhimControll
         loadLoaiPhimToComboBox();
         fillToTable();
         clear();
-        
+
         if (cboLoaiPhim.getItemCount() > 0) {
             cboLoaiPhim.setSelectedIndex(0); // Mặc định set thể loại đầu tiên khi mở form
         }
-        
+
         updateButtonStatus();
     }
 
@@ -472,10 +479,19 @@ public class QuanLyPhim extends javax.swing.JPanel implements QuanLyPhimControll
             return null;
         }
 
-        // Lấy mã loại phim từ combo box
-        LoaiPhim selectedLoai = (LoaiPhim) cboLoaiPhim.getSelectedItem();
+        // ✅ Lấy tên loại từ ComboBox (vì addItem là String)
+        String tenLoai = (String) cboLoaiPhim.getSelectedItem();
+
+        // ✅ Dùng map để lấy lại đối tượng LoaiPhim
+        LoaiPhim selectedLoai = loaiPhimMap.get(tenLoai);
         if (selectedLoai == null) {
             XDialog.alert("Vui lòng chọn thể loại phim!");
+            return null;
+        }
+        QuanLyPhimDaoImpl phimDao = new QuanLyPhimDaoImpl();
+        // ✅ Kiểm tra trùng tên phim
+        if (phimDao.isTenPhimTrung(tenPhim)) {
+            XDialog.alert("Tên phim đã tồn tại! Vui lòng chọn tên khác.");
             return null;
         }
 
@@ -491,14 +507,15 @@ public class QuanLyPhim extends javax.swing.JPanel implements QuanLyPhimControll
             return null;
         }
 
-        // Kiểm tra ngày chiếu và ngày kết thúc
+        // Kiểm tra ngày chiếu
         Date ngayKhoiChieu = XDate.parse(txtNgayKhoiChieu.getText().trim(), "dd/MM/yyyy");
         Date today = new Date();
         if (ngayKhoiChieu.before(today)) {
             XDialog.alert("Ngày khởi chiếu không được nhỏ hơn ngày hôm nay.");
             return null;
         }
-        // Lấy trạng thái
+
+        // Kiểm tra trạng thái
         String trangThai = getTrangThai();
         if (trangThai == null) {
             XDialog.alert("Vui lòng chọn trạng thái phim!");
@@ -508,10 +525,10 @@ public class QuanLyPhim extends javax.swing.JPanel implements QuanLyPhimControll
         // Hình ảnh
         String hinhAnh = lblAnh.getToolTipText();
 
-        // Build đối tượng Phim
+        // ✅ Trả về đối tượng Phim
         return Phim.builder()
                 .tenPhim(tenPhim)
-                .maLoai(selectedLoai.getMaLoai())
+                .maLoai(selectedLoai.getMaLoai()) // dùng được vì đã lấy đúng LoaiPhim
                 .thoiLuong(thoiLuong)
                 .moTa(moTa)
                 .ngayKhoiChieu(ngayKhoiChieu)
