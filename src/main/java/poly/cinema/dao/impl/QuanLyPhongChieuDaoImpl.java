@@ -20,7 +20,8 @@ import poly.cinema.util.XJdbc;
  * @author Admin
  */
 public class QuanLyPhongChieuDaoImpl implements QuanLyPhongChieuDao {
-private final String INSERT_SQL = "INSERT INTO PhongChieu (ma_phong, ten_phong, so_hang, so_cot) VALUES (?, ?, ?, ?)";
+
+    private final String INSERT_SQL = "INSERT INTO PhongChieu (ma_phong, ten_phong, so_hang, so_cot) VALUES (?, ?, ?, ?)";
     private final String UPDATE_SQL = "UPDATE PhongChieu SET ten_phong = ?, so_hang = ?, so_cot = ? WHERE ma_phong = ?";
     private final String DELETE_SQL = "DELETE FROM PhongChieu WHERE ma_phong = ?";
     private final String SELECT_ALL_SQL = "SELECT * FROM PhongChieu";
@@ -29,10 +30,10 @@ private final String INSERT_SQL = "INSERT INTO PhongChieu (ma_phong, ten_phong, 
     @Override
     public PhongChieu create(PhongChieu entity) {
         XJdbc.executeUpdate(INSERT_SQL,
-            entity.getMaPhong(),
-            entity.getTenPhong(),
-            entity.getSoHang(),
-            entity.getSoCot()
+                entity.getMaPhong(),
+                entity.getTenPhong(),
+                entity.getSoHang(),
+                entity.getSoCot()
         );
         return entity;
     }
@@ -40,10 +41,10 @@ private final String INSERT_SQL = "INSERT INTO PhongChieu (ma_phong, ten_phong, 
     @Override
     public void update(PhongChieu entity) {
         XJdbc.executeUpdate(UPDATE_SQL,
-            entity.getTenPhong(),
-            entity.getSoHang(),
-            entity.getSoCot(),
-            entity.getMaPhong()
+                entity.getTenPhong(),
+                entity.getSoHang(),
+                entity.getSoCot(),
+                entity.getMaPhong()
         );
     }
 
@@ -106,10 +107,10 @@ private final String INSERT_SQL = "INSERT INTO PhongChieu (ma_phong, ten_phong, 
         try (ResultSet rs = XJdbc.executeQuery(SELECT_BY_ID_SQL1, maPhong)) {
             if (rs.next()) {
                 return new PhongChieu(
-                    rs.getString("ma_phong"),
-                    rs.getString("ten_phong"),
-                    rs.getInt("so_hang"),
-                    rs.getInt("so_cot")
+                        rs.getString("ma_phong"),
+                        rs.getString("ten_phong"),
+                        rs.getInt("so_hang"),
+                        rs.getInt("so_cot")
                 );
             }
         } catch (Exception e) {
@@ -117,4 +118,11 @@ private final String INSERT_SQL = "INSERT INTO PhongChieu (ma_phong, ten_phong, 
         }
         return null;
     }
+
+    @Override
+    public void delete(String maPhong) {
+        String sql = "DELETE FROM PhongChieu WHERE ma_phong = ?";
+        XJdbc.executeUpdate(sql, maPhong);
+    }
+
 }

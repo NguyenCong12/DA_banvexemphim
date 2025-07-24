@@ -80,6 +80,7 @@ public class QuanLyGheDaoImpl implements QuanLyGheDao {
         XJdbc.executeUpdate(DELETE_SQL, id);
     }
 
+
     @Override
     public List<QuanLyGhe> findAll() {
         return XQuery.getEntityList(QuanLyGhe.class, SELECT_ALL_SQL);
@@ -165,5 +166,11 @@ public class QuanLyGheDaoImpl implements QuanLyGheDao {
         }
 
         return list;
+    }
+
+    @Override
+    public void deleteByMaPhong(String maPhong) {
+        String sql = "DELETE FROM Ghe WHERE ma_phong = ?";
+        XJdbc.executeUpdate(sql, maPhong);
     }
 }
