@@ -17,7 +17,9 @@ import poly.cinema.dao.impl.ChiTietVeDAOImpl;
 import poly.cinema.dao.impl.HoaDonDaoImpl;
 import poly.cinema.dao.impl.VeDaoImpl;
 import poly.cinema.entity.DangNhapSession;
+import poly.cinema.entity.DatHang;
 import poly.cinema.entity.NguoiDung;
+import poly.cinema.entity.SanPhamSession;
 
 /**
  *
@@ -27,11 +29,13 @@ public class BanHang extends javax.swing.JPanel {
 
     private JPanel pnlMainContent;
     private List<String> gheDaChon = new ArrayList<>();
+
     private int maXuatChieu;
 
     public BanHang(JPanel pnlMainContent) {
         this.pnlMainContent = pnlMainContent;
         initComponents();
+        loadSanPhamTuTam();
     }
 
     public void updateSauKhiChonGhe() {
@@ -145,6 +149,32 @@ public class BanHang extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(this, "Có lỗi khi thanh toán!", "Lỗi", JOptionPane.ERROR_MESSAGE);
         }
 
+    }
+
+    public void loadSanPhamTuTam() {
+        List<DatHang> ds = SanPhamSession.getAll();
+
+        DefaultTableModel model = (DefaultTableModel) tblchitiethang.getModel();
+        model.setRowCount(0); // Xóa bảng cũ
+
+        for (DatHang sp : ds) {
+            Object[] row = new Object[]{
+                sp.getTenSanPham(),
+                sp.getGia(),
+                sp.getSoLuong(),
+                sp.getThanhTien()
+            };
+            model.addRow(row);
+        }
+    }
+
+    public void setDanhSachHoaDon(List<Object[]> ds) {
+        DefaultTableModel model = (DefaultTableModel) tblchitiethang.getModel();
+        System.out.println(ds.size());
+        model.setRowCount(0); // Xoá hết dòng cũ
+        for (Object[] row : ds) {
+            model.addRow(row);
+        }
     }
 
     /**
@@ -392,20 +422,13 @@ public class BanHang extends javax.swing.JPanel {
     }//GEN-LAST:event_lblchonphimMouseClicked
 
     private void lblchonsanphamMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblchonsanphamMouseClicked
+
         chuyenPanel("pnlBanSanPham");
     }//GEN-LAST:event_lblchonsanphamMouseClicked
 
     private void jLabel10MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel10MouseClicked
         thanhToan();
     }//GEN-LAST:event_jLabel10MouseClicked
-
-    public void setDanhSachHoaDon(List<Object[]> ds) {
-        DefaultTableModel model = (DefaultTableModel) tblchitiethang.getModel();
-        model.setRowCount(0); // Xoá hết dòng cũ
-        for (Object[] row : ds) {
-            model.addRow(row);
-        }
-    }
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

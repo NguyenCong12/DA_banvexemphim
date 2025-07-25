@@ -10,7 +10,7 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Cursor;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
+
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.Image;
@@ -32,7 +32,9 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableModel;
 import poly.cinema.dao.impl.QuanLySanPhamDAOImpl;
+import poly.cinema.entity.DatHang;
 import poly.cinema.entity.SanPham;
+import poly.cinema.entity.SanPhamSession;
 
 /**
  *
@@ -229,22 +231,17 @@ public class BanSanPham extends javax.swing.JPanel {
 
     private void cboLoaiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboLoaiActionPerformed
         locSanPhamTheoLoai();
+        luuSanPhamTamTuBang();
     }//GEN-LAST:event_cboLoaiActionPerformed
 
     private void btnTroLaiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTroLaiActionPerformed
-        // Bước 1: Lấy danh sách sản phẩm trong tblHoaDon
-        List<Object[]> dsTam = getDanhSachHoaDonTam();
-
-        // Bước 2: Ép kiểu panel đích và truyền dữ liệu
-        Component[] components = pnlMainContent.getComponents();
-        for (Component comp : components) {
-            if (comp instanceof BanHang banHang) {
-                banHang.setDanhSachHoaDon(dsTam);
-                break;
-            }
-        }
-
+        // Lưu dữ liệu tạm thời
+        List<Object[]> ds = getDanhSachHoaDonTam();
+        List<Object[]> dsHang = getDanhSachHoaDonTam(); // Từ bảng tblHoaDon ở Bán sản phẩm
+        luuSanPhamTamTuBang();
+        // Chuyển trang
         chuyenPanel("pnlBanHang");
+
     }//GEN-LAST:event_btnTroLaiActionPerformed
 
     private DefaultTableModel tblModel;
@@ -585,6 +582,26 @@ public class BanSanPham extends javax.swing.JPanel {
             ds.add(new Object[]{tenSP, gia, soLuong, thanhTien});
         }
         return ds;
+    }
+
+    public void luuSanPhamTamTuBang() {
+        List<DatHang> danhSach = new ArrayList<>();
+
+        DefaultTableModel model = (DefaultTableModel) tblHoaDon.getModel();
+        for (int i = 0; i < model.getRowCount(); i++) {
+            String tenSP = (String) model.getValueAt(i, 0);
+            double gia = Double.parseDouble(model.getValueAt(i, 1).toString());
+            int soLuong = Integer.parseInt(model.getValueAt(i, 2).toString());
+
+            DatHang sp = new DatHang(tenSP, gia, soLuong);
+            danhSach.add(sp);
+        }
+
+        // Gán vào session
+        SanPhamSession.clear();
+        for (DatHang sp : danhSach) {
+            SanPhamSession.them(sp);
+        }
     }
 
 
