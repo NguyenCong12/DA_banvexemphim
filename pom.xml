@@ -19,6 +19,14 @@
     </properties>
 
     <build>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <includes>
+                    <include>**/*</include>
+                </includes>
+            </resource>
+        </resources>
         <plugins>
             <!-- Compile Java source -->
             <plugin>
@@ -86,7 +94,7 @@
                     <classPath>
                         <mainClass>${exec.mainClass}</mainClass>
                     </classPath>
-                    <icon>src/main/resources/fpt.ico</icon>
+                    <icon>${project.basedir}/src/main/resources/fpt.ico</icon>
                     <jre>
                         <minVersion>1.8.0</minVersion> <!-- Khuyên nên đổi thành 11+ nếu bạn dùng JDK 17 trở lên -->
                     </jre>
