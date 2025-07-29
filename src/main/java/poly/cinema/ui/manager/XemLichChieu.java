@@ -28,6 +28,7 @@ import java.time.format.DateTimeParseException;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -78,8 +79,8 @@ public class XemLichChieu extends javax.swing.JPanel {
         pnlChiTiet = new javax.swing.JPanel();
         cboLoai = new javax.swing.JComboBox<>();
         btnLoc = new javax.swing.JButton();
-        txtNgayChieu = new javax.swing.JTextField();
-        cboPhim = new javax.swing.JComboBox<>();
+        jLabel2 = new javax.swing.JLabel();
+        txtNgayChieu = new com.toedter.calendar.JDateChooser();
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -119,16 +120,10 @@ public class XemLichChieu extends javax.swing.JPanel {
         });
         jPanel1.add(btnLoc, new org.netbeans.lib.awtextra.AbsoluteConstraints(1010, 240, -1, -1));
 
-        txtNgayChieu.setText("jTextField1");
-        jPanel1.add(txtNgayChieu, new org.netbeans.lib.awtextra.AbsoluteConstraints(790, 240, -1, -1));
-
-        cboPhim.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        cboPhim.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cboPhimActionPerformed(evt);
-            }
-        });
-        jPanel1.add(cboPhim, new org.netbeans.lib.awtextra.AbsoluteConstraints(790, 110, -1, -1));
+        jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel2.setText("Lọc theo the loại:");
+        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(790, 110, 130, -1));
+        jPanel1.add(txtNgayChieu, new org.netbeans.lib.awtextra.AbsoluteConstraints(790, 230, 160, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -146,23 +141,19 @@ public class XemLichChieu extends javax.swing.JPanel {
         locVaHienThiDanhSachPhim();
     }//GEN-LAST:event_btnLocActionPerformed
 
-    private void cboPhimActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboPhimActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_cboPhimActionPerformed
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnLoc;
     private javax.swing.JComboBox<String> cboLoai;
-    private javax.swing.JComboBox<String> cboPhim;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel pnlChiTiet;
     private javax.swing.JScrollPane scpChiTiet;
     private javax.swing.JScrollPane scpDanhSachPhim;
-    private javax.swing.JTextField txtNgayChieu;
+    private com.toedter.calendar.JDateChooser txtNgayChieu;
     // End of variables declaration//GEN-END:variables
-private static final int CARD_W = 150;
+    private static final int CARD_W = 150;
     private static final int POSTER_H = 190;
 
 // ==== STYLE ====
@@ -212,8 +203,11 @@ private static final int CARD_W = 150;
    OPEN - LOAD DANH SÁCH
    ========================================================= */
     public void open() {
+
+        txtNgayChieu.setLocale(new Locale("vi", "VN"));
+        txtNgayChieu.setDateFormatString("dd/MM/yyyy");
+        txtNgayChieu.setDate(new Date());
         loadComboLoai();
-        loadComboPhim();
         ensureNgayChieuDefaultToday();
         locVaHienThiDanhSachPhim();
     }
@@ -293,54 +287,58 @@ private static final int CARD_W = 150;
         // Lấy loại
         String selectedLoai = (String) cboLoai.getSelectedItem();
 
-        // Lấy ngày
-        LocalDate ngayChieu;
-        try {
-            ngayChieu = LocalDate.parse(txtNgayChieu.getText().trim(), DATE_FMT);
-        } catch (DateTimeParseException ex) {
-            ngayChieu = LocalDate.now();
-            txtNgayChieu.setText(ngayChieu.format(DATE_FMT));
+        // Lấy ngày từ JDateChooser và kiểm tra null
+        Date selectedDate = txtNgayChieu.getDate();
+        if (selectedDate == null) {
+            JOptionPane.showMessageDialog(this, "Vui lòng chọn ngày chiếu.", "Lỗi", JOptionPane.ERROR_MESSAGE);
+            return;
         }
 
-        // Danh sách phim
+        // Chuyển sang LocalDate
+        LocalDate ngayChieu;
+        try {
+            ngayChieu = selectedDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Ngày không đúng định dạng.", "Lỗi", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        // Lấy danh sách phim theo ngày
         QuanLyPhimDao phimDao = new QuanLyPhimDaoImpl();
         List<Phim> dsPhim = phimDao.findPhimChieuTheoNgay(ngayChieu);
 
-        // Lọc theo loại
+        // Lọc theo loại nếu khác "Tất cả"
         if (!"Tất cả".equals(selectedLoai)) {
             dsPhim = dsPhim.stream()
                     .filter(p -> selectedLoai.equals(LoaiPhimDaoImpl.getTenLoaiById(p.getMaLoai())))
                     .toList();
         }
 
-        // Lọc theo cboPhim
-        String selectedPhim = (String) cboPhim.getSelectedItem();
-        if (selectedPhim != null && !"Tất cả".equals(selectedPhim)) {
-            dsPhim = dsPhim.stream()
-                    .filter(p -> selectedPhim.equals(p.getTenPhim()))
-                    .toList();
-        }
-
-        // Hiển thị
-        pnlGrid.setLayout(new BoxLayout(pnlGrid, BoxLayout.Y_AXIS));
-
-        if (dsPhim.isEmpty()) {
+        // Kiểm tra dữ liệu
+        if (dsPhim == null || dsPhim.isEmpty()) {
             JLabel lblNo = new JLabel("Không có phim phù hợp", JLabel.CENTER);
             lblNo.setFont(new Font("Arial", Font.ITALIC, 14));
             lblNo.setForeground(Color.GRAY);
-            lblNo.setAlignmentX(Component.CENTER_ALIGNMENT); // căn giữa
+            lblNo.setAlignmentX(Component.CENTER_ALIGNMENT);
+            pnlGrid.setLayout(new BoxLayout(pnlGrid, BoxLayout.Y_AXIS));
             pnlGrid.add(Box.createVerticalStrut(20));
             pnlGrid.add(lblNo);
             pnlGrid.add(Box.createVerticalGlue());
-        } else {
-            for (Phim phim : dsPhim) {
-                JPanel card = (JPanel) taoHangPhim(phim);
-                card.setMaximumSize(new Dimension(Integer.MAX_VALUE, 160)); // Chiều cao mỗi hàng
-                card.setAlignmentX(Component.CENTER_ALIGNMENT); // căn giữa mỗi card
-                pnlGrid.add(card);
-                pnlGrid.add(Box.createVerticalStrut(15)); // khoảng cách giữa các hàng
-            }
+            pnlGrid.revalidate();
+            pnlGrid.repaint();
+            return;
         }
+
+        // Hiển thị phim nếu có
+        pnlGrid.setLayout(new BoxLayout(pnlGrid, BoxLayout.Y_AXIS));
+        for (Phim phim : dsPhim) {
+            JPanel card = (JPanel) taoHangPhim(phim);
+            card.setMaximumSize(new Dimension(Integer.MAX_VALUE, 160));
+            card.setAlignmentX(Component.CENTER_ALIGNMENT);
+            pnlGrid.add(card);
+            pnlGrid.add(Box.createVerticalStrut(15));
+        }
+
         pnlGrid.revalidate();
         pnlGrid.repaint();
     }
@@ -357,15 +355,6 @@ private static final int CARD_W = 150;
         }
     }
 
-    private void loadComboPhim() {
-        cboPhim.removeAllItems();
-        cboPhim.addItem("Tất cả");
-        QuanLyPhimDao phimDao = new QuanLyPhimDaoImpl();
-        List<Phim> dsPhim = phimDao.findByTrangThai("Đang chiếu");
-        for (Phim p : dsPhim) {
-            cboPhim.addItem(p.getTenPhim());
-        }
-    }
 
     /* =========================================================
    LISTENERS CHO FILTER
@@ -377,13 +366,8 @@ private static final int CARD_W = 150;
             }
         });
 
-        cboPhim.addItemListener(e -> {
-            if (e.getStateChange() == ItemEvent.SELECTED) {
-                locVaHienThiDanhSachPhim();
-            }
-        });
+        txtNgayChieu.getDateEditor().addPropertyChangeListener("date", e -> locVaHienThiDanhSachPhim());
 
-        txtNgayChieu.addActionListener(e -> locVaHienThiDanhSachPhim());
     }
 
     private JPanel buildInfoSection(String loai, Integer thoiLuong, String moTa) {
@@ -539,19 +523,12 @@ private static final int CARD_W = 150;
     }
 
     private LocalDate coerceNgayChieuOrToday() {
-        String raw = txtNgayChieu.getText();
-        if (raw == null) {
-            raw = "";
+        Date date = txtNgayChieu.getDate();
+        if (date == null) {
+            date = new Date(); // fallback: hôm nay
+            txtNgayChieu.setDate(date); // set lại UI
         }
-        String text = raw.trim();
-
-        if (text.isEmpty() || text.equalsIgnoreCase("jTextField1") || !isValidDate(text)) {
-            LocalDate today = LocalDate.now();
-            txtNgayChieu.setText(today.format(DATE_FMT)); // gán lại vào UI
-            return today;
-        }
-
-        return LocalDate.parse(text, DATE_FMT);
+        return date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
     }
 
     private boolean isValidDate(String s) {
@@ -596,14 +573,8 @@ private static final int CARD_W = 150;
     }
 
     private void ensureNgayChieuDefaultToday() {
-        String raw = txtNgayChieu.getText();
-        if (raw == null) {
-            raw = "";
-        }
-        String text = raw.trim();
-
-        if (text.isEmpty() || text.equalsIgnoreCase("jTextField1") || !isValidDate(text)) {
-            txtNgayChieu.setText(LocalDate.now().format(DATE_FMT));
+        if (txtNgayChieu.getDate() == null) {
+            txtNgayChieu.setDate(new Date()); // hôm nay
         }
     }
 }

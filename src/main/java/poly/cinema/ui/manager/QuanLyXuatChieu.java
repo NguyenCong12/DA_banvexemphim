@@ -74,6 +74,7 @@ public class QuanLyXuatChieu extends javax.swing.JPanel implements QuanLySuatChi
         jLabel7 = new javax.swing.JLabel();
         chooserNgayChieu = new com.toedter.calendar.JDateChooser();
         spnGioChieu = new javax.swing.JSpinner();
+        jLabel8 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         cboPhim1 = new javax.swing.JComboBox<>();
@@ -170,10 +171,19 @@ public class QuanLyXuatChieu extends javax.swing.JPanel implements QuanLySuatChi
         jLabel6.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel6.setText("Giá vé");
 
+        cboPhim.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cboPhimActionPerformed(evt);
+            }
+        });
+
         cboPhong.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         jLabel7.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel7.setText("Giờ chiếu");
+
+        jLabel8.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel8.setText("Tên phim:");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -223,7 +233,10 @@ public class QuanLyXuatChieu extends javax.swing.JPanel implements QuanLySuatChi
                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel7)
                                     .addComponent(spnGioChieu, javax.swing.GroupLayout.PREFERRED_SIZE, 209, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(84, 84, 84))))))
+                                .addGap(84, 84, 84))))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -253,7 +266,9 @@ public class QuanLyXuatChieu extends javax.swing.JPanel implements QuanLySuatChi
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                             .addComponent(txtMaPhim, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addComponent(chooserNgayChieu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(41, 41, 41)
+                .addGap(13, 13, 13)
+                .addComponent(jLabel8)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(cboPhim, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(8, 8, 8)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -265,7 +280,7 @@ public class QuanLyXuatChieu extends javax.swing.JPanel implements QuanLySuatChi
         );
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 28)); // NOI18N
-        jLabel1.setText("QUẢN LÝ XUẤT CHIẾU");
+        jLabel1.setText("QUẢN LÝ SUẤT CHIẾU");
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -396,6 +411,10 @@ public class QuanLyXuatChieu extends javax.swing.JPanel implements QuanLySuatChi
         open();
     }//GEN-LAST:event_btnResetBoLocActionPerformed
 
+    private void cboPhimActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboPhimActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cboPhimActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnLamMoi;
@@ -416,6 +435,7 @@ public class QuanLyXuatChieu extends javax.swing.JPanel implements QuanLySuatChi
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
@@ -742,13 +762,19 @@ public class QuanLyXuatChieu extends javax.swing.JPanel implements QuanLySuatChi
     private void loadComboboxes() {
         QuanLyPhimDao phimDao = new QuanLyPhimDaoImpl();
         phimList = phimDao.findAll();
+
         cboPhim.removeAllItems();
         cboPhim1.removeAllItems();
         cboPhim.addItem("-- Chưa chọn --");
-        cboPhim1.addItem("-- Tất cả --"); // lọc
+        cboPhim1.addItem("-- Tất cả --"); // Lọc lịch sử
 
         for (Phim phim : phimList) {
-            cboPhim.addItem(phim.getTenPhim());
+            //Chỉ thêm phim đang chiếu vào cboPhim
+            if (!"Ngừng chiếu".equalsIgnoreCase(phim.getTrangThai())) {
+                cboPhim.addItem(phim.getTenPhim());
+            }
+
+            //Thêm tất cả phim (kể cả ngừng chiếu) vào cboPhim1
             cboPhim1.addItem(phim.getTenPhim());
         }
 
@@ -757,7 +783,7 @@ public class QuanLyXuatChieu extends javax.swing.JPanel implements QuanLySuatChi
         cboPhong.removeAllItems();
         cboPhong1.removeAllItems();
         cboPhong.addItem("-- Chưa chọn --");
-        cboPhong1.addItem("-- Tất cả --"); // lọc
+        cboPhong1.addItem("-- Tất cả --");
 
         for (PhongChieu pc : phongList) {
             cboPhong.addItem(pc.getMaPhong());

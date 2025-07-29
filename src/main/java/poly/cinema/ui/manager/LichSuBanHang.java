@@ -4,10 +4,12 @@
  */
 package poly.cinema.ui.manager;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import poly.cinema.dao.LichSuDAO;
@@ -41,13 +43,13 @@ public class LichSuBanHang extends javax.swing.JPanel implements LichSuBanHangCo
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblBills = new javax.swing.JTable();
-        txtBegin = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        txtEnd = new javax.swing.JTextField();
         btnLoc = new javax.swing.JButton();
         cboTimeRanges = new javax.swing.JComboBox<>();
+        txtBegin = new com.toedter.calendar.JDateChooser();
+        txtEnd = new com.toedter.calendar.JDateChooser();
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setPreferredSize(new java.awt.Dimension(1110, 720));
@@ -71,13 +73,6 @@ public class LichSuBanHang extends javax.swing.JPanel implements LichSuBanHangCo
         tblBills.setRowHeight(25);
         jScrollPane1.setViewportView(tblBills);
 
-        txtBegin.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153), 2));
-        txtBegin.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtBeginActionPerformed(evt);
-            }
-        });
-
         jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel3.setText("Từ ngày:");
 
@@ -87,8 +82,6 @@ public class LichSuBanHang extends javax.swing.JPanel implements LichSuBanHangCo
 
         jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel4.setText("Đến ngày:");
-
-        txtEnd.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153), 2));
 
         btnLoc.setBackground(new java.awt.Color(212, 212, 212));
         btnLoc.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
@@ -114,13 +107,13 @@ public class LichSuBanHang extends javax.swing.JPanel implements LichSuBanHangCo
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addGap(202, 202, 202)
                 .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(txtBegin, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(txtBegin, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(txtEnd, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(58, 58, 58)
+                .addGap(18, 18, 18)
+                .addComponent(txtEnd, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addComponent(btnLoc)
                 .addGap(71, 71, 71)
                 .addComponent(cboTimeRanges, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -140,15 +133,16 @@ public class LichSuBanHang extends javax.swing.JPanel implements LichSuBanHangCo
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel1)
-                .addGap(53, 53, 53)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtBegin, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel3)
-                    .addComponent(jLabel4)
-                    .addComponent(btnLoc)
-                    .addComponent(cboTimeRanges, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtEnd, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 50, Short.MAX_VALUE)
+                .addGap(59, 59, 59)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel3)
+                        .addComponent(jLabel4)
+                        .addComponent(btnLoc)
+                        .addComponent(cboTimeRanges, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtEnd, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtBegin, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 56, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 506, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(32, 32, 32))
         );
@@ -170,19 +164,12 @@ public class LichSuBanHang extends javax.swing.JPanel implements LichSuBanHangCo
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnLocActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLocActionPerformed
-        this.locTheoNgay();
-        if (tblBills.getRowCount() == 0 && tblBills.getRowCount() == 0) {
-            JOptionPane.showMessageDialog(this, "Không có dữ liệu trong khoảng thời gian đã chọn.");
-        }
+        locTheoNgay();
     }//GEN-LAST:event_btnLocActionPerformed
 
     private void cboTimeRangesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboTimeRangesActionPerformed
 
     }//GEN-LAST:event_cboTimeRangesActionPerformed
-
-    private void txtBeginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtBeginActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtBeginActionPerformed
 
     private final LichSuDAO lichSuDAO = new LichSuDAOImpl();
     private List<LichSu> listLichSu;
@@ -198,40 +185,34 @@ public class LichSuBanHang extends javax.swing.JPanel implements LichSuBanHangCo
     }
 
     private void initComboTimeRangeListener() {
-        if (tblBills.getRowCount() == 0 && tblBills.getRowCount() == 0) {
-            JOptionPane.showMessageDialog(this, "Không có dữ liệu trong khoảng thời gian đã chọn.");
-        } else {
-            cboTimeRanges.addActionListener(e -> {
-                Object selectedObj = cboTimeRanges.getSelectedItem();
-                if (selectedObj == null) {
-                    return;
-                }
+        cboTimeRanges.addActionListener(e -> {
+            Object selectedObj = cboTimeRanges.getSelectedItem();
+            if (selectedObj == null) {
+                return;
+            }
 
-                String selected = selectedObj.toString(); // hoặc (String) selectedObj nếu chắc chắn
-                TimeRange range = switch (selected) {
-                    case "Hôm nay" ->
-                        TimeRange.today();
-                    case "Tuần này" ->
-                        TimeRange.thisWeek();
-                    case "Tháng này" ->
-                        TimeRange.thisMonth();
-                    case "Quý này" ->
-                        TimeRange.thisQuarter();
-                    case "Năm nay" ->
-                        TimeRange.thisYear();
-                    default ->
-                        null;
-                };
+            String selected = selectedObj.toString();
+            TimeRange range = switch (selected) {
+                case "Hôm nay" ->
+                    TimeRange.today();
+                case "Tuần này" ->
+                    TimeRange.thisWeek();
+                case "Tháng này" ->
+                    TimeRange.thisMonth();
+                case "Quý này" ->
+                    TimeRange.thisQuarter();
+                case "Năm nay" ->
+                    TimeRange.thisYear();
+                default ->
+                    null;
+            };
 
-                if (range != null) {
-                    var sdf = new java.text.SimpleDateFormat("dd-MM-yyyy");
-                    txtBegin.setText(sdf.format(range.getBegin()));
-                    txtEnd.setText(sdf.format(range.getEnd()));
-
-                    locTheoNgay();
-                }
-            });
-        }
+            if (range != null) {
+                txtBegin.setDate(range.getBegin());
+                txtEnd.setDate(range.getEnd());
+                locTheoNgay();
+            }
+        });
     }
 
     private void fillTableLichSu(List<LichSu> list) {
@@ -240,33 +221,39 @@ public class LichSuBanHang extends javax.swing.JPanel implements LichSuBanHangCo
         model.setRowCount(0);
 
         for (LichSu ls : listLichSu) {
+            double tongTien = ls.getTongTien();
+            String formattedTongTien = tongTien == 0 ? "" : String.format("%,.0f VNĐ", tongTien);
+
             model.addRow(new Object[]{
                 ls.getMaHd(),
                 ls.getNgayLap(),
                 ls.getTenNhanVien(),
-                ls.getTongTien()
+                formattedTongTien
             });
         }
     }
 
     private void locTheoNgay() {
         try {
-            if (txtBegin.getText().trim().isEmpty() || txtEnd.getText().trim().isEmpty()) {
-                JOptionPane.showMessageDialog(this, "Vui lòng nhập đầy đủ ngày bắt đầu và kết thúc.");
+            Date begin = txtBegin.getDate();
+            Date end = txtEnd.getDate();
+
+            if(begin == null || end == null){
+                JOptionPane.showMessageDialog(this, "Vui lòng chọn đầy đủ ngày bắt đầu và kết thúc.");
                 return;
             }
 
-            SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
-            sdf.setLenient(false);
-            Date begin = sdf.parse(txtBegin.getText());
-            Date end = sdf.parse(txtEnd.getText());
-
-            if (begin.after(end)) {
-                JOptionPane.showMessageDialog(this, "Ngày bắt đầu không được lớn hơn ngày kết thúc.");
+            if (!begin.before(end) && !begin.equals(end)) {
+                JOptionPane.showMessageDialog(this, "Ngày kết thúc phải bằng hoặc sau ngày bắt đầu.");
                 return;
             }
-
-            // Đặt thời gian
+            
+            
+            if (tblBills.getRowCount() == 0 ) {
+                JOptionPane.showMessageDialog(this, "Không có dữ liệu trong khoảng thời gian đã chọn.");
+            }
+            
+            // Làm tròn thời gian
             Calendar cal = Calendar.getInstance();
             cal.setTime(begin);
             cal.set(Calendar.HOUR_OF_DAY, 0);
@@ -286,24 +273,24 @@ public class LichSuBanHang extends javax.swing.JPanel implements LichSuBanHangCo
             List<LichSu> list = lichSuDAO.getByDate(begin, end);
             fillTableLichSu(list);
 
-            if (list == null || list.isEmpty()) {
-                JOptionPane.showMessageDialog(this, "Không có dữ liệu trong khoảng thời gian đã chọn.");
-            }
-
-        } catch (java.text.ParseException ex) {
-            JOptionPane.showMessageDialog(this, "Ngày không hợp lệ. Định dạng đúng: dd-MM-yyyy");
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Lỗi truy vấn dữ liệu. Vui lòng kiểm tra kết nối.");
+            JOptionPane.showMessageDialog(this, "Đã xảy ra lỗi khi truy vấn dữ liệu.");
             e.printStackTrace();
         }
     }
 
     @Override
     public void open() {
+        txtBegin.setLocale(new Locale("vi", "VN"));
+        txtEnd.setLocale(new Locale("vi", "VN"));
+
+        txtBegin.setDateFormatString("dd/MM/yyyy");
+        txtEnd.setDateFormatString("dd/MM/yyyy");
+
         fillTable();
-        selectTimeRange();
         initComboTimeRanges();
         initComboTimeRangeListener();
+        selectTimeRange();
     }
 
     @Override
@@ -342,10 +329,10 @@ public class LichSuBanHang extends javax.swing.JPanel implements LichSuBanHangCo
                 TimeRange.today();
         };
 
-        var sdf = new java.text.SimpleDateFormat("dd-MM-yyyy");
-        txtBegin.setText(sdf.format(range.getBegin()));
-        txtEnd.setText(sdf.format(range.getEnd()));
+        txtBegin.setDate(range.getBegin());
+        txtEnd.setDate(range.getEnd());
     }
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnLoc;
     private javax.swing.JComboBox<String> cboTimeRanges;
@@ -355,8 +342,8 @@ public class LichSuBanHang extends javax.swing.JPanel implements LichSuBanHangCo
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tblBills;
-    private javax.swing.JTextField txtBegin;
-    private javax.swing.JTextField txtEnd;
+    private com.toedter.calendar.JDateChooser txtBegin;
+    private com.toedter.calendar.JDateChooser txtEnd;
     // End of variables declaration//GEN-END:variables
 
 }

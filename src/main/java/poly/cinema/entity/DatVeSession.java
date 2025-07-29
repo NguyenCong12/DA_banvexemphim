@@ -1,16 +1,8 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package poly.cinema.entity;
 
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- *
- * @author Admin
- */
 public class DatVeSession {
 
     private static String maPhong;
@@ -73,8 +65,31 @@ public class DatVeSession {
         return danhSachGheDaChon;
     }
 
+    /**
+     * ⚠️ KHÔNG nên dùng hàm này nữa.
+     * Sử dụng addGheDaChon() để tránh ghi đè danh sách ghế cũ.
+     */
+    @Deprecated
     public static void setDanhSachGheDaChon(List<String> danhSach) {
         danhSachGheDaChon = danhSach;
+    }
+
+    public static void addGheDaChon(List<String> gheMoi) {
+        if (danhSachGheDaChon == null) {
+            danhSachGheDaChon = new ArrayList<>();
+        }
+
+        for (String ghe : gheMoi) {
+            if (!danhSachGheDaChon.contains(ghe)) {
+                danhSachGheDaChon.add(ghe);
+            }
+        }
+    }
+
+    public static void removeGheDaChon(String maGhe) {
+        if (danhSachGheDaChon != null) {
+            danhSachGheDaChon.remove(maGhe);
+        }
     }
 
     public static void clear() {
@@ -84,10 +99,10 @@ public class DatVeSession {
         tenPhim = null;
         suatChieuDuocChon = null;
         danhSachGheDaChon.clear();
+        maXuat = null;
     }
 
     public static List<Object[]> getDanhSachHangTam() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        throw new UnsupportedOperationException("Chưa được hỗ trợ.");
     }
-
 }

@@ -12,6 +12,7 @@ import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableModel;
 import poly.cinema.dao.QuanLyPhimDao;
 import poly.cinema.dao.QuanLySuatChieuDao;
@@ -30,7 +31,7 @@ import poly.cinema.util.XDialog;
  * @author Admin
  */
 public class chonPhimJpanel extends javax.swing.JPanel implements chonPhimController {
-
+private boolean isLoadingPhim = false; 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -271,47 +272,57 @@ private JPanel pnlMainContent;
         }
     }
 
-    @Override
-    public void open() {
-        fillProduct();
-        initPhimSelectionListener();
-    }
+@Override
+public void open() {
+    fillProduct();
+    initPhimSelectionListener();
 
-    @Override
-    public void fillProduct() {
-        DefaultTableModel model = (DefaultTableModel) tblPhim.getModel();
-        model.setRowCount(0);
-        try {
-            List<Phim> list = phimDao.findAll();
-            for (Phim p : list) {
-                model.addRow(new Object[]{
-                    p.getMaPhim(),
-                    p.getTenPhim(),
-                    p.getThoiLuong(),
-                    p.getNgayKhoiChieu()
-                });
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-            XDialog.alert("Lỗi khi load danh sách phim");
+    SwingUtilities.invokeLater(() -> {
+        fillThongTinPhimNeuDaChon();
+    });
+}
+
+
+
+   @Override
+public void fillProduct() {
+    isLoadingPhim = true;
+    DefaultTableModel model = (DefaultTableModel) tblPhim.getModel();
+    model.setRowCount(0);
+    try {
+        List<Phim> list = phimDao.findAll();
+        for (Phim p : list) {
+            model.addRow(new Object[]{
+                p.getMaPhim(),
+                p.getTenPhim(),
+                p.getThoiLuong(),
+                p.getNgayKhoiChieu()
+            });
         }
+    } catch (Exception e) {
+        e.printStackTrace();
+        XDialog.alert("Lỗi khi load danh sách phim");
     }
+    isLoadingPhim = false;
+}
 
-    private void initPhimSelectionListener() {
-        tblPhim.getSelectionModel().addListSelectionListener(e -> {
-            if (!e.getValueIsAdjusting()) {
-                int row = tblPhim.getSelectedRow();
-                if (row >= 0) {
-                    String maPhim = tblPhim.getValueAt(row, 0).toString();
-                    fillSuatChieuTheoPhim(maPhim);
-                }
+
+   private void initPhimSelectionListener() {
+    tblPhim.getSelectionModel().addListSelectionListener(e -> {
+        if (!e.getValueIsAdjusting() && !isLoadingPhim) {
+            int row = tblPhim.getSelectedRow();
+            if (row >= 0) {
+                String maPhim = tblPhim.getValueAt(row, 0).toString();
+                fillSuatChieuTheoPhim(maPhim);
             }
-        });
-    }
+        }
+    });
+}
+
 
     private void fillSuatChieuTheoPhim(String maPhim) {
         DefaultTableModel model = (DefaultTableModel) tblSuatChieu.getModel();
-        model.setRowCount(0);
+        model.setRowCount(0); 
         try {
             int maPhimInt = Integer.parseInt(maPhim);
             List<SuatChieu> list = suatChieuDao.findByMaPhim(maPhimInt);
@@ -376,4 +387,20 @@ private JPanel pnlMainContent;
     public void fillBrand() {
         throw new UnsupportedOperationException("Not supported yet.");
     }
+    
+    private void fillThongTinPhimNeuDaChon() {
+    if (DatVeSession.getMaXuat() != null) {
+        DefaultTableModel model = (DefaultTableModel) tblDaChon.getModel();
+        model.setRowCount(0);
+        model.addRow(new Object[]{
+            DatVeSession.getMaXuat(),
+            DatVeSession.getMaPhong(),
+            DatVeSession.getNgayChieu(),
+            DatVeSession.getGioChieu()
+        });
+    }
+}
+
+
+
 }
