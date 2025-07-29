@@ -304,9 +304,10 @@ public class LoaiPhimPanel extends javax.swing.JPanel implements CrudController<
 
         if (tenLoai.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Tên thể loại không được để trống.");
+         //  tenloai.isBlank();  tự động trả về null
             return;
         }
-
+  
         // Kiểm tra trùng tên
         LoaiPhim existing = loaiPhimDao.findByName(tenLoai);
         if (existing != null) {
