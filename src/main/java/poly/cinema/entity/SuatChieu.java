@@ -27,7 +27,7 @@ public class SuatChieu {
     private String maPhong;
     private LocalDate ngayChieu;
     private LocalTime gioChieu;
-    private double giaVe;
+    private BigDecimal giaVe;
 
     private PhongChieu phong; 
 }

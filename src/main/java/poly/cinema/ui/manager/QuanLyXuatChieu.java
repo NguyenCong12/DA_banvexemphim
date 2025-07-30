@@ -492,11 +492,7 @@ public class QuanLyXuatChieu extends javax.swing.JPanel implements QuanLySuatChi
                 XDialog.alert("Vui lòng chọn phim!");
                 return null;
             }
-            int maPhim = phimList.stream()
-                    .filter(p -> p.getTenPhim().equals(tenPhim))
-                    .findFirst()
-                    .map(Phim::getMaPhim)
-                    .orElse(-1);
+            int maPhim = phimList.stream().filter(p -> p.getTenPhim().equals(tenPhim)).findFirst().map(Phim::getMaPhim).orElse(-1);
 
             String maPhong = (String) cboPhong.getSelectedItem();
             if (maPhong == null || maPhong.equals("-- Chưa chọn --")) {
@@ -504,28 +500,14 @@ public class QuanLyXuatChieu extends javax.swing.JPanel implements QuanLySuatChi
                 return null;
             }
 
-            LocalDate ngayChieu = chooserNgayChieu.getDate().toInstant()
-                    .atZone(ZoneId.systemDefault()).toLocalDate();
+            LocalDate ngayChieu = chooserNgayChieu.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+            LocalTime gioChieu = ((Date) spnGioChieu.getValue()).toInstant().atZone(ZoneId.systemDefault()).toLocalTime();
+            BigDecimal giaVe = new BigDecimal(txtGiaVe.getText().trim());
 
-            LocalTime gioChieu = ((Date) spnGioChieu.getValue()).toInstant()
-                    .atZone(ZoneId.systemDefault()).toLocalTime();
-
-            // 🔧 Xử lý giá vé định dạng có dấu phẩy/chấm
-            String giaVeStr = txtGiaVe.getText().trim().replaceAll("[^\\d]", ""); // Xóa ký tự không phải số
-            int giaVe = Integer.parseInt(giaVeStr);
-
-            SuatChieu sc = SuatChieu.builder()
-                    .maPhim(maPhim)
-                    .maPhong(maPhong)
-                    .ngayChieu(ngayChieu)
-                    .gioChieu(gioChieu)
-                    .giaVe(giaVe)
-                    .build();
-
+            SuatChieu sc = SuatChieu.builder().maPhim(maPhim).maPhong(maPhong).ngayChieu(ngayChieu).gioChieu(gioChieu).giaVe(giaVe).build();
             if (!txtMaXuat.getText().trim().isEmpty()) {
                 sc.setMaXuat(Integer.parseInt(txtMaXuat.getText().trim()));
             }
-
             return sc;
         } catch (Exception e) {
             XDialog.alert("Vui lòng nhập đúng định dạng dữ liệu!");
@@ -536,42 +518,37 @@ public class QuanLyXuatChieu extends javax.swing.JPanel implements QuanLySuatChi
     @Override
     public void setForm(SuatChieu sc) {
         txtMaXuat.setText(String.valueOf(sc.getMaXuat()));
+        txtMaPhim.setText(String.valueOf(sc.getMaPhim()));
 
-        // Tìm và set tên phim
-        Phim phim = phimList.stream()
+        phimList.stream()
                 .filter(p -> p.getMaPhim() == sc.getMaPhim())
                 .findFirst()
-                .orElse(null);
-        if (phim != null) {
-            cboPhim.setSelectedItem(phim.getTenPhim());
-        }
+                .ifPresent(p -> cboPhim.setSelectedItem(p.getTenPhim()));
 
         cboPhong.setSelectedItem(sc.getMaPhong());
 
-        // Set ngày chiếu
-        Date date = Date.from(sc.getNgayChieu().atStartOfDay(ZoneId.systemDefault()).toInstant());
-        chooserNgayChieu.setDate(date);
+        chooserNgayChieu.setDate(Date.from(sc.getNgayChieu()
+                .atStartOfDay(ZoneId.systemDefault()).toInstant()));
 
-        // Set giờ chiếu
-        Date time = Date.from(sc.getGioChieu().atDate(LocalDate.now())
-                .atZone(ZoneId.systemDefault()).toInstant());
-        spnGioChieu.setValue(time);
+        spnGioChieu.setValue(Date.from(
+                sc.getGioChieu().atDate(LocalDate.now())
+                        .atZone(ZoneId.systemDefault()).toInstant()));
 
-        // ✅ Định dạng giá vé thành chuỗi VND có dấu phân cách
-        NumberFormat vndFormat = NumberFormat.getNumberInstance(new Locale("vi", "VN"));
-        txtGiaVe.setText(vndFormat.format(sc.getGiaVe()));
+        NumberFormat vnFormat = NumberFormat.getNumberInstance(new Locale("vi", "VN"));
+        txtGiaVe.setText(vnFormat.format(sc.getGiaVe()));
     }
 
+    
     @Override
     public void fillToTable() {
         LocalDate today = LocalDate.now();
-
-        DefaultTableModel model = (DefaultTableModel) tblSuatChieu.getModel();
-        model.setRowCount(0);
-        items = dao.findAll();
-
         DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");
+
+        DefaultTableModel model = (DefaultTableModel) tblSuatChieu.getModel();
+        model.setRowCount(0); // Xóa bảng cũ
+
+        items = dao.findAll(); // Cập nhật lại danh sách gốc
 
         for (SuatChieu sc : items) {
             if (sc.getNgayChieu().isEqual(today)) {
@@ -579,15 +556,15 @@ public class QuanLyXuatChieu extends javax.swing.JPanel implements QuanLySuatChi
                         .filter(p -> p.getMaPhim() == sc.getMaPhim())
                         .map(Phim::getTenPhim)
                         .findFirst()
-                        .orElse("N/A");
+                        .orElse("Không rõ");
 
                 model.addRow(new Object[]{
-                    sc.getMaXuat(),
-                    tenPhim,
-                    sc.getMaPhong(),
-                    sc.getNgayChieu().format(dateFormatter),
-                    sc.getGioChieu().format(timeFormatter),
-                    String.format("%,.0f VND", sc.getGiaVe())
+                    sc.getMaXuat(), // Cột 0: Mã suất (dùng để xác định khi click)
+                    tenPhim, // Cột 1: Tên phim
+                    sc.getMaPhong(), // Cột 2: Mã phòng
+                    sc.getNgayChieu().format(dateFormatter), // Cột 3: Ngày chiếu
+                    sc.getGioChieu().format(timeFormatter), // Cột 4: Giờ chiếu
+                    sc.getGiaVe() // Cột 5: Giá vé
                 });
             }
         }
@@ -604,20 +581,10 @@ public class QuanLyXuatChieu extends javax.swing.JPanel implements QuanLySuatChi
             XDialog.alert("Ngày chiếu không được nhỏ hơn ngày hiện tại!");
             return;
         }
-
-        // ✅ Giờ chiếu phải >= giờ hiện tại nếu chiếu hôm nay
-        if (sc.getNgayChieu().isEqual(LocalDate.now())) {
-            if (sc.getGioChieu().isBefore(LocalTime.now())) {
-                XDialog.alert("Giờ chiếu không được nhỏ hơn giờ hiện tại!");
-                return;
-            }
-        }
-
-        if (sc.getGiaVe() <= 0) {
+        if (sc.getGiaVe().compareTo(BigDecimal.ZERO) <= 0) {
             XDialog.alert("Giá vé phải lớn hơn 0!");
             return;
         }
-
         if (isOverlapping(sc)) {
             XDialog.alert("Suất chiếu bị trùng hoặc cách nhau không đủ thời gian!");
             return;
@@ -640,19 +607,6 @@ public class QuanLyXuatChieu extends javax.swing.JPanel implements QuanLySuatChi
         if (sc == null) {
             return;
         }
-
-        if (sc.getNgayChieu().isBefore(LocalDate.now())) {
-            XDialog.alert("Ngày chiếu không được nhỏ hơn ngày hiện tại!");
-            return;
-        }
-
-        // ✅ Giờ chiếu phải >= giờ hiện tại nếu chiếu hôm nay
-        if (sc.getNgayChieu().isEqual(LocalDate.now())) {
-            if (sc.getGioChieu().isBefore(LocalTime.now())) {
-                XDialog.alert("Giờ chiếu không được nhỏ hơn giờ hiện tại!");
-                return;
-            }
-        }
         // Kiểm tra có thay đổi hay không
         SuatChieu old = items.get(row);
         if (sc.equals(old)) {
@@ -667,7 +621,6 @@ public class QuanLyXuatChieu extends javax.swing.JPanel implements QuanLySuatChi
         }
         dao.update(sc);
         fillToTable();
-        this.clear();
         XDialog.alert("Cập nhật thành công!");
     }
 

@@ -4,6 +4,7 @@
  */
 package poly.cinema.entity;
 
+import java.math.BigDecimal;
 import java.sql.Time;
 import java.util.Date;
 import lombok.AllArgsConstructor;
@@ -25,5 +26,5 @@ public class XuatChieu {
     private String maPhong;
     private Date ngayChieu;
     private Time gioChieu;
-    private Double giaVe;
+    private BigDecimal giaVe;
 }
