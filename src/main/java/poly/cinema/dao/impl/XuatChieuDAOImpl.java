@@ -74,7 +74,7 @@ public class XuatChieuDAOImpl implements XuatChieuDAO {
                 xc.setMaPhong(rs.getString("ma_phong"));
                 xc.setNgayChieu(rs.getDate("ngay_chieu"));
                 xc.setGioChieu(rs.getTime("gio_chieu")); // Lấy giờ là java.sql.Time
-                xc.setGiaVe(rs.getDouble("gia_ve"));
+                xc.setGiaVe(rs.getBigDecimal("gia_ve"));
                 list.add(xc);
             }
             rs.getStatement().getConnection().close();

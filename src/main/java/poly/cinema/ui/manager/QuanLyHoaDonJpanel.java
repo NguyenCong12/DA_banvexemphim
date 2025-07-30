@@ -30,6 +30,7 @@ import poly.cinema.entity.MatHang;
 import poly.cinema.entity.NguoiDung;
 import poly.cinema.entity.QuanLyGhe;
 import poly.cinema.entity.XuatChieu;
+import poly.cinema.util.XDialog;
 
 /**
  *
@@ -486,6 +487,20 @@ public class QuanLyHoaDonJpanel extends javax.swing.JPanel implements QuanLyHoaD
     private DefaultTableModel modelChiTietVe;
     private DefaultTableModel modelChiTietHang;
 
+    private String formatCurrency(double value) {
+        return String.format("%,.0f VNĐ", value);
+    }
+
+    private double parseCurrency(String formatted) {
+        try {
+            String raw = formatted.replace("VNĐ", "").replace(",", "").trim();
+            return Double.parseDouble(raw);
+        } catch (NumberFormatException e) {
+            XDialog.alert("Định dạng tiền không hợp lệ!");
+            return 0;
+        }
+    }
+
     @Override
     public void setForm(HoaDon entity) {
         txtMaHoaDon.setText(String.valueOf(entity.getMaHD()));
@@ -498,7 +513,7 @@ public class QuanLyHoaDonJpanel extends javax.swing.JPanel implements QuanLyHoaD
         }
 
         txtNgayMua.setText(new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").format(entity.getNgayLap()));
-        txtGiaBan.setText(String.valueOf(entity.getTongTien()));
+        txtGiaBan.setText(formatCurrency(entity.getTongTien()));
 
         // ✅ Xử lý và hiển thị trạng thái hóa đơn
         String rawTrangThai = entity.getTrangThai();
@@ -579,7 +594,7 @@ public class QuanLyHoaDonJpanel extends javax.swing.JPanel implements QuanLyHoaD
                 hd.getMaHD(),
                 tenNhanVien,
                 sdf.format(hd.getNgayLap()),
-                hd.getTongTien(),
+                formatCurrency(hd.getTongTien()),
                 trangThai
             });
         }
@@ -624,7 +639,7 @@ public class QuanLyHoaDonJpanel extends javax.swing.JPanel implements QuanLyHoaD
                 ct.getMaHD(),
                 ct.getMaXuat(),
                 seatInfo,
-                ct.getGiaVe()
+                formatCurrency(ct.getGiaVe())
             });
         }
 
@@ -647,8 +662,8 @@ public class QuanLyHoaDonJpanel extends javax.swing.JPanel implements QuanLyHoaD
                 ct.getMaHang(),
                 //itemName,
                 ct.getSoLuong(),
-                ct.getGia(),
-                ct.getThanhTien()
+                formatCurrency(ct.getGia()),
+                formatCurrency(ct.getThanhTien())
             });
         }
     }
