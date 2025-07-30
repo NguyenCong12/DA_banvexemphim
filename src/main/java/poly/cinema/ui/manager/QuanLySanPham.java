@@ -11,7 +11,9 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
+import java.text.NumberFormat;
 import java.util.List;
+import java.util.Locale;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
@@ -384,12 +386,17 @@ public class QuanLySanPham extends javax.swing.JPanel implements QuanLySanPhamCo
         DefaultTableModel model = (DefaultTableModel) tblSanPham.getModel();
         model.setRowCount(0);
         list = dao.findAll();
+
+        // Tạo đối tượng định dạng tiền Việt Nam
+        NumberFormat currencyFormat = NumberFormat.getInstance(new Locale("vi", "VN"));
+
         for (SanPham sp : list) {
+            String giaFormatted = currencyFormat.format(sp.getGia()) + " VNĐ";
             model.addRow(new Object[]{
                 sp.getMaSanPham(),
                 sp.getTenSanPham(),
                 sp.getLoai(),
-                sp.getGia(),
+                giaFormatted, // giá đã định dạng
                 sp.isTrangThai() ? "Còn hàng" : "Hết hàng",
                 sp.getAnh()
             });
@@ -537,6 +544,7 @@ public class QuanLySanPham extends javax.swing.JPanel implements QuanLySanPhamCo
             dao.update(spMoi);
             fillToTable();
             JOptionPane.showMessageDialog(this, "Cập nhật thành công!");
+            this.clear();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Cập nhật thất bại: " + e.getMessage());
         }

@@ -84,7 +84,7 @@ public class QuanLySuatChieuDaoImpl implements QuanLySuatChieuDao {
                 .maPhong(rs.getString("ma_phong"))
                 .ngayChieu(rs.getDate("ngay_chieu").toLocalDate()) // LocalDate
                 .gioChieu(rs.getTime("gio_chieu").toLocalTime()) // LocalTime
-                .giaVe(rs.getBigDecimal("gia_ve"))
+                .giaVe(rs.getInt("gia_ve"))
                 .build();
     }
 
