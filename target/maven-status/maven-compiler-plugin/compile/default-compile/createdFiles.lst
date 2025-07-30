@@ -127,6 +127,7 @@ poly\cinema\ui\manager\QuanLyXuatChieu.class
 poly\cinema\ui\DoiMatKhau.class
 poly\cinema\ui\manager\QuanLyPhim$3.class
 poly\cinema\dao\QuanLyGheDao.class
+poly\cinema\entity\DatHang.class
 poly\cinema\ui\manager\QuanLyGheJpanel.class
 poly\cinema\entity\SuatChieu.class
 poly\cinema\ui\BanSanPham$4.class
@@ -152,6 +153,7 @@ poly\cinema\util\TimeRange.class
 poly\cinema\ui\manager\QuanLySanPham$2.class
 poly\cinema\ui\manager\QuanLyPhongChieuController.class
 poly\cinema\entity\MatHang.class
+poly\cinema\entity\SanPhamSession.class
 poly\cinema\ui\manager\QuanLySanPhamController.class
 poly\cinema\ui\manager\QuanLyPhim$11.class
 poly\cinema\ui\NewJFrame$2.class

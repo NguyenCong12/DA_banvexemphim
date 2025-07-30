@@ -12,5 +12,5 @@ import poly.cinema.entity.HoaDon;
  * @author ADMIN
  */
 public interface HoaDonDAO extends CrudDAO<HoaDon, Integer> {
-    // Ghi dòng này để Git nhận ra file là mới
+    
 }

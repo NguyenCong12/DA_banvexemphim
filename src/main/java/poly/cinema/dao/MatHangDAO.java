@@ -11,5 +11,5 @@ import poly.cinema.entity.MatHang;
  * @author ADMIN
  */
 public interface MatHangDAO extends CrudDAO<MatHang, Integer> {
-    // Ghi dòng này để Git nhận ra file là mới
+    
 }

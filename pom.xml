@@ -8,7 +8,7 @@
     <properties>
         <java.version>23</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <exec.mainClass>poly.cinema.ui.PolyCafe_JFameForm</exec.mainClass>
+        <exec.mainClass>poly.cinema.ui.FCinema_Frame</exec.mainClass>
 
         <!-- Versions -->
         <poi.version>5.2.5</poi.version>

@@ -12,5 +12,4 @@ import poly.cinema.entity.NguoiDung;
  */
 public interface NguoiDungDAO extends CrudDAO<NguoiDung, Integer> {
     NguoiDung findByEmail(String email);
-    // Ghi dòng này để Git nhận ra file là mới
 }

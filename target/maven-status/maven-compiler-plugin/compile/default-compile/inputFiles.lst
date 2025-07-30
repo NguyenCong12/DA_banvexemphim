@@ -33,6 +33,7 @@ E:\DA1\DA_VeXemPhim\src\main\java\poly\cinema\dao\XuatChieuDAO.java
 E:\DA1\DA_VeXemPhim\src\main\java\poly\cinema\entity\ChiTietHang.java
 E:\DA1\DA_VeXemPhim\src\main\java\poly\cinema\entity\ChiTietVe.java
 E:\DA1\DA_VeXemPhim\src\main\java\poly\cinema\entity\DangNhapSession.java
+E:\DA1\DA_VeXemPhim\src\main\java\poly\cinema\entity\DatHang.java
 E:\DA1\DA_VeXemPhim\src\main\java\poly\cinema\entity\DatVeSession.java
 E:\DA1\DA_VeXemPhim\src\main\java\poly\cinema\entity\HoaDon.java
 E:\DA1\DA_VeXemPhim\src\main\java\poly\cinema\entity\LichSu.java
@@ -44,6 +45,7 @@ E:\DA1\DA_VeXemPhim\src\main\java\poly\cinema\entity\Phim.java
 E:\DA1\DA_VeXemPhim\src\main\java\poly\cinema\entity\PhongChieu.java
 E:\DA1\DA_VeXemPhim\src\main\java\poly\cinema\entity\QuanLyGhe.java
 E:\DA1\DA_VeXemPhim\src\main\java\poly\cinema\entity\SanPham.java
+E:\DA1\DA_VeXemPhim\src\main\java\poly\cinema\entity\SanPhamSession.java
 E:\DA1\DA_VeXemPhim\src\main\java\poly\cinema\entity\SuatChieu.java
 E:\DA1\DA_VeXemPhim\src\main\java\poly\cinema\entity\ThongKe.java
 E:\DA1\DA_VeXemPhim\src\main\java\poly\cinema\entity\XuatChieu.java
