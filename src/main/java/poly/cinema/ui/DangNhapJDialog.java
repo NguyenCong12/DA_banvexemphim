@@ -83,6 +83,11 @@ public class DangNhapJDialog extends javax.swing.JDialog implements DangNhapCont
 
         btnQuenMatKhau.setFont(new java.awt.Font("Segoe UI", 2, 12)); // NOI18N
         btnQuenMatKhau.setText("Quên mật khẩu?");
+        btnQuenMatKhau.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnQuenMatKhauMouseClicked(evt);
+            }
+        });
 
         btnDangNhap.setBackground(new java.awt.Color(212, 212, 212));
         btnDangNhap.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
@@ -227,6 +232,13 @@ public class DangNhapJDialog extends javax.swing.JDialog implements DangNhapCont
         }
 
     }//GEN-LAST:event_chkHienMatKhauActionPerformed
+
+    private void btnQuenMatKhauMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnQuenMatKhauMouseClicked
+    KhoiPhucMKJDialog dialog = new KhoiPhucMKJDialog(
+                (java.awt.Frame) javax.swing.SwingUtilities.getWindowAncestor(this), true);
+        dialog.setVisible(true);
+// TODO add your handling code here:
+    }//GEN-LAST:event_btnQuenMatKhauMouseClicked
 
     /**
      * @param args the command line arguments

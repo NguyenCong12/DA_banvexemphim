@@ -48,9 +48,9 @@ public class QuanLiNhanVien extends javax.swing.JPanel implements QuanLiNhanVien
         jLabel10 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
-        jLabel13 = new javax.swing.JLabel();
         jLabel15 = new javax.swing.JLabel();
         jLabel16 = new javax.swing.JLabel();
+        jLabel13 = new javax.swing.JLabel();
         txtTennhanvien = new javax.swing.JTextField();
         txtMatkhau = new javax.swing.JTextField();
         txtSodienthoai = new javax.swing.JTextField();
@@ -113,10 +113,6 @@ public class QuanLiNhanVien extends javax.swing.JPanel implements QuanLiNhanVien
         jLabel12.setText("Mật khẩu");
         jPanel1.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 80, -1, -1));
 
-        jLabel13.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jLabel13.setText("Vai trò");
-        jPanel1.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 80, -1, -1));
-
         jLabel15.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel15.setText("Số điện thoại");
         jPanel1.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 10, -1, -1));
@@ -124,6 +120,10 @@ public class QuanLiNhanVien extends javax.swing.JPanel implements QuanLiNhanVien
         jLabel16.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel16.setText("Email");
         jPanel1.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 150, -1, -1));
+
+        jLabel13.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel13.setText("Vai trò");
+        jPanel1.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 80, -1, -1));
 
         txtTennhanvien.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
