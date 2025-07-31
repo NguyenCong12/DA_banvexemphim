@@ -302,21 +302,21 @@ public class LoaiPhimPanel extends javax.swing.JPanel implements CrudController<
     public void create() {
         String tenLoai = txtTheLoai.getText().trim();
 
+        // 🔒 Kiểm tra không để trống
         if (tenLoai.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Tên thể loại không được để trống.");
-         //  tenloai.isBlank();  tự động trả về null
             return;
         }
-  
-        // Kiểm tra trùng tên
+
+        // 🔒 Kiểm tra trùng tên (không phân biệt hoa thường)
         LoaiPhim existing = loaiPhimDao.findByName(tenLoai);
         if (existing != null) {
             JOptionPane.showMessageDialog(this, "Tên thể loại đã tồn tại.");
             return;
         }
 
-        // Tạo đối tượng và thêm mới
-        LoaiPhim entity = new LoaiPhim(null, tenLoai); // giả sử ID được tự tăng trong DB
+        // ✅ Tạo đối tượng mới (giả sử ID tự tăng)
+        LoaiPhim entity = new LoaiPhim(null, tenLoai);
         try {
             LoaiPhim created = loaiPhimDao.create(entity);
             if (created != null) {
@@ -334,42 +334,59 @@ public class LoaiPhimPanel extends javax.swing.JPanel implements CrudController<
     }
 
     @Override
-    public void update() {
-        int row = tblLoaiPhim.getSelectedRow();
-        if (row == -1) {
-            JOptionPane.showMessageDialog(this, "Vui lòng chọn một bản ghi để sửa.");
-            return;
-        }
-
-        Integer maLoai = (Integer) tblLoaiPhim.getValueAt(row, 0);
-        String tenLoai = txtTheLoai.getText().trim();
-
-        if (tenLoai.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Tên thể loại không được để trống.");
-            return;
-        }
-
-        LoaiPhim entity = LoaiPhim.builder()
-                .maLoai(maLoai)
-                .tenLoai(tenLoai)
-                .build();
-
-        try {
-            loaiPhimDao.update(entity);
-            JOptionPane.showMessageDialog(this, "Cập nhật thành công!");
-            fillToTable();
-            clear();
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Lỗi khi cập nhật: " + e.getMessage());
-            e.printStackTrace();
-        }
-
-        LoaiPhim old = loaiPhimDao.findById(maLoai);
-        if (old != null && old.getTenLoai().equalsIgnoreCase(tenLoai)) {
-            JOptionPane.showMessageDialog(this, "Tên thể loại không có thay đổi.");
-            return;
-        }
+public void update() {
+    int row = tblLoaiPhim.getSelectedRow();
+    if (row == -1) {
+        JOptionPane.showMessageDialog(this, "Vui lòng chọn một bản ghi để sửa.");
+        return;
     }
+
+    Integer maLoai = (Integer) tblLoaiPhim.getValueAt(row, 0);
+    String tenLoai = txtTheLoai.getText().trim();
+
+    // 🔒 Kiểm tra rỗng
+    if (tenLoai.isEmpty()) {
+        JOptionPane.showMessageDialog(this, "Tên thể loại không được để trống.");
+        return;
+    }
+
+    // 🔄 Lấy bản gốc từ CSDL
+    LoaiPhim old = loaiPhimDao.findById(maLoai);
+    if (old == null) {
+        JOptionPane.showMessageDialog(this, "Không tìm thấy thể loại để cập nhật.");
+        return;
+    }
+
+    // 🔍 Kiểm tra không có thay đổi
+    if (old.getTenLoai().equalsIgnoreCase(tenLoai)) {
+        JOptionPane.showMessageDialog(this, "Bạn chưa thay đổi thông tin nào để cập nhật.");
+        return;
+    }
+
+    // 🔒 Kiểm tra trùng tên với loại khác
+    LoaiPhim existed = loaiPhimDao.findByName(tenLoai);
+    if (existed != null && !existed.getMaLoai().equals(maLoai)) {
+        JOptionPane.showMessageDialog(this, "Tên thể loại đã tồn tại.");
+        return;
+    }
+
+    // ✅ Cập nhật
+    LoaiPhim entity = LoaiPhim.builder()
+            .maLoai(maLoai)
+            .tenLoai(tenLoai)
+            .build();
+
+    try {
+        loaiPhimDao.update(entity);
+        JOptionPane.showMessageDialog(this, "Cập nhật thành công!");
+        fillToTable();
+        clear();
+    } catch (Exception e) {
+        JOptionPane.showMessageDialog(this, "Lỗi khi cập nhật: " + e.getMessage());
+        e.printStackTrace();
+    }
+}
+
 
     @Override
     public void delete() {
@@ -399,6 +416,7 @@ public class LoaiPhimPanel extends javax.swing.JPanel implements CrudController<
     @Override
     public void clear() {
         txtTheLoai.setText("");
+        tblLoaiPhim.clearSelection();
         updateButtonStatus();
     }
 

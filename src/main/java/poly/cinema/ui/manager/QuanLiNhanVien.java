@@ -431,24 +431,34 @@ public class QuanLiNhanVien extends javax.swing.JPanel implements QuanLiNhanVien
         return user;
     }
 
+    private List<NguoiDung> listAll = new ArrayList<>();
+    private List<NguoiDung> listDisplay = new ArrayList<>();
+
     @Override
     public void fillToTable() {
+        listAll = dao.findAll(); // chứa tất cả
+        listDisplay.clear();     // chỉ chứa nhân viên
+
         DefaultTableModel model = (DefaultTableModel) tblQLnhanvien.getModel();
         model.setRowCount(0);
 
-        items = dao.findAll();
-        for (NguoiDung item : items) {
-            Object[] rowData = {
+        for (NguoiDung item : listAll) {
+            if (item.isVai_tro()) {
+                continue; // bỏ qua quản lý trong bảng
+            }
+
+            listDisplay.add(item); // thêm vào danh sách hiển thị
+
+            model.addRow(new Object[]{
                 item.getTenNd(),
-                item.getMatKhau(),
                 item.getEmail(),
                 item.getSdt(),
-                item.isVai_tro() ? "Quản lý" : "Nhân viên",
+                "Nhân viên",
                 item.isHoat_dong() ? "Hoạt động" : "Tạm dừng",
                 false
-            };
-            model.addRow(rowData);
+            });
         }
+
     }
 
     @Override
