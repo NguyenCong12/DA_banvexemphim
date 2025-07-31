@@ -64,16 +64,7 @@ public class QuanLiPhongChieu extends javax.swing.JPanel implements QuanLyPhongC
 
         tblPhongChieu.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
                 "Mã phòng", "Tên phòng", "Số hàng", "Số cột"
@@ -416,6 +407,13 @@ public class QuanLiPhongChieu extends javax.swing.JPanel implements QuanLyPhongC
             }
         }
 
+        for (PhongChieu item : items) {
+            if (item.getTenPhong().equalsIgnoreCase(pc.getTenPhong())) {
+                XDialog.alert("Tên phòng đã tồn tại, vui lòng chọn tên khác.");
+                return;
+            }
+        }
+
         dao.create(pc);
         insertGheChoPhong(pc); // ✅ Tạo ghế tự động
         fillToTable();
@@ -440,6 +438,30 @@ public class QuanLiPhongChieu extends javax.swing.JPanel implements QuanLyPhongC
 
         // Lấy bản gốc từ list để so sánh
         PhongChieu old = items.get(row);
+
+        // 🔒 Kiểm tra trùng mã phòng (khác vị trí)
+        for (int i = 0; i < items.size(); i++) {
+            if (i == row) {
+                continue; // bỏ qua chính nó
+            }
+            if (items.get(i).getMaPhong().equalsIgnoreCase(pc.getMaPhong())) {
+                XDialog.alert("Mã phòng đã tồn tại ở một phòng khác.");
+                return;
+            }
+        }
+
+        // 🔒 Kiểm tra trùng tên phòng (khác vị trí)
+        for (int i = 0; i < items.size(); i++) {
+            if (i == row) {
+                continue; // bỏ qua chính nó
+            }
+            if (items.get(i).getTenPhong().equalsIgnoreCase(pc.getTenPhong())) {
+                XDialog.alert("Tên phòng đã tồn tại ở một phòng khác.");
+                return;
+            }
+        }
+
+        // 🔍 Kiểm tra có thay đổi không
         boolean isChanged = !old.getMaPhong().equals(pc.getMaPhong())
                 || !old.getTenPhong().equals(pc.getTenPhong())
                 || old.getSoHang() != pc.getSoHang()
@@ -450,16 +472,17 @@ public class QuanLiPhongChieu extends javax.swing.JPanel implements QuanLyPhongC
             return;
         }
 
-        dao.update(pc); // Cập nhật phòng
+        dao.update(pc); // ✅ Cập nhật phòng
 
-        // Nếu số hàng/cột thay đổi thì làm lại ghế
+        // ✅ Nếu thay đổi hàng/cột thì cập nhật lại ghế
         if (old.getSoHang() != pc.getSoHang() || old.getSoCot() != pc.getSoCot()) {
             QuanLyGheDao gheDao = new QuanLyGheDaoImpl();
-            gheDao.deleteByMaPhong(pc.getMaPhong()); // ✅ Xóa ghế cũ
-            insertGheChoPhong(pc);                   // ✅ Sinh lại ghế mới
+            gheDao.deleteByMaPhong(pc.getMaPhong()); // Xoá ghế cũ
+            insertGheChoPhong(pc);                   // Tạo ghế mới
         }
 
         fillToTable();
+        this.clear();
         XDialog.alert("Cập nhật thành công!");
     }
 

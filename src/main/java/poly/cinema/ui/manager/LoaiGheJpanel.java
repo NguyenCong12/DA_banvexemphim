@@ -1,5 +1,6 @@
 package poly.cinema.ui.manager;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
@@ -291,38 +292,42 @@ public class LoaiGheJpanel extends javax.swing.JPanel implements LoaiGheControll
     }
 
     @Override
-public LoaiGhe getForm() {
-    String ma = txtTenGhe.getText().trim();
-    String phuPhiStr = txtPhuPhi.getText().trim();
+    public LoaiGhe getForm() {
+        String ma = txtTenGhe.getText().trim();
+        String phuPhiStr = txtPhuPhi.getText().trim();
 
-    if (ma.isEmpty() || phuPhiStr.isEmpty()) {
-        JOptionPane.showMessageDialog(this, "Vui lòng nhập đầy đủ thông tin.");
-        return null;
-    }
-
-    try {
-        double phuPhi = Double.parseDouble(phuPhiStr);
-        if (phuPhi < 0) {
-            JOptionPane.showMessageDialog(this, "Phụ phí không được âm.");
+        if (ma.isEmpty() || phuPhiStr.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Vui lòng nhập đầy đủ thông tin.");
             return null;
         }
-        return new LoaiGhe(ma, phuPhi);
-    } catch (NumberFormatException e) {
-        JOptionPane.showMessageDialog(this, "Phụ phí phải là số.");
-        return null;
-    }
-}
 
+        try {
+            double phuPhi = Double.parseDouble(phuPhiStr);
+            if (phuPhi < 0) {
+                JOptionPane.showMessageDialog(this, "Phụ phí không được âm.");
+                return null;
+            }
+            return new LoaiGhe(ma, phuPhi);
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Phụ phí phải là số.");
+            return null;
+        }
+    }
 
     @Override
     public void fillToTable() {
         list = dao.findAll();
         DefaultTableModel model = (DefaultTableModel) tblBillDetaills.getModel();
         model.setRowCount(0);
+
+        DecimalFormat decimalFormat = new DecimalFormat("#,###");
+
         for (LoaiGhe lg : list) {
+            String formattedPhuPhi = decimalFormat.format(lg.getPhuPhi()) + " VNĐ";
+
             model.addRow(new Object[]{
                 lg.getLoaiGhe(),
-                lg.getPhuPhi()
+                formattedPhuPhi
             });
         }
         updateButtonStatus();
@@ -354,44 +359,43 @@ public LoaiGhe getForm() {
     }
 
     @Override
-public void update() {
-    int row = tblBillDetaills.getSelectedRow();
-    if (row < 0 || row >= list.size()) {
-        JOptionPane.showMessageDialog(this, "Vui lòng chọn loại ghế cần cập nhật.");
-        return;
-    }
+    public void update() {
+        int row = tblBillDetaills.getSelectedRow();
+        if (row < 0 || row >= list.size()) {
+            JOptionPane.showMessageDialog(this, "Vui lòng chọn loại ghế cần cập nhật.");
+            return;
+        }
 
-    LoaiGhe newEntity = getForm();
-    if (newEntity == null) {
-        return; // getForm đã báo lỗi rồi
-    }
+        LoaiGhe newEntity = getForm();
+        if (newEntity == null) {
+            return; // getForm đã báo lỗi rồi
+        }
 
-    // Lấy dữ liệu cũ trong DB
-    LoaiGhe oldEntity = dao.findById(newEntity.getLoaiGhe());
-    if (oldEntity == null) {
-        JOptionPane.showMessageDialog(this, "Mã ghế không tồn tại để cập nhật!");
-        return;
-    }
+        // Lấy dữ liệu cũ trong DB
+        LoaiGhe oldEntity = dao.findById(newEntity.getLoaiGhe());
+        if (oldEntity == null) {
+            JOptionPane.showMessageDialog(this, "Mã ghế không tồn tại để cập nhật!");
+            return;
+        }
 
-    // ✅ So sánh xem có thay đổi gì không
-    if (oldEntity.getPhuPhi() == newEntity.getPhuPhi()) {
-        JOptionPane.showMessageDialog(this, "Không có thay đổi nào để cập nhật.");
-        return;
-    }
+        // ✅ So sánh xem có thay đổi gì không
+        if (oldEntity.getPhuPhi() == newEntity.getPhuPhi()) {
+            JOptionPane.showMessageDialog(this, "Không có thay đổi nào để cập nhật.");
+            return;
+        }
 
-    // ✅ Nếu có thay đổi thì mới cập nhật
-    try {
-        dao.update(newEntity);
-        fillToTable();
-        clear();
-        updateButtonStatus();
-        JOptionPane.showMessageDialog(this, "Cập nhật thành công!");
-    } catch (Exception e) {
-        JOptionPane.showMessageDialog(this, "Lỗi cập nhật: ");
-        e.printStackTrace();
+        // ✅ Nếu có thay đổi thì mới cập nhật
+        try {
+            dao.update(newEntity);
+            fillToTable();
+            clear();
+            updateButtonStatus();
+            JOptionPane.showMessageDialog(this, "Cập nhật thành công!");
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Lỗi cập nhật: ");
+            e.printStackTrace();
+        }
     }
-}
-
 
     @Override
     public void delete() {
