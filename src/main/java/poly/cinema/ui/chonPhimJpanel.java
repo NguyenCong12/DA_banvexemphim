@@ -6,6 +6,7 @@ package poly.cinema.ui;
 
 import java.awt.CardLayout;
 import java.math.BigDecimal;
+import java.text.DecimalFormat;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.ZoneId;
@@ -31,13 +32,14 @@ import poly.cinema.util.XDialog;
  * @author Admin
  */
 public class chonPhimJpanel extends javax.swing.JPanel implements chonPhimController {
-private boolean isLoadingPhim = false; 
+
+    private boolean isLoadingPhim = false;
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblDaChon = new javax.swing.JTable();
         jScrollPane2 = new javax.swing.JScrollPane();
@@ -45,8 +47,10 @@ private boolean isLoadingPhim = false;
         jScrollPane3 = new javax.swing.JScrollPane();
         tblSuatChieu = new javax.swing.JTable();
         btnTieptheo = new javax.swing.JButton();
-
-        jLabel1.setText("Hủy");
+        btnHuy = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
 
         tblDaChon.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -56,24 +60,24 @@ private boolean isLoadingPhim = false;
                 {null, null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "Mã chiếu", "Phòng chiếu", "Ngày chiếu", "Giờ chiếu"
             }
         ));
         jScrollPane1.setViewportView(tblDaChon);
 
         tblPhim.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4", "Title 5"
+                "Mã phim", "Tên phim", "thời lượng", "Ngày khởi chiếu"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false
+                false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -90,11 +94,11 @@ private boolean isLoadingPhim = false;
                 {null, null, null, null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4", "Title 5", "Title 6"
+                "Mã chiếu", "Mã phim", "Phòng chiếu", "Ngày chiếu", "Giờ chiếu", "Giá"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, true
+                false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -108,45 +112,81 @@ private boolean isLoadingPhim = false;
         });
         jScrollPane3.setViewportView(tblSuatChieu);
 
-        btnTieptheo.setText("jButton1");
+        btnTieptheo.setText("Tiếp theo");
         btnTieptheo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnTieptheoActionPerformed(evt);
             }
         });
 
+        btnHuy.setText("Hủy");
+        btnHuy.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnHuyActionPerformed(evt);
+            }
+        });
+
+        jLabel2.setText("Danh sách phim");
+
+        jLabel3.setText("Danh sách suất chiếu");
+
+        jLabel4.setText("Suất chiếu đã chọn");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 588, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 504, Short.MAX_VALUE)
-                .addContainerGap())
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 816, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
                 .addComponent(btnTieptheo)
-                .addGap(55, 55, 55)
-                .addComponent(jLabel1)
-                .addGap(73, 73, 73))
+                .addGap(29, 29, 29)
+                .addComponent(btnHuy)
+                .addGap(28, 28, 28))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 530, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 37, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(367, 367, 367))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 530, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap())))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addComponent(jScrollPane1)
+                .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap(84, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 356, Short.MAX_VALUE)
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
-                .addGap(18, 18, 18)
+                .addContainerGap(70, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 262, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.TRAILING))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 318, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 317, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(11, 11, 11)
+                .addComponent(jLabel4)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(103, 103, 103))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel1)
-                            .addComponent(btnTieptheo))
-                        .addGap(97, 97, 97))))
+                            .addComponent(btnTieptheo)
+                            .addComponent(btnHuy))
+                        .addGap(40, 40, 40))))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -195,10 +235,17 @@ private boolean isLoadingPhim = false;
         }
     }//GEN-LAST:event_tblSuatChieuMouseClicked
 
+    private void btnHuyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHuyActionPerformed
+        huyChonSuatChieu();
+    }//GEN-LAST:event_btnHuyActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnHuy;
     private javax.swing.JButton btnTieptheo;
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
@@ -207,7 +254,8 @@ private boolean isLoadingPhim = false;
     private javax.swing.JTable tblPhim;
     private javax.swing.JTable tblSuatChieu;
     // End of variables declaration//GEN-END:variables
-private JPanel pnlMainContent;
+
+    private JPanel pnlMainContent;
 
     QuanLyPhimDao phimDao = new QuanLyPhimDaoImpl();
     QuanLySuatChieuDao suatChieuDao = new QuanLySuatChieuDaoImpl();
@@ -254,7 +302,10 @@ private JPanel pnlMainContent;
                     ? (LocalTime) gioObj
                     : LocalTime.parse(gioObj.toString());
 
-            BigDecimal giaVe = new BigDecimal(tblSuatChieu.getValueAt(row, 5).toString());
+// Sửa đoạn này
+            String giaVeStr = tblSuatChieu.getValueAt(row, 5).toString();
+            giaVeStr = giaVeStr.replace(",", "").replace(" VNĐ", "").trim();
+            BigDecimal giaVe = new BigDecimal(giaVeStr);
 
             return SuatChieu.builder()
                     .maXuat(maXuat)
@@ -272,57 +323,53 @@ private JPanel pnlMainContent;
         }
     }
 
-@Override
-public void open() {
-    fillProduct();
-    initPhimSelectionListener();
+    @Override
+    public void open() {
+        fillProduct();
+        initPhimSelectionListener();
 
-    SwingUtilities.invokeLater(() -> {
-        fillThongTinPhimNeuDaChon();
-    });
-}
-
-
-
-   @Override
-public void fillProduct() {
-    isLoadingPhim = true;
-    DefaultTableModel model = (DefaultTableModel) tblPhim.getModel();
-    model.setRowCount(0);
-    try {
-        List<Phim> list = phimDao.findAll();
-        for (Phim p : list) {
-            model.addRow(new Object[]{
-                p.getMaPhim(),
-                p.getTenPhim(),
-                p.getThoiLuong(),
-                p.getNgayKhoiChieu()
-            });
-        }
-    } catch (Exception e) {
-        e.printStackTrace();
-        XDialog.alert("Lỗi khi load danh sách phim");
+        SwingUtilities.invokeLater(() -> {
+            fillThongTinPhimNeuDaChon();
+        });
     }
-    isLoadingPhim = false;
-}
 
-
-   private void initPhimSelectionListener() {
-    tblPhim.getSelectionModel().addListSelectionListener(e -> {
-        if (!e.getValueIsAdjusting() && !isLoadingPhim) {
-            int row = tblPhim.getSelectedRow();
-            if (row >= 0) {
-                String maPhim = tblPhim.getValueAt(row, 0).toString();
-                fillSuatChieuTheoPhim(maPhim);
+    @Override
+    public void fillProduct() {
+        isLoadingPhim = true;
+        DefaultTableModel model = (DefaultTableModel) tblPhim.getModel();
+        model.setRowCount(0);
+        try {
+            List<Phim> list = phimDao.findAll();
+            for (Phim p : list) {
+                model.addRow(new Object[]{
+                    p.getMaPhim(),
+                    p.getTenPhim(),
+                    p.getThoiLuong(),
+                    p.getNgayKhoiChieu()
+                });
             }
+        } catch (Exception e) {
+            e.printStackTrace();
+            XDialog.alert("Lỗi khi load danh sách phim");
         }
-    });
-}
+        isLoadingPhim = false;
+    }
 
+    private void initPhimSelectionListener() {
+        tblPhim.getSelectionModel().addListSelectionListener(e -> {
+            if (!e.getValueIsAdjusting() && !isLoadingPhim) {
+                int row = tblPhim.getSelectedRow();
+                if (row >= 0) {
+                    String maPhim = tblPhim.getValueAt(row, 0).toString();
+                    fillSuatChieuTheoPhim(maPhim);
+                }
+            }
+        });
+    }
 
     private void fillSuatChieuTheoPhim(String maPhim) {
         DefaultTableModel model = (DefaultTableModel) tblSuatChieu.getModel();
-        model.setRowCount(0); 
+        model.setRowCount(0);
         try {
             int maPhimInt = Integer.parseInt(maPhim);
             List<SuatChieu> list = suatChieuDao.findByMaPhim(maPhimInt);
@@ -334,7 +381,7 @@ public void fillProduct() {
                     sc.getMaPhong(),
                     sc.getNgayChieu(),
                     sc.getGioChieu(),
-                    sc.getGiaVe()
+                    formatVNĐ(sc.getGiaVe())
                 };
                 model.addRow(rowData);
             }
@@ -342,6 +389,11 @@ public void fillProduct() {
             e.printStackTrace();
             XDialog.alert("Lỗi khi load suất chiếu");
         }
+    }
+
+    private String formatVNĐ(BigDecimal amount) {
+        DecimalFormat formatter = new DecimalFormat("#,###");
+        return formatter.format(amount) + " VNĐ";
     }
 
     @Override
@@ -387,20 +439,48 @@ public void fillProduct() {
     public void fillBrand() {
         throw new UnsupportedOperationException("Not supported yet.");
     }
-    
+
     private void fillThongTinPhimNeuDaChon() {
-    if (DatVeSession.getMaXuat() != null) {
-        DefaultTableModel model = (DefaultTableModel) tblDaChon.getModel();
-        model.setRowCount(0);
-        model.addRow(new Object[]{
-            DatVeSession.getMaXuat(),
-            DatVeSession.getMaPhong(),
-            DatVeSession.getNgayChieu(),
-            DatVeSession.getGioChieu()
-        });
+        if (DatVeSession.getMaXuat() != null) {
+            DefaultTableModel model = (DefaultTableModel) tblDaChon.getModel();
+            model.setRowCount(0);
+            model.addRow(new Object[]{
+                DatVeSession.getMaXuat(),
+                DatVeSession.getMaPhong(),
+                DatVeSession.getNgayChieu(),
+                DatVeSession.getGioChieu()
+            });
+        }
     }
-}
 
+    private void huyChonSuatChieu() {
+        try {
+            // Kiểm tra nếu chưa chọn suất chiếu nào
+            if (DatVeSession.getMaXuat() == null) {
+                XDialog.alert("Chưa có suất chiếu nào được chọn để hủy!");
+                return;
+            }
 
+            // Xóa dữ liệu trong session
+            DatVeSession.setSuatChieuDuocChon(null);
+            DatVeSession.setMaXuat(null);
+            DatVeSession.setMaPhong(null);
+            DatVeSession.setNgayChieu(null);
+            DatVeSession.setGioChieu(null);
+
+            // Xóa dòng trong bảng đã chọn
+            DefaultTableModel model = (DefaultTableModel) tblDaChon.getModel();
+            model.setRowCount(0);
+
+            // Bỏ chọn dòng trong bảng suất chiếu
+            tblSuatChieu.clearSelection();
+
+            XDialog.alert("Đã hủy chọn suất chiếu!");
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            XDialog.alert("Lỗi khi hủy chọn suất chiếu!");
+        }
+    }
 
 }

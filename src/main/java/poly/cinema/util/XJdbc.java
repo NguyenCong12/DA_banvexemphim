@@ -25,11 +25,7 @@ public class XJdbc {
         var driver = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
         var dburl = "jdbc:sqlserver://localhost:1433;database=QuanLyBanVeXemPhim;encrypt=true;trustServerCertificate=true;";
         var username = "sa";
-<<<<<<< HEAD
         var password = "223344";
-=======
-        var password = "123456";
->>>>>>> a13f4d7bb8333b484c32fd8a0b047e94a2dc9c89
 
 
         try {

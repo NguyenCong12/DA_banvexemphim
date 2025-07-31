@@ -21,7 +21,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 public class SuatChieu {
-
+    
     private int maXuat;
     private int maPhim;
     private String maPhong;

@@ -75,4 +75,16 @@ public class MatHangDAOImpl implements MatHangDAO {
         }
         return list;
     }
+    public int timMaHangTheoTen(String tenSp) {
+    String sql = "SELECT ma_hang FROM MatHang WHERE ten_hang = ?";
+    try (ResultSet rs = XJdbc.executeQuery(sql, tenSp)) {
+        if (rs.next()) {
+            return rs.getInt("ma_hang");
+        }
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+    return -1; // hoặc ném exception nếu không tìm thấy
+}
+
 }

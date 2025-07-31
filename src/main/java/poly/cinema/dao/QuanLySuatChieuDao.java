@@ -7,6 +7,7 @@ package poly.cinema.dao;
 import java.sql.Date;
 import java.util.List;
 import poly.cinema.entity.SuatChieu;
+import poly.cinema.entity.XuatChieu;
 
 /**
  *
@@ -15,6 +16,5 @@ import poly.cinema.entity.SuatChieu;
 public interface QuanLySuatChieuDao extends CrudDAO<SuatChieu, Integer> {
     List<SuatChieu> findByNgayVaPhim(Date ngay, int maPhim);
     List<SuatChieu> findByMaPhim(int maPhim);
-    
 }
 
