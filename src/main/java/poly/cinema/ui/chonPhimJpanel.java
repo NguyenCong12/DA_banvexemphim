@@ -4,14 +4,20 @@
  */
 package poly.cinema.ui;
 
+import java.awt.BorderLayout;
 import java.awt.CardLayout;
+import java.awt.FlowLayout;
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.ZoneId;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableModel;
@@ -51,6 +57,9 @@ public class chonPhimJpanel extends javax.swing.JPanel implements chonPhimContro
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
+        dateChooserNgay = new com.toedter.calendar.JDateChooser();
+        jLabel1 = new javax.swing.JLabel();
+        btnQuayLai = new javax.swing.JButton();
 
         tblDaChon.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -132,12 +141,18 @@ public class chonPhimJpanel extends javax.swing.JPanel implements chonPhimContro
 
         jLabel4.setText("Suất chiếu đã chọn");
 
+        jLabel1.setText("Chọn ngày:");
+
+        btnQuayLai.setText("Quay  lại");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(btnQuayLai)
+                .addGap(26, 26, 26)
                 .addComponent(btnTieptheo)
                 .addGap(29, 29, 29)
                 .addComponent(btnHuy)
@@ -163,11 +178,21 @@ public class chonPhimJpanel extends javax.swing.JPanel implements chonPhimContro
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(jScrollPane1)
                 .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(dateChooserNgay, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(65, 65, 65))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap(70, Short.MAX_VALUE)
+                .addGap(26, 26, 26)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(dateChooserNgay, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 22, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.TRAILING))
@@ -178,15 +203,15 @@ public class chonPhimJpanel extends javax.swing.JPanel implements chonPhimContro
                 .addGap(11, 11, 11)
                 .addComponent(jLabel4)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(103, 103, 103))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(btnTieptheo)
-                            .addComponent(btnHuy))
-                        .addGap(40, 40, 40))))
+                        .addGap(0, 63, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(btnTieptheo)
+                        .addComponent(btnHuy)
+                        .addComponent(btnQuayLai)))
+                .addGap(40, 40, 40))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -242,7 +267,10 @@ public class chonPhimJpanel extends javax.swing.JPanel implements chonPhimContro
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnHuy;
+    private javax.swing.JButton btnQuayLai;
     private javax.swing.JButton btnTieptheo;
+    private com.toedter.calendar.JDateChooser dateChooserNgay;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -265,7 +293,41 @@ public class chonPhimJpanel extends javax.swing.JPanel implements chonPhimContro
     public chonPhimJpanel(JPanel pnlMainContent) {
         this.pnlMainContent = pnlMainContent;
         initComponents();
+        // Thiết lập tiếng Việt
+        Locale localeVN = new Locale("vi", "VN");
+        Locale.setDefault(localeVN);
+
+// Thiết lập định dạng và ngày mặc định
+        dateChooserNgay.setLocale(localeVN);
+        dateChooserNgay.setDateFormatString("dd/MM/yyyy");
+
+        Date today = new Date(); // hôm nay
+        dateChooserNgay.setDate(today); // mặc định hôm nay
+
+// Giới hạn ngày: chỉ được chọn từ hôm nay đến 7 ngày sau
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(today);
+        cal.add(Calendar.DAY_OF_MONTH, 7);
+        Date maxDate = cal.getTime();
+
+        dateChooserNgay.setMinSelectableDate(today);
+        dateChooserNgay.setMaxSelectableDate(maxDate);
+        btnQuayLai.addActionListener(e -> quayLai());
+
+        JPanel pnlTop = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        pnlTop.add(btnQuayLai);
+
+// Thêm vào layout chính của bạn (nếu dùng BorderLayout)
+        add(pnlTop, BorderLayout.NORTH);
         open();
+        dateChooserNgay.getDateEditor().addPropertyChangeListener("date", evt -> {
+            fillProduct(); // tự động gọi fill khi chọn ngày
+        });
+    }
+
+    private void quayLai() {
+        CardLayout cl = (CardLayout) pnlMainContent.getLayout();
+        cl.show(pnlMainContent, "pnlBanHang");
     }
 
     private void chuyenPanel(String panelName) {
@@ -338,20 +400,47 @@ public class chonPhimJpanel extends javax.swing.JPanel implements chonPhimContro
         isLoadingPhim = true;
         DefaultTableModel model = (DefaultTableModel) tblPhim.getModel();
         model.setRowCount(0);
+
         try {
-            List<Phim> list = phimDao.findAll();
-            for (Phim p : list) {
-                model.addRow(new Object[]{
-                    p.getMaPhim(),
-                    p.getTenPhim(),
-                    p.getThoiLuong(),
-                    p.getNgayKhoiChieu()
-                });
+            Date selectedDate = dateChooserNgay.getDate();
+            if (selectedDate == null) {
+                JOptionPane.showMessageDialog(this, "Vui lòng chọn ngày!");
+                return;
             }
+
+            // Chuyển sang LocalDate
+            LocalDate selectedLocalDate = selectedDate.toInstant()
+                    .atZone(ZoneId.systemDefault())
+                    .toLocalDate();
+
+            List<Phim> allPhim = phimDao.findAll();
+            List<Integer> phimIdNgayChon = new ArrayList<>();
+
+            for (Phim p : allPhim) {
+                List<SuatChieu> suatChieus = suatChieuDao.findByMaPhim(p.getMaPhim());
+                boolean coSuat = suatChieus.stream()
+                        .anyMatch(sc -> sc.getNgayChieu() != null && sc.getNgayChieu().isEqual(selectedLocalDate));
+                if (coSuat) {
+                    phimIdNgayChon.add(p.getMaPhim());
+                }
+            }
+
+            for (Phim p : allPhim) {
+                if (phimIdNgayChon.contains(p.getMaPhim())) {
+                    model.addRow(new Object[]{
+                        p.getMaPhim(),
+                        p.getTenPhim(),
+                        p.getThoiLuong(),
+                        p.getNgayKhoiChieu()
+                    });
+                }
+            }
+
         } catch (Exception e) {
             e.printStackTrace();
-            XDialog.alert("Lỗi khi load danh sách phim");
+            JOptionPane.showMessageDialog(this, "Lỗi khi lọc phim theo ngày!");
         }
+
         isLoadingPhim = false;
     }
 
@@ -374,16 +463,22 @@ public class chonPhimJpanel extends javax.swing.JPanel implements chonPhimContro
             int maPhimInt = Integer.parseInt(maPhim);
             List<SuatChieu> list = suatChieuDao.findByMaPhim(maPhimInt);
 
+            // Lấy ngày đang chọn
+            LocalDate selectedDate = dateChooserNgay.getDate().toInstant()
+                    .atZone(ZoneId.systemDefault()).toLocalDate();
+
             for (SuatChieu sc : list) {
-                Object[] rowData = {
-                    sc.getMaXuat(),
-                    sc.getMaPhim(),
-                    sc.getMaPhong(),
-                    sc.getNgayChieu(),
-                    sc.getGioChieu(),
-                    formatVNĐ(sc.getGiaVe())
-                };
-                model.addRow(rowData);
+                if (sc.getNgayChieu().isEqual(selectedDate)) { // Lọc đúng ngày
+                    Object[] rowData = {
+                        sc.getMaXuat(),
+                        sc.getMaPhim(),
+                        sc.getMaPhong(),
+                        sc.getNgayChieu(),
+                        sc.getGioChieu(),
+                        formatVNĐ(sc.getGiaVe())
+                    };
+                    model.addRow(rowData);
+                }
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -408,6 +503,8 @@ public class chonPhimJpanel extends javax.swing.JPanel implements chonPhimContro
         if (suat == null) {
             return;
         }
+        String tenPhim = tblPhim.getValueAt(tblPhim.getSelectedRow(), 1).toString();
+        DatVeSession.setTenPhim(tenPhim);
 
         DatVeSession.setSuatChieuDuocChon(suat);
         DatVeSession.setMaXuat(suat.getMaXuat());

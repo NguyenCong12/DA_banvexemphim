@@ -24,5 +24,7 @@ public class QuanLyGhe {
     private String hang;
     private Integer cot;
     private String loaiGhe;
+    private String trangThai;
 }
+
 

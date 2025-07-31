@@ -8,7 +8,7 @@
     <properties>
         <java.version>23</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <exec.mainClass>poly.cinema.ui.PolyCafe_JFameForm</exec.mainClass>
+        <exec.mainClass>poly.cinema.ui.FCinema_JFameForm</exec.mainClass>
 
         <!-- Versions -->
         <poi.version>5.2.5</poi.version>
@@ -86,7 +86,7 @@
                     <classPath>
                         <mainClass>${exec.mainClass}</mainClass>
                     </classPath>
-                    <icon>src/main/resources/fpt.ico</icon>
+                    <!--                    <icon>src/main/resources/fpt.ico</icon>-->
                     <jre>
                         <minVersion>1.8.0</minVersion> <!-- Khuyên nên đổi thành 11+ nếu bạn dùng JDK 17 trở lên -->
                     </jre>
@@ -130,7 +130,6 @@
             <artifactId>xmlbeans</artifactId>
             <version>${xmlbeans.version}</version>
         </dependency>
-
         <!-- SQL Server JDBC -->
         <dependency>
             <groupId>com.microsoft.sqlserver</groupId>

@@ -321,14 +321,17 @@ public class QuanLiPhongChieu extends javax.swing.JPanel implements QuanLyPhongC
 
             for (int cot = 1; cot <= soCot; cot++) {
                 String soGhe = hangStr + cot; // Ví dụ: A1, A2, D5, E3,...
-                QuanLyGhe ghe = new QuanLyGhe(
-                        null,
-                        maPhong,
-                        soGhe,
-                        hangStr,
-                        cot,
-                        loaiGhe
-                );
+
+                QuanLyGhe ghe = QuanLyGhe.builder()
+                        .maGhe(null)
+                        .maPhong(maPhong)
+                        .soGhe(soGhe)
+                        .hang(hangStr)
+                        .cot(cot)
+                        .loaiGhe(loaiGhe)
+                        .trangThai("Bình thường")
+                        .build();
+
                 gheDao.create(ghe);
             }
         }

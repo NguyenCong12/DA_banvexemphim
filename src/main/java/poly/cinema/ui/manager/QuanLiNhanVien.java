@@ -352,14 +352,15 @@ public class QuanLiNhanVien extends javax.swing.JPanel implements QuanLiNhanVien
         txtTennhanvien.setText(entity.getTenNd());
         txtMatkhau.setText(entity.getMatKhau());
         txtSodienthoai.setText(entity.getSdt());
+        txtEmail.setText(entity.getEmail());
 
-        String hinh = entity.getAnh_dai_dien(); // đổi tên field
-
+        // Hiển thị ảnh đại diện
+        String hinh = entity.getAnh_dai_dien();
         if (hinh != null && !hinh.isBlank()) {
             File imageFile = new File("images", hinh);
             if (imageFile.exists()) {
                 lblAnh.setToolTipText(hinh);
-                XIcon.setIcon(lblAnh, imageFile); // hiển thị hình ảnh
+                XIcon.setIcon(lblAnh, imageFile); // class helper hiển thị ảnh
             } else {
                 lblAnh.setToolTipText(null);
                 lblAnh.setIcon(null);
@@ -368,10 +369,12 @@ public class QuanLiNhanVien extends javax.swing.JPanel implements QuanLiNhanVien
             lblAnh.setToolTipText(null);
             lblAnh.setIcon(null);
         }
-        txtEmail.setText(entity.getEmail());
+
+        // Trạng thái hoạt động
         rdoHoatDong.setSelected(entity.isHoat_dong());
         rdoDaNgung.setSelected(!entity.isHoat_dong());
 
+        // Vai trò
         rdoQuanLy.setSelected(entity.isVai_tro());
         rdoNhanVien.setSelected(!entity.isVai_tro());
     }
@@ -379,23 +382,26 @@ public class QuanLiNhanVien extends javax.swing.JPanel implements QuanLiNhanVien
     @Override
     public NguoiDung getForm() {
         NguoiDung user = new NguoiDung();
+
+        // Lấy lại mã người dùng nếu đang chọn trên bảng
         int row = tblQLnhanvien.getSelectedRow();
         if (row >= 0) {
-            // Lấy lại ma_nd từ entity cũ
-            String email = tblQLnhanvien.getValueAt(row, 1).toString();
+            String email = tblQLnhanvien.getValueAt(row, 1).toString(); // Cột 1 là email
             NguoiDung existing = dao.findByEmail(email);
-            user.setMaNd(existing.getMaNd());
+            if (existing != null) {
+                user.setMaNd(existing.getMaNd());
+            }
         }
 
-        user.setTenNd(txtTennhanvien.getText());
-        user.setEmail(txtEmail.getText());
-        user.setMatKhau(txtMatkhau.getText());
-        user.setSdt(txtSodienthoai.getText());
-        user.setVai_tro(rdoQuanLy.isSelected());  // sửa ở đây
+        user.setTenNd(txtTennhanvien.getText().trim());
+        user.setEmail(txtEmail.getText().trim());
+        user.setMatKhau(txtMatkhau.getText().trim());
+        user.setSdt(txtSodienthoai.getText().trim());
+        user.setVai_tro(rdoQuanLy.isSelected());
         user.setHoat_dong(rdoHoatDong.isSelected());
 
         String anh = lblAnh.getToolTipText();
-        user.setAnh_dai_dien(anh == null ? "" : anh);
+        user.setAnh_dai_dien(anh != null ? anh : "");
 
         return user;
     }

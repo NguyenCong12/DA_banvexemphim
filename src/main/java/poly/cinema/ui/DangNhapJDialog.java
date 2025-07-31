@@ -234,7 +234,7 @@ public class DangNhapJDialog extends javax.swing.JDialog implements DangNhapCont
     }//GEN-LAST:event_chkHienMatKhauActionPerformed
 
     private void btnQuenMatKhauMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnQuenMatKhauMouseClicked
-    KhoiPhucMKJDialog dialog = new KhoiPhucMKJDialog(
+        KhoiPhucMKJDialog dialog = new KhoiPhucMKJDialog(
                 (java.awt.Frame) javax.swing.SwingUtilities.getWindowAncestor(this), true);
         dialog.setVisible(true);
 // TODO add your handling code here:
@@ -311,46 +311,45 @@ public class DangNhapJDialog extends javax.swing.JDialog implements DangNhapCont
     }
 
     @Override
-public void login() {
-    try {
-        String email = txtTenDangNhap.getText().trim();
-        String password = txtMatKhau.getText(); // từ JTextField, nếu dùng JPasswordField thì dùng: new String(txtMatKhau.getPassword());
+    public void login() {
+        try {
+            String email = txtTenDangNhap.getText().trim();
+            String password = txtMatKhau.getText(); // từ JTextField, nếu dùng JPasswordField thì dùng: new String(txtMatKhau.getPassword());
 
-        if (email.isEmpty() || password.isEmpty()) {
-            XDialog.alert("⚠️ Vui lòng nhập đầy đủ tên đăng nhập và mật khẩu!");
-            return;
+            if (email.isEmpty() || password.isEmpty()) {
+                XDialog.alert("⚠️ Vui lòng nhập đầy đủ tên đăng nhập và mật khẩu!");
+                return;
+            }
+
+            NguoiDungDAO dao = new NguoiDungDAOImpl();
+            NguoiDung user = dao.findByEmail(email);
+
+            if (user == null) {
+                XDialog.alert("❌ Tên đăng nhập không tồn tại!");
+                return;
+            }
+
+            if (!password.equals(user.getMatKhau())) {
+                XDialog.alert("❌ Mật khẩu không đúng!");
+                return;
+            }
+
+            if (!user.isHoat_dong()) {
+                XDialog.alert("⚠️ Tài khoản đã bị khóa. Vui lòng liên hệ quản trị viên.");
+                return;
+            }
+
+            // Lưu user vào session
+            DangNhapSession.setNguoiDung(user);
+            XAuth.user = user;
+
+            this.dispose(); // đóng form đăng nhập
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            XDialog.alert("❗ Đã xảy ra lỗi khi kết nối đến hệ thống. Vui lòng thử lại!");
         }
-
-        NguoiDungDAO dao = new NguoiDungDAOImpl();
-        NguoiDung user = dao.findByEmail(email);
-
-        if (user == null) {
-            XDialog.alert("❌ Tên đăng nhập không tồn tại!");
-            return;
-        }
-
-        if (!password.equals(user.getMatKhau())) {
-            XDialog.alert("❌ Mật khẩu không đúng!");
-            return;
-        }
-
-        if (!user.isVai_tro()) {
-            XDialog.alert("⚠️ Tài khoản đã bị khóa. Vui lòng liên hệ quản trị viên.");
-            return;
-        }
-
-        // Lưu user vào session
-        DangNhapSession.setNguoiDung(user);
-        XAuth.user = user;
-
-        this.dispose(); // đóng form đăng nhập
-
-    } catch (Exception e) {
-        e.printStackTrace();
-        XDialog.alert("❗ Đã xảy ra lỗi khi kết nối đến hệ thống. Vui lòng thử lại!");
     }
-}
-
 
     @Override
     public void exit() {

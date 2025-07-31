@@ -17,6 +17,7 @@ import poly.cinema.util.XJdbc;
  */
 public class NguoiDungDAOImpl implements NguoiDungDAO {
 // Ghi dòng này để Git nhận ra file là mới
+
     @Override
     public NguoiDung findByEmail(String email) {
         String sql = "SELECT * FROM NguoiDung WHERE email=?";
@@ -31,9 +32,9 @@ public class NguoiDungDAOImpl implements NguoiDungDAO {
                 entity.getTenNd(),
                 entity.getEmail(),
                 entity.getMatKhau(),
-                entity.isVai_tro(),           // sửa ở đây
+                entity.isVai_tro(), // sửa ở đây
                 entity.getSdt(),
-                entity.isHoat_dong(),        // sửa ở đây
+                entity.isHoat_dong(), // sửa ở đây
                 entity.getAnh_dai_dien()
         );
         return entity;
@@ -46,9 +47,9 @@ public class NguoiDungDAOImpl implements NguoiDungDAO {
                 entity.getTenNd(),
                 entity.getEmail(),
                 entity.getMatKhau(),
-                entity.isVai_tro(),           // boolean -> is
+                entity.isVai_tro(), // boolean -> is
                 entity.getSdt(),
-                entity.isHoat_dong(),         // boolean -> is
+                entity.isHoat_dong(), // boolean -> is
                 entity.getAnh_dai_dien(),
                 entity.getMaNd()
         );
@@ -96,4 +97,3 @@ public class NguoiDungDAOImpl implements NguoiDungDAO {
         return list;
     }
 }
-

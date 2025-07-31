@@ -11,13 +11,13 @@ import poly.cinema.util.XQuery;
 public class QuanLyGheDaoImpl implements QuanLyGheDao {
 
     private final String INSERT_SQL = """
-        INSERT INTO Ghe (ma_phong, so_ghe, hang, cot, loai_ghe)
-        VALUES (?, ?, ?, ?, ?)
+        INSERT INTO Ghe (ma_phong, so_ghe, hang, cot, loai_ghe, trang_thai)
+        VALUES (?, ?, ?, ?, ?, ?)
     """;
 
     private final String UPDATE_SQL = """
         UPDATE Ghe
-        SET ma_phong = ?, loai_ghe = ?
+        SET ma_phong = ?, loai_ghe = ?, trang_thai = ?
         WHERE ma_ghe = ?
     """;
 
@@ -30,24 +30,27 @@ public class QuanLyGheDaoImpl implements QuanLyGheDao {
             so_ghe AS soGhe,
             hang AS hang,
             cot AS cot,
-            loai_ghe AS loaiGhe
+            loai_ghe AS loaiGhe,
+            trang_thai AS trangThai
         FROM Ghe
     """;
 
     private final String SELECT_BY_ID_SQL = SELECT_ALL_SQL + " WHERE ma_ghe = ?";
     private final String SELECT_BY_PHONG_SQL = SELECT_ALL_SQL + " WHERE ma_phong = ?";
     private final String SELECT_BY_SOGHE_SQL = SELECT_ALL_SQL + " WHERE so_ghe = ?";
-    private final String FIND_BY_SOGHE_AND_MAPHONG_SQL = "SELECT * FROM Ghe WHERE so_ghe = ? AND ma_phong = ?";
+    private final String FIND_BY_SOGHE_AND_MAPHONG_SQL = SELECT_ALL_SQL + " WHERE so_ghe = ? AND ma_phong = ?";
 
     @Override
     public QuanLyGhe create(QuanLyGhe ghe) {
-        try (
-                Connection conn = XJdbc.openConnection(); PreparedStatement stmt = conn.prepareStatement(INSERT_SQL, Statement.RETURN_GENERATED_KEYS)) {
+        try (Connection conn = XJdbc.openConnection();
+             PreparedStatement stmt = conn.prepareStatement(INSERT_SQL, Statement.RETURN_GENERATED_KEYS)) {
+
             stmt.setString(1, ghe.getMaPhong());
             stmt.setString(2, ghe.getSoGhe());
             stmt.setString(3, ghe.getHang());
             stmt.setInt(4, ghe.getCot());
             stmt.setString(5, ghe.getLoaiGhe());
+            stmt.setString(6, ghe.getTrangThai());
 
             stmt.executeUpdate();
 
@@ -67,6 +70,7 @@ public class QuanLyGheDaoImpl implements QuanLyGheDao {
         Object[] args = {
             ghe.getMaPhong(),
             ghe.getLoaiGhe(),
+            ghe.getTrangThai(),
             ghe.getMaGhe()
         };
         XJdbc.executeUpdate(UPDATE_SQL, args);
@@ -76,7 +80,6 @@ public class QuanLyGheDaoImpl implements QuanLyGheDao {
     public void deleteById(Integer id) {
         XJdbc.executeUpdate(DELETE_SQL, id);
     }
-
 
     @Override
     public List<QuanLyGhe> findAll() {
@@ -100,26 +103,7 @@ public class QuanLyGheDaoImpl implements QuanLyGheDao {
 
     @Override
     public QuanLyGhe findBySoGheAndPhong(String soGhe, String maPhong) {
-        try (
-                Connection conn = XJdbc.openConnection(); PreparedStatement ps = conn.prepareStatement(FIND_BY_SOGHE_AND_MAPHONG_SQL)) {
-            ps.setString(1, soGhe);
-            ps.setString(2, maPhong);
-            try (ResultSet rs = ps.executeQuery()) {
-                if (rs.next()) {
-                    return QuanLyGhe.builder()
-                            .maGhe(rs.getInt("ma_ghe"))
-                            .maPhong(rs.getString("ma_phong"))
-                            .soGhe(rs.getString("so_ghe"))
-                            .hang(rs.getString("hang"))
-                            .cot(rs.getInt("cot"))
-                            .loaiGhe(rs.getString("loai_ghe"))
-                            .build();
-                }
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return null;
+        return XQuery.getSingleBean(QuanLyGhe.class, FIND_BY_SOGHE_AND_MAPHONG_SQL, soGhe, maPhong);
     }
 
     @Override
@@ -127,7 +111,10 @@ public class QuanLyGheDaoImpl implements QuanLyGheDao {
         List<String> result = new ArrayList<>();
         String sql = "SELECT ma_phong FROM PhongChieu";
         try (
-                Connection conn = XJdbc.openConnection(); PreparedStatement ps = conn.prepareStatement(sql); ResultSet rs = ps.executeQuery()) {
+            Connection conn = XJdbc.openConnection();
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery()) {
+
             while (rs.next()) {
                 result.add(rs.getString("ma_phong"));
             }
@@ -139,30 +126,7 @@ public class QuanLyGheDaoImpl implements QuanLyGheDao {
 
     @Override
     public List<QuanLyGhe> findByMaPhong(String maPhong) {
-        List<QuanLyGhe> list = new ArrayList<>();
-        String sql = "SELECT * FROM Ghe WHERE ma_phong = ?";
-
-        try (
-                Connection conn = XJdbc.openConnection(); PreparedStatement stmt = conn.prepareStatement(sql);) {
-            stmt.setString(1, maPhong);
-            ResultSet rs = stmt.executeQuery();
-
-            while (rs.next()) {
-                QuanLyGhe ghe = new QuanLyGhe();
-                ghe.setMaGhe(rs.getInt("ma_ghe"));
-                ghe.setMaPhong(rs.getString("ma_phong"));
-                ghe.setSoGhe(rs.getString("so_ghe"));
-                ghe.setHang(rs.getString("hang"));
-                ghe.setCot(rs.getInt("cot"));
-                ghe.setLoaiGhe(rs.getString("loai_ghe"));
-                list.add(ghe);
-            }
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        return list;
+        return findByPhong(maPhong);
     }
 
     @Override
@@ -170,4 +134,20 @@ public class QuanLyGheDaoImpl implements QuanLyGheDao {
         String sql = "DELETE FROM Ghe WHERE ma_phong = ?";
         XJdbc.executeUpdate(sql, maPhong);
     }
+    @Override
+    public boolean updateWithResult(QuanLyGhe ghe) {
+    String sql = "UPDATE Ghe SET loai_ghe=?, trang_thai=? WHERE ma_ghe=?";
+    try {
+        int rows = XJdbc.executeUpdate(sql,
+            ghe.getLoaiGhe(),
+            ghe.getTrangThai(),
+            ghe.getMaGhe()
+        );
+        return rows > 0;
+    } catch (Exception e) {
+        e.printStackTrace();
+        return false;
+    }
+}
+
 }

@@ -66,8 +66,8 @@ public class DatVeSession {
     }
 
     /**
-     * ⚠️ KHÔNG nên dùng hàm này nữa.
-     * Sử dụng addGheDaChon() để tránh ghi đè danh sách ghế cũ.
+     * ⚠️ KHÔNG nên dùng hàm này nữa. Sử dụng addGheDaChon() để tránh ghi đè
+     * danh sách ghế cũ.
      */
     @Deprecated
     public static void setDanhSachGheDaChon(List<String> danhSach) {
@@ -104,5 +104,14 @@ public class DatVeSession {
 
     public static List<Object[]> getDanhSachHangTam() {
         throw new UnsupportedOperationException("Chưa được hỗ trợ.");
+    }
+
+    public void clearDatVeSession() {
+        DatVeSession.setSuatChieuDuocChon(null);
+        DatVeSession.setMaXuat(null);
+        DatVeSession.setMaPhong(null);
+        DatVeSession.setNgayChieu(null);
+        DatVeSession.setGioChieu(null);
+        DatVeSession.setTenPhim(null);
     }
 }
