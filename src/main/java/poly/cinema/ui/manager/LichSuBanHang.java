@@ -276,7 +276,7 @@ public class LichSuBanHang extends javax.swing.JPanel implements LichSuBanHangCo
                 list = lichSuDAO.getByDate(begin, end);
             } else {
                 // Nhân viên: chỉ xem của chính mình trong khoảng ngày
-                list = lichSuDAO.getByDateAndUserId(begin, end, user.getMaNd());
+                list = lichSuDAO.getByDateAndUser(begin, end, user.getMaNd());
             }
 
             if (list.isEmpty()) {
