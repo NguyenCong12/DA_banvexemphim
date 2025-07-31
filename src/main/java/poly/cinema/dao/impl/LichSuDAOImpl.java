@@ -70,4 +70,26 @@ public class LichSuDAOImpl implements LichSuDAO {
 
         return list;
     }
+
+    @Override
+    public List<LichSu> selectByUsername(int maND) {
+        String sql = "SELECT * FROM LichSu WHERE MaND = ?";
+        return selectBySql(sql, maND);
+    }
+
+    @Override
+    public List<LichSu> getByDateAndUser(Date begin, Date end, int maND) {
+        String sql = "SELECT * FROM LichSu WHERE NgayLap >= ? AND NgayLap < ? AND MaND = ?";
+        return selectBySql(sql, begin, end, maND);
+    }
+
+    @Override
+    public List<LichSu> getByDateAndUserId(Date begin, Date end, int maNd) {
+        String sql = """
+        SELECT * FROM HoaDon 
+        WHERE NgayLap >= ? AND NgayLap < ? AND MaND = ?
+    """;
+        return selectBySql(sql, begin, end, maNd);
+    }
+
 }

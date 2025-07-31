@@ -17,4 +17,10 @@ public interface LichSuDAO {
     List<LichSu> selectAll();
 
     List<LichSu> getByDate(Date begin, Date end);
+
+    List<LichSu> selectByUsername(int maND);
+
+    List<LichSu> getByDateAndUser(Date begin, Date end, int maND);
+    
+    List<LichSu> getByDateAndUserId(Date begin, Date end, int maNd);
 }

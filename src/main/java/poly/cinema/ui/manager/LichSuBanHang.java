@@ -4,8 +4,6 @@
  */
 package poly.cinema.ui.manager;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -16,7 +14,8 @@ import poly.cinema.dao.LichSuDAO;
 import poly.cinema.dao.impl.LichSuDAOImpl;
 import poly.cinema.entity.LichSu;
 import poly.cinema.util.TimeRange;
-import poly.cinema.util.XDate;
+import poly.cinema.entity.NguoiDung;
+import poly.cinema.util.XAuth;
 
 /**
  *
@@ -238,7 +237,7 @@ public class LichSuBanHang extends javax.swing.JPanel implements LichSuBanHangCo
             Date begin = txtBegin.getDate();
             Date end = txtEnd.getDate();
 
-            if(begin == null || end == null){
+            if (begin == null || end == null) {
                 JOptionPane.showMessageDialog(this, "Vui lòng chọn đầy đủ ngày bắt đầu và kết thúc.");
                 return;
             }
@@ -247,12 +246,7 @@ public class LichSuBanHang extends javax.swing.JPanel implements LichSuBanHangCo
                 JOptionPane.showMessageDialog(this, "Ngày kết thúc phải bằng hoặc sau ngày bắt đầu.");
                 return;
             }
-            
-            
-            if (tblBills.getRowCount() == 0 ) {
-                JOptionPane.showMessageDialog(this, "Không có dữ liệu trong khoảng thời gian đã chọn.");
-            }
-            
+
             // Làm tròn thời gian
             Calendar cal = Calendar.getInstance();
             cal.setTime(begin);
@@ -267,10 +261,28 @@ public class LichSuBanHang extends javax.swing.JPanel implements LichSuBanHangCo
             cal.set(Calendar.MINUTE, 0);
             cal.set(Calendar.SECOND, 0);
             cal.set(Calendar.MILLISECOND, 0);
-            cal.add(Calendar.DATE, 1);
+            cal.add(Calendar.DATE, 1); // để lấy trọn ngày kết thúc
             end = cal.getTime();
 
-            List<LichSu> list = lichSuDAO.getByDate(begin, end);
+            NguoiDung user = XAuth.user;
+            if (user == null) {
+                return;
+            }
+
+            List<LichSu> list;
+
+            if (user.isVai_tro()) {
+                // Quản lý: xem tất cả trong khoảng ngày
+                list = lichSuDAO.getByDate(begin, end);
+            } else {
+                // Nhân viên: chỉ xem của chính mình trong khoảng ngày
+                list = lichSuDAO.getByDateAndUserId(begin, end, user.getMaNd());
+            }
+
+            if (list.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Không có dữ liệu trong khoảng thời gian đã chọn.");
+            }
+
             fillTableLichSu(list);
 
         } catch (Exception e) {
@@ -295,13 +307,39 @@ public class LichSuBanHang extends javax.swing.JPanel implements LichSuBanHangCo
 
     @Override
     public void fillTable() {
-        List<LichSu> list = lichSuDAO.selectAll();
+        NguoiDung user = XAuth.user;
+        if (user == null) {
+            return;
+        }
+
+        List<LichSu> list;
+
+        if (user.isVai_tro()) {
+            // Quản lý: xem tất cả lịch sử
+            list = lichSuDAO.selectAll();
+        } else {
+            // Nhân viên: chỉ xem lịch sử của chính mình
+            list = lichSuDAO.selectByUsername(user.getMaNd());
+        }
+
         fillTableLichSu(list);
     }
 
     @Override
     public void fillTableByDate(Date begin, Date end) {
-        List<LichSu> list = lichSuDAO.getByDate(begin, end);
+        NguoiDung user = XAuth.user;
+        if (user == null) {
+            return;
+        }
+
+        List<LichSu> list;
+
+        if (user.isVai_tro()) {
+            list = lichSuDAO.getByDate(begin, end);
+        } else {
+            list = lichSuDAO.getByDateAndUser(begin, end, user.getMaNd());
+        }
+
         fillTableLichSu(list);
     }
 

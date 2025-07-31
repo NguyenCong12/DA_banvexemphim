@@ -50,13 +50,9 @@ public class QuanLiNhanVien extends javax.swing.JPanel implements QuanLiNhanVien
         jLabel12 = new javax.swing.JLabel();
         jLabel15 = new javax.swing.JLabel();
         jLabel16 = new javax.swing.JLabel();
-        jLabel13 = new javax.swing.JLabel();
         txtTennhanvien = new javax.swing.JTextField();
-        txtMatkhau = new javax.swing.JTextField();
         txtSodienthoai = new javax.swing.JTextField();
         txtEmail = new javax.swing.JTextField();
-        rdoQuanLy = new javax.swing.JRadioButton();
-        rdoNhanVien = new javax.swing.JRadioButton();
         rdoHoatDong = new javax.swing.JRadioButton();
         rdoDaNgung = new javax.swing.JRadioButton();
         jPanel4 = new javax.swing.JPanel();
@@ -66,21 +62,26 @@ public class QuanLiNhanVien extends javax.swing.JPanel implements QuanLiNhanVien
         btnSua = new javax.swing.JButton();
         btnXoa = new javax.swing.JButton();
         btnNhapmoi = new javax.swing.JButton();
+        txtMatkhau = new javax.swing.JPasswordField();
         jLabel1 = new javax.swing.JLabel();
+        jLabel13 = new javax.swing.JLabel();
+        rdoQuanLy = new javax.swing.JRadioButton();
+        rdoNhanVien = new javax.swing.JRadioButton();
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
         jPanel3.setPreferredSize(new java.awt.Dimension(1110, 720));
+        jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         tblQLnhanvien.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "Tên nhân viên", "Mật khẩu", "Email", "Số điện thoại", "Vai trò", "Trạng thái"
+                "Tên nhân viên", "Email", "Số điện thoại", "Vai trò", "Trạng thái"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false
+                false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -97,6 +98,8 @@ public class QuanLiNhanVien extends javax.swing.JPanel implements QuanLiNhanVien
         });
         jScrollPane1.setViewportView(tblQLnhanvien);
 
+        jPanel3.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 100, 991, 197));
+
         jPanel1.setBackground(new java.awt.Color(212, 212, 212));
         jPanel1.setFont(new java.awt.Font("Segoe UI", 1, 28)); // NOI18N
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -107,7 +110,7 @@ public class QuanLiNhanVien extends javax.swing.JPanel implements QuanLiNhanVien
 
         jLabel11.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel11.setText("Trạng thái");
-        jPanel1.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 160, -1, -1));
+        jPanel1.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 80, -1, -1));
 
         jLabel12.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel12.setText("Mật khẩu");
@@ -121,23 +124,12 @@ public class QuanLiNhanVien extends javax.swing.JPanel implements QuanLiNhanVien
         jLabel16.setText("Email");
         jPanel1.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 150, -1, -1));
 
-        jLabel13.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jLabel13.setText("Vai trò");
-        jPanel1.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 80, -1, -1));
-
         txtTennhanvien.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtTennhanvienActionPerformed(evt);
             }
         });
         jPanel1.add(txtTennhanvien, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 40, 230, -1));
-
-        txtMatkhau.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtMatkhauActionPerformed(evt);
-            }
-        });
-        jPanel1.add(txtMatkhau, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 110, 230, -1));
 
         txtSodienthoai.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -153,21 +145,13 @@ public class QuanLiNhanVien extends javax.swing.JPanel implements QuanLiNhanVien
         });
         jPanel1.add(txtEmail, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 180, 230, -1));
 
-        btgVaitro.add(rdoQuanLy);
-        rdoQuanLy.setText("Quản lí");
-        jPanel1.add(rdoQuanLy, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 110, -1, -1));
-
-        btgVaitro.add(rdoNhanVien);
-        rdoNhanVien.setText("Nhân viên");
-        jPanel1.add(rdoNhanVien, new org.netbeans.lib.awtextra.AbsoluteConstraints(830, 110, -1, -1));
-
         btgTrangthai.add(rdoHoatDong);
         rdoHoatDong.setText("Hoạt động");
-        jPanel1.add(rdoHoatDong, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 190, -1, -1));
+        jPanel1.add(rdoHoatDong, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 110, -1, -1));
 
         btgTrangthai.add(rdoDaNgung);
         rdoDaNgung.setText("Đã ngừng");
-        jPanel1.add(rdoDaNgung, new org.netbeans.lib.awtextra.AbsoluteConstraints(840, 190, -1, -1));
+        jPanel1.add(rdoDaNgung, new org.netbeans.lib.awtextra.AbsoluteConstraints(840, 110, -1, -1));
 
         lblAnh.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -234,36 +218,25 @@ public class QuanLiNhanVien extends javax.swing.JPanel implements QuanLiNhanVien
             }
         });
         jPanel1.add(btnNhapmoi, new org.netbeans.lib.awtextra.AbsoluteConstraints(870, 260, -1, 32));
+        jPanel1.add(txtMatkhau, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 110, 230, -1));
+
+        jPanel3.add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 351, 991, 308));
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 28)); // NOI18N
         jLabel1.setText("QUẢN LÝ NHÂN VIÊN");
+        jPanel3.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(419, 28, -1, -1));
 
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(60, 60, 60)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 991, Short.MAX_VALUE)
-                    .addComponent(jScrollPane1))
-                .addContainerGap(71, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel1)
-                .addGap(413, 413, 413))
-        );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(28, 28, 28)
-                .addComponent(jLabel1)
-                .addGap(34, 34, 34)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(54, 54, 54)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 308, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(61, Short.MAX_VALUE))
-        );
+        jLabel13.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel13.setText("Vai trò");
+        jPanel3.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 220, -1, -1));
+
+        btgVaitro.add(rdoQuanLy);
+        rdoQuanLy.setText("Quản lí");
+        jPanel3.add(rdoQuanLy, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 250, -1, -1));
+
+        btgVaitro.add(rdoNhanVien);
+        rdoNhanVien.setText("Nhân viên");
+        jPanel3.add(rdoNhanVien, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 250, -1, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -282,10 +255,6 @@ public class QuanLiNhanVien extends javax.swing.JPanel implements QuanLiNhanVien
     private void txtTennhanvienActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTennhanvienActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtTennhanvienActionPerformed
-
-    private void txtMatkhauActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtMatkhauActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtMatkhauActionPerformed
 
     private void txtSodienthoaiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSodienthoaiActionPerformed
         // TODO add your handling code here:
@@ -318,7 +287,7 @@ public class QuanLiNhanVien extends javax.swing.JPanel implements QuanLiNhanVien
     private void tblQLnhanvienMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblQLnhanvienMouseClicked
         int row = tblQLnhanvien.getSelectedRow();
         if (row >= 0) {
-            String email = tblQLnhanvien.getValueAt(row, 2).toString(); // Cột 2 là email
+            String email = tblQLnhanvien.getValueAt(row, 1).toString(); // Cột 2 là email
             NguoiDung nhanVien = dao.findByEmail(email); // Tìm theo email, không dùng ID nữa
 
             if (nhanVien != null) {
@@ -362,7 +331,7 @@ public class QuanLiNhanVien extends javax.swing.JPanel implements QuanLiNhanVien
     private javax.swing.JRadioButton rdoQuanLy;
     private javax.swing.JTable tblQLnhanvien;
     private javax.swing.JTextField txtEmail;
-    private javax.swing.JTextField txtMatkhau;
+    private javax.swing.JPasswordField txtMatkhau;
     private javax.swing.JTextField txtSodienthoai;
     private javax.swing.JTextField txtTennhanvien;
     // End of variables declaration//GEN-END:variables
@@ -413,7 +382,7 @@ public class QuanLiNhanVien extends javax.swing.JPanel implements QuanLiNhanVien
         int row = tblQLnhanvien.getSelectedRow();
         if (row >= 0) {
             // Lấy lại ma_nd từ entity cũ
-            String email = tblQLnhanvien.getValueAt(row, 2).toString();
+            String email = tblQLnhanvien.getValueAt(row, 1).toString();
             NguoiDung existing = dao.findByEmail(email);
             user.setMaNd(existing.getMaNd());
         }
@@ -468,7 +437,7 @@ public class QuanLiNhanVien extends javax.swing.JPanel implements QuanLiNhanVien
             JOptionPane.showMessageDialog(this, "Vui lòng chọn một dòng để chỉnh sửa!");
             return;
         }
-        String email = tblQLnhanvien.getValueAt(row, 2).toString();
+        String email = tblQLnhanvien.getValueAt(row, 1).toString();
         NguoiDung entity = dao.findByEmail(email);
         if (entity != null) {
             this.setForm(entity);
@@ -498,7 +467,7 @@ public class QuanLiNhanVien extends javax.swing.JPanel implements QuanLiNhanVien
 
         // Kiểm tra độ dài tên
         if (tennhanvien.length() < 3) {
-            JOptionPane.showMessageDialog(this, "Tên đăng nhập phải có ít nhất 3 ký tự!");
+            JOptionPane.showMessageDialog(this, "Tên nhân viên phải có ít nhất 3 ký tự!");
             return;
         }
 
@@ -514,15 +483,9 @@ public class QuanLiNhanVien extends javax.swing.JPanel implements QuanLiNhanVien
             return;
         }
 
-        // Kiểm tra định dạng số điện thoại (10–11 số)
-        if (!sodienthoai.matches("^\\d{10}$")) {
-            JOptionPane.showMessageDialog(this, "Số điện thoại không hợp lệ (phải có 10 chữ số)!");
-            return;
-        }
-
-        // Kiểm tra vai trò
-        if (!rdoNhanVien.isSelected() && !rdoQuanLy.isSelected()) {
-            JOptionPane.showMessageDialog(this, "Vui lòng chọn vai trò!");
+        // Kiểm tra định dạng số điện thoại: phải bắt đầu bằng 0 và đủ 10 số
+        if (!sodienthoai.matches("^0\\d{9}$")) {
+            JOptionPane.showMessageDialog(this, "Số điện thoại không hợp lệ (phải bắt đầu bằng 0 và có 10 chữ số)!");
             return;
         }
 
@@ -532,35 +495,32 @@ public class QuanLiNhanVien extends javax.swing.JPanel implements QuanLiNhanVien
             return;
         }
 
-        // Kiểm tra chỉ được có 1 quản lý
-        if (rdoQuanLy.isSelected()) {
-            List<NguoiDung> list = dao.findAll();
-            for (NguoiDung nd : list) {
-                // Giả sử vai trò quản lý là true, nhân viên là false (boolean)
-                // Nếu bạn dùng kiểu String thì sửa thành: nd.getVaitro().equalsIgnoreCase("Quản lý")
-                if (nd.isVai_tro()) {
-                    JOptionPane.showMessageDialog(this, "Hệ thống chỉ cho phép một người quản lý!");
-                    return;
-                }
-            }
+        // Kiểm tra email đã tồn tại
+        if (dao.findByEmail(taikhoan) != null) {
+            JOptionPane.showMessageDialog(this, "Email đã tồn tại!");
+            return;
         }
 
-        // Kiểm tra email đã tồn tại chưa
-        if (dao.findByEmail(taikhoan) != null) {
-            JOptionPane.showMessageDialog(this, "Tài khoản đã tồn tại!");
-            return;
+        // Kiểm tra số điện thoại đã tồn tại
+        List<NguoiDung> list = dao.findAll();
+        for (NguoiDung nd : list) {
+            if (nd.getSdt().equals(sodienthoai)) {
+                JOptionPane.showMessageDialog(this, "Số điện thoại đã được sử dụng!");
+                return;
+            }
         }
 
         // Thêm vào CSDL
         try {
             NguoiDung entity = getForm();
+            entity.setVai_tro(false); // mặc định là nhân viên
             dao.create(entity);
             fillToTable();
             clear();
             JOptionPane.showMessageDialog(this, "Thêm mới thành công!");
         } catch (Exception e) {
             e.printStackTrace();
-            JOptionPane.showMessageDialog(this, "Thêm mới thất bại: ");
+            JOptionPane.showMessageDialog(this, "Thêm mới thất bại!");
         }
     }
 
@@ -591,7 +551,7 @@ public class QuanLiNhanVien extends javax.swing.JPanel implements QuanLiNhanVien
             return;
         }
 
-        // Kiểm tra tên nhân viên
+        // Kiểm tra tên
         if (tennhanvien.length() < 3) {
             JOptionPane.showMessageDialog(this, "Tên phải có ít nhất 3 ký tự!");
             return;
@@ -609,15 +569,9 @@ public class QuanLiNhanVien extends javax.swing.JPanel implements QuanLiNhanVien
             return;
         }
 
-        // Kiểm tra số điện thoại
-        if (!sodienthoai.matches("^\\d{10,11}$")) {
-            JOptionPane.showMessageDialog(this, "Số điện thoại không hợp lệ!");
-            return;
-        }
-
-        // Kiểm tra vai trò
-        if (!rdoNhanVien.isSelected() && !rdoQuanLy.isSelected()) {
-            JOptionPane.showMessageDialog(this, "Vui lòng chọn vai trò!");
+        // Kiểm tra số điện thoại: bắt đầu bằng 0 và đủ 10 số
+        if (!sodienthoai.matches("^0\\d{9}$")) {
+            JOptionPane.showMessageDialog(this, "Số điện thoại không hợp lệ (phải bắt đầu bằng 0 và có 10 chữ số)!");
             return;
         }
 
@@ -629,13 +583,23 @@ public class QuanLiNhanVien extends javax.swing.JPanel implements QuanLiNhanVien
 
         try {
             NguoiDung newUser = getForm();
-            String oldEmail = tblQLnhanvien.getValueAt(row, 2).toString();
+            String oldEmail = tblQLnhanvien.getValueAt(row, 1).toString();
             NguoiDung oldUser = dao.findByEmail(oldEmail);
 
-            // Nếu người dùng sửa email, kiểm tra trùng email với người dùng khác
-            if (!taikhoan.equals(oldEmail) && dao.findByEmail(taikhoan) != null) {
+            // Kiểm tra trùng email (với người khác)
+            NguoiDung checkEmail = dao.findByEmail(taikhoan);
+            if (!taikhoan.equals(oldEmail) && checkEmail != null) {
                 JOptionPane.showMessageDialog(this, "Email đã tồn tại, không thể cập nhật!");
                 return;
+            }
+
+            // Kiểm tra trùng số điện thoại (với người khác)
+            List<NguoiDung> allUsers = dao.findAll();
+            for (NguoiDung nd : allUsers) {
+                if (!nd.getEmail().equals(oldEmail) && nd.getSdt().equals(sodienthoai)) {
+                    JOptionPane.showMessageDialog(this, "Số điện thoại đã tồn tại, không thể cập nhật!");
+                    return;
+                }
             }
 
             // So sánh dữ liệu cũ và mới
@@ -646,11 +610,12 @@ public class QuanLiNhanVien extends javax.swing.JPanel implements QuanLiNhanVien
 
             dao.update(newUser);
             fillToTable();
+            this.clear();
             JOptionPane.showMessageDialog(this, "Cập nhật thành công!");
 
         } catch (Exception e) {
             e.printStackTrace();
-            JOptionPane.showMessageDialog(this, "Cập nhật thất bại: ");
+            JOptionPane.showMessageDialog(this, "Cập nhật thất bại: " + e.getMessage());
         }
     }
 
@@ -662,7 +627,7 @@ public class QuanLiNhanVien extends javax.swing.JPanel implements QuanLiNhanVien
             return;
         }
 
-        String email = tblQLnhanvien.getValueAt(row, 2).toString();
+        String email = tblQLnhanvien.getValueAt(row, 1).toString();
 
         int choice = JOptionPane.showConfirmDialog(this, "Bạn có chắc muốn xóa người dùng này?", "Xác nhận", JOptionPane.YES_NO_OPTION);
         if (choice != JOptionPane.YES_OPTION) {
