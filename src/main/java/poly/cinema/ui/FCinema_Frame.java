@@ -29,57 +29,66 @@ public class FCinema_Frame extends javax.swing.JFrame implements FCinema_Control
      * Creates new form FCinema_Frame
      */
     public FCinema_Frame() {
-        initComponents();
-        init();
-        setLocationRelativeTo(null);
-        pnlBanHang = new BanHang(pnlMainContent);
-        pnlMainContent.removeAll();
-        pnlMainContent.setLayout(new CardLayout());
+    initComponents();
+    init();
+    setLocationRelativeTo(null);
 
-        pnlQuanLyPhim = new poly.cinema.ui.manager.QuanLyPhim();
-        pnlQuanLyPhongChieu = new poly.cinema.ui.manager.QuanLiPhongChieu();
-        pnlDoiMatKhau = new poly.cinema.ui.DoiMatKhau();
-        pnlQuanLyNhanVien = new poly.cinema.ui.manager.QuanLiNhanVien();
-        pnlThongKeDoanhThu = new poly.cinema.ui.manager.ThongKePanel();
-        pnlQuanLyHoaDon = new poly.cinema.ui.manager.QuanLyHoaDonJpanel();
-        pnlXemLichChieu = new poly.cinema.ui.manager.XemLichChieu();
-        pnlLichSuBanHang = new poly.cinema.ui.manager.LichSuBanHang();
-        pnlQuanLyGhe = new poly.cinema.ui.manager.QuanLyGheJpanel();
-        pnlQuanLySanPham = new poly.cinema.ui.manager.QuanLySanPham();
-        pnlQuanLySuatChieu = new poly.cinema.ui.manager.QuanLyXuatChieu();
-        pnlLoaighe = new poly.cinema.ui.manager.LoaiGheJpanel();
-        pnlLoaiPhim = new poly.cinema.ui.manager.LoaiPhimPanel();
-        
-        pnlBanHang = new poly.cinema.ui.BanHang(pnlMainContent);
-        pnlMainContent.add(pnlBanHang, "pnlBanHang");
-        pnlChonPhim = new poly.cinema.ui.chonPhimJpanel(pnlMainContent);
-        pnlMainContent.add(pnlChonPhim, "pnlChonPhim");
-        pnlchonGhe = new poly.cinema.ui.chonGheJPanel(pnlMainContent);
-        pnlMainContent.add(pnlchonGhe, "pnlchonGhe");
-        pnlBanSanPham = new poly.cinema.ui.BanSanPham(pnlMainContent);
-        pnlMainContent.add(pnlBanSanPham, "pnlBanSanPham");
+    pnlMainContent.removeAll();
+    pnlMainContent.setLayout(new CardLayout());
 
-        pnlMainContent.add(pnlLoaiPhim, "pnlLoaiPhim");
-        pnlMainContent.add(pnlLoaighe, "pnlLoaighe");
-        pnlMainContent.add(pnlQuanLyPhim, "pnlQuanLyPhim");
-        pnlMainContent.add(pnlQuanLyPhongChieu, "pnlQuanLyPhongChieu");
-        pnlMainContent.add(pnlQuanLyNhanVien, "pnlQuanLyNhanVien");
-        pnlMainContent.add(pnlThongKeDoanhThu, "pnlThongKeDoanhThu");
-        pnlMainContent.add(pnlDoiMatKhau, "pnlDoiMatKhau");
-        pnlMainContent.add(pnlQuanLyHoaDon, "pnlQuanLyHoaDon");
-        pnlMainContent.add(pnlXemLichChieu, "pnlXemLichChieu");
-        pnlMainContent.add(pnlLichSuBanHang, "pnlLichSuBanHang");
-        pnlMainContent.add(pnlQuanLyGhe, "pnlQuanLyGhe");
-        pnlMainContent.add(pnlQuanLySanPham, "pnlQuanLySanPham");
-        pnlMainContent.add(pnlQuanLySuatChieu, "pnlQuanLySuatChieu");
+    // Tạo một instance thực của BanHang
+    BanHang banHangPanel = new BanHang(pnlMainContent);
+    
+    // Gán cho pnlBanHang (mặc định là JPanel do NetBeans tạo)
+    pnlBanHang = banHangPanel;
 
-        pnlMainContent.add(pnlTrangchu, "pnlTrangchu");
+    // Truyền banHangPanel vào BanSanPham (bạn cần dùng các method của BanHang)
+    pnlBanSanPham = new BanSanPham(pnlMainContent, banHangPanel);
 
-        // Mặc định hiển thị Trang chủ
-        CardLayout cl = (CardLayout) pnlMainContent.getLayout();
-        cl.show(pnlMainContent, "pnlTrangchu");
-        addHoverEffectToPanelLabels(pnlManager);
-    }
+    // Khởi tạo các panel khác
+    pnlQuanLyPhim = new poly.cinema.ui.manager.QuanLyPhim();
+    pnlQuanLyPhongChieu = new poly.cinema.ui.manager.QuanLiPhongChieu();
+    pnlDoiMatKhau = new poly.cinema.ui.DoiMatKhau();
+    pnlQuanLyNhanVien = new poly.cinema.ui.manager.QuanLiNhanVien();
+    pnlThongKeDoanhThu = new poly.cinema.ui.manager.ThongKePanel();
+    pnlQuanLyHoaDon = new poly.cinema.ui.manager.QuanLyHoaDonJpanel();
+    pnlXemLichChieu = new poly.cinema.ui.manager.XemLichChieu();
+    pnlLichSuBanHang = new poly.cinema.ui.manager.LichSuBanHang();
+    pnlQuanLyGhe = new poly.cinema.ui.manager.QuanLyGheJpanel();
+    pnlQuanLySanPham = new poly.cinema.ui.manager.QuanLySanPham();
+    pnlQuanLySuatChieu = new poly.cinema.ui.manager.QuanLyXuatChieu();
+    pnlLoaighe = new poly.cinema.ui.manager.LoaiGheJpanel();
+    pnlLoaiPhim = new poly.cinema.ui.manager.LoaiPhimPanel();
+    pnlChonPhim = new poly.cinema.ui.chonPhimJpanel(pnlMainContent);
+    pnlchonGhe = new poly.cinema.ui.chonGheJPanel(pnlMainContent);
+
+    // Thêm panel vào MainContent
+    pnlMainContent.add(pnlBanHang, "pnlBanHang");
+    pnlMainContent.add(pnlChonPhim, "pnlChonPhim");
+    pnlMainContent.add(pnlchonGhe, "pnlchonGhe");
+    pnlMainContent.add(pnlBanSanPham, "pnlBanSanPham");
+    pnlMainContent.add(pnlLoaiPhim, "pnlLoaiPhim");
+    pnlMainContent.add(pnlLoaighe, "pnlLoaighe");
+    pnlMainContent.add(pnlQuanLyPhim, "pnlQuanLyPhim");
+    pnlMainContent.add(pnlQuanLyPhongChieu, "pnlQuanLyPhongChieu");
+    pnlMainContent.add(pnlQuanLyNhanVien, "pnlQuanLyNhanVien");
+    pnlMainContent.add(pnlThongKeDoanhThu, "pnlThongKeDoanhThu");
+    pnlMainContent.add(pnlDoiMatKhau, "pnlDoiMatKhau");
+    pnlMainContent.add(pnlQuanLyHoaDon, "pnlQuanLyHoaDon");
+    pnlMainContent.add(pnlXemLichChieu, "pnlXemLichChieu");
+    pnlMainContent.add(pnlLichSuBanHang, "pnlLichSuBanHang");
+    pnlMainContent.add(pnlQuanLyGhe, "pnlQuanLyGhe");
+    pnlMainContent.add(pnlQuanLySanPham, "pnlQuanLySanPham");
+    pnlMainContent.add(pnlQuanLySuatChieu, "pnlQuanLySuatChieu");
+    pnlMainContent.add(pnlTrangchu, "pnlTrangchu");
+
+    // Hiển thị mặc định
+    CardLayout cl = (CardLayout) pnlMainContent.getLayout();
+    cl.show(pnlMainContent, "pnlTrangchu");
+
+    addHoverEffectToPanelLabels(pnlManager);
+}
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always

@@ -17,7 +17,7 @@ public class QuanLyGheDaoImpl implements QuanLyGheDao {
 
     private final String UPDATE_SQL = """
         UPDATE Ghe
-        SET ma_phong = ?, so_ghe = ?, hang = ?, cot = ?, loai_ghe = ?
+        SET ma_phong = ?, loai_ghe = ?
         WHERE ma_ghe = ?
     """;
 
@@ -66,9 +66,6 @@ public class QuanLyGheDaoImpl implements QuanLyGheDao {
     public void update(QuanLyGhe ghe) {
         Object[] args = {
             ghe.getMaPhong(),
-            ghe.getSoGhe(),
-            ghe.getHang(),
-            ghe.getCot(),
             ghe.getLoaiGhe(),
             ghe.getMaGhe()
         };

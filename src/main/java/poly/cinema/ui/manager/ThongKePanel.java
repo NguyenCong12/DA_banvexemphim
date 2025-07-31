@@ -9,6 +9,7 @@ import java.io.FileOutputStream;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -17,7 +18,6 @@ import org.apache.poi.xwpf.usermodel.XWPFParagraph;
 import org.apache.poi.xwpf.usermodel.XWPFRun;
 import org.apache.poi.xwpf.usermodel.XWPFTable;
 import org.apache.poi.xwpf.usermodel.XWPFTableRow;
-import static org.apache.xmlbeans.impl.schema.StscState.end;
 import poly.cinema.dao.ThongKeDAO;
 import poly.cinema.dao.impl.ThongKeDAOImpl;
 import poly.cinema.entity.ThongKe;
@@ -52,9 +52,7 @@ public class ThongKePanel extends javax.swing.JPanel implements ThongKeControlle
         jLabel1 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
-        txtBegin = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
-        txtEnd = new javax.swing.JTextField();
         btnLoc = new javax.swing.JButton();
         cboTimeRanges = new javax.swing.JComboBox<>();
         jTabbedPane1 = new javax.swing.JTabbedPane();
@@ -64,6 +62,8 @@ public class ThongKePanel extends javax.swing.JPanel implements ThongKeControlle
         jPanel4 = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
         tblDoanhthubapnuov = new javax.swing.JTable();
+        txtBegin = new com.toedter.calendar.JDateChooser();
+        txtEnd = new com.toedter.calendar.JDateChooser();
         btnXuatWord = new javax.swing.JButton();
 
         addMouseListener(new java.awt.event.MouseAdapter() {
@@ -84,12 +84,8 @@ public class ThongKePanel extends javax.swing.JPanel implements ThongKeControlle
         jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel3.setText("Từ ngày:");
 
-        txtBegin.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153), 2));
-
         jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel4.setText("Đến ngày:");
-
-        txtEnd.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153), 2));
 
         btnLoc.setBackground(new java.awt.Color(212, 212, 212));
         btnLoc.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
@@ -188,7 +184,15 @@ public class ThongKePanel extends javax.swing.JPanel implements ThongKeControlle
             new String [] {
                 "Loại", "Doanh thu"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         tblDoanhthubapnuov.setGridColor(new java.awt.Color(0, 0, 0));
         tblDoanhthubapnuov.setRowHeight(25);
         tblDoanhthubapnuov.setShowGrid(true);
@@ -221,13 +225,13 @@ public class ThongKePanel extends javax.swing.JPanel implements ThongKeControlle
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                         .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(txtBegin, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(83, 83, 83)
-                        .addComponent(jLabel4)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(txtEnd, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(78, 78, 78)
+                        .addComponent(txtBegin, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(39, 39, 39)
+                        .addComponent(jLabel4)
+                        .addGap(18, 18, 18)
+                        .addComponent(txtEnd, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
                         .addComponent(btnLoc)
                         .addGap(73, 73, 73)
                         .addComponent(cboTimeRanges, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -239,15 +243,16 @@ public class ThongKePanel extends javax.swing.JPanel implements ThongKeControlle
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(19, 19, 19)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(txtBegin, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel4)
-                    .addComponent(txtEnd, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnLoc)
-                    .addComponent(cboTimeRanges, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 36, Short.MAX_VALUE)
+                .addGap(25, 25, 25)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel3)
+                        .addComponent(jLabel4)
+                        .addComponent(btnLoc)
+                        .addComponent(cboTimeRanges, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtBegin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtEnd, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 42, Short.MAX_VALUE)
                 .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 372, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(57, 57, 57))
         );
@@ -308,10 +313,8 @@ public class ThongKePanel extends javax.swing.JPanel implements ThongKeControlle
     }//GEN-LAST:event_cboTimeRangesActionPerformed
 
     private void btnLocActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLocActionPerformed
-        fillRevenue();
-        if (tblDoanhthuPhim.getRowCount() == 0 && tblDoanhthubapnuov.getRowCount() == 0) {
-            JOptionPane.showMessageDialog(this, "Không có dữ liệu trong khoảng thời gian đã chọn.");
-        }
+        fillRevenue(); // trước tiên gọi để đổ dữ liệu vào bảng
+
     }//GEN-LAST:event_btnLocActionPerformed
 
     private void tblDoanhthuPhimMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblDoanhthuPhimMouseClicked
@@ -345,70 +348,107 @@ public class ThongKePanel extends javax.swing.JPanel implements ThongKeControlle
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTable tblDoanhthuPhim;
     private javax.swing.JTable tblDoanhthubapnuov;
-    private javax.swing.JTextField txtBegin;
-    private javax.swing.JTextField txtEnd;
+    private com.toedter.calendar.JDateChooser txtBegin;
+    private com.toedter.calendar.JDateChooser txtEnd;
     // End of variables declaration//GEN-END:variables
 
     private final ThongKeDAO dao = new ThongKeDAOImpl();
 
     @Override
     public void open() {
+
+        txtBegin.setLocale(new Locale("vi", "VN"));
+        txtEnd.setLocale(new Locale("vi", "VN"));
+
+        txtBegin.setDateFormatString("dd/MM/yyyy");
+        txtEnd.setDateFormatString("dd/MM/yyyy");
         this.selectTimeRange(); // Gán mặc định thời gian
         this.fillRevenue();     // Load dữ liệu doanh thu phim và bắp nước
     }
 
     @Override
     public void selectTimeRange() {
-        TimeRange range = TimeRange.today();
+        TimeRange range = TimeRange.today(); // Mặc định
+
         switch (cboTimeRanges.getSelectedIndex()) {
             case 0 ->
-                range = TimeRange.today();         // Hôm nay
+                range = TimeRange.today();
             case 1 ->
-                range = TimeRange.thisWeek();      // Tuần này
+                range = TimeRange.thisWeek();
             case 2 ->
-                range = TimeRange.thisMonth();     // Tháng này
+                range = TimeRange.thisMonth();
             case 3 ->
-                range = TimeRange.thisQuarter();   // Quý này
+                range = TimeRange.thisQuarter();
             case 4 ->
-                range = TimeRange.thisYear();      // Năm này
+                range = TimeRange.thisYear();
         }
-        txtBegin.setText(XDate.format(range.getBegin(), "dd-MM-yyyy"));
-        txtEnd.setText(XDate.format(range.getEnd(), "dd-MM-yyyy"));
+
+        // Gán ngày vào JDateChooser
+        txtBegin.setDate(range.getBegin());
+        txtEnd.setDate(range.getEnd());
     }
 
     @Override
     public void fillRevenue() {
-        Date begin = XDate.parse(txtBegin.getText(), "dd-MM-yyyy");
-        Date end = XDate.parse(txtEnd.getText(), "dd-MM-yyyy");
+        try {
+            // Lấy ngày từ JDateChooser
+            Date begin = txtBegin.getDate();
+            Date end = txtEnd.getDate();
 
-        Calendar cal = Calendar.getInstance();
-        cal.setTime(begin);
-        cal.set(Calendar.HOUR_OF_DAY, 0);
-        cal.set(Calendar.MINUTE, 0);
-        cal.set(Calendar.SECOND, 0);
-        cal.set(Calendar.MILLISECOND, 0);
-        begin = cal.getTime();
+            if (begin == null || end == null) {
+                JOptionPane.showMessageDialog(this, "Vui lòng chọn đầy đủ ngày bắt đầu và kết thúc.");
+                return;
+            }
 
-        cal.setTime(end);
-        cal.set(Calendar.HOUR_OF_DAY, 0);
-        cal.set(Calendar.MINUTE, 0);
-        cal.set(Calendar.SECOND, 0);
-        cal.set(Calendar.MILLISECOND, 0);
-        cal.add(Calendar.DATE, 1); // +1 ngày
-        end = cal.getTime();
+            // Kiểm tra hợp lệ: ngày bắt đầu không được sau ngày kết thúc
+            if (begin.after(end)) {
+                JOptionPane.showMessageDialog(this, "Ngày kết thúc phải bằng hoặc sau ngày bắt đầu.");
+                return;
+            }
 
-        fillMovieRevenue(begin, end);
-        fillFoodRevenue(begin, end);
+            // Làm tròn thời gian về 00:00 cho begin
+            Calendar cal = Calendar.getInstance();
+            cal.setTime(begin);
+            cal.set(Calendar.HOUR_OF_DAY, 0);
+            cal.set(Calendar.MINUTE, 0);
+            cal.set(Calendar.SECOND, 0);
+            cal.set(Calendar.MILLISECOND, 0);
+            begin = cal.getTime();
+
+            // Làm tròn thời gian về 00:00 hôm sau cho end (để bao gồm toàn bộ ngày)
+            cal.setTime(end);
+            cal.set(Calendar.HOUR_OF_DAY, 0);
+            cal.set(Calendar.MINUTE, 0);
+            cal.set(Calendar.SECOND, 0);
+            cal.set(Calendar.MILLISECOND, 0);
+            cal.add(Calendar.DATE, 1);
+            end = cal.getTime();
+
+            // Load dữ liệu
+            fillMovieRevenue(begin, end);
+            fillFoodRevenue(begin, end);
+
+            if (tblDoanhthuPhim.getRowCount() == 0 && tblDoanhthubapnuov.getRowCount() == 0) {
+                JOptionPane.showMessageDialog(this, "Không có dữ liệu trong khoảng thời gian đã chọn.");
+            }
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Lỗi định dạng hoặc dữ liệu ngày tháng.");
+            e.printStackTrace();
+        }
     }
 
     public void fillMovieRevenue(Date begin, Date end) {
         List<ThongKe.DoanhThuPhim> list = dao.getDoanhThuPhim(begin, end);
         DefaultTableModel model = (DefaultTableModel) tblDoanhthuPhim.getModel();
         model.setRowCount(0);
+
         for (ThongKe.DoanhThuPhim item : list) {
+            double doanhThu = item.getDoanhThu();
+            String formattedDoanhThu = doanhThu == 0 ? "VNĐ" : String.format("%,.0f VNĐ", doanhThu);
             model.addRow(new Object[]{
                 item.getTenPhim(),
-                String.format("%,.0f VNĐ", item.getDoanhThu())
+                formattedDoanhThu
             });
         }
     }

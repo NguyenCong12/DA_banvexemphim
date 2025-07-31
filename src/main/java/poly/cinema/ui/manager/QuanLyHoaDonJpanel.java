@@ -110,15 +110,20 @@ public class QuanLyHoaDonJpanel extends javax.swing.JPanel implements QuanLyHoaD
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+
             },
             new String [] {
                 "Mã hóa đơn", "Tên nhân viên", "Ngày lập", "Tổng tiền", "Trạng thái"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         jTable1.setGridColor(new java.awt.Color(0, 0, 0));
         jTable1.setRowHeight(25);
         jTable1.setShowGrid(true);

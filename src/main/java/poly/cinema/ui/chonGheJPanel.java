@@ -89,7 +89,8 @@ public class chonGheJPanel extends javax.swing.JPanel {
 
     private void btnTiepTheoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTiepTheoActionPerformed
        // ✅ Ghi dữ liệu vào session trước
-    DatVeSession.setDanhSachGheDaChon(gheDaChon);
+   DatVeSession.addGheDaChon(gheDaChon);
+
     
     // ✅ Nếu maXuatChieu đang lưu là String → phải parse
     DatVeSession.setMaXuat(Integer.parseInt(maXuatChieu)); // ép kiểu nếu cần

@@ -36,27 +36,36 @@ import poly.cinema.entity.DatHang;
 import poly.cinema.entity.SanPham;
 import poly.cinema.entity.SanPhamSession;
 
+
+
+
+
+//Fix lỗi bán hàng Thêm biến banHangPanel trong BanSanPham
+//
 /**
  *
  * @author NITRO
  */
 public class BanSanPham extends javax.swing.JPanel {
+private BanHang banHangPanel;
 
     private JPanel pnlMainContent;
 
-    public BanSanPham(JPanel pnlMainContent) {
-        this.pnlMainContent = pnlMainContent;
-        initComponents();
-        loadSanPham();
-        init();
-        loadComboBoxLoai();
-        this.addComponentListener(new ComponentAdapter() {
-            @Override
-            public void componentShown(ComponentEvent e) {
-                loadSanPham(); // Gọi lại mỗi khi panel được hiển thị
-            }
-        });
-    }
+ public BanSanPham(JPanel pnlMainContent, BanHang banHangPanel) {
+    this.pnlMainContent = pnlMainContent;
+    this.banHangPanel = banHangPanel; // <-- thêm dòng này
+    initComponents();
+    loadSanPham();
+    init();
+    loadComboBoxLoai();
+    this.addComponentListener(new ComponentAdapter() {
+        @Override
+        public void componentShown(ComponentEvent e) {
+            loadSanPham();
+        }
+    });
+}
+
 
     private void chuyenPanel(String panelName) {
         CardLayout cl = (CardLayout) pnlMainContent.getLayout();
@@ -235,12 +244,10 @@ public class BanSanPham extends javax.swing.JPanel {
     }//GEN-LAST:event_cboLoaiActionPerformed
 
     private void btnTroLaiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTroLaiActionPerformed
-        // Lưu dữ liệu tạm thời
         List<Object[]> ds = getDanhSachHoaDonTam();
-        List<Object[]> dsHang = getDanhSachHoaDonTam(); // Từ bảng tblHoaDon ở Bán sản phẩm
-        luuSanPhamTamTuBang();
-        // Chuyển trang
-        chuyenPanel("pnlBanHang");
+    List<Object[]> dsHang = getDanhSachHoaDonTam(); 
+    luuSanPhamTamTuBang();
+    chuyenPanel("pnlBanHang");
 
     }//GEN-LAST:event_btnTroLaiActionPerformed
 
