@@ -201,29 +201,30 @@ public class QuanLyXuatChieu extends javax.swing.JPanel implements QuanLySuatChi
     }
 
     @Override
-public void update() {
-    int row = tblSuatChieu.getSelectedRow();
-    if (row < 0) {
-        XDialog.alert("Vui lòng chọn dòng cần cập nhật.");
-        return;
+    public void update() {
+        int row = tblSuatChieu.getSelectedRow();
+        if (row < 0) {
+            XDialog.alert("Vui lòng chọn dòng cần cập nhật.");
+            return;
+        }
+
+        SuatChieu sc = getForm();
+        if (sc == null) {
+            return;
+        }
+
+        int maXuat = (Integer) tblSuatChieu.getValueAt(row, 0);
+        sc.setMaXuat(maXuat); // Cập nhật đúng mã
+
+        if (isOverlapping(sc)) {
+            XDialog.alert("Suất chiếu bị trùng hoặc cách nhau không đủ thời gian!");
+            return;
+        }
+
+        dao.update(sc);
+        fillToTable();
+        XDialog.alert("Cập nhật thành công!");
     }
-
-    SuatChieu sc = getForm();
-    if (sc == null) return;
-
-    int maXuat = (Integer) tblSuatChieu.getValueAt(row, 0);
-    sc.setMaXuat(maXuat); // Cập nhật đúng mã
-
-    if (isOverlapping(sc)) {
-        XDialog.alert("Suất chiếu bị trùng hoặc cách nhau không đủ thời gian!");
-        return;
-    }
-
-    dao.update(sc);
-    fillToTable();
-    XDialog.alert("Cập nhật thành công!");
-}
-
 
     @Override
     public void delete() {
@@ -303,18 +304,17 @@ public void update() {
     }
 
     @Override
-public void edit() {
-    int row = tblSuatChieu.getSelectedRow();
-    if (row >= 0) {
-        int maXuat = (Integer) tblSuatChieu.getValueAt(row, 0);
-        SuatChieu sc = dao.findById(maXuat);
-        if (sc != null) {
-            setForm(sc);
-            setEditable(true);
+    public void edit() {
+        int row = tblSuatChieu.getSelectedRow();
+        if (row >= 0) {
+            int maXuat = (Integer) tblSuatChieu.getValueAt(row, 0);
+            SuatChieu sc = dao.findById(maXuat);
+            if (sc != null) {
+                setForm(sc);
+                setEditable(true);
+            }
         }
     }
-}
-
 
     @Override
     public void selectTimeRange() {
@@ -497,7 +497,7 @@ public void edit() {
 
             },
             new String [] {
-                "Mã suất", "Mã phim", "Mã phòng", "Ngày chiếu", "Giờ chiếu", "Giá vé"
+                "Mã suất", "Tên phim", "Mã phòng", "Ngày chiếu", "Giờ chiếu", "Giá vé"
             }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -783,11 +783,7 @@ public void edit() {
     }//GEN-LAST:event_btnXoaActionPerformed
 
     private void tblSuatChieuMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblSuatChieuMouseClicked
-        int row = tblSuatChieu.getSelectedRow();
-        if (row >= 0) {
-            setForm(items.get(row));
-            setEditable(true);
-        }
+        edit();
     }//GEN-LAST:event_tblSuatChieuMouseClicked
 
     private void cboPhim1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboPhim1ActionPerformed
