@@ -4,7 +4,9 @@
  */
 package poly.cinema.dao.impl;
 
+import java.sql.Connection;
 import java.sql.Date;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Time;
@@ -12,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 import poly.cinema.dao.QuanLySuatChieuDao;
 import poly.cinema.entity.SuatChieu;
+import poly.cinema.entity.XuatChieu;
 import poly.cinema.util.XJdbc;
 import poly.cinema.util.XQuery;
 
@@ -99,5 +102,5 @@ public class QuanLySuatChieuDaoImpl implements QuanLySuatChieuDao {
         String sql = "SELECT * FROM XuatChieu WHERE ma_phim = ?";
         return selectBySql(sql, maPhim);
     }
-
+   
 }

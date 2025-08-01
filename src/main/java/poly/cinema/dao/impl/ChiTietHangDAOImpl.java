@@ -44,7 +44,7 @@ public class ChiTietHangDAOImpl implements ChiTietHangDAO {
         }
         return list;
     }
-    
+
     @Override
     public ChiTietHang create(ChiTietHang entity) {
         String sql = "INSERT INTO ChiTietHang (ma_hd, ma_hang, so_luong, gia) VALUES (?, ?, ?, ?)";
@@ -115,4 +115,11 @@ public class ChiTietHangDAOImpl implements ChiTietHangDAO {
         }
         return list;
     }
+
+    public void themChiTietSanPham(int maHoaDon, int maHang, double gia, int soLuong) {
+    String sql = "INSERT INTO ChiTietHang (ma_hd, ma_hang, so_luong, gia) VALUES (?, ?, ?, ?)";
+    XJdbc.executeUpdate(sql, maHoaDon, maHang, soLuong, gia); // đúng thứ tự
+}
+
+
 }

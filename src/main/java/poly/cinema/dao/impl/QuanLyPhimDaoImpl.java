@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 import poly.cinema.dao.QuanLyPhimDao;
 import poly.cinema.entity.Phim;
+import poly.cinema.entity.XuatChieu;
 import poly.cinema.util.XJdbc;
 import poly.cinema.util.XQuery;
 
@@ -222,5 +223,7 @@ public class QuanLyPhimDaoImpl implements QuanLyPhimDao {
         }
         return false;
     }
+
+    
 
 }

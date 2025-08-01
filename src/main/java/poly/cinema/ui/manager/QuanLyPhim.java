@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -61,7 +62,6 @@ public class QuanLyPhim extends javax.swing.JPanel implements QuanLyPhimControll
         rdoDangChieu = new javax.swing.JRadioButton();
         rdoNgungChieu = new javax.swing.JRadioButton();
         cboLoaiPhim = new javax.swing.JComboBox<>();
-        txtNgayKhoiChieu = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         lblAnh = new javax.swing.JLabel();
@@ -70,6 +70,7 @@ public class QuanLyPhim extends javax.swing.JPanel implements QuanLyPhimControll
         btnSuaa = new javax.swing.JButton();
         btnXoaa = new javax.swing.JButton();
         btnlamMoi = new javax.swing.JButton();
+        txtNgayKhoiChieu = new com.toedter.calendar.JDateChooser();
         jLabel7 = new javax.swing.JLabel();
 
         setPreferredSize(new java.awt.Dimension(1110, 720));
@@ -164,13 +165,6 @@ public class QuanLyPhim extends javax.swing.JPanel implements QuanLyPhimControll
         cboLoaiPhim.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         jPanel1.add(cboLoaiPhim, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 40, -1, -1));
 
-        txtNgayKhoiChieu.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtNgayKhoiChieuActionPerformed(evt);
-            }
-        });
-        jPanel1.add(txtNgayKhoiChieu, new org.netbeans.lib.awtextra.AbsoluteConstraints(34, 225, 250, 30));
-
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel2.setText("Ảnh của phim:");
         jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 10, 100, -1));
@@ -244,6 +238,7 @@ public class QuanLyPhim extends javax.swing.JPanel implements QuanLyPhimControll
             }
         });
         jPanel1.add(btnlamMoi, new org.netbeans.lib.awtextra.AbsoluteConstraints(930, 290, -1, 31));
+        jPanel1.add(txtNgayKhoiChieu, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 240, 260, 30));
 
         jLabel7.setFont(new java.awt.Font("Segoe UI", 1, 28)); // NOI18N
         jLabel7.setText("QUẢN LÝ PHIM");
@@ -293,10 +288,6 @@ public class QuanLyPhim extends javax.swing.JPanel implements QuanLyPhimControll
     private void txtMoTaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtMoTaActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtMoTaActionPerformed
-
-    private void txtNgayKhoiChieuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNgayKhoiChieuActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtNgayKhoiChieuActionPerformed
 
     private void btnLamMoiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLamMoiActionPerformed
 
@@ -371,7 +362,7 @@ public class QuanLyPhim extends javax.swing.JPanel implements QuanLyPhimControll
     private javax.swing.JRadioButton rdoNgungChieu;
     private javax.swing.JTable tblPhim;
     private javax.swing.JTextField txtMoTa;
-    private javax.swing.JTextField txtNgayKhoiChieu;
+    private com.toedter.calendar.JDateChooser txtNgayKhoiChieu;
     private javax.swing.JTextField txtTenPhim;
     private javax.swing.JTextField txtThoiLuong;
     // End of variables declaration//GEN-END:variables
@@ -395,6 +386,8 @@ public class QuanLyPhim extends javax.swing.JPanel implements QuanLyPhimControll
 
     @Override
     public void open() {
+        txtNgayKhoiChieu.setLocale(new Locale("vi", "VN"));
+        txtNgayKhoiChieu.setDateFormatString("dd/MM/yyyy");
         loadLoaiPhimToComboBox();
         fillToTable();
         clear();
@@ -432,9 +425,32 @@ public class QuanLyPhim extends javax.swing.JPanel implements QuanLyPhimControll
         String moTa = txtMoTa.getText().trim();
         String tenLoai = (String) cboLoaiPhim.getSelectedItem();
         LoaiPhim selectedLoai = loaiPhimMap.get(tenLoai);
-        int thoiLuong = Integer.parseInt(thoiLuongStr);
-        Date ngayKhoiChieu = XDate.parse(txtNgayKhoiChieu.getText().trim(), "dd/MM/yyyy");
+
+        if (thoiLuongStr.isEmpty()) {
+            XDialog.alert("Vui lòng nhập thời lượng phim!");
+            return null;
+        }
+
+        int thoiLuong;
+        try {
+            thoiLuong = Integer.parseInt(thoiLuongStr);
+        } catch (NumberFormatException ex) {
+            XDialog.alert("Thời lượng phim phải là số!");
+            return null;
+        }
+
+        Date ngayKhoiChieu = txtNgayKhoiChieu.getDate();
+        if (ngayKhoiChieu == null) {
+            XDialog.alert("Vui lòng chọn ngày khởi chiếu!");
+            return null;
+        }
+
         String trangThai = getTrangThai();
+        if (trangThai == null) {
+            XDialog.alert("Vui lòng chọn trạng thái phim!");
+            return null;
+        }
+
         String hinhAnh = lblAnh.getToolTipText();
 
         return Phim.builder()
@@ -451,6 +467,7 @@ public class QuanLyPhim extends javax.swing.JPanel implements QuanLyPhimControll
     @Override
     public void setForm(Phim entity) {
         txtTenPhim.setText(entity.getTenPhim());
+
         for (LoaiPhim loai : loaiPhimList) {
             if (loai.getMaLoai() == entity.getMaLoai()) {
                 cboLoaiPhim.setSelectedItem(loai.getTenLoai());
@@ -460,7 +477,8 @@ public class QuanLyPhim extends javax.swing.JPanel implements QuanLyPhimControll
 
         txtThoiLuong.setText(String.valueOf(entity.getThoiLuong()));
         txtMoTa.setText(entity.getMoTa());
-        txtNgayKhoiChieu.setText(XDate.format(entity.getNgayKhoiChieu(), "dd/MM/yyyy"));
+        txtNgayKhoiChieu.setDate(entity.getNgayKhoiChieu());
+
         switch (entity.getTrangThai()) {
             case "Đang chiếu" ->
                 rdoDangChieu.setSelected(true);
@@ -468,13 +486,12 @@ public class QuanLyPhim extends javax.swing.JPanel implements QuanLyPhimControll
                 rdoNgungChieu.setSelected(true);
         }
 
-        // Hiển thị hình ảnh nếu tồn tại
         String hinh = entity.getHinhAnh();
         if (hinh != null) {
             File imageFile = new File("images", hinh);
             if (imageFile.exists()) {
-                lblAnh.setToolTipText(hinh); // dùng để lưu lại tên file
-                XIcon.setIcon(lblAnh, imageFile); // hiển thị icon
+                lblAnh.setToolTipText(hinh);
+                XIcon.setIcon(lblAnh, imageFile);
             } else {
                 lblAnh.setToolTipText(null);
                 lblAnh.setIcon(null);
@@ -501,11 +518,11 @@ public class QuanLyPhim extends javax.swing.JPanel implements QuanLyPhimControll
         items = dao.findAll();
 
         for (Phim p : items) {
-            String tenLoai = getTenLoaiByMaLoai(p.getMaLoai()); // ✅ tên thể loại
+            String tenLoai = getTenLoaiByMaLoai(p.getMaLoai());
             model.addRow(new Object[]{
-                p.getMaPhim(), p.getTenPhim(), tenLoai, // ✅ đúng tên
+                p.getMaPhim(), p.getTenPhim(), tenLoai,
                 p.getThoiLuong(), p.getMoTa(),
-                XDate.format(p.getNgayKhoiChieu(), "dd/MM/yyyy"),
+                XDate.format(p.getNgayKhoiChieu(), "dd/MM/yyyy"), // ✅ định dạng lại
                 p.getTrangThai(), p.getHinhAnh()
             });
         }
@@ -515,7 +532,7 @@ public class QuanLyPhim extends javax.swing.JPanel implements QuanLyPhimControll
     public void create() {
         Phim phim = getForm();
         if (phim == null) {
-            return; // đã bắt lỗi trong getForm()
+            return; // đã validate trong getForm()
         }
 
         // Kiểm tra tên trùng
@@ -524,6 +541,19 @@ public class QuanLyPhim extends javax.swing.JPanel implements QuanLyPhimControll
                 XDialog.alert("Tên phim đã tồn tại!");
                 return;
             }
+        }
+
+        // Kiểm tra thời lượng >= 30 phút
+        if (phim.getThoiLuong() < 30) {
+            XDialog.alert("Thời lượng phim phải từ 30 phút trở lên!");
+            return;
+        }
+
+        // Kiểm tra ngày khởi chiếu không trước ngày hiện tại
+        Date today = new Date();
+        if (phim.getNgayKhoiChieu().before(XDate.toDate(today))) {
+            XDialog.alert("Ngày khởi chiếu không được trước ngày hiện tại!");
+            return;
         }
 
         // Kiểm tra ảnh
@@ -537,7 +567,7 @@ public class QuanLyPhim extends javax.swing.JPanel implements QuanLyPhimControll
             dao.create(phim);
             fillToTable();
             clear();
-            XDialog.alert(" Thêm mới thành công!");
+            XDialog.alert("Thêm mới thành công!");
             updateButtonStatus();
         }
     }
@@ -545,11 +575,6 @@ public class QuanLyPhim extends javax.swing.JPanel implements QuanLyPhimControll
     @Override
     public void update() {
         int row = tblPhim.getSelectedRow();
-        if (row < 0) {
-            XDialog.alert("Vui lòng chọn phim để cập nhật.");
-            return;
-        }
-
         Phim phimMoi = getForm();
         if (phimMoi == null) {
             return; // đã validate trong getForm()
@@ -558,7 +583,6 @@ public class QuanLyPhim extends javax.swing.JPanel implements QuanLyPhimControll
         int maPhim = (Integer) tblPhim.getValueAt(row, 0);
         phimMoi.setMaPhim(maPhim);
 
-        // Lấy phim cũ
         Phim phimCu = dao.findById(maPhim);
         if (phimCu == null) {
             XDialog.alert("Phim không tồn tại!");
@@ -574,6 +598,19 @@ public class QuanLyPhim extends javax.swing.JPanel implements QuanLyPhimControll
             }
         }
 
+        // Kiểm tra thời lượng >= 30 phút
+        if (phimMoi.getThoiLuong() < 30) {
+            XDialog.alert("Thời lượng phim phải từ 30 phút trở lên!");
+            return;
+        }
+
+        // Kiểm tra ngày khởi chiếu không được trước ngày hiện tại
+        Date today = new Date();
+        if (phimMoi.getNgayKhoiChieu().before(XDate.toDate(today))) {
+            XDialog.alert("Ngày khởi chiếu không được trước ngày hiện tại!");
+            return;
+        }
+
         // Kiểm tra chưa thay đổi gì
         if (phimMoi.getTenPhim().equals(phimCu.getTenPhim())
                 && phimMoi.getMaLoai() == phimCu.getMaLoai()
@@ -586,14 +623,11 @@ public class QuanLyPhim extends javax.swing.JPanel implements QuanLyPhimControll
             XDialog.alert("Bạn chưa thay đổi thông tin nào để cập nhật!");
             return;
         }
+        dao.update(phimMoi); // << Thêm dòng này
 
-        // Xác nhận cập nhật
-        if (XDialog.confirm("Bạn chắc chắn muốn cập nhật thông tin phim này?")) {
-            dao.update(phimMoi);
-            fillToTable();
-            XDialog.alert(" Cập nhật thành công!");
-            updateButtonStatus();
-        }
+        fillToTable();
+        clear();
+        XDialog.alert("Cập nhật phim thành công!");
     }
 
     @Override
@@ -604,22 +638,30 @@ public class QuanLyPhim extends javax.swing.JPanel implements QuanLyPhimControll
             return;
         }
 
-        int maPhim = (Integer) tblPhim.getValueAt(row, 0);
-        Phim phim = dao.findById(maPhim);
+        // Dòng dưới dùng đúng chỉ số Model nếu có sort/filter
+        int modelRow = tblPhim.convertRowIndexToModel(row);
 
+        Object value = tblPhim.getModel().getValueAt(modelRow, 0);
+        if (!(value instanceof Integer)) {
+            XDialog.alert("Dữ liệu không hợp lệ!");
+            return;
+        }
+        int maPhim = (Integer) value;
+
+        Phim phim = dao.findById(maPhim);
         if (phim == null) {
             XDialog.alert("Phim không tồn tại hoặc đã bị xóa trước đó!");
             fillToTable();
             return;
         }
 
-        // Không cho xóa phim đang chiếu
-        if ("Đang chiếu".equalsIgnoreCase(phim.getTrangThai())) {
-            XDialog.alert(" Không thể xóa phim đang chiếu!");
+        // Xử lý null an toàn cho trạng thái
+        String trangThai = phim.getTrangThai();
+        if ("Đang chiếu".equalsIgnoreCase(trangThai != null ? trangThai : "")) {
+            XDialog.alert("Không thể xóa phim đang chiếu!");
             return;
         }
 
-        // Xác nhận xóa
         if (XDialog.confirm("Bạn chắc chắn muốn xóa phim này?")) {
             dao.deleteById(maPhim);
             fillToTable();
@@ -632,11 +674,10 @@ public class QuanLyPhim extends javax.swing.JPanel implements QuanLyPhimControll
     @Override
     public void clear() {
         txtTenPhim.setText("");
-        cboLoaiPhim.setSelectedIndex(-1); // reset selection
-
+        cboLoaiPhim.setSelectedIndex(-1);
         txtThoiLuong.setText("");
         txtMoTa.setText("");
-        txtNgayKhoiChieu.setText("");
+        txtNgayKhoiChieu.setDate(null); // ✅ reset JDateChooser
         rdoDangChieu.setSelected(true);
         lblAnh.setIcon(null);
         lblAnh.setToolTipText(null);
@@ -649,7 +690,7 @@ public class QuanLyPhim extends javax.swing.JPanel implements QuanLyPhimControll
         txtTenPhim.setEditable(editable);
         txtThoiLuong.setEditable(editable);
         txtMoTa.setEditable(editable);
-        txtNgayKhoiChieu.setEditable(editable);
+        txtNgayKhoiChieu.getDateEditor().getUiComponent().setEnabled(editable);
         rdoDangChieu.setEnabled(editable);
         rdoNgungChieu.setEnabled(editable);
         // Nếu có nút hoặc hình ảnh thì xử lý thêm ở đây
@@ -701,26 +742,7 @@ public class QuanLyPhim extends javax.swing.JPanel implements QuanLyPhimControll
 
     @Override
     public void selectTimeRange() {
-//        Date tuNgay = txtTuNgay.getDate();
-//        Date denNgay = txtDenNgay.getDate();
-//
-//        if (tuNgay == null || denNgay == null) {
-//            XDialog.alert("Vui lòng chọn đầy đủ khoảng ngày.");
-//            return;
-//        }
-//
-//        DefaultTableModel model = (DefaultTableModel) tblPhim.getModel();
-//        model.setRowCount(0);
-//        for (Phim p : dao.findAll()) {
-//            Date ngayKhoiChieu = p.getNgayKhoiChieu();
-//            if (!ngayKhoiChieu.before(tuNgay) && !ngayKhoiChieu.after(denNgay)) {
-//                model.addRow(new Object[]{
-//                    p.getMaPhim(), p.getTenPhim(), p.getTheLoai(), p.getThoiLuong(),
-//                    p.getMoTa(), XDate.format(p.getNgayKhoiChieu(), "dd/MM/yyyy"),
-//                    p.getTrangThai(), p.getHinhAnh()
-//                });
-//            }
-//        }
+
     }
 
     @Override
