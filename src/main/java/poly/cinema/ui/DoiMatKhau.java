@@ -12,7 +12,6 @@ import poly.cinema.dao.impl.NguoiDungDAOImpl;
 import poly.cinema.util.CaptchaGenerator;
 import poly.cinema.util.XAuth;
 
-
 /**
  *
  * @author Bao Nhien
@@ -287,6 +286,9 @@ public class DoiMatKhau extends javax.swing.JPanel implements DoiMatKhauControll
         txtNewpass.setText("");
         txtConfirm.setText("");
         txtCaptcha.setText("");
+
+        clearErrorLabels(); // <-- Thêm dòng này để xóa hết thông báo lỗi
+
         loadCaptcha();
     }//GEN-LAST:event_bntExitActionPerformed
 
@@ -419,7 +421,5 @@ public class DoiMatKhau extends javax.swing.JPanel implements DoiMatKhauControll
     private javax.swing.JTextField txtPassword;
     private javax.swing.JTextField txtUsername;
     // End of variables declaration//GEN-END:variables
-
-    
 
 }
