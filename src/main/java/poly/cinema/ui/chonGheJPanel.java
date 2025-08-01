@@ -4,15 +4,16 @@
  */
 package poly.cinema.ui;
 
+import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Color;
+import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.Insets;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JButton;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import poly.cinema.dao.ChiTietVeDAO;
 import poly.cinema.dao.QuanLyGheDao;
@@ -47,7 +48,6 @@ public class chonGheJPanel extends javax.swing.JPanel {
         jLabel3 = new javax.swing.JLabel();
         jPanel6 = new javax.swing.JPanel();
         btnTiepTheo = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
 
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -149,21 +149,12 @@ public class chonGheJPanel extends javax.swing.JPanel {
             }
         });
 
-        jButton1.setText("Quay lại");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
         jPanel6Layout.setHorizontalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jButton1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 32, Short.MAX_VALUE)
+                .addContainerGap(111, Short.MAX_VALUE)
                 .addComponent(btnTiepTheo)
                 .addContainerGap())
         );
@@ -171,9 +162,7 @@ public class chonGheJPanel extends javax.swing.JPanel {
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel6Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnTiepTheo)
-                    .addComponent(jButton1))
+                .addComponent(btnTiepTheo)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -205,11 +194,11 @@ public class chonGheJPanel extends javax.swing.JPanel {
                 .addComponent(pnlGhe, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGap(47, 47, 47)
-                        .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGap(28, 28, 28)
-                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGap(47, 47, 47)
+                        .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
 
@@ -217,33 +206,27 @@ public class chonGheJPanel extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnTiepTheoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTiepTheoActionPerformed
-       // ✅ Ghi dữ liệu vào session trước
-   DatVeSession.addGheDaChon(gheDaChon);
+        // ✅ Ghi dữ liệu vào session trước
+        DatVeSession.addGheDaChon(gheDaChon);
 
-    
-    // ✅ Nếu maXuatChieu đang lưu là String → phải parse
-    DatVeSession.setMaXuat(Integer.parseInt(maXuatChieu)); // ép kiểu nếu cần
+        // ✅ Nếu maXuatChieu đang lưu là String → phải parse
+        DatVeSession.setMaXuat(Integer.parseInt(maXuatChieu)); // ép kiểu nếu cần
 
-    if (banHangPanel == null) {
-        banHangPanel = new BanHang(pnlMainContent);
-        pnlMainContent.add(banHangPanel, "pnlBanHang");
-    }
+        if (banHangPanel == null) {
+            banHangPanel = new BanHang(pnlMainContent);
+            pnlMainContent.add(banHangPanel, "pnlBanHang");
+        }
 
-    // Gọi update
-    banHangPanel.updateSauKhiChonGhe();
+        // Gọi update
+        banHangPanel.updateSauKhiChonGhe();
 
-    // Chuyển panel
-    chuyenPanel("pnlBanHang");
+        // Chuyển panel
+        chuyenPanel("pnlBanHang");
     }//GEN-LAST:event_btnTiepTheoActionPerformed
-
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnTiepTheo;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -264,7 +247,6 @@ public class chonGheJPanel extends javax.swing.JPanel {
     public chonGheJPanel(JPanel pnlMainContent) {
         this.pnlMainContent = pnlMainContent;
         initComponents();
-
         // ✅ Xóa tất cả listener cũ trước khi gắn mới
         for (ActionListener al : btnTiepTheo.getActionListeners()) {
             btnTiepTheo.removeActionListener(al);
@@ -273,6 +255,7 @@ public class chonGheJPanel extends javax.swing.JPanel {
         // ✅ Gắn listener một lần duy nhất
         btnTiepTheo.addActionListener(this::btnTiepTheoActionPerformed);
     }
+
 
     public void setMaXuatChieu(String maXuat) {
         this.maXuatChieu = maXuat;
@@ -318,8 +301,7 @@ public class chonGheJPanel extends javax.swing.JPanel {
             int hangIndex = ghe.getHang().charAt(0) - 'A';
             int cotIndex = ghe.getCot() - 1;
 
-            String maGhe = String.valueOf(ghe.getMaGhe()); // ✅ chuyển từ Integer → String
-
+            String maGhe = String.valueOf(ghe.getMaGhe());
             String tenGhe = ghe.getSoGhe();
 
             JButton btn = new JButton(tenGhe);
@@ -331,9 +313,22 @@ public class chonGheJPanel extends javax.swing.JPanel {
             int y = offsetY + hangIndex * (btnSize + gap);
             btn.setBounds(x, y, btnSize, btnSize);
 
+            // Ghế đã được đặt (đỏ, không cho chọn)
             if (gheDaDat.contains(maGhe)) {
                 btn.setEnabled(false);
                 btn.setBackground(Color.RED);
+
+                // Ghế bị hư (xám đậm, không cho chọn)
+            } else if ("Hư".equalsIgnoreCase(ghe.getTrangThai())) {
+                btn.setEnabled(false);
+                btn.setBackground(Color.DARK_GRAY);
+
+                // Ghế dành cho nhân viên (xanh dương, không cho chọn)
+            } else if ("Cho nhân viên".equalsIgnoreCase(ghe.getTrangThai())) {
+                btn.setEnabled(false);
+                btn.setBackground(Color.BLUE);
+
+                // Các ghế còn lại (VIP hoặc thường)
             } else {
                 btn.setBackground("VIP".equalsIgnoreCase(ghe.getLoaiGhe()) ? Color.RED : Color.LIGHT_GRAY);
 
@@ -368,5 +363,4 @@ public class chonGheJPanel extends javax.swing.JPanel {
         }
         return ds;
     }
-
 }

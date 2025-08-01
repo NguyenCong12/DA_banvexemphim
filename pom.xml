@@ -138,7 +138,6 @@
             <artifactId>xmlbeans</artifactId>
             <version>${xmlbeans.version}</version>
         </dependency>
-
         <!-- SQL Server JDBC -->
         <dependency>
             <groupId>com.microsoft.sqlserver</groupId>

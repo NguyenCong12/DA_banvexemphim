@@ -40,6 +40,7 @@ E:\DA1\DA_VeXemPhim\src\main\java\poly\cinema\entity\LichSu.java
 E:\DA1\DA_VeXemPhim\src\main\java\poly\cinema\entity\LoaiGhe.java
 E:\DA1\DA_VeXemPhim\src\main\java\poly\cinema\entity\LoaiPhim.java
 E:\DA1\DA_VeXemPhim\src\main\java\poly\cinema\entity\MatHang.java
+E:\DA1\DA_VeXemPhim\src\main\java\poly\cinema\entity\Nguoi.java
 E:\DA1\DA_VeXemPhim\src\main\java\poly\cinema\entity\NguoiDung.java
 E:\DA1\DA_VeXemPhim\src\main\java\poly\cinema\entity\Phim.java
 E:\DA1\DA_VeXemPhim\src\main\java\poly\cinema\entity\PhongChieu.java
@@ -91,6 +92,7 @@ E:\DA1\DA_VeXemPhim\src\main\java\poly\cinema\ui\QL_BanHang_Controler.java
 E:\DA1\DA_VeXemPhim\src\main\java\poly\cinema\ui\WelcomeController.java
 E:\DA1\DA_VeXemPhim\src\main\java\poly\cinema\ui\WelcomeJDialog.java
 E:\DA1\DA_VeXemPhim\src\main\java\poly\cinema\util\CaptchaGenerator.java
+E:\DA1\DA_VeXemPhim\src\main\java\poly\cinema\util\ExcelOutput.java
 E:\DA1\DA_VeXemPhim\src\main\java\poly\cinema\util\PDFExporter.java
 E:\DA1\DA_VeXemPhim\src\main\java\poly\cinema\util\TimeRange.java
 E:\DA1\DA_VeXemPhim\src\main\java\poly\cinema\util\XAuth.java

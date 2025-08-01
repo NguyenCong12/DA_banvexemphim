@@ -182,7 +182,7 @@ public class FCinema_Frame extends javax.swing.JFrame implements FCinema_Control
                 lblLichSuBanHangMouseClicked(evt);
             }
         });
-        pnlManager.add(lblLichSuBanHang, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 240, 240, 37));
+        pnlManager.add(lblLichSuBanHang, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 200, 240, 37));
 
         lblQLNHANVIEN.setBackground(new java.awt.Color(255, 255, 255));
         lblQLNHANVIEN.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
@@ -207,7 +207,7 @@ public class FCinema_Frame extends javax.swing.JFrame implements FCinema_Control
                 lblQLDoanhthuMouseEntered(evt);
             }
         });
-        pnlManager.add(lblQLDoanhthu, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 200, 240, 37));
+        pnlManager.add(lblQLDoanhthu, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 240, 240, 37));
 
         lblQLHoaDon.setBackground(new java.awt.Color(255, 255, 255));
         lblQLHoaDon.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
@@ -306,7 +306,7 @@ public class FCinema_Frame extends javax.swing.JFrame implements FCinema_Control
                 lbldãnguatMouseClicked(evt);
             }
         });
-        pnlManager.add(lbldãnguat, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 680, 240, 40));
+        pnlManager.add(lbldãnguat, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 690, 240, 40));
 
         lblQLPhongChieu1.setBackground(new java.awt.Color(255, 255, 255));
         lblQLPhongChieu1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
@@ -330,7 +330,7 @@ public class FCinema_Frame extends javax.swing.JFrame implements FCinema_Control
         });
         pnlManager.add(lblQLPhongChieu2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 560, 240, 37));
 
-        pnlCenter.add(pnlManager, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 240, 720));
+        pnlCenter.add(pnlManager, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 240, 730));
 
         pnlMainContent.setLayout(new java.awt.CardLayout());
 
@@ -342,7 +342,7 @@ public class FCinema_Frame extends javax.swing.JFrame implements FCinema_Control
         );
         pnlQuanLyPhongChieuLayout.setVerticalGroup(
             pnlQuanLyPhongChieuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 720, Short.MAX_VALUE)
+            .addGap(0, 730, Short.MAX_VALUE)
         );
 
         pnlMainContent.add(pnlQuanLyPhongChieu, "card3");
@@ -355,7 +355,7 @@ public class FCinema_Frame extends javax.swing.JFrame implements FCinema_Control
         );
         pnlQuanLyGheLayout.setVerticalGroup(
             pnlQuanLyGheLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 720, Short.MAX_VALUE)
+            .addGap(0, 730, Short.MAX_VALUE)
         );
 
         pnlMainContent.add(pnlQuanLyGhe, "card3");
@@ -368,7 +368,7 @@ public class FCinema_Frame extends javax.swing.JFrame implements FCinema_Control
         );
         pnlBanVeLayout.setVerticalGroup(
             pnlBanVeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 720, Short.MAX_VALUE)
+            .addGap(0, 730, Short.MAX_VALUE)
         );
 
         pnlMainContent.add(pnlBanVe, "card3");
@@ -381,7 +381,7 @@ public class FCinema_Frame extends javax.swing.JFrame implements FCinema_Control
         );
         pnlQuanLyHoaDonLayout.setVerticalGroup(
             pnlQuanLyHoaDonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 720, Short.MAX_VALUE)
+            .addGap(0, 730, Short.MAX_VALUE)
         );
 
         pnlMainContent.add(pnlQuanLyHoaDon, "card3");
@@ -394,7 +394,7 @@ public class FCinema_Frame extends javax.swing.JFrame implements FCinema_Control
         );
         pnlQuanLyNhanVienLayout.setVerticalGroup(
             pnlQuanLyNhanVienLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 720, Short.MAX_VALUE)
+            .addGap(0, 730, Short.MAX_VALUE)
         );
 
         pnlMainContent.add(pnlQuanLyNhanVien, "card3");
@@ -410,7 +410,7 @@ public class FCinema_Frame extends javax.swing.JFrame implements FCinema_Control
         );
         pnlTrangchuLayout.setVerticalGroup(
             pnlTrangchuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 720, Short.MAX_VALUE)
+            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 730, Short.MAX_VALUE)
         );
 
         pnlMainContent.add(pnlTrangchu, "card2");
@@ -423,7 +423,7 @@ public class FCinema_Frame extends javax.swing.JFrame implements FCinema_Control
         );
         pnlQuanLySanPhamLayout.setVerticalGroup(
             pnlQuanLySanPhamLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 720, Short.MAX_VALUE)
+            .addGap(0, 730, Short.MAX_VALUE)
         );
 
         pnlMainContent.add(pnlQuanLySanPham, "card3");
@@ -436,7 +436,7 @@ public class FCinema_Frame extends javax.swing.JFrame implements FCinema_Control
         );
         pnlQuanLyPhimLayout.setVerticalGroup(
             pnlQuanLyPhimLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 720, Short.MAX_VALUE)
+            .addGap(0, 730, Short.MAX_VALUE)
         );
 
         pnlMainContent.add(pnlQuanLyPhim, "card3");
@@ -449,7 +449,7 @@ public class FCinema_Frame extends javax.swing.JFrame implements FCinema_Control
         );
         pnlXemLichChieuLayout.setVerticalGroup(
             pnlXemLichChieuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 720, Short.MAX_VALUE)
+            .addGap(0, 730, Short.MAX_VALUE)
         );
 
         pnlMainContent.add(pnlXemLichChieu, "card3");
@@ -462,7 +462,7 @@ public class FCinema_Frame extends javax.swing.JFrame implements FCinema_Control
         );
         pnlThongKeDoanhThuLayout.setVerticalGroup(
             pnlThongKeDoanhThuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 720, Short.MAX_VALUE)
+            .addGap(0, 730, Short.MAX_VALUE)
         );
 
         pnlMainContent.add(pnlThongKeDoanhThu, "card3");
@@ -475,7 +475,7 @@ public class FCinema_Frame extends javax.swing.JFrame implements FCinema_Control
         );
         pnlLichSuBanHangLayout.setVerticalGroup(
             pnlLichSuBanHangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 720, Short.MAX_VALUE)
+            .addGap(0, 730, Short.MAX_VALUE)
         );
 
         pnlMainContent.add(pnlLichSuBanHang, "card3");
@@ -488,7 +488,7 @@ public class FCinema_Frame extends javax.swing.JFrame implements FCinema_Control
         );
         pnlQuanLySuatChieuLayout.setVerticalGroup(
             pnlQuanLySuatChieuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 720, Short.MAX_VALUE)
+            .addGap(0, 730, Short.MAX_VALUE)
         );
 
         pnlMainContent.add(pnlQuanLySuatChieu, "card3");
@@ -501,7 +501,7 @@ public class FCinema_Frame extends javax.swing.JFrame implements FCinema_Control
         );
         pnlDoiMatKhauLayout.setVerticalGroup(
             pnlDoiMatKhauLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 720, Short.MAX_VALUE)
+            .addGap(0, 730, Short.MAX_VALUE)
         );
 
         pnlMainContent.add(pnlDoiMatKhau, "card13");
@@ -514,7 +514,7 @@ public class FCinema_Frame extends javax.swing.JFrame implements FCinema_Control
         );
         pnlLoaiPhimLayout.setVerticalGroup(
             pnlLoaiPhimLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 720, Short.MAX_VALUE)
+            .addGap(0, 730, Short.MAX_VALUE)
         );
 
         pnlMainContent.add(pnlLoaiPhim, "card15");
@@ -527,7 +527,7 @@ public class FCinema_Frame extends javax.swing.JFrame implements FCinema_Control
         );
         pnlLoaiGheLayout.setVerticalGroup(
             pnlLoaiGheLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 720, Short.MAX_VALUE)
+            .addGap(0, 730, Short.MAX_VALUE)
         );
 
         pnlMainContent.add(pnlLoaiGhe, "card16");
@@ -540,7 +540,7 @@ public class FCinema_Frame extends javax.swing.JFrame implements FCinema_Control
         );
         pnlBanHangLayout.setVerticalGroup(
             pnlBanHangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 720, Short.MAX_VALUE)
+            .addGap(0, 730, Short.MAX_VALUE)
         );
 
         pnlMainContent.add(pnlBanHang, "card17");
@@ -553,7 +553,7 @@ public class FCinema_Frame extends javax.swing.JFrame implements FCinema_Control
         );
         pnlchonGheLayout.setVerticalGroup(
             pnlchonGheLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 720, Short.MAX_VALUE)
+            .addGap(0, 730, Short.MAX_VALUE)
         );
 
         pnlMainContent.add(pnlchonGhe, "card18");
@@ -566,7 +566,7 @@ public class FCinema_Frame extends javax.swing.JFrame implements FCinema_Control
         );
         pnlChonPhimLayout.setVerticalGroup(
             pnlChonPhimLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 720, Short.MAX_VALUE)
+            .addGap(0, 730, Short.MAX_VALUE)
         );
 
         pnlMainContent.add(pnlChonPhim, "card19");
@@ -579,7 +579,7 @@ public class FCinema_Frame extends javax.swing.JFrame implements FCinema_Control
         );
         pnlBanSanPhamLayout.setVerticalGroup(
             pnlBanSanPhamLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 720, Short.MAX_VALUE)
+            .addGap(0, 730, Short.MAX_VALUE)
         );
 
         pnlMainContent.add(pnlBanSanPham, "card20");
@@ -592,12 +592,12 @@ public class FCinema_Frame extends javax.swing.JFrame implements FCinema_Control
         );
         pnlLoaigheLayout.setVerticalGroup(
             pnlLoaigheLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 720, Short.MAX_VALUE)
+            .addGap(0, 730, Short.MAX_VALUE)
         );
 
         pnlMainContent.add(pnlLoaighe, "card21");
 
-        pnlCenter.add(pnlMainContent, new org.netbeans.lib.awtextra.AbsoluteConstraints(244, 0, 1120, 720));
+        pnlCenter.add(pnlMainContent, new org.netbeans.lib.awtextra.AbsoluteConstraints(244, 0, 1120, 730));
 
         lblFullname.setText("jLabel5");
         pnlCenter.add(lblFullname, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 630, 60, 50));
@@ -827,11 +827,20 @@ public class FCinema_Frame extends javax.swing.JFrame implements FCinema_Control
 
         lblFullname.setText(XAuth.user.getTenNd());
         if (!XAuth.user.isVai_tro()) {
-            pnlCenter.remove(pnlManager);
+             pnlManager.remove(lblQLDoanhthu);
+            pnlManager.remove(lblQLGhe);
+            pnlManager.remove(lblQLHoaDon);
+            pnlManager.remove(lblQLNHANVIEN);
+            pnlManager.remove(lblQLPhim);
+            pnlManager.remove(lblQLSanPham);
+            pnlManager.remove(lblsuatchieu);
+            pnlManager.remove(lblQLPhongChieu1);
+            pnlManager.remove(lblQLPhongChieu2);
+            pnlManager.remove(lblQLPhongChieu);
         }
-//        if (XAuth.user.isVai_tro()) {
-//            pnlCenter.remove(pnlManager1);
-//        } 
+        if (XAuth.user.isVai_tro()) {
+           
+        } 
     }
 
     private void logout() {

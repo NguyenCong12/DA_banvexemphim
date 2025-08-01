@@ -13,6 +13,10 @@ import java.util.Locale;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
 import org.apache.poi.xwpf.usermodel.XWPFParagraph;
 import org.apache.poi.xwpf.usermodel.XWPFRun;
@@ -259,7 +263,7 @@ public class ThongKePanel extends javax.swing.JPanel implements ThongKeControlle
 
         btnXuatWord.setBackground(new java.awt.Color(212, 212, 212));
         btnXuatWord.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        btnXuatWord.setText("Xuất file Word");
+        btnXuatWord.setText("Xuất file Excel");
         btnXuatWord.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnXuatWordActionPerformed(evt);
@@ -328,7 +332,7 @@ public class ThongKePanel extends javax.swing.JPanel implements ThongKeControlle
     }//GEN-LAST:event_formMouseClicked
 
     private void btnXuatWordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXuatWordActionPerformed
-        this.xuatWord();
+        this.xuatExcel();
     }//GEN-LAST:event_btnXuatWordActionPerformed
 
 
@@ -525,6 +529,64 @@ public class ThongKePanel extends javax.swing.JPanel implements ThongKeControlle
             XDialog.alert("Xuất Word thất bại: " + e.getMessage());
         }
     }
+private void xuatExcel() {
+    try (XSSFWorkbook workbook = new XSSFWorkbook()) {
+        // Sheet 1: Doanh thu phim
+        XSSFSheet sheetPhim = workbook.createSheet("Doanh thu phim");
+        int rowPhim = 0;
+
+        // Tiêu đề
+        Row titleRowPhim = sheetPhim.createRow(rowPhim++);
+        Cell titleCellPhim = titleRowPhim.createCell(0);
+        titleCellPhim.setCellValue("THỐNG KÊ DOANH THU PHIM");
+
+        // Header
+        Row headerPhim = sheetPhim.createRow(rowPhim++);
+        headerPhim.createCell(0).setCellValue("Tên phim");
+        headerPhim.createCell(1).setCellValue("Doanh thu");
+
+        // Data
+        for (int i = 0; i < tblDoanhthuPhim.getRowCount(); i++) {
+            Row row = sheetPhim.createRow(rowPhim++);
+            row.createCell(0).setCellValue(tblDoanhthuPhim.getValueAt(i, 0).toString());
+            row.createCell(1).setCellValue(tblDoanhthuPhim.getValueAt(i, 1).toString());
+        }
+
+        // Sheet 2: Doanh thu sản phẩm
+        XSSFSheet sheetSanPham = workbook.createSheet("Doanh thu sản phẩm");
+        int rowSP = 0;
+
+        // Tiêu đề
+        Row titleRowSP = sheetSanPham.createRow(rowSP++);
+        Cell titleCellSP = titleRowSP.createCell(0);
+        titleCellSP.setCellValue("THỐNG KÊ DOANH THU SẢN PHẨM");
+
+        // Header
+        Row headerSP = sheetSanPham.createRow(rowSP++);
+        headerSP.createCell(0).setCellValue("Loại sản phẩm");
+        headerSP.createCell(1).setCellValue("Doanh thu");
+
+        // Data
+        for (int i = 0; i < tblDoanhthubapnuov.getRowCount(); i++) {
+            Row row = sheetSanPham.createRow(rowSP++);
+            row.createCell(0).setCellValue(tblDoanhthubapnuov.getValueAt(i, 0).toString());
+            row.createCell(1).setCellValue(tblDoanhthubapnuov.getValueAt(i, 1).toString());
+        }
+
+        // Ghi file
+        JFileChooser chooser = new JFileChooser();
+        chooser.setSelectedFile(new File("ThongKeDoanhThu.xlsx"));
+        if (chooser.showSaveDialog(null) == JFileChooser.APPROVE_OPTION) {
+            try (FileOutputStream fos = new FileOutputStream(chooser.getSelectedFile())) {
+                workbook.write(fos);
+                XDialog.alert("Xuất file Excel thành công!");
+            }
+        }
+
+    } catch (Exception e) {
+        XDialog.alert("Xuất Excel thất bại: " + e.getMessage());
+    }
+}
 
     @Override
     public void setForm(ThongKe entity) {

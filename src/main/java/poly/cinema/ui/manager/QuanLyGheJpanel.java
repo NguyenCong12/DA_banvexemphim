@@ -4,14 +4,24 @@
  */
 package poly.cinema.ui.manager;
 
-import java.awt.event.ItemEvent;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.GridLayout;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
-import javax.swing.table.DefaultTableModel;
+import javax.swing.BorderFactory;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import poly.cinema.dao.QuanLyGheDao;
 import poly.cinema.dao.impl.QuanLyGheDaoImpl;
 import poly.cinema.entity.QuanLyGhe;
-import poly.cinema.util.XDialog;
 
 /**
  *
@@ -22,9 +32,113 @@ public class QuanLyGheJpanel extends javax.swing.JPanel implements QuanLyGheCont
     /**
      * Creates new form QuanLyGheJpanel
      */
+    private final QuanLyGheDao dao = new QuanLyGheDaoImpl();
+    private final List<QuanLyGhe> items = new ArrayList<>();
+
+    private QuanLyGhe gheDangChon;
+
     public QuanLyGheJpanel() {
-        initComponents();
-        open();
+        setLayout(new BorderLayout());
+        initUI();
+        loadPhongChieu();
+    }
+
+    private void initUI() {
+        // TOP: chọn phòng
+        JPanel pnlTop = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        cboPhong = new JComboBox<>();
+        cboPhong.addActionListener(e -> loadGhe());
+        pnlTop.add(new JLabel("Phòng:"));
+        pnlTop.add(cboPhong);
+        add(pnlTop, BorderLayout.NORTH);
+
+        // CENTER: danh sách ghế
+        pnlGhe = new JPanel();
+        add(new JScrollPane(pnlGhe), BorderLayout.CENTER);
+
+        // BOTTOM: chọn loại ghế và trạng thái
+        JPanel pnlBottom = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        cboLoaiGhe = new JComboBox<>(new String[]{"Thường", "VIP"});
+        cboTrangThai = new JComboBox<>(new String[]{"Bình thường", "Hư", "Cho nhân viên"});
+        btnCapNhat = new JButton("Cập nhật");
+
+        btnCapNhat.addActionListener(e -> {
+            if (gheDangChon == null) {
+                JOptionPane.showMessageDialog(this, "Vui lòng chọn ghế.");
+                return;
+            }
+            gheDangChon.setLoaiGhe((String) cboLoaiGhe.getSelectedItem());
+            gheDangChon.setTrangThai((String) cboTrangThai.getSelectedItem());
+            boolean ok = dao.updateWithResult(gheDangChon);
+            if (ok) {
+                JOptionPane.showMessageDialog(this, "Cập nhật thành công!");
+                loadGhe();
+            } else {
+                JOptionPane.showMessageDialog(this, "Cập nhật thất bại!");
+            }
+        });
+
+        pnlBottom.add(new JLabel("Loại ghế:"));
+        pnlBottom.add(cboLoaiGhe);
+        pnlBottom.add(new JLabel("Trạng thái:"));
+        pnlBottom.add(cboTrangThai);
+        pnlBottom.add(btnCapNhat);
+        add(pnlBottom, BorderLayout.SOUTH);
+    }
+
+    private void loadPhongChieu() {
+        cboPhong.removeAllItems();
+        List<String> maPhongs = dao.getAllMaPhong();
+        for (String ma : maPhongs) {
+            cboPhong.addItem(ma);
+        }
+        if (!maPhongs.isEmpty()) {
+            cboPhong.setSelectedIndex(0);
+        }
+    }
+
+    private void loadGhe() {
+        pnlGhe.removeAll();
+        String maPhong = (String) cboPhong.getSelectedItem();
+        if (maPhong == null) {
+            return;
+        }
+        items.clear();
+        items.addAll(dao.findByMaPhong(maPhong));
+
+        int maxCot = items.stream().mapToInt(QuanLyGhe::getCot).max().orElse(5);
+        pnlGhe.setLayout(new GridLayout(0, maxCot, 5, 5));
+
+        for (QuanLyGhe g : items) {
+            JButton btn = new JButton(g.getSoGhe());
+            btn.setOpaque(true);
+            btn.setBackground(getColorByLoaiVaTrangThai(g.getLoaiGhe(), g.getTrangThai()));
+            btn.setToolTipText("Ghế " + g.getSoGhe() + " - " + g.getLoaiGhe() + " - " + g.getTrangThai());
+
+            btn.addActionListener(e -> {
+                gheDangChon = g;
+                cboLoaiGhe.setSelectedItem(g.getLoaiGhe());
+                cboTrangThai.setSelectedItem(g.getTrangThai());
+            });
+
+            pnlGhe.add(btn);
+        }
+
+        pnlGhe.revalidate();
+        pnlGhe.repaint();
+    }
+
+    private Color getColorByLoaiVaTrangThai(String loai, String trangThai) {
+        if ("Hư".equals(trangThai)) {
+            return Color.DARK_GRAY;
+        }
+        if ("Cho nhân viên".equals(trangThai)) {
+            return Color.CYAN;
+        }
+        if ("VIP".equals(loai)) {
+            return Color.ORANGE;
+        }
+        return Color.LIGHT_GRAY;
     }
 
     /**
@@ -39,12 +153,13 @@ public class QuanLyGheJpanel extends javax.swing.JPanel implements QuanLyGheCont
         jLabel1 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         jLabel7 = new javax.swing.JLabel();
-        cboPhongChieu = new javax.swing.JComboBox<>();
+        cboPhong = new javax.swing.JComboBox<>();
         cboLoaiGhe = new javax.swing.JComboBox<>();
         jLabel9 = new javax.swing.JLabel();
-        btnSua = new javax.swing.JButton();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        tblGhe = new javax.swing.JTable();
+        btnCapNhat = new javax.swing.JButton();
+        jLabel10 = new javax.swing.JLabel();
+        cboTrangThai = new javax.swing.JComboBox<>();
+        pnlGhe = new javax.swing.JPanel();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setPreferredSize(new java.awt.Dimension(1110, 720));
@@ -61,10 +176,10 @@ public class QuanLyGheJpanel extends javax.swing.JPanel implements QuanLyGheCont
         jLabel7.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel7.setText("Lọc theo phòng chiếu");
 
-        cboPhongChieu.setEditable(true);
-        cboPhongChieu.addActionListener(new java.awt.event.ActionListener() {
+        cboPhong.setEditable(true);
+        cboPhong.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cboPhongChieuActionPerformed(evt);
+                cboPhongActionPerformed(evt);
             }
         });
 
@@ -79,10 +194,21 @@ public class QuanLyGheJpanel extends javax.swing.JPanel implements QuanLyGheCont
         jLabel9.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel9.setText("Thay đổi loại ghế");
 
-        btnSua.setText("Sửa");
-        btnSua.addActionListener(new java.awt.event.ActionListener() {
+        btnCapNhat.setText("Sửa");
+        btnCapNhat.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnSuaActionPerformed(evt);
+                btnCapNhatActionPerformed(evt);
+            }
+        });
+
+        jLabel10.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel10.setText("Trạng thái");
+
+        cboTrangThai.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Bình thường", "Hư", "Cho nhân viên" }));
+        cboTrangThai.setToolTipText("");
+        cboTrangThai.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cboTrangThaiActionPerformed(evt);
             }
         });
 
@@ -90,305 +216,168 @@ public class QuanLyGheJpanel extends javax.swing.JPanel implements QuanLyGheCont
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(53, 53, 53)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(btnSua)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                .addGap(47, 47, 47)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(cboPhong, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(102, 102, 102)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(cboLoaiGhe, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(cboPhongChieu, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(102, 102, 102)
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(cboLoaiGhe, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(525, Short.MAX_VALUE))
+                        .addGap(52, 52, 52)
+                        .addComponent(cboTrangThai, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(77, 77, 77)
+                        .addComponent(btnCapNhat))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGap(60, 60, 60)
+                        .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(190, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                .addGap(21, 21, 21)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel9)
-                    .addComponent(jLabel7))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(cboLoaiGhe, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cboPhongChieu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 65, Short.MAX_VALUE)
-                .addComponent(btnSua, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(38, 38, 38))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(btnCapNhat, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel9)
+                            .addComponent(jLabel7)
+                            .addComponent(jLabel10))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(cboLoaiGhe, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(cboPhong, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(cboTrangThai, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGap(44, 44, 44))
         );
 
-        add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 370, 1040, 210));
+        add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 590, 1080, 90));
 
-        tblGhe.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
+        javax.swing.GroupLayout pnlGheLayout = new javax.swing.GroupLayout(pnlGhe);
+        pnlGhe.setLayout(pnlGheLayout);
+        pnlGheLayout.setHorizontalGroup(
+            pnlGheLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 770, Short.MAX_VALUE)
+        );
+        pnlGheLayout.setVerticalGroup(
+            pnlGheLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 490, Short.MAX_VALUE)
+        );
 
-            },
-            new String [] {
-                "Mã ghế", "Số ghế", "Hàng", "Cột", "Loại ghế", "Mã phòng"
-            }
-        ) {
-            boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false
-            };
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
-        tblGhe.setRowHeight(25);
-        tblGhe.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                tblGheMouseClicked(evt);
-            }
-        });
-        jScrollPane1.setViewportView(tblGhe);
-
-        add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 100, 1040, 240));
+        add(pnlGhe, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 90, 770, 490));
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnSuaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSuaActionPerformed
-        update();
-    }//GEN-LAST:event_btnSuaActionPerformed
-
-    private void tblGheMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblGheMouseClicked
-        int row = tblGhe.getSelectedRow();
-        if (row >= 0) {
-            QuanLyGhe ghe = items.get(row);
-            setForm(ghe);
-            updateButtonState();
-        }
-    }//GEN-LAST:event_tblGheMouseClicked
+    private void btnCapNhatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCapNhatActionPerformed
+        
+    }//GEN-LAST:event_btnCapNhatActionPerformed
 
     private void cboLoaiGheActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboLoaiGheActionPerformed
 
     }//GEN-LAST:event_cboLoaiGheActionPerformed
 
-    private void cboPhongChieuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboPhongChieuActionPerformed
-        cboPhongChieu.addItemListener(e -> {
-            if (e.getStateChange() == ItemEvent.SELECTED) {
-                fillToTable();
-            }
-        });
-    }//GEN-LAST:event_cboPhongChieuActionPerformed
+    private void cboPhongActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboPhongActionPerformed
+
+    }//GEN-LAST:event_cboPhongActionPerformed
+
+    private void cboTrangThaiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboTrangThaiActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cboTrangThaiActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnSua;
+    private javax.swing.JButton btnCapNhat;
     private javax.swing.JComboBox<String> cboLoaiGhe;
-    private javax.swing.JComboBox<String> cboPhongChieu;
+    private javax.swing.JComboBox<String> cboPhong;
+    private javax.swing.JComboBox<String> cboTrangThai;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel3;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable tblGhe;
+    private javax.swing.JPanel pnlGhe;
     // End of variables declaration//GEN-END:variables
 
-    QuanLyGheDao dao = new QuanLyGheDaoImpl();
-    List<QuanLyGhe> items = new ArrayList<>();
-    
-    private void updateButtonState() {
-    boolean isRowSelected = tblGhe.getSelectedRow() >= 0;
-
-    btnSua.setEnabled(isRowSelected);
-}
     @Override
     public void open() {
-        addListeners();
-        fillComboBoxPhong();
-        fillComboBoxLoaiGhe(); // ✅ Thêm dòng này
-        fillToTable();
-        clear();
     }
 
-    private void addListeners() {
-        cboPhongChieu.addItemListener(e -> {
-            if (e.getStateChange() == ItemEvent.SELECTED) {
-                fillToTable();
-            }
-        });
-    }
-
-    private void fillComboBoxLoaiGhe() {
-        cboLoaiGhe.removeAllItems();
-        cboLoaiGhe.addItem("Thường");
-        cboLoaiGhe.addItem("VIP");
-    }
-
-    private void fillComboBoxPhong() {
-        cboPhongChieu.removeAllItems();
-        List<String> dsPhong = dao.getAllMaPhong();
-        for (String maPhong : dsPhong) {
-            cboPhongChieu.addItem(maPhong);
-        }
+    @Override
+    public void setForm(QuanLyGhe entity) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
     public QuanLyGhe getForm() {
-        QuanLyGhe ghe = new QuanLyGhe();
-        ghe.setLoaiGhe((String) cboLoaiGhe.getSelectedItem());
-        ghe.setMaPhong((String) cboPhongChieu.getSelectedItem());
-        return ghe;
-    }
-
-    @Override
-    public void setForm(QuanLyGhe ghe) {
-        cboLoaiGhe.setSelectedItem(ghe.getLoaiGhe());
-        cboPhongChieu.setSelectedItem(ghe.getMaPhong());
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
     public void fillToTable() {
-        DefaultTableModel model = (DefaultTableModel) tblGhe.getModel();
-        model.setRowCount(0);
-        String maPhong = (String) cboPhongChieu.getSelectedItem();
-        if (maPhong != null) {
-            items = dao.findByPhong(maPhong);
-            for (QuanLyGhe ghe : items) {
-                model.addRow(new Object[]{
-                    ghe.getMaGhe(),
-                    ghe.getSoGhe(),
-                    ghe.getHang(),
-                    ghe.getCot(),
-                    ghe.getLoaiGhe(),
-                    ghe.getMaPhong(),
-                    false
-                });
-            }
-        }
-        updateButtonState();
-    }
-
-    @Override
-    public void create() {
-        QuanLyGhe ghe = getForm();
-        if (ghe == null) {
-            return;
-        }
-
-        QuanLyGhe existed = dao.findBySoGheAndPhong(ghe.getSoGhe(), ghe.getMaPhong());
-        if (existed != null) {
-            XDialog.alert("Ghế " + ghe.getSoGhe() + " đã tồn tại trong phòng " + ghe.getMaPhong() + "!");
-            return;
-        }
-
-        dao.create(ghe);
-        fillToTable();
-        clear();
-        XDialog.alert("Thêm ghế thành công!");
-    }
-
-    @Override
-    public void update() {
-        int row = tblGhe.getSelectedRow();
-        if (row < 0) {
-            XDialog.alert("Vui lòng chọn ghế để cập nhật!");
-            return;
-        }
-
-        QuanLyGhe ghe = getForm();
-        if (ghe == null) {
-            return;
-        }
-
-        ghe.setMaGhe((Integer) tblGhe.getValueAt(row, 0));
-        dao.update(ghe);
-        fillToTable();
-        XDialog.alert("Cập nhật ghế thành công!");
-    }
-
-    @Override
-    public void delete() {
-        int row = tblGhe.getSelectedRow();
-        if (row < 0) {
-            XDialog.alert("Vui lòng chọn ghế để xóa!");
-            return;
-        }
-        int maGhe = (Integer) tblGhe.getValueAt(row, 0);
-        dao.deleteById(maGhe);
-        fillToTable();
-        clear();
-        XDialog.alert("Xóa ghế thành công!");
-    }
-
-    @Override
-    public void clear() {
-
-        if (cboLoaiGhe.getItemCount() > 0) {
-            cboLoaiGhe.setSelectedIndex(0);
-        }
-        if (cboPhongChieu.getItemCount() > 0) {
-            cboPhongChieu.setSelectedIndex(0);
-        }
-
-        tblGhe.clearSelection();
-        
-        updateButtonState();
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
     public void edit() {
-        int row = tblGhe.getSelectedRow();
-        if (row >= 0) {
-            QuanLyGhe ghe = items.get(row);
-            setForm(ghe);
-            tblGhe.setRowSelectionInterval(row, row);
-        } else {
-            XDialog.alert("Vui lòng chọn ghế để chỉnh sửa.");
-        }
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public void create() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public void update() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public void delete() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public void clear() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
     public void setEditable(boolean editable) {
-        cboLoaiGhe.setEnabled(editable);
-        cboPhongChieu.setEnabled(editable);
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
     public void moveFirst() {
-        if (!items.isEmpty()) {
-            moveTo(0);
-        }
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
     public void movePrevious() {
-        int row = tblGhe.getSelectedRow();
-        if (row > 0) {
-            moveTo(row - 1);
-        }
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
     public void moveNext() {
-        int row = tblGhe.getSelectedRow();
-        if (row < items.size() - 1) {
-            moveTo(row + 1);
-        }
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
     public void moveLast() {
-        if (!items.isEmpty()) {
-            moveTo(items.size() - 1);
-        }
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
     public void moveTo(int rowIndex) {
-        if (rowIndex >= 0 && rowIndex < items.size()) {
-            QuanLyGhe ghe = items.get(rowIndex);
-            setForm(ghe);
-            tblGhe.setRowSelectionInterval(rowIndex, rowIndex);
-        }
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
     public void selectTimeRange() {
-        // Không áp dụng
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
 }

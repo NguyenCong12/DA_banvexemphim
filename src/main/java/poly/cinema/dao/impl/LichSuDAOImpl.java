@@ -27,9 +27,20 @@ public class LichSuDAOImpl implements LichSuDAO {
             hd.tong_tien
         FROM HoaDon hd
         JOIN NguoiDung nd ON nd.ma_nd = hd.ma_nd
+        ORDER BY hd.ngay_lap DESC
     """;
 
-    private final String SELECT_BY_DATE_SQL = SELECT_ALL_SQL + " WHERE hd.ngay_lap BETWEEN ? AND ?";
+    private final String SELECT_BY_DATE_SQL = """
+        SELECT 
+            hd.ma_hd,
+            hd.ngay_lap,
+            nd.ten_nd AS tenNhanVien,
+            hd.tong_tien
+        FROM HoaDon hd
+        JOIN NguoiDung nd ON nd.ma_nd = hd.ma_nd
+        WHERE hd.ngay_lap BETWEEN ? AND ?
+        ORDER BY hd.ngay_lap DESC
+    """;
 
     @Override
     public List<LichSu> selectAll() {
@@ -39,6 +50,38 @@ public class LichSuDAOImpl implements LichSuDAO {
     @Override
     public List<LichSu> getByDate(Date begin, Date end) {
         return selectBySql(SELECT_BY_DATE_SQL, begin, end);
+    }
+
+    @Override
+    public List<LichSu> selectByUsername(int maND) {
+        String sql = """
+            SELECT 
+                hd.ma_hd,
+                hd.ngay_lap,
+                nd.ten_nd AS tenNhanVien,
+                hd.tong_tien
+            FROM HoaDon hd
+            JOIN NguoiDung nd ON hd.ma_nd = nd.ma_nd
+            WHERE nd.ma_nd = ?
+            ORDER BY hd.ngay_lap DESC
+        """;
+        return selectBySql(sql, maND);
+    }
+
+    @Override
+    public List<LichSu> getByDateAndUser(Date begin, Date end, int maND) {
+        String sql = """
+            SELECT 
+                hd.ma_hd,
+                hd.ngay_lap,
+                nd.ten_nd AS tenNhanVien,
+                hd.tong_tien
+            FROM HoaDon hd
+            JOIN NguoiDung nd ON hd.ma_nd = nd.ma_nd
+            WHERE hd.ngay_lap >= ? AND hd.ngay_lap < ? AND nd.ma_nd = ?
+            ORDER BY hd.ngay_lap DESC
+        """;
+        return selectBySql(sql, begin, end, maND);
     }
 
     private List<LichSu> selectBySql(String sql, Object... args) {
