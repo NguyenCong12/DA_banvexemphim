@@ -1,20 +1,25 @@
- /*
+/*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JDialog.java to edit this template
  */
 package poly.cinema.ui;
 
+import java.util.Random;
+import poly.cinema.dao.NguoiDungDAO;
+import poly.cinema.dao.impl.NguoiDungDAOImpl;
+import poly.cinema.entity.NguoiDung;
 import poly.cinema.util.XDialog;
-
+import poly.cinema.util.XMailer;
 
 /**
  *
  * @author KhanhLinh
  */
 public class KhoiPhucMKJDialog extends javax.swing.JDialog {
-//
-//    private final UserDAO dao = new UserDAOImpl();
+
+    private final NguoiDungDAO dao = new NguoiDungDAOImpl();
     private String otpCode = null;
+    private NguoiDung nguoiDung;
 
     /**
      * Creates new form KhoiPhucMKJDialog
@@ -210,6 +215,7 @@ public class KhoiPhucMKJDialog extends javax.swing.JDialog {
 
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
         String username = txtusername.getText().trim();
+        String email = txtEmail.getText().trim();
         String inputOtp = txtMaOTP.getText().trim();
         String newPass = new String(txtMatKhauMoi.getPassword());
 
@@ -228,32 +234,30 @@ public class KhoiPhucMKJDialog extends javax.swing.JDialog {
             return;
         }
 
-        // ✅ Kiểm tra mật khẩu nâng cao
         if (newPass.length() < 8) {
-            XDialog.alert("Mật khẩu phải từ 8 ký tự trở lên.");
+            XDialog.alert("Mật khẩu phải từ 6 ký tự trở lên.");
             return;
         }
 
-        if (!newPass.matches(".*[A-Z].*")) {
-            XDialog.alert("Mật khẩu phải có ít nhất 1 chữ in hoa.");
-            return;
-        }
-
-        if (!newPass.matches(".*[a-z].*")) {
-            XDialog.alert("Mật khẩu phải có ít nhất 1 chữ thường.");
-            return;
-        }
-
-        if (!newPass.matches(".*\\d.*")) {
-            XDialog.alert("Mật khẩu phải có ít nhất 1 chữ số.");
-            return;
-        }
-
-        if (!newPass.matches(".*[!@#$%^&*()_+\\-=\\[\\]{};':\"\\\\|,.<>\\/?].*")) {
-            XDialog.alert("Mật khẩu phải có ít nhất 1 ký tự đặc biệt.");
-            return;
-        }
-
+//        if (!newPass.matches(".*[A-Z].*")) {
+//            XDialog.alert("Mật khẩu phải có ít nhất 1 chữ in hoa.");
+//            return;
+//        }
+//
+//        if (!newPass.matches(".*[a-z].*")) {
+//            XDialog.alert("Mật khẩu phải có ít nhất 1 chữ thường.");
+//            return;
+//        }
+//
+//        if (!newPass.matches(".*\\d.*")) {
+//            XDialog.alert("Mật khẩu phải có ít nhất 1 chữ số.");
+//            return;
+//        }
+//
+//        if (!newPass.matches(".*[!@#$%^&*()_+\\-=\\[\\]{};':\"\\\\|,.<>\\/?].*")) {
+//            XDialog.alert("Mật khẩu phải có ít nhất 1 ký tự đặc biệt.");
+//            return;
+//        }
         if (newPass.contains(" ")) {
             XDialog.alert("Mật khẩu không được chứa khoảng trắng.");
             return;
@@ -264,16 +268,16 @@ public class KhoiPhucMKJDialog extends javax.swing.JDialog {
             return;
         }
 
-        //        User user = dao.findById(username);
-        //        if (user == null) {
-            //            XDialog.alert("Không tìm thấy người dùng.");
-            //            return;
-            //        }
-        //
-        //        user.setPassword(newPass); // có thể mã hóa nếu cần
-        //        dao.update(user);
-        //        XDialog.alert("Mật khẩu đã được đặt lại thành công!");
-        //        dispose();
+        nguoiDung = dao.findByEmail(email);
+        if (nguoiDung == null) {
+            XDialog.alert("Không tìm thấy người dùng với tên đăng nhập và email đã nhập.");
+            return;
+        }
+
+        nguoiDung.setMatKhau(newPass); // có thể mã hóa nếu cần
+        dao.update(nguoiDung);
+        XDialog.alert("Mật khẩu đã được đặt lại thành công!");
+        dispose();
     }//GEN-LAST:event_btnLoginActionPerformed
 
     private void btnOPTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOPTActionPerformed
@@ -281,42 +285,49 @@ public class KhoiPhucMKJDialog extends javax.swing.JDialog {
         String username = txtusername.getText().trim();
         String email = txtEmail.getText().trim();
 
+        // Kiểm tra username có rỗng không
         if (username.isEmpty()) {
             XDialog.alert("Vui lòng nhập tên đăng nhập.");
             return;
         }
-        //
-        //        User user = dao.findById(username);
-        //        if (user == null) {
-            //            XDialog.alert("Không tìm thấy người dùng.");
-            //            return;
-            //        }
-        //
-        //        if (email.isEmpty()) {
-            //            XDialog.alert("Vui lòng nhập email.");
-            //            return;
-            //        }
 
-        //        User existing = dao.findByEmail(email);
-        //        if (existing != null && !existing.getUsername().equals(user.getUsername())) {
-            //            XDialog.alert("Email này đã được sử dụng bởi người dùng khác.");
-            //            return;
-            //        }
-        //
-        //        // Cập nhật email cho user
-        //        user.setEmail(email);
-        //        dao.update(user);
-        //
-        //        // Tạo mã OTP 6 chữ số
-        //        otpCode = String.valueOf((int) (Math.random() * 900000 + 100000));
-        //
-        //        try {
-            //            // Gửi email OTP với HTML đẹp
-            //            XMailer.send(email, "Xác thực tài khoản - Mã OTP từ Poly Phone", user.getFullname(), otpCode);
-            //            XDialog.alert("Mã OTP đã được gửi đến email.");
-            //        } catch (Exception e) {
-            //            XDialog.alert("Gửi email thất bại: " + e.getMessage());
-            //        }
+        // Tìm người dùng theo email
+        NguoiDung nguoiDung = dao.findByEmail(email);
+        if (nguoiDung == null) {
+            XDialog.alert("Không tìm thấy người dùng với tên đăng nhập và email đã nhập.");
+            return;
+        }
+
+        // Kiểm tra email có rỗng không
+        if (email.isEmpty()) {
+            XDialog.alert("Vui lòng nhập đúng email.");
+            return;
+        }
+
+        // Kiểm tra email khớp với người dùng
+        if (!email.equals(nguoiDung.getEmail())) {
+            XDialog.alert("Email không khớp với tài khoản.");
+            return;
+        }
+
+        // Tạo mã OTP 6 chữ số ngẫu nhiên
+        Random rand = new Random();
+        int otpCode = 100000 + rand.nextInt(900000);
+        System.out.println("[DEBUG] Mã OTP đã tạo: " + otpCode + " cho email: " + email); //Dòng này nè
+
+        try {
+            XMailer.send(email, "Mã xác thực OTP", nguoiDung.getTenNd(), String.valueOf(otpCode));
+            System.out.println("[DEBUG] Gửi email thành công tới: " + email); //Dòng này cũng nên có
+
+            XDialog.alert("Mã OTP đã được gửi tới email của bạn.");
+            this.otpCode = String.valueOf(otpCode);
+            this.nguoiDung = nguoiDung;
+        } catch (Exception e) {
+            System.err.println("[DEBUG] Gửi OTP thất bại: " + e.getMessage()); // Báo lỗi
+            e.printStackTrace();
+            XDialog.alert("Gửi email thất bại: " + e.getMessage());
+        }
+
     }//GEN-LAST:event_btnOPTActionPerformed
 
     /**
@@ -344,6 +355,10 @@ public class KhoiPhucMKJDialog extends javax.swing.JDialog {
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(KhoiPhucMKJDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
