@@ -8,6 +8,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.Font;
 import java.awt.GridLayout;
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -36,6 +37,7 @@ public class QuanLyGheJpanel extends javax.swing.JPanel implements QuanLyGheCont
     private final List<QuanLyGhe> items = new ArrayList<>();
 
     private QuanLyGhe gheDangChon;
+    private String maGheDangChon = null;
 
     public QuanLyGheJpanel() {
         setLayout(new BorderLayout());
@@ -45,7 +47,6 @@ public class QuanLyGheJpanel extends javax.swing.JPanel implements QuanLyGheCont
     }
 
     private void initUI() {
-        // TOP: chọn phòng
         JPanel pnlTop = new JPanel(new FlowLayout(FlowLayout.LEFT));
         cboPhong = new JComboBox<>();
         cboPhong.addActionListener(e -> loadGhe());
@@ -53,11 +54,9 @@ public class QuanLyGheJpanel extends javax.swing.JPanel implements QuanLyGheCont
         pnlTop.add(cboPhong);
         add(pnlTop, BorderLayout.NORTH);
 
-        // CENTER: danh sách ghế
         pnlGhe = new JPanel();
         add(new JScrollPane(pnlGhe), BorderLayout.CENTER);
 
-        // BOTTOM: chọn loại ghế và trạng thái
         JPanel pnlBottom = new JPanel(new FlowLayout(FlowLayout.LEFT));
         cboLoaiGhe = new JComboBox<>(new String[]{"Thường", "VIP"});
         cboTrangThai = new JComboBox<>(new String[]{"Bình thường", "Hư", "Cho nhân viên"});
@@ -68,16 +67,37 @@ public class QuanLyGheJpanel extends javax.swing.JPanel implements QuanLyGheCont
                 JOptionPane.showMessageDialog(this, "Vui lòng chọn ghế.");
                 return;
             }
-            gheDangChon.setLoaiGhe((String) cboLoaiGhe.getSelectedItem());
-            gheDangChon.setTrangThai((String) cboTrangThai.getSelectedItem());
+
+            String newLoaiGhe = (String) cboLoaiGhe.getSelectedItem();
+            String newTrangThai = (String) cboTrangThai.getSelectedItem();
+
+            if (newLoaiGhe.equals(gheDangChon.getLoaiGhe()) && newTrangThai.equals(gheDangChon.getTrangThai())) {
+                JOptionPane.showMessageDialog(this, "Không có thay đổi để cập nhật.");
+                return;
+            }
+
+            gheDangChon.setLoaiGhe(newLoaiGhe);
+            gheDangChon.setTrangThai(newTrangThai);
+
             boolean ok = dao.updateWithResult(gheDangChon);
             if (ok) {
                 JOptionPane.showMessageDialog(this, "Cập nhật thành công!");
-                loadGhe();
+                // Ghi nhớ mã ghế được chọn
+                maGheDangChon = gheDangChon.getMaGhe() + "";
+                loadGhe(); // sẽ khôi phục gheDangChon bên trong loadGhe
             } else {
                 JOptionPane.showMessageDialog(this, "Cập nhật thất bại!");
             }
         });
+
+        if (maGheDangChon != null) {
+            for (QuanLyGhe g : items) {
+                if (g.getMaGhe().equals(maGheDangChon)) {
+                    gheDangChon = g;
+                    break;
+                }
+            }
+        }
 
         pnlBottom.add(new JLabel("Loại ghế:"));
         pnlBottom.add(cboLoaiGhe);
@@ -87,7 +107,7 @@ public class QuanLyGheJpanel extends javax.swing.JPanel implements QuanLyGheCont
         add(pnlBottom, BorderLayout.SOUTH);
     }
 
-    private void loadPhongChieu() {
+    void loadPhongChieu() {
         cboPhong.removeAllItems();
         List<String> maPhongs = dao.getAllMaPhong();
         for (String ma : maPhongs) {
@@ -98,7 +118,7 @@ public class QuanLyGheJpanel extends javax.swing.JPanel implements QuanLyGheCont
         }
     }
 
-    private void loadGhe() {
+    void loadGhe() {
         pnlGhe.removeAll();
         String maPhong = (String) cboPhong.getSelectedItem();
         if (maPhong == null) {
@@ -116,10 +136,23 @@ public class QuanLyGheJpanel extends javax.swing.JPanel implements QuanLyGheCont
             btn.setBackground(getColorByLoaiVaTrangThai(g.getLoaiGhe(), g.getTrangThai()));
             btn.setToolTipText("Ghế " + g.getSoGhe() + " - " + g.getLoaiGhe() + " - " + g.getTrangThai());
 
+            // 👉 Đánh dấu ghế đang chọn
+            if (maGheDangChon != null && g.getMaGhe().toString().equals(maGheDangChon)) {
+                gheDangChon = g; // gán lại sau khi load
+                btn.setFont(btn.getFont().deriveFont(Font.BOLD)); // in đậm
+                btn.setBorder(BorderFactory.createLineBorder(Color.RED, 2)); // thêm viền đỏ
+            }
+
             btn.addActionListener(e -> {
                 gheDangChon = g;
                 cboLoaiGhe.setSelectedItem(g.getLoaiGhe());
                 cboTrangThai.setSelectedItem(g.getTrangThai());
+
+                // 👉 Ghi nhớ ghế mới khi chọn thủ công
+                maGheDangChon = g.getMaGhe().toString();
+
+                // 👉 Load lại giao diện để cập nhật in đậm
+                loadGhe();
             });
 
             pnlGhe.add(btn);
@@ -140,6 +173,12 @@ public class QuanLyGheJpanel extends javax.swing.JPanel implements QuanLyGheCont
             return Color.ORANGE;
         }
         return Color.LIGHT_GRAY;
+    }
+
+    // ✅ Phương thức này để bên khác gọi sau khi thêm phòng chiếu mới
+    public void capNhatDanhSachPhong(String maPhongMoi) {
+        loadPhongChieu();
+        cboPhong.setSelectedItem(maPhongMoi); // tự động chọn phòng vừa thêm
     }
 
     /**
@@ -274,7 +313,7 @@ public class QuanLyGheJpanel extends javax.swing.JPanel implements QuanLyGheCont
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnCapNhatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCapNhatActionPerformed
-        
+
     }//GEN-LAST:event_btnCapNhatActionPerformed
 
     private void cboLoaiGheActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboLoaiGheActionPerformed

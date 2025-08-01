@@ -24,11 +24,6 @@ public class QuanLiPhongChieu extends javax.swing.JPanel implements QuanLyPhongC
     /**
      * Creates new form QuanLiPhongChieu
      */
-    public QuanLiPhongChieu() {
-        initComponents();
-        open();
-    }
-
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -299,6 +294,19 @@ public class QuanLiPhongChieu extends javax.swing.JPanel implements QuanLyPhongC
 
     QuanLyPhongChieuDao dao = new QuanLyPhongChieuDaoImpl();
     List<PhongChieu> items = new ArrayList<>();
+    private QuanLyGheJpanel ghePanel;
+
+    public QuanLiPhongChieu(QuanLyGheJpanel ghePanel) {
+        this.ghePanel = ghePanel; // ✅ gán đúng
+        initComponents();
+        if (ghePanel != null) {
+            ghePanel.loadPhongChieu();  // load lại combobox phòng
+            ghePanel.loadGhe();         // load lại danh sách ghế (nếu muốn)
+        }
+
+        fillToTable();
+        open();
+    }
 
     private void updateButtonStatus() {
         boolean isSelected = tblPhongChieu.getSelectedRow() >= 0;
@@ -387,6 +395,7 @@ public class QuanLiPhongChieu extends javax.swing.JPanel implements QuanLyPhongC
             });
         }
         updateButtonStatus();
+
     }
 
     @Override
@@ -396,21 +405,16 @@ public class QuanLiPhongChieu extends javax.swing.JPanel implements QuanLyPhongC
             return;
         }
 
-// Kiểm tra số hàng và cột không vượt quá 15
         if (pc.getSoHang() > 15 || pc.getSoCot() > 15) {
             XDialog.alert("Số hàng và số cột không được vượt quá 15!");
             return;
         }
 
-// Kiểm tra mã phòng trùng
         for (PhongChieu item : items) {
             if (item.getMaPhong().equalsIgnoreCase(pc.getMaPhong())) {
                 XDialog.alert("Mã phòng đã tồn tại, vui lòng chọn mã khác.");
                 return;
             }
-        }
-
-        for (PhongChieu item : items) {
             if (item.getTenPhong().equalsIgnoreCase(pc.getTenPhong())) {
                 XDialog.alert("Tên phòng đã tồn tại, vui lòng chọn tên khác.");
                 return;
@@ -418,12 +422,16 @@ public class QuanLiPhongChieu extends javax.swing.JPanel implements QuanLyPhongC
         }
 
         dao.create(pc);
-        insertGheChoPhong(pc); // ✅ Tạo ghế tự động
+        insertGheChoPhong(pc); // ✅ tạo ghế tự động
         fillToTable();
         clear();
         updateButtonStatus();
         XDialog.alert("Thêm thành công!");
 
+        // ✅ Cập nhật panel ghế nếu có
+        if (ghePanel != null) {
+            ghePanel.capNhatDanhSachPhong(pc.getMaPhong());
+        }
     }
 
     @Override
@@ -452,7 +460,7 @@ public class QuanLiPhongChieu extends javax.swing.JPanel implements QuanLyPhongC
                 return;
             }
         }
-        
+
         if (pc.getSoHang() > 15 || pc.getSoCot() > 15) {
             XDialog.alert("Số hàng và số cột không được vượt quá 15!");
             return;
@@ -492,6 +500,9 @@ public class QuanLiPhongChieu extends javax.swing.JPanel implements QuanLyPhongC
         fillToTable();
         this.clear();
         XDialog.alert("Cập nhật thành công!");
+        if (ghePanel != null) {
+            ghePanel.capNhatDanhSachPhong(pc.getMaPhong());
+        }
     }
 
     @Override
@@ -528,6 +539,10 @@ public class QuanLiPhongChieu extends javax.swing.JPanel implements QuanLyPhongC
                 XDialog.alert("Xóa thất bại: " + e.getMessage());
             }
         }
+        if (ghePanel != null) {
+            ghePanel.capNhatDanhSachPhong(maPhong);
+        }
+
     }
 
     @Override
