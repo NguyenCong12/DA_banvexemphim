@@ -8,11 +8,14 @@ import java.awt.CardLayout;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.text.NumberFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import poly.cinema.dao.MatHangDAO;
 import poly.cinema.dao.impl.ChiTietHangDAOImpl;
@@ -25,6 +28,7 @@ import poly.cinema.entity.DatHang;
 import poly.cinema.entity.DatVeSession;
 import poly.cinema.entity.NguoiDung;
 import poly.cinema.entity.SanPhamSession;
+import poly.cinema.util.PDFExporter;
 
 /**
  *
@@ -184,7 +188,6 @@ public class BanHang extends javax.swing.JPanel {
 
             if (maXuat != null && danhSachGhe != null && !danhSachGhe.isEmpty()) {
                 List<Object[]> danhSachVe = layDanhSachVe(maXuat, danhSachGhe);
-
                 for (Object[] row : danhSachVe) {
                     int maGhe = (int) row[0];
                     double giaVe = Double.parseDouble(row[6].toString());
@@ -201,18 +204,71 @@ public class BanHang extends javax.swing.JPanel {
                     double gia = sp.getGia();
                     int soLuong = sp.getSoLuong();
 
-                    // Lấy mã hàng từ tên sản phẩm
                     MatHangDAO matHangDAO = new MatHangDAOImpl();
                     int maHang = matHangDAO.timMaHangTheoTen(tenSp);
 
-                    // Gọi hàm đúng số lượng và kiểu tham số
                     ctSpDao.themChiTietSanPham(maHoaDon, maHang, gia, soLuong);
                 }
             }
 
-            // ====================== DỌN DẸP SAU KHI THANH TOÁN ======================
-            JOptionPane.showMessageDialog(this, "Thanh toán thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+            // ====================== IN HÓA ĐƠN PDF ======================
+            try {
+                PDFExporter exporter = new PDFExporter();
 
+                String fileName = "hoadon_" + System.currentTimeMillis() + ".pdf";
+                String filePath = "hoadon/" + fileName; // Thư mục phải tồn tại
+
+                String maPhieu = "HD" + maHoaDon;
+                String nhanVien = nguoiDung.getTenNd();
+                String trangThai = "Đã thanh toán";
+                String checkin = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss").format(new Date());
+                String checkout = checkin;
+
+                // Gộp dữ liệu từ 2 bảng vào bảng tạm để in
+                DefaultTableModel model = new DefaultTableModel();
+                model.setColumnIdentifiers(new Object[]{"#", "Tên", "Giá", "SL", "Thành tiền"});
+
+                for (int i = 0; i < tblHoaDon.getRowCount(); i++) {
+                    model.addRow(new Object[]{
+                        i + 1,
+                        tblHoaDon.getValueAt(i, 1),
+                        tblHoaDon.getValueAt(i, 3),
+                        1,
+                        tblHoaDon.getValueAt(i, 3)
+                    });
+                }
+
+                for (int i = 0; i < tblchitiethang.getRowCount(); i++) {
+                    model.addRow(new Object[]{
+                        tblHoaDon.getRowCount() + i + 1,
+                        tblchitiethang.getValueAt(i, 0),
+                        tblchitiethang.getValueAt(i, 1),
+                        tblchitiethang.getValueAt(i, 2),
+                        tblchitiethang.getValueAt(i, 3)
+                    });
+                }
+
+                JTable tableToPrint = new JTable(model);
+
+                exporter.exportBillToPDF(
+                        filePath,
+                        maPhieu,
+                        nhanVien,
+                        trangThai,
+                        checkout,
+                        tableToPrint,
+                        tongTien,
+                        tienKhachDua,
+                        tienKhachDua - tongTien
+                );
+
+                JOptionPane.showMessageDialog(this, "Đã thanh toán và in hóa đơn PDF:\n" + filePath, "Thành công", JOptionPane.INFORMATION_MESSAGE);
+            } catch (Exception e) {
+                e.printStackTrace();
+                JOptionPane.showMessageDialog(this, "Lỗi khi in hóa đơn PDF!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+            }
+
+            // ====================== DỌN DẸP SAU KHI THANH TOÁN ======================
             ((DefaultTableModel) tblHoaDon.getModel()).setRowCount(0);
             ((DefaultTableModel) tblchitiethang.getModel()).setRowCount(0);
             txtTienVe.setText("0");
@@ -288,7 +344,8 @@ public class BanHang extends javax.swing.JPanel {
         txtTienVe.setText("0");
         txtTienSanPham.setText("0");
         txtTongTien.setText("0");
-
+        txtTienKhachDua.setText("0");
+        txtTienThua.setText("0");
         DatVeSession.clear();
         SanPhamSession.clear();
 

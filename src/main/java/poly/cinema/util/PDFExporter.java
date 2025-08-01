@@ -1,104 +1,146 @@
 package poly.cinema.util;
 
-//import com.itextpdf.text.Document;
-//import com.itextpdf.text.Paragraph;
-//import com.itextpdf.text.Font;
-//import com.itextpdf.text.FontFactory;
-//import com.itextpdf.text.BaseColor;
-//import com.itextpdf.text.Chunk;
-//import com.itextpdf.text.Element;
-//import com.itextpdf.text.Image;
-//import com.itextpdf.text.PageSize;
-//import com.itextpdf.text.Phrase;
-//import com.itextpdf.text.pdf.PdfPCell;
-//import com.itextpdf.text.pdf.PdfPTable;
-//import com.itextpdf.text.pdf.PdfWriter;
-//import java.io.File;
-//import java.io.FileOutputStream;
-//import java.text.NumberFormat;
-//import java.util.List;
-//import java.util.Locale;
-//import poly.cinema.entity.Bill;
-//import poly.cinema.entity.BillDetail;
-//import poly.cinema.entity.Customer;
+import com.itextpdf.text.*;
+import com.itextpdf.text.pdf.*;
+import com.itextpdf.text.pdf.draw.LineSeparator;
 
+import javax.swing.JTable;
+import java.io.FileOutputStream;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
-//public class PDFExporter {
-//
-//   public void exportBillToPDF(Bill bill, List<BillDetail> details, Customer customer, String filePath) {
-//Document document = new Document(PageSize.A4, 50, 50, 50, 50);
-//    try {
-//        File file = new File(filePath);
-//        file.getParentFile().mkdirs(); // 👉 Fix lỗi đường dẫn không tồn tại
-//        PdfWriter.getInstance(document, new FileOutputStream(filePath));
-//        document.open();
-//
-//        // Fonts
-//        Font titleFont = FontFactory.getFont(FontFactory.HELVETICA_BOLD, 20, BaseColor.BLUE);
-//        Font headerFont = FontFactory.getFont(FontFactory.HELVETICA_BOLD, 12);
-//        Font bodyFont = FontFactory.getFont(FontFactory.HELVETICA, 12);
-//        Font totalFont = FontFactory.getFont(FontFactory.HELVETICA_BOLD, 14, BaseColor.BLUE);
-//
-//        // Logo
-//        try {
-//            Image logo = Image.getInstance("src/main/resources/icon/logo.png");
-//            logo.scaleAbsolute(70f, 70f);
-//            logo.setAlignment(Image.ALIGN_LEFT);
-//            document.add(logo);
-//        } catch (Exception e) {
-//            System.err.println("Không thể chèn logo: " + e.getMessage());
-//        }
-//
-//        // Tiêu đề
-//        Paragraph title = new Paragraph("HÓA ĐƠN THANH TOÁN", titleFont);
-//        title.setAlignment(Element.ALIGN_CENTER);
-//        document.add(title);
-//        document.add(Chunk.NEWLINE);
-//
-//        // Thông tin khách hàng
-//        document.add(new Paragraph("Mã hóa đơn: " + bill.getBillId(), bodyFont));
-//        document.add(new Paragraph("Khách hàng: " + (customer != null ? customer.getCustomerName() : "Khách lẻ"), bodyFont));
-//        document.add(new Paragraph("Ngày thanh toán: " + bill.getCheckout().toString(), bodyFont));
-//        document.add(Chunk.NEWLINE);
-//
-//        // Bảng chi tiết
-//        PdfPTable table = new PdfPTable(5);
-//        table.setWidthPercentage(100);
-//        table.setWidths(new float[]{3, 1, 2, 1, 2});
-//
-//        table.addCell(new PdfPCell(new Phrase("Sản phẩm", headerFont)));
-//        table.addCell(new PdfPCell(new Phrase("Số lượng", headerFont)));
-//        table.addCell(new PdfPCell(new Phrase("Đơn giá", headerFont)));
-//        table.addCell(new PdfPCell(new Phrase("Giảm giá", headerFont)));
-//        table.addCell(new PdfPCell(new Phrase("Thành tiền", headerFont)));
-//
-//        double total = 0;
-//        NumberFormat formatter = NumberFormat.getInstance(new Locale("vi", "VN"));
-//
-//        for (BillDetail d : details) {
-//            double thanhTien = d.getQuantity() * d.getUnitPrice() * (1 - d.getDiscount());
-//            total += thanhTien;
-//
-//            table.addCell(new Phrase(d.getProductName(), bodyFont));
-//            table.addCell(new Phrase(String.valueOf(d.getQuantity()), bodyFont));
-//            table.addCell(new Phrase(formatter.format(d.getUnitPrice()), bodyFont));
-//            table.addCell(new Phrase(String.format("%.0f%%", d.getDiscount() * 100), bodyFont));
-//            table.addCell(new Phrase(formatter.format(thanhTien), bodyFont));
-//        }
-//
-//        document.add(table);
-//        document.add(Chunk.NEWLINE);
-//
-//        // Tổng cộng
-//        Paragraph totalPara = new Paragraph("Tổng cộng: " + formatter.format(total) + " VNĐ", totalFont);
-//        totalPara.setAlignment(Element.ALIGN_RIGHT);
-//        document.add(totalPara);
-//
-//    } catch (Exception e) {
-//        e.printStackTrace();
-//    } finally {
-//        document.close();
-//    }
-//
-//   }
-//}
+public class PDFExporter {
+
+    public void exportBillToPDF(String filePath,
+                                 String maPhieu,
+                                 String nhanVien,
+                                 String trangThai,
+                                 String checkout,
+                                 JTable table,
+                                 double tongTien,
+                                 double tienKhachDua,
+                                 double tienThoiLai) {
+        try {
+            Document document = new Document(PageSize.A4, 50, 50, 50, 50);
+            PdfWriter.getInstance(document, new FileOutputStream(filePath));
+            document.open();
+
+            // Font tiếng Việt
+            BaseFont baseFont = BaseFont.createFont("c:/windows/fonts/arial.ttf", BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
+            Font shopNameFont = new Font(baseFont, 20, Font.BOLD, BaseColor.RED);
+            Font titleFont = new Font(baseFont, 16, Font.BOLD, BaseColor.BLUE);
+            Font headerFont = new Font(baseFont, 12, Font.BOLD);
+            Font normalFont = new Font(baseFont, 12);
+            Font italicFont = new Font(baseFont, 11, Font.ITALIC, BaseColor.DARK_GRAY);
+
+            // Logo
+            try {
+                Image logo = Image.getInstance("src\\main\\resources\\images\\LOGOHOADON.png");
+                logo.scaleToFit(80, 80);
+                logo.setAlignment(Element.ALIGN_CENTER);
+                document.add(logo);
+            } catch (Exception e) {
+                System.out.println("Không tìm thấy logo. Bỏ qua.");
+            }
+
+            // Tên shop & địa chỉ
+            Paragraph shopName = new Paragraph("FCINEMA", shopNameFont);
+            shopName.setAlignment(Element.ALIGN_CENTER);
+            shopName.setSpacingAfter(5f);
+            document.add(shopName);
+
+            Paragraph address = new Paragraph("Địa chỉ: Toà nhà FPT Polytechnic, Đ. Số 22, Thường Thạnh, Cái Răng, Cần Thơ", normalFont);
+            address.setAlignment(Element.ALIGN_CENTER);
+            address.setSpacingAfter(10f);
+            document.add(address);
+
+            document.add(new LineSeparator());
+
+            // Tiêu đề hóa đơn
+            Paragraph title = new Paragraph("HÓA ĐƠN THANH TOÁN", titleFont);
+            title.setAlignment(Element.ALIGN_CENTER);
+            title.setSpacingBefore(10f);
+            title.setSpacingAfter(15f);
+            document.add(title);
+
+            // Thông tin hóa đơn
+            PdfPTable infoTable = new PdfPTable(2);
+            infoTable.setWidthPercentage(80);
+            infoTable.setHorizontalAlignment(Element.ALIGN_CENTER);
+            infoTable.setWidths(new float[]{1.5f, 4});
+            infoTable.setSpacingAfter(10f);
+
+            addInfoCell(infoTable, "Mã phiếu:", maPhieu, headerFont, normalFont);
+            addInfoCell(infoTable, "Nhân viên:", nhanVien, headerFont, normalFont);
+            addInfoCell(infoTable, "Trạng thái:", trangThai, headerFont, normalFont);
+            addInfoCell(infoTable, "Thời điểm thanh toán:", checkout, headerFont, normalFont);
+
+            document.add(infoTable);
+
+            document.add(new LineSeparator());
+
+            // Bảng chi tiết
+            PdfPTable pdfTable = new PdfPTable(table.getColumnCount() - 1);
+            pdfTable.setWidthPercentage(100);
+            pdfTable.setSpacingBefore(10f);
+
+            for (int col = 1; col < table.getColumnCount(); col++) {
+                PdfPCell cell = new PdfPCell(new Phrase(table.getColumnName(col), headerFont));
+                cell.setBackgroundColor(BaseColor.LIGHT_GRAY);
+                cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+                pdfTable.addCell(cell);
+            }
+
+            for (int row = 0; row < table.getRowCount(); row++) {
+                for (int col = 1; col < table.getColumnCount(); col++) {
+                    Object value = table.getValueAt(row, col);
+                    PdfPCell dataCell = new PdfPCell(new Phrase(value != null ? value.toString() : "", normalFont));
+                    dataCell.setHorizontalAlignment(Element.ALIGN_CENTER);
+                    pdfTable.addCell(dataCell);
+                }
+            }
+
+            document.add(pdfTable);
+
+            // Bảng tổng kết
+            PdfPTable summaryTable = new PdfPTable(2);
+            summaryTable.setWidthPercentage(40);
+            summaryTable.setHorizontalAlignment(Element.ALIGN_RIGHT);
+            summaryTable.setSpacingBefore(20f);
+
+            addInfoCell(summaryTable, "Tổng tiền:", String.format("%.0f VND", tongTien), headerFont, normalFont);
+            addInfoCell(summaryTable, "Tiền khách đưa:", String.format("%.0f VND", tienKhachDua), headerFont, normalFont);
+            addInfoCell(summaryTable, "Tiền thối lại:", String.format("%.0f VND", tienThoiLai), headerFont, normalFont);
+
+            document.add(summaryTable);
+
+            // Cảm ơn
+            Paragraph thanks = new Paragraph("\nCảm ơn quý khách đã sử dụng dịch vụ của chúng tôi!\nHẹn gặp lại quý khách lần sau.", italicFont);
+            thanks.setAlignment(Element.ALIGN_CENTER);
+            thanks.setSpacingBefore(30f);
+            document.add(thanks);
+
+            // Ngày in
+            String printDate = new SimpleDateFormat("dd-MM-yyyy HH:mm").format(new Date());
+            Paragraph printTime = new Paragraph("Ngày in: " + printDate, italicFont);
+            printTime.setAlignment(Element.ALIGN_RIGHT);
+            printTime.setSpacingBefore(20f);
+            document.add(printTime);
+
+            document.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void addInfoCell(PdfPTable table, String label, String value, Font labelFont, Font valueFont) {
+        PdfPCell cell1 = new PdfPCell(new Phrase(label, labelFont));
+        PdfPCell cell2 = new PdfPCell(new Phrase(value, valueFont));
+        cell1.setBorder(Rectangle.NO_BORDER);
+        cell2.setBorder(Rectangle.NO_BORDER);
+        cell1.setHorizontalAlignment(Element.ALIGN_LEFT);
+        cell2.setHorizontalAlignment(Element.ALIGN_LEFT);
+        table.addCell(cell1);
+        table.addCell(cell2);
+    }
+}
