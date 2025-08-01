@@ -96,4 +96,13 @@ public class NguoiDungDAOImpl implements NguoiDungDAO {
         }
         return list;
     }
+
+
+//    @Override
+//    public NguoiDung findByUsernameAndEmail(String username, String email) {
+//        String sql = "SELECT * FROM NguoiDung WHERE ten_nd = ? AND email = ?";
+//        List<NguoiDung> list = selectBySql(sql, username, email);
+//        return list.isEmpty() ? null : list.get(0);
+//    }
+
 }

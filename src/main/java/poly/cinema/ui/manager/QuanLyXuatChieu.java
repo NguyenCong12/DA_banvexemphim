@@ -27,6 +27,7 @@ import poly.cinema.dao.impl.QuanLySuatChieuDaoImpl;
 import poly.cinema.entity.Phim;
 import poly.cinema.entity.PhongChieu;
 import poly.cinema.entity.SuatChieu;
+import static poly.cinema.util.TimeRange.today;
 import poly.cinema.util.XDialog;
 
 /**
@@ -208,6 +209,11 @@ public class QuanLyXuatChieu extends javax.swing.JPanel implements QuanLySuatChi
             return;
         }
 
+        if (!sc.getNgayChieu().isAfter(LocalDate.now())) {
+            XDialog.alert("Chỉ được tạo suất chiếu từ ngày mai trở đi!");
+            return;
+        }
+
         // Giờ chiếu hợp lệ (7h - 23h)
         if (sc.getGioChieu().isBefore(LocalTime.of(7, 0)) || sc.getGioChieu().isAfter(LocalTime.of(23, 0))) {
             XDialog.alert("Giờ chiếu phải trong khoảng từ 07:00 đến 23:00!");
@@ -280,7 +286,6 @@ public class QuanLyXuatChieu extends javax.swing.JPanel implements QuanLySuatChi
             return;
         }
 
-
         // Trùng lịch chiếu
         if (isOverlapping(sc)) {
             XDialog.alert("Suất chiếu bị trùng hoặc cách nhau không đủ thời gian!");
@@ -329,7 +334,6 @@ public class QuanLyXuatChieu extends javax.swing.JPanel implements QuanLySuatChi
     public void setEditable(boolean editable) {
         btnLamMoi.setEnabled(true); // luôn bật làm mới
         btnThem.setEnabled(!editable); // nếu đang edit thì tắt nút thêm
-        btnSua.setEnabled(editable);
         btnXoa.setEnabled(editable);
     }
 
@@ -535,7 +539,6 @@ public class QuanLyXuatChieu extends javax.swing.JPanel implements QuanLySuatChi
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         btnThem = new javax.swing.JButton();
-        btnSua = new javax.swing.JButton();
         btnXoa = new javax.swing.JButton();
         btnLamMoi = new javax.swing.JButton();
         jLabel6 = new javax.swing.JLabel();
@@ -613,14 +616,6 @@ public class QuanLyXuatChieu extends javax.swing.JPanel implements QuanLySuatChi
             }
         });
 
-        btnSua.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        btnSua.setText("Sửa");
-        btnSua.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnSuaActionPerformed(evt);
-            }
-        });
-
         btnXoa.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnXoa.setText("Xóa");
         btnXoa.addActionListener(new java.awt.event.ActionListener() {
@@ -687,9 +682,7 @@ public class QuanLyXuatChieu extends javax.swing.JPanel implements QuanLySuatChi
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addGap(0, 0, Short.MAX_VALUE)
                                 .addComponent(btnThem)
-                                .addGap(18, 18, 18)
-                                .addComponent(btnSua)
-                                .addGap(18, 18, 18)
+                                .addGap(42, 42, 42)
                                 .addComponent(btnXoa, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
                                 .addComponent(btnLamMoi)
@@ -742,7 +735,6 @@ public class QuanLyXuatChieu extends javax.swing.JPanel implements QuanLySuatChi
                 .addGap(8, 8, 8)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnThem, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnSua, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnXoa, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnLamMoi, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(41, Short.MAX_VALUE))
@@ -841,10 +833,6 @@ public class QuanLyXuatChieu extends javax.swing.JPanel implements QuanLySuatChi
         create();
     }//GEN-LAST:event_btnThemActionPerformed
 
-    private void btnSuaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSuaActionPerformed
-        update();
-    }//GEN-LAST:event_btnSuaActionPerformed
-
     private void btnXoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXoaActionPerformed
         delete();
     }//GEN-LAST:event_btnXoaActionPerformed
@@ -872,7 +860,6 @@ public class QuanLyXuatChieu extends javax.swing.JPanel implements QuanLySuatChi
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnLamMoi;
     private javax.swing.JButton btnResetBoLoc;
-    private javax.swing.JButton btnSua;
     private javax.swing.JButton btnThem;
     private javax.swing.JButton btnXoa;
     private javax.swing.JComboBox<String> cboPhim;

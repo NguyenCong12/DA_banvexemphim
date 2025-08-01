@@ -208,7 +208,6 @@ poly\cinema\ui\BanHang.class
 poly\cinema\dao\QuanLyPhongChieuDao.class
 poly\cinema\ui\manager\XemLichChieu$1.class
 poly\cinema\ui\manager\QuanLyXuatChieu$3.class
-poly\cinema\ui\manager\QuanLyXuatChieu$10.class
 poly\cinema\dao\LichSuDAO.class
 poly\cinema\ui\WelcomeJDialog$1.class
 poly\cinema\ui\BanHang$2.class
@@ -236,12 +235,14 @@ poly\cinema\ui\BanSanPham$3.class
 poly\cinema\ui\FCinema_Frame$7.class
 poly\cinema\ui\manager\QuanLyXuatChieu$6.class
 poly\cinema\dao\impl\MatHangDAOImpl.class
+poly\cinema\util\PDFExporter.class
 poly\cinema\entity\ChiTietHang.class
 poly\cinema\entity\PhongChieu.class
 poly\cinema\dao\ChiTietHangDAO.class
 poly\cinema\ui\BanSanPham$6.class
 poly\cinema\dao\impl\ChiTietHangDAOImpl.class
 poly\cinema\ui\DoiMatKhau$4.class
+poly\cinema\util\XMailer.class
 poly\cinema\ui\BanHang$4.class
 poly\cinema\ui\chonPhimJpanel$2.class
 poly\cinema\ui\manager\QuanLyPhimController.class
@@ -271,3 +272,4 @@ poly\cinema\ui\KhoiPhucMKJDialog$2.class
 poly\cinema\ui\chonGheJPanel$1.class
 poly\cinema\ui\BanHang$5.class
 poly\cinema\ui\DangNhapJDialog$1.class
+poly\cinema\util\XMailer$1.class

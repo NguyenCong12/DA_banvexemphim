@@ -421,11 +421,12 @@ public class QuanLyPhim extends javax.swing.JPanel implements QuanLyPhimControll
     @Override
     public Phim getForm() {
         String tenPhim = txtTenPhim.getText().trim();
-        String thoiLuongStr = txtThoiLuong.getText().trim();
-        String moTa = txtMoTa.getText().trim();
-        String tenLoai = (String) cboLoaiPhim.getSelectedItem();
-        LoaiPhim selectedLoai = loaiPhimMap.get(tenLoai);
+        if (tenPhim.isEmpty()) {
+            XDialog.alert("Vui lòng nhập tên phim!");
+            return null;
+        }
 
+        String thoiLuongStr = txtThoiLuong.getText().trim();
         if (thoiLuongStr.isEmpty()) {
             XDialog.alert("Vui lòng nhập thời lượng phim!");
             return null;
@@ -434,8 +435,26 @@ public class QuanLyPhim extends javax.swing.JPanel implements QuanLyPhimControll
         int thoiLuong;
         try {
             thoiLuong = Integer.parseInt(thoiLuongStr);
+            if (thoiLuong <= 0) {
+                XDialog.alert("Thời lượng phim phải lớn hơn 0!");
+                return null;
+            }
         } catch (NumberFormatException ex) {
             XDialog.alert("Thời lượng phim phải là số!");
+            return null;
+        }
+
+        String moTa = txtMoTa.getText().trim();
+
+        String tenLoai = (String) cboLoaiPhim.getSelectedItem();
+        if (tenLoai == null || tenLoai.trim().isEmpty()) {
+            XDialog.alert("Vui lòng chọn loại phim!");
+            return null;
+        }
+
+        LoaiPhim selectedLoai = loaiPhimMap.get(tenLoai);
+        if (selectedLoai == null) {
+            XDialog.alert("Loại phim không hợp lệ!");
             return null;
         }
 
@@ -452,16 +471,77 @@ public class QuanLyPhim extends javax.swing.JPanel implements QuanLyPhimControll
         }
 
         String hinhAnh = lblAnh.getToolTipText();
+        if (hinhAnh == null || hinhAnh.trim().isEmpty()) {
+            XDialog.alert("Vui lòng chọn hình ảnh phim!");
+            return null;
+        }
 
         return Phim.builder()
                 .tenPhim(tenPhim)
-                .maLoai(selectedLoai != null ? selectedLoai.getMaLoai() : null)
+                .maLoai(selectedLoai.getMaLoai())
                 .thoiLuong(thoiLuong)
                 .moTa(moTa)
                 .ngayKhoiChieu(ngayKhoiChieu)
                 .trangThai(trangThai)
                 .hinhAnh(hinhAnh)
                 .build();
+    }
+
+    private boolean validateForm() {
+        if (txtTenPhim.getText().trim().isEmpty()) {
+            XDialog.alert("Vui lòng nhập tên phim.");
+            txtTenPhim.requestFocus();
+            return false;
+        }
+
+        if (cboLoaiPhim.getSelectedIndex() == -1) {
+            XDialog.alert("Vui lòng chọn loại phim.");
+            cboLoaiPhim.requestFocus();
+            return false;
+        }
+
+        String thoiLuongStr = txtThoiLuong.getText().trim();
+        if (thoiLuongStr.isEmpty()) {
+            XDialog.alert("Vui lòng nhập thời lượng.");
+            txtThoiLuong.requestFocus();
+            return false;
+        }
+        try {
+            int thoiLuong = Integer.parseInt(thoiLuongStr);
+            if (thoiLuong <= 0) {
+                XDialog.alert("Thời lượng phải lớn hơn 0.");
+                txtThoiLuong.requestFocus();
+                return false;
+            }
+        } catch (NumberFormatException e) {
+            XDialog.alert("Thời lượng phải là số.");
+            txtThoiLuong.requestFocus();
+            return false;
+        }
+
+        if (txtMoTa.getText().trim().isEmpty()) {
+            XDialog.alert("Vui lòng nhập mô tả.");
+            txtMoTa.requestFocus();
+            return false;
+        }
+
+        if (txtNgayKhoiChieu.getDate() == null) {
+            XDialog.alert("Vui lòng chọn ngày khởi chiếu.");
+            txtNgayKhoiChieu.requestFocus();
+            return false;
+        }
+
+        if (!rdoDangChieu.isSelected() && !rdoNgungChieu.isSelected()) {
+            XDialog.alert("Vui lòng chọn trạng thái phim.");
+            return false;
+        }
+
+        if (lblAnh.getToolTipText() == null) {
+            XDialog.alert("Vui lòng chọn hình ảnh.");
+            return false;
+        }
+
+        return true;
     }
 
     @Override
@@ -535,6 +615,10 @@ public class QuanLyPhim extends javax.swing.JPanel implements QuanLyPhimControll
             return; // đã validate trong getForm()
         }
 
+        if (!validateForm()) {
+            return;
+        }
+
         // Kiểm tra tên trùng
         for (Phim p : dao.findAll()) {
             if (p.getTenPhim().equalsIgnoreCase(phim.getTenPhim())) {
@@ -578,6 +662,10 @@ public class QuanLyPhim extends javax.swing.JPanel implements QuanLyPhimControll
         Phim phimMoi = getForm();
         if (phimMoi == null) {
             return; // đã validate trong getForm()
+        }
+
+        if (!validateForm()) {
+            return;
         }
 
         int maPhim = (Integer) tblPhim.getValueAt(row, 0);

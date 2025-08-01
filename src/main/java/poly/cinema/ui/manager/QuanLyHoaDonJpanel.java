@@ -442,6 +442,7 @@ public class QuanLyHoaDonJpanel extends javax.swing.JPanel implements QuanLyHoaD
     }//GEN-LAST:event_jTable1MouseClicked
 
     public void open() {
+        fillToTable();
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnMoveFirst;

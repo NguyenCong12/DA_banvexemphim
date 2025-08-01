@@ -12,7 +12,6 @@ import poly.cinema.dao.impl.NguoiDungDAOImpl;
 import poly.cinema.util.CaptchaGenerator;
 import poly.cinema.util.XAuth;
 
-
 /**
  *
  * @author Bao Nhien
@@ -267,7 +266,7 @@ public class DoiMatKhau extends javax.swing.JPanel implements DoiMatKhauControll
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 1145, Short.MAX_VALUE)
+            .addComponent(jPanel4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -287,6 +286,9 @@ public class DoiMatKhau extends javax.swing.JPanel implements DoiMatKhauControll
         txtNewpass.setText("");
         txtConfirm.setText("");
         txtCaptcha.setText("");
+
+        clearErrorLabels(); // <-- Thêm dòng này để xóa hết thông báo lỗi
+
         loadCaptcha();
     }//GEN-LAST:event_bntExitActionPerformed
 
@@ -327,21 +329,21 @@ public class DoiMatKhau extends javax.swing.JPanel implements DoiMatKhauControll
             isValid = false;
         }
 
-        if (newpass.length() < 8) {
-            lblLoiNewPass.setText("Mật khẩu phải từ 8 ký tự trở lên");
+        if (newpass.length() < 6) {
+            lblLoiNewPass.setText("Mật khẩu phải từ 6 ký tự trở lên");
             isValid = false;
-        } else if (!newpass.matches(".*[A-Z].*")) {
-            lblLoiNewPass.setText("Phải có ít nhất 1 chữ in hoa");
-            isValid = false;
-        } else if (!newpass.matches(".*[a-z].*")) {
-            lblLoiNewPass.setText("Phải có ít nhất 1 chữ thường");
-            isValid = false;
-        } else if (!newpass.matches(".*\\d.*")) {
-            lblLoiNewPass.setText("Phải có ít nhất 1 chữ số");
-            isValid = false;
-        } else if (!newpass.matches(".*[!@#$%^&*()_+\\-=\\[\\]{};':\"\\\\|,.<>\\/?].*")) {
-            lblLoiNewPass.setText("Phải có ít nhất 1 ký tự đặc biệt");
-            isValid = false;
+//        } else if (!newpass.matches(".*[A-Z].*")) {
+//            lblLoiNewPass.setText("Phải có ít nhất 1 chữ in hoa");
+//            isValid = false;
+//        } else if (!newpass.matches(".*[a-z].*")) {
+//            lblLoiNewPass.setText("Phải có ít nhất 1 chữ thường");
+//            isValid = false;
+//        } else if (!newpass.matches(".*\\d.*")) {
+//            lblLoiNewPass.setText("Phải có ít nhất 1 chữ số");
+//            isValid = false;
+//        } else if (!newpass.matches(".*[!@#$%^&*()_+\\-=\\[\\]{};':\"\\\\|,.<>\\/?].*")) {
+//            lblLoiNewPass.setText("Phải có ít nhất 1 ký tự đặc biệt");
+//            isValid = false;
         } else if (newpass.contains(" ")) {
             lblLoiNewPass.setText("Không được chứa khoảng trắng");
             isValid = false;
@@ -419,7 +421,5 @@ public class DoiMatKhau extends javax.swing.JPanel implements DoiMatKhauControll
     private javax.swing.JTextField txtPassword;
     private javax.swing.JTextField txtUsername;
     // End of variables declaration//GEN-END:variables
-
-    
 
 }
