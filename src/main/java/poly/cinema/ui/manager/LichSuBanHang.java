@@ -279,10 +279,6 @@ public class LichSuBanHang extends javax.swing.JPanel implements LichSuBanHangCo
                 list = lichSuDAO.getByDateAndUser(begin, end, user.getMaNd());
             }
 
-            if (list.isEmpty()) {
-                JOptionPane.showMessageDialog(this, "Không có dữ liệu trong khoảng thời gian đã chọn.");
-            }
-
             fillTableLichSu(list);
 
         } catch (Exception e) {

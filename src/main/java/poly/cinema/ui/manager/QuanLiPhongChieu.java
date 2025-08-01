@@ -452,6 +452,11 @@ public class QuanLiPhongChieu extends javax.swing.JPanel implements QuanLyPhongC
                 return;
             }
         }
+        
+        if (pc.getSoHang() > 15 || pc.getSoCot() > 15) {
+            XDialog.alert("Số hàng và số cột không được vượt quá 15!");
+            return;
+        }
 
         // 🔒 Kiểm tra trùng tên phòng (khác vị trí)
         for (int i = 0; i < items.size(); i++) {

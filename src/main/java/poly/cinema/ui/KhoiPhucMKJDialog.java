@@ -234,7 +234,7 @@ public class KhoiPhucMKJDialog extends javax.swing.JDialog {
             return;
         }
 
-        if (newPass.length() < 8) {
+        if (newPass.length() < 6) {
             XDialog.alert("Mật khẩu phải từ 6 ký tự trở lên.");
             return;
         }

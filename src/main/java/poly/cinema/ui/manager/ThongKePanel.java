@@ -432,9 +432,6 @@ public class ThongKePanel extends javax.swing.JPanel implements ThongKeControlle
             fillMovieRevenue(begin, end);
             fillFoodRevenue(begin, end);
 
-            if (tblDoanhthuPhim.getRowCount() == 0 && tblDoanhthubapnuov.getRowCount() == 0) {
-                JOptionPane.showMessageDialog(this, "Không có dữ liệu trong khoảng thời gian đã chọn.");
-            }
 
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Lỗi định dạng hoặc dữ liệu ngày tháng.");

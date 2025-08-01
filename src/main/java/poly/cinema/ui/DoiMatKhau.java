@@ -327,7 +327,7 @@ public class DoiMatKhau extends javax.swing.JPanel implements DoiMatKhauControll
             isValid = false;
         }
 
-        if (newpass.length() < 8) {
+        if (newpass.length() < 6) {
             lblLoiNewPass.setText("Mật khẩu phải từ 6 ký tự trở lên");
             isValid = false;
 //        } else if (!newpass.matches(".*[A-Z].*")) {
