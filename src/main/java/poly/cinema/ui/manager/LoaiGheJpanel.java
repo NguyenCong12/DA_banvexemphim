@@ -342,17 +342,25 @@ public class LoaiGheJpanel extends javax.swing.JPanel implements LoaiGheControll
     public void create() {
         LoaiGhe entity = getForm();
         if (entity != null) {
+            // 🔒 Kiểm tra tên ghế không chứa số
+            if (entity.getLoaiGhe().matches(".*\\d.*")) {
+                JOptionPane.showMessageDialog(this, "Tên ghế không được chứa số!");
+                return;
+            }
+
+            // 🔒 Kiểm tra mã ghế đã tồn tại
             if (dao.findById(entity.getLoaiGhe()) != null) {
                 JOptionPane.showMessageDialog(this, "Mã ghế đã tồn tại!");
                 return;
             }
+
             try {
                 dao.create(entity);
                 fillToTable();
                 clear();
                 JOptionPane.showMessageDialog(this, "Thêm mới thành công!");
             } catch (Exception e) {
-                JOptionPane.showMessageDialog(this, "Lỗi thêm dữ liệu: ");
+                JOptionPane.showMessageDialog(this, "Lỗi thêm dữ liệu: " + e.getMessage());
                 e.printStackTrace();
             }
         }
@@ -369,6 +377,10 @@ public class LoaiGheJpanel extends javax.swing.JPanel implements LoaiGheControll
         LoaiGhe newEntity = getForm();
         if (newEntity == null) {
             return; // getForm đã báo lỗi rồi
+        }
+        if (newEntity.getLoaiGhe().matches(".*\\d.*")) {
+            JOptionPane.showMessageDialog(this, "Tên ghế không được chứa số!");
+            return;
         }
 
         // Lấy dữ liệu cũ trong DB

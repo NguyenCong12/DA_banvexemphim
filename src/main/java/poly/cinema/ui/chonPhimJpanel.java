@@ -71,7 +71,15 @@ public class chonPhimJpanel extends javax.swing.JPanel implements chonPhimContro
             new String [] {
                 "Mã chiếu", "Phòng chiếu", "Ngày chiếu", "Giờ chiếu"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         jScrollPane1.setViewportView(tblDaChon);
 
         tblPhim.setModel(new javax.swing.table.DefaultTableModel(
