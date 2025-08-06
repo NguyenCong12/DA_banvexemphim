@@ -308,7 +308,7 @@ public class FCinema_Frame extends javax.swing.JFrame implements FCinema_Control
                 lbldãnguatMouseClicked(evt);
             }
         });
-        pnlManager.add(lbldãnguat, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 690, 240, 40));
+        pnlManager.add(lbldãnguat, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 680, 240, 40));
 
         lblQLPhongChieu1.setBackground(new java.awt.Color(255, 255, 255));
         lblQLPhongChieu1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N

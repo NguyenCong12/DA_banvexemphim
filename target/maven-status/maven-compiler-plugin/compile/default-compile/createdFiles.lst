@@ -109,6 +109,7 @@ poly\cinema\ui\manager\LoaiPhimPanel$1.class
 poly\cinema\dao\LoaiGheDAO.class
 poly\cinema\ui\DangNhapJDialog$8$1.class
 poly\cinema\entity\SanPham.class
+poly\cinema\ui\chonPhimJpanel$6.class
 poly\cinema\dao\impl\QuanLyPhimDaoImpl.class
 poly\cinema\entity\PhongChieu$PhongChieuBuilder.class
 poly\cinema\ui\DangNhapJDialog.class
@@ -247,6 +248,7 @@ poly\cinema\ui\BanHang$4.class
 poly\cinema\ui\chonPhimJpanel$2.class
 poly\cinema\ui\manager\QuanLyPhimController.class
 poly\cinema\ui\WelcomeJDialog.class
+poly\cinema\util\OtpService.class
 poly\cinema\ui\KhoiPhucMKJDialog$1.class
 poly\cinema\ui\DangNhapJDialog$2.class
 poly\cinema\entity\QuanLyGhe.class

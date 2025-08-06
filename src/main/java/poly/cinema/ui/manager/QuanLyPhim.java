@@ -694,11 +694,25 @@ public class QuanLyPhim extends javax.swing.JPanel implements QuanLyPhimControll
 
         // Kiểm tra ngày khởi chiếu không được trước ngày hiện tại
         Date today = new Date();
-        if (phimMoi.getNgayKhoiChieu().before(XDate.toDate(today))) {
-            XDialog.alert("Ngày khởi chiếu không được trước ngày hiện tại!");
-            return;
-        }
 
+// Nếu phim đã khởi chiếu và đang ở trạng thái "Ngừng chiếu"
+        if (phimMoi.getNgayKhoiChieu().before(today)
+                && phimCu.getTrangThai().equalsIgnoreCase("Ngừng chiếu")) {
+
+            // So sánh các trường khác, nếu có sự thay đổi thì chặn (ngoại trừ trạng thái)
+            boolean thayDoiKhongHopLe
+                    = !phimMoi.getTenPhim().equals(phimCu.getTenPhim())
+                    || phimMoi.getMaLoai() != phimCu.getMaLoai()
+                    || phimMoi.getThoiLuong() != phimCu.getThoiLuong()
+                    || !phimMoi.getMoTa().equals(phimCu.getMoTa())
+                    || !phimMoi.getNgayKhoiChieu().equals(phimCu.getNgayKhoiChieu())
+                    || !phimMoi.getHinhAnh().equals(phimCu.getHinhAnh()); // nếu có hình
+
+            if (thayDoiKhongHopLe) {
+                XDialog.alert("Phim đã ngừng chiếu chỉ được phép thay đổi trạng thái!");
+                return;
+            }
+        }
         // Kiểm tra chưa thay đổi gì
         if (phimMoi.getTenPhim().equals(phimCu.getTenPhim())
                 && phimMoi.getMaLoai() == phimCu.getMaLoai()

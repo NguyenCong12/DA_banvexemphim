@@ -212,6 +212,8 @@ public class KhoiPhucMKJDialog extends javax.swing.JDialog {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+private long otpGeneratedTime = 0; // lưu thời gian tạo OTP
+    private final long OTP_VALID_DURATION = 5 * 60 * 1000; // 5 phút
 
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
         String username = txtusername.getText().trim();
@@ -221,6 +223,14 @@ public class KhoiPhucMKJDialog extends javax.swing.JDialog {
 
         if (otpCode == null) {
             XDialog.alert("Vui lòng nhấn 'Gửi mã OTP' trước.");
+            return;
+        }
+
+        // Kiểm tra OTP hết hạn chưa
+        long currentTime = System.currentTimeMillis();
+        if (currentTime - otpGeneratedTime > OTP_VALID_DURATION) {
+            XDialog.alert("Mã OTP đã hết hạn. Vui lòng gửi lại mã OTP mới.");
+            this.otpCode = null;
             return;
         }
 
@@ -284,6 +294,10 @@ public class KhoiPhucMKJDialog extends javax.swing.JDialog {
 
         String username = txtusername.getText().trim();
         String email = txtEmail.getText().trim();
+
+        this.otpCode = String.valueOf(otpCode);
+        this.nguoiDung = nguoiDung;
+        this.otpGeneratedTime = System.currentTimeMillis(); // Lưu thời điểm tạo OTP
 
         // Kiểm tra username có rỗng không
         if (username.isEmpty()) {

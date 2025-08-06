@@ -1,6 +1,9 @@
 package poly.cinema.util;
 
 import java.io.UnsupportedEncodingException;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.Properties;
 import javax.mail.*;
 import javax.mail.internet.*;
@@ -53,15 +56,44 @@ public class XMailer {
             </html>
         """.formatted(username, otpCode);
 
-        // 4. Tạo và gửi email
+        // 4. Gửi email
         Message message = new MimeMessage(session);
         message.setFrom(new InternetAddress(USERNAME, "BanVeXemPhim"));
         message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(toEmail));
         message.setSubject(subject);
         message.setContent(htmlContent, "text/html; charset=UTF-8");
-
-        // Gửi trực tiếp bằng Transport.send (không cần transport.connect thủ công)
         Transport.send(message);
         System.out.println(" Email đã được gửi đến: " + toEmail);
+
+        // 5. Cập nhật mã OTP vào DB
+        try {
+            updateOTPInDatabase(toEmail, Integer.parseInt(otpCode));
+            System.out.println(" Đã cập nhật mã OTP vào CSDL.");
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.err.println(" Lỗi khi lưu OTP vào CSDL!");
+        }
+    }
+
+    private static void updateOTPInDatabase(String email, int otpCode) throws SQLException {
+        Connection conn = null;
+        PreparedStatement ps = null;
+
+        try {
+            conn = XJdbc.getConnection(); // Kết nối từ class XJdbc của bạn
+            String sql = """
+                UPDATE NguoiDung
+                SET ma_xac_thuc = ?, 
+                    ma_xac_thuc_Expiration = DATEADD(MINUTE, 5, GETDATE())
+                WHERE email = ?
+            """;
+            ps = conn.prepareStatement(sql);
+            ps.setInt(1, otpCode);
+            ps.setString(2, email);
+            ps.executeUpdate();
+        } finally {
+            if (ps != null) ps.close();
+            if (conn != null) conn.close();
+        }
     }
 }

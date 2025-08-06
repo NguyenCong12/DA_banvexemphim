@@ -157,4 +157,19 @@ public class XJdbc {
         String sql = "DELETE FROM Drinks WHERE UnitPrice < ?";
         var count = XJdbc.executeUpdate(sql, 0.0);
     }
+    
+      // Hàm tạo kết nối
+    public static Connection getConnection() throws SQLException {
+        try {
+            // Nạp driver JDBC (cần thiết với một số IDE/libraries)
+            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+        } catch (ClassNotFoundException ex) {
+            throw new RuntimeException("Không tìm thấy JDBC Driver cho SQL Server!", ex);
+        }
+
+        // Trả về kết nối
+        return DriverManager.getConnection("jdbc:sqlserver://localhost:1433;database=QuanLyBanVeXemPhim;encrypt=true;trustServerCertificate=true;",
+                "bahao",
+                "0");
+    }
 }
