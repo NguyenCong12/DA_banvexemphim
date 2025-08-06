@@ -44,8 +44,6 @@ public class KhoiPhucMKJDialog extends javax.swing.JDialog {
         jPanel3 = new javax.swing.JPanel();
         jPanel8 = new javax.swing.JPanel();
         lblMatKhau = new javax.swing.JLabel();
-        txtusername = new javax.swing.JTextField();
-        lblTenDangNhap = new javax.swing.JLabel();
         btnOPT = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         txtMatKhauMoi = new javax.swing.JPasswordField();
@@ -66,8 +64,6 @@ public class KhoiPhucMKJDialog extends javax.swing.JDialog {
         jPanel8.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 0, 1, 0, new java.awt.Color(153, 153, 153)));
 
         lblMatKhau.setText("Email");
-
-        lblTenDangNhap.setText("Tên đăng nhập");
 
         btnOPT.setForeground(new java.awt.Color(204, 0, 0));
         btnOPT.setText("Gửi mã OTP");
@@ -91,8 +87,6 @@ public class KhoiPhucMKJDialog extends javax.swing.JDialog {
             .addGroup(jPanel8Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtusername)
-                    .addComponent(txtEmail)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel8Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(btnOPT))
@@ -100,35 +94,31 @@ public class KhoiPhucMKJDialog extends javax.swing.JDialog {
                     .addComponent(txtMatKhauMoi)
                     .addGroup(jPanel8Layout.createSequentialGroup()
                         .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lblTenDangNhap, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(lblMatKhau, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel2)
                             .addComponent(jLabel1))
-                        .addGap(0, 400, Short.MAX_VALUE)))
+                        .addGap(0, 419, Short.MAX_VALUE)))
                 .addContainerGap())
+            .addComponent(txtEmail)
         );
         jPanel8Layout.setVerticalGroup(
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel8Layout.createSequentialGroup()
-                .addGap(17, 17, 17)
-                .addComponent(lblTenDangNhap)
-                .addGap(18, 18, 18)
-                .addComponent(txtusername, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addGap(15, 15, 15)
                 .addComponent(lblMatKhau)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnOPT, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(btnOPT, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(10, 10, 10)
                 .addComponent(jLabel2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtMaOTP, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(27, 27, 27)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(txtMaOTP, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(33, 33, 33)
                 .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtMatKhauMoi, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(41, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(txtMatKhauMoi, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(47, Short.MAX_VALUE))
         );
 
         lblLayLaiMatKhau.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
@@ -216,7 +206,7 @@ private long otpGeneratedTime = 0; // lưu thời gian tạo OTP
     private final long OTP_VALID_DURATION = 5 * 60 * 1000; // 5 phút
 
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
-        String username = txtusername.getText().trim();
+
         String email = txtEmail.getText().trim();
         String inputOtp = txtMaOTP.getText().trim();
         String newPass = new String(txtMatKhauMoi.getPassword());
@@ -249,34 +239,12 @@ private long otpGeneratedTime = 0; // lưu thời gian tạo OTP
             return;
         }
 
-//        if (!newPass.matches(".*[A-Z].*")) {
-//            XDialog.alert("Mật khẩu phải có ít nhất 1 chữ in hoa.");
-//            return;
-//        }
-//
-//        if (!newPass.matches(".*[a-z].*")) {
-//            XDialog.alert("Mật khẩu phải có ít nhất 1 chữ thường.");
-//            return;
-//        }
-//
-//        if (!newPass.matches(".*\\d.*")) {
-//            XDialog.alert("Mật khẩu phải có ít nhất 1 chữ số.");
-//            return;
-//        }
-//
-//        if (!newPass.matches(".*[!@#$%^&*()_+\\-=\\[\\]{};':\"\\\\|,.<>\\/?].*")) {
-//            XDialog.alert("Mật khẩu phải có ít nhất 1 ký tự đặc biệt.");
-//            return;
-//        }
+
         if (newPass.contains(" ")) {
             XDialog.alert("Mật khẩu không được chứa khoảng trắng.");
             return;
         }
 
-        if (newPass.toLowerCase().contains(username.toLowerCase())) {
-            XDialog.alert("Mật khẩu không được chứa tên đăng nhập.");
-            return;
-        }
 
         nguoiDung = dao.findByEmail(email);
         if (nguoiDung == null) {
@@ -292,18 +260,13 @@ private long otpGeneratedTime = 0; // lưu thời gian tạo OTP
 
     private void btnOPTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOPTActionPerformed
 
-        String username = txtusername.getText().trim();
+
         String email = txtEmail.getText().trim();
 
         this.otpCode = String.valueOf(otpCode);
         this.nguoiDung = nguoiDung;
         this.otpGeneratedTime = System.currentTimeMillis(); // Lưu thời điểm tạo OTP
 
-        // Kiểm tra username có rỗng không
-        if (username.isEmpty()) {
-            XDialog.alert("Vui lòng nhập tên đăng nhập.");
-            return;
-        }
 
         // Tìm người dùng theo email
         NguoiDung nguoiDung = dao.findByEmail(email);
@@ -341,7 +304,6 @@ private long otpGeneratedTime = 0; // lưu thời gian tạo OTP
             e.printStackTrace();
             XDialog.alert("Gửi email thất bại: " + e.getMessage());
         }
-
     }//GEN-LAST:event_btnOPTActionPerformed
 
     /**
@@ -404,10 +366,8 @@ private long otpGeneratedTime = 0; // lưu thời gian tạo OTP
     private javax.swing.JPanel jPanel8;
     private javax.swing.JLabel lblLayLaiMatKhau;
     private javax.swing.JLabel lblMatKhau;
-    private javax.swing.JLabel lblTenDangNhap;
     private javax.swing.JTextField txtEmail;
     private javax.swing.JTextField txtMaOTP;
     private javax.swing.JPasswordField txtMatKhauMoi;
-    private javax.swing.JTextField txtusername;
     // End of variables declaration//GEN-END:variables
 }

@@ -89,7 +89,7 @@ public class DoiMatKhau extends javax.swing.JPanel implements DoiMatKhauControll
         jLabel5.setText("Mật khẩu hiện tại");
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jLabel2.setText("Tên đăng nhập");
+        jLabel2.setText("Email");
 
         txtCaptcha.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

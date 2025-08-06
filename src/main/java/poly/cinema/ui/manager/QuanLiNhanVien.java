@@ -60,7 +60,6 @@ public class QuanLiNhanVien extends javax.swing.JPanel implements QuanLiNhanVien
         jLabel2 = new javax.swing.JLabel();
         btnThem = new javax.swing.JButton();
         btnSua = new javax.swing.JButton();
-        btnXoa = new javax.swing.JButton();
         btnNhapmoi = new javax.swing.JButton();
         txtMatkhau = new javax.swing.JPasswordField();
         jLabel1 = new javax.swing.JLabel();
@@ -190,7 +189,7 @@ public class QuanLiNhanVien extends javax.swing.JPanel implements QuanLiNhanVien
                 btnThemActionPerformed(evt);
             }
         });
-        jPanel1.add(btnThem, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 260, 85, 32));
+        jPanel1.add(btnThem, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 260, 85, 32));
 
         btnSua.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnSua.setText("Sửa");
@@ -199,16 +198,7 @@ public class QuanLiNhanVien extends javax.swing.JPanel implements QuanLiNhanVien
                 btnSuaActionPerformed(evt);
             }
         });
-        jPanel1.add(btnSua, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 260, 85, 32));
-
-        btnXoa.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        btnXoa.setText("Xóa");
-        btnXoa.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnXoaActionPerformed(evt);
-            }
-        });
-        jPanel1.add(btnXoa, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 260, 83, 32));
+        jPanel1.add(btnSua, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 260, 85, 32));
 
         btnNhapmoi.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnNhapmoi.setText("Nhập mới");
@@ -274,11 +264,6 @@ public class QuanLiNhanVien extends javax.swing.JPanel implements QuanLiNhanVien
         this.update();
     }//GEN-LAST:event_btnSuaActionPerformed
 
-    private void btnXoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXoaActionPerformed
-        // TODO add your handling code here:
-        this.delete();
-    }//GEN-LAST:event_btnXoaActionPerformed
-
     private void btnNhapmoiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNhapmoiActionPerformed
         // TODO add your handling code here:
         this.clear();
@@ -311,7 +296,6 @@ public class QuanLiNhanVien extends javax.swing.JPanel implements QuanLiNhanVien
     private javax.swing.JButton btnNhapmoi;
     private javax.swing.JButton btnSua;
     private javax.swing.JButton btnThem;
-    private javax.swing.JButton btnXoa;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -668,7 +652,6 @@ public class QuanLiNhanVien extends javax.swing.JPanel implements QuanLiNhanVien
     public void setEditable(boolean editable) {
         btnThem.setEnabled(!editable);
         btnSua.setEnabled(editable);
-        btnXoa.setEnabled(editable);
     }
 
     @Override

@@ -27,7 +27,6 @@ public class XJdbc {
         var username = "sa";
         var password = "123";
 
-
         try {
             if (!XJdbc.isReady()) {
                 Class.forName(driver);
@@ -169,7 +168,7 @@ public class XJdbc {
 
         // Trả về kết nối
         return DriverManager.getConnection("jdbc:sqlserver://localhost:1433;database=QuanLyBanVeXemPhim;encrypt=true;trustServerCertificate=true;",
-                "bahao",
-                "0");
+                "sa",
+                "1");
     }
 }
