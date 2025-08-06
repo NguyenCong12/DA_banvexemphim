@@ -180,14 +180,14 @@ public class DoiMatKhau extends javax.swing.JPanel implements DoiMatKhauControll
                                 .addComponent(txtPassword, javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(txtUsername, javax.swing.GroupLayout.Alignment.LEADING))
                             .addComponent(lblLoiUsername, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lblLoiPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(lblLoiNewPass, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(lblLoiConfirm, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(lblLoiCaptcha, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(lblCaptchaImage, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
-                                .addComponent(btnReloadCaptcha)))))
+                                .addComponent(btnReloadCaptcha))
+                            .addComponent(lblLoiPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(31, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -319,31 +319,29 @@ public class DoiMatKhau extends javax.swing.JPanel implements DoiMatKhauControll
 
         boolean isValid = true;
 
-        if (!email.equals(XAuth.user.getEmail())) {
+        // Kiểm tra trống từng trường
+        if (email.isEmpty()) {
+            lblLoiUsername.setText("Vui lòng nhập tên đăng nhập");
+            isValid = false;
+        } else if (!email.equals(XAuth.user.getEmail())) {
             lblLoiUsername.setText("Sai tên đăng nhập");
             isValid = false;
         }
 
-        if (!matKhau.equals(XAuth.user.getMatKhau())) {
+        if (matKhau.isEmpty()) {
+            lblLoiPassword.setText("Vui lòng nhập mật khẩu hiện tại");
+            isValid = false;
+        } else if (!matKhau.equals(XAuth.user.getMatKhau())) {
             lblLoiPassword.setText("Sai mật khẩu");
             isValid = false;
         }
 
-        if (newpass.length() < 6) {
+        if (newpass.isEmpty()) {
+            lblLoiNewPass.setText("Vui lòng nhập mật khẩu mới");
+            isValid = false;
+        } else if (newpass.length() < 6) {
             lblLoiNewPass.setText("Mật khẩu phải từ 6 ký tự trở lên");
             isValid = false;
-//        } else if (!newpass.matches(".*[A-Z].*")) {
-//            lblLoiNewPass.setText("Phải có ít nhất 1 chữ in hoa");
-//            isValid = false;
-//        } else if (!newpass.matches(".*[a-z].*")) {
-//            lblLoiNewPass.setText("Phải có ít nhất 1 chữ thường");
-//            isValid = false;
-//        } else if (!newpass.matches(".*\\d.*")) {
-//            lblLoiNewPass.setText("Phải có ít nhất 1 chữ số");
-//            isValid = false;
-//        } else if (!newpass.matches(".*[!@#$%^&*()_+\\-=\\[\\]{};':\"\\\\|,.<>\\/?].*")) {
-//            lblLoiNewPass.setText("Phải có ít nhất 1 ký tự đặc biệt");
-//            isValid = false;
         } else if (newpass.contains(" ")) {
             lblLoiNewPass.setText("Không được chứa khoảng trắng");
             isValid = false;
@@ -352,17 +350,24 @@ public class DoiMatKhau extends javax.swing.JPanel implements DoiMatKhauControll
             isValid = false;
         }
 
-        if (!newpass.equals(confirm)) {
+        if (confirm.isEmpty()) {
+            lblLoiConfirm.setText("Vui lòng xác nhận lại mật khẩu");
+            isValid = false;
+        } else if (!newpass.equals(confirm)) {
             lblLoiConfirm.setText("Mật khẩu không khớp");
             isValid = false;
         }
 
-        if (!userCaptcha.equals(currentCaptcha)) {
+        if (userCaptcha.isEmpty()) {
+            lblLoiCaptcha.setText("Vui lòng nhập mã captcha");
+            isValid = false;
+        } else if (!userCaptcha.equals(currentCaptcha)) {
             lblLoiCaptcha.setText("Mã captcha không đúng!");
             isValid = false;
             loadCaptcha();
         }
 
+        // Nếu hợp lệ thì cập nhật mật khẩu
         if (isValid) {
             XAuth.user.setMatKhau(newpass);
             dao.update(XAuth.user);

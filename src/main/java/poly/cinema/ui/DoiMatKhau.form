@@ -142,7 +142,6 @@
                                       <Component id="txtUsername" alignment="0" max="32767" attributes="0"/>
                                   </Group>
                                   <Component id="lblLoiUsername" alignment="1" min="-2" pref="184" max="-2" attributes="0"/>
-                                  <Component id="lblLoiPassword" alignment="1" min="-2" pref="164" max="-2" attributes="0"/>
                                   <Component id="lblLoiNewPass" alignment="1" min="-2" pref="183" max="-2" attributes="0"/>
                                   <Component id="lblLoiConfirm" alignment="1" min="-2" pref="180" max="-2" attributes="0"/>
                                   <Component id="lblLoiCaptcha" alignment="1" min="-2" pref="178" max="-2" attributes="0"/>
@@ -151,6 +150,7 @@
                                       <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
                                       <Component id="btnReloadCaptcha" min="-2" max="-2" attributes="0"/>
                                   </Group>
+                                  <Component id="lblLoiPassword" alignment="1" min="-2" pref="197" max="-2" attributes="0"/>
                               </Group>
                           </Group>
                       </Group>
