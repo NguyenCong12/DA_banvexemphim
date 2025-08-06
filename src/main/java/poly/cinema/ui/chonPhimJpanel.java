@@ -101,6 +101,7 @@ public class chonPhimJpanel extends javax.swing.JPanel implements chonPhimContro
                 return canEdit [columnIndex];
             }
         });
+        tblPhim.setRowHeight(25);
         jScrollPane2.setViewportView(tblPhim);
 
         tblSuatChieu.setModel(new javax.swing.table.DefaultTableModel(
@@ -122,6 +123,7 @@ public class chonPhimJpanel extends javax.swing.JPanel implements chonPhimContro
                 return canEdit [columnIndex];
             }
         });
+        tblSuatChieu.setRowHeight(25);
         tblSuatChieu.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 tblSuatChieuMouseClicked(evt);
