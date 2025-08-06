@@ -24,8 +24,8 @@ public class XJdbc {
     public static Connection openConnection() {
         var driver = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
         var dburl = "jdbc:sqlserver://localhost:1433;database=QuanLyBanVeXemPhim;encrypt=true;trustServerCertificate=true;";
-        var username = "bahao";
-        var password = "0"; //gmmvzyehjwspxddq
+        var username = "sa";
+        var password = "1"; //gmmvzyehjwspxddq
 
 
 
@@ -170,7 +170,7 @@ public class XJdbc {
 
         // Trả về kết nối
         return DriverManager.getConnection("jdbc:sqlserver://localhost:1433;database=QuanLyBanVeXemPhim;encrypt=true;trustServerCertificate=true;",
-                "bahao",
-                "0");
+                "sa",
+                "1");
     }
 }

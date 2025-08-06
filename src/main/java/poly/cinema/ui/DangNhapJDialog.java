@@ -67,7 +67,7 @@ public class DangNhapJDialog extends javax.swing.JDialog implements DangNhapCont
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabel2.setText("Tên đăng nhập/Email:");
+        jLabel2.setText("Email:");
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 28)); // NOI18N
         jLabel3.setText("ĐĂNG NHẬP");
