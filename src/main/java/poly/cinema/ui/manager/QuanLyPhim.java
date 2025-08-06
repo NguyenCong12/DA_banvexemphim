@@ -713,6 +713,12 @@ public class QuanLyPhim extends javax.swing.JPanel implements QuanLyPhimControll
                 return;
             }
         }
+
+        if (phimMoi.getTrangThai().equalsIgnoreCase("Đang chiếu")
+                && phimMoi.getNgayKhoiChieu().before(today)) {
+            XDialog.alert("Ngày khởi chiếu không được trước ngày hiện tại!");
+            return;
+        }
         // Kiểm tra chưa thay đổi gì
         if (phimMoi.getTenPhim().equals(phimCu.getTenPhim())
                 && phimMoi.getMaLoai() == phimCu.getMaLoai()

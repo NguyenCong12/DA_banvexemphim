@@ -90,7 +90,6 @@ poly\cinema\entity\NguoiDung.class
 poly\cinema\entity\LichSu$LichSuBuilder.class
 poly\cinema\ui\manager\LoaiPhimPanel$4.class
 poly\cinema\ui\manager\QuanLyPhim$1.class
-poly\cinema\ui\manager\QuanLiNhanVien$10.class
 poly\cinema\ui\manager\ThongKePanel$3.class
 poly\cinema\ui\FCinema_Frame$1.class
 poly\cinema\dao\impl\QuanLySuatChieuDaoImpl.class
