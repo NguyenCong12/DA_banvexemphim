@@ -4,6 +4,7 @@
  */
 package poly.cinema.dao;
 
+import java.util.List;
 import poly.cinema.entity.LoaiGhe;
 
 /**
@@ -11,5 +12,5 @@ import poly.cinema.entity.LoaiGhe;
  * @author ADMIN
  */
 public interface LoaiGheDAO extends CrudDAO<LoaiGhe, String>  {
-    
+    public List<String> findAllTenLoaiGhe();
 }

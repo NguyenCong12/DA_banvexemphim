@@ -19,7 +19,7 @@ import lombok.NoArgsConstructor;
 @Builder
 public class PhongChieu {
 
-    private String maPhong;   // mã phòng (khóa chính)
+    private int maPhong;   // mã phòng (khóa chính)
     private String tenPhong;  // tên phòng chiếu
     private int soHang;       // số hàng ghế
     private int soCot;        // số cột ghế

@@ -24,26 +24,26 @@ public class QuanLyGheDaoImpl implements QuanLyGheDao {
     private final String DELETE_SQL = "DELETE FROM Ghe WHERE ma_ghe = ?";
 
     private final String SELECT_ALL_SQL = """
-        SELECT 
-            ma_ghe AS maGhe,
-            ma_phong AS maPhong,
-            so_ghe AS soGhe,
-            hang AS hang,
-            cot AS cot,
-            loai_ghe AS loaiGhe,
-            trang_thai AS trangThai
-        FROM Ghe
-    """;
+    SELECT 
+        ma_ghe AS maGhe,
+        ma_phong AS maPhong,
+        so_ghe AS soGhe,
+        hang AS hang,
+        cot AS cot,
+        loai_ghe AS loaiGhe,
+        trang_thai AS trangThai
+    FROM Ghe
+""";
+
+    private final String SELECT_BY_PHONG_SQL = SELECT_ALL_SQL + " WHERE ma_phong = ?";
 
     private final String SELECT_BY_ID_SQL = SELECT_ALL_SQL + " WHERE ma_ghe = ?";
-    private final String SELECT_BY_PHONG_SQL = SELECT_ALL_SQL + " WHERE ma_phong = ?";
     private final String SELECT_BY_SOGHE_SQL = SELECT_ALL_SQL + " WHERE so_ghe = ?";
     private final String FIND_BY_SOGHE_AND_MAPHONG_SQL = SELECT_ALL_SQL + " WHERE so_ghe = ? AND ma_phong = ?";
 
     @Override
     public QuanLyGhe create(QuanLyGhe ghe) {
-        try (Connection conn = XJdbc.openConnection();
-             PreparedStatement stmt = conn.prepareStatement(INSERT_SQL, Statement.RETURN_GENERATED_KEYS)) {
+        try (Connection conn = XJdbc.openConnection(); PreparedStatement stmt = conn.prepareStatement(INSERT_SQL, Statement.RETURN_GENERATED_KEYS)) {
 
             stmt.setString(1, ghe.getMaPhong());
             stmt.setString(2, ghe.getSoGhe());
@@ -111,9 +111,7 @@ public class QuanLyGheDaoImpl implements QuanLyGheDao {
         List<String> result = new ArrayList<>();
         String sql = "SELECT ma_phong FROM PhongChieu";
         try (
-            Connection conn = XJdbc.openConnection();
-            PreparedStatement ps = conn.prepareStatement(sql);
-            ResultSet rs = ps.executeQuery()) {
+                Connection conn = XJdbc.openConnection(); PreparedStatement ps = conn.prepareStatement(sql); ResultSet rs = ps.executeQuery()) {
 
             while (rs.next()) {
                 result.add(rs.getString("ma_phong"));
@@ -134,20 +132,21 @@ public class QuanLyGheDaoImpl implements QuanLyGheDao {
         String sql = "DELETE FROM Ghe WHERE ma_phong = ?";
         XJdbc.executeUpdate(sql, maPhong);
     }
+
     @Override
     public boolean updateWithResult(QuanLyGhe ghe) {
-    String sql = "UPDATE Ghe SET loai_ghe=?, trang_thai=? WHERE ma_ghe=?";
-    try {
-        int rows = XJdbc.executeUpdate(sql,
-            ghe.getLoaiGhe(),
-            ghe.getTrangThai(),
-            ghe.getMaGhe()
-        );
-        return rows > 0;
-    } catch (Exception e) {
-        e.printStackTrace();
-        return false;
+        String sql = "UPDATE Ghe SET loai_ghe=?, trang_thai=? WHERE ma_ghe=?";
+        try {
+            int rows = XJdbc.executeUpdate(sql,
+                    ghe.getLoaiGhe(),
+                    ghe.getTrangThai(),
+                    ghe.getMaGhe()
+            );
+            return rows > 0;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
     }
-}
 
 }

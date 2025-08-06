@@ -16,7 +16,7 @@ import poly.cinema.util.XJdbc;
  * @author ADMIN
  */
 public class LoaiGheDAOImpl implements LoaiGheDAO {
-    
+
     private final String INSERT_SQL = "INSERT INTO LoaiGhe (loai_ghe, phu_phi) VALUES (?, ?)";
     private final String UPDATE_SQL = "UPDATE LoaiGhe SET phu_phi = ? WHERE loai_ghe = ?";
     private final String DELETE_SQL = "DELETE FROM LoaiGhe WHERE loai_ghe = ?";
@@ -26,16 +26,16 @@ public class LoaiGheDAOImpl implements LoaiGheDAO {
     @Override
     public LoaiGhe create(LoaiGhe loaiGhe) {
         XJdbc.executeUpdate(INSERT_SQL,
-            loaiGhe.getLoaiGhe(),
-            loaiGhe.getPhuPhi());
+                loaiGhe.getLoaiGhe(),
+                loaiGhe.getPhuPhi());
         return loaiGhe;
     }
 
     @Override
     public void update(LoaiGhe loaiGhe) {
         XJdbc.executeUpdate(UPDATE_SQL,
-            loaiGhe.getPhuPhi(),
-            loaiGhe.getLoaiGhe());
+                loaiGhe.getPhuPhi(),
+                loaiGhe.getLoaiGhe());
     }
 
     @Override
@@ -70,5 +70,19 @@ public class LoaiGheDAOImpl implements LoaiGheDAO {
         }
         return list;
     }
-    
+
+    @Override
+    public List<String> findAllTenLoaiGhe() {
+        List<String> list = new ArrayList<>();
+        String sql = "SELECT loai_ghe FROM LoaiGhe"; // ✅ sửa lại đúng tên cột
+        try (ResultSet rs = XJdbc.executeQuery(sql)) {
+            while (rs.next()) {
+                list.add(rs.getString("loai_ghe"));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
+
 }

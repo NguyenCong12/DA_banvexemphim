@@ -297,62 +297,60 @@ public class QuanLiPhongChieu extends javax.swing.JPanel implements QuanLyPhongC
     private QuanLyGheJpanel ghePanel;
 
     public QuanLiPhongChieu(QuanLyGheJpanel ghePanel) {
-        this.ghePanel = ghePanel; // ✅ gán đúng
+        this.ghePanel = ghePanel;
         initComponents();
-        if (ghePanel != null) {
-            ghePanel.loadPhongChieu();  // load lại combobox phòng
-            ghePanel.loadGhe();         // load lại danh sách ghế (nếu muốn)
-        }
-
         fillToTable();
         open();
     }
 
     private void updateButtonStatus() {
         boolean isSelected = tblPhongChieu.getSelectedRow() >= 0;
-        btnThem.setEnabled(!isSelected); // Chỉ bật khi KHÔNG chọn dòng
-        btnSua.setEnabled(isSelected);   // Bật khi có chọn dòng
-        btnXoa.setEnabled(isSelected);   // Bật khi có chọn dòng
+        btnThem.setEnabled(!isSelected);
+        btnSua.setEnabled(isSelected);
+        btnXoa.setEnabled(isSelected);
     }
 
+    /**
+     * Tạo ghế cho phòng
+     */
     private void insertGheChoPhong(PhongChieu pc) {
         QuanLyGheDao gheDao = new QuanLyGheDaoImpl();
         int soHang = pc.getSoHang();
         int soCot = pc.getSoCot();
-        String maPhong = pc.getMaPhong();
+        int maPhong = pc.getMaPhong();
 
         for (int hang = 1; hang <= soHang; hang++) {
-            String hangStr = String.valueOf((char) ('A' + hang - 1)); // A, B, C,...
-
-            // Xác định loại ghế
+            String hangStr = String.valueOf((char) ('A' + hang - 1));
             String loaiGhe = (hang <= 3) ? "Thường" : "VIP";
 
             for (int cot = 1; cot <= soCot; cot++) {
-                String soGhe = hangStr + cot; // Ví dụ: A1, A2, D5, E3,...
-
+                String soGhe = hangStr + cot;
                 QuanLyGhe ghe = QuanLyGhe.builder()
                         .maGhe(null)
-                        .maPhong(maPhong)
+                        .maPhong(String.valueOf(maPhong))
                         .soGhe(soGhe)
                         .hang(hangStr)
                         .cot(cot)
                         .loaiGhe(loaiGhe)
                         .trangThai("Bình thường")
                         .build();
-
                 gheDao.create(ghe);
             }
         }
     }
 
+    /**
+     * Lấy dữ liệu từ form
+     *
+     * @return
+     */
     @Override
     public PhongChieu getForm() {
-        String ma = txtMaPhong.getText().trim();
         String ten = txtTenPhong.getText().trim();
         String soHangStr = txtSoHang.getText().trim();
         String soCotStr = txtSoCot.getText().trim();
 
-        if (ma.isEmpty() || ten.isEmpty() || soHangStr.isEmpty() || soCotStr.isEmpty()) {
+        if (ten.isEmpty() || soHangStr.isEmpty() || soCotStr.isEmpty()) {
             XDialog.alert("Vui lòng nhập đầy đủ thông tin.");
             return null;
         }
@@ -366,7 +364,7 @@ public class QuanLiPhongChieu extends javax.swing.JPanel implements QuanLyPhongC
                 return null;
             }
 
-            return new PhongChieu(ma, ten, soHang, soCot);
+            return new PhongChieu(0, ten, soHang, soCot); // maPhong = 0 vì DB tự sinh
         } catch (NumberFormatException e) {
             XDialog.alert("Số hàng và số cột phải là số nguyên!");
             return null;
@@ -375,7 +373,7 @@ public class QuanLiPhongChieu extends javax.swing.JPanel implements QuanLyPhongC
 
     @Override
     public void setForm(PhongChieu entity) {
-        txtMaPhong.setText(entity.getMaPhong());
+        txtMaPhong.setText(String.valueOf(entity.getMaPhong()));
         txtTenPhong.setText(entity.getTenPhong());
         txtSoHang.setText(String.valueOf(entity.getSoHang()));
         txtSoCot.setText(String.valueOf(entity.getSoCot()));
@@ -395,9 +393,11 @@ public class QuanLiPhongChieu extends javax.swing.JPanel implements QuanLyPhongC
             });
         }
         updateButtonStatus();
-
     }
 
+    /**
+     * Thêm phòng
+     */
     @Override
     public void create() {
         PhongChieu pc = getForm();
@@ -411,29 +411,34 @@ public class QuanLiPhongChieu extends javax.swing.JPanel implements QuanLyPhongC
         }
 
         for (PhongChieu item : items) {
-            if (item.getMaPhong().equalsIgnoreCase(pc.getMaPhong())) {
-                XDialog.alert("Mã phòng đã tồn tại, vui lòng chọn mã khác.");
-                return;
-            }
             if (item.getTenPhong().equalsIgnoreCase(pc.getTenPhong())) {
-                XDialog.alert("Tên phòng đã tồn tại, vui lòng chọn tên khác.");
+                XDialog.alert("Tên phòng đã tồn tại!");
                 return;
             }
         }
 
+        // Tạo phòng
         dao.create(pc);
-        insertGheChoPhong(pc); // ✅ tạo ghế tự động
+
+        // Lấy ID mới
+        int newId = ((QuanLyPhongChieuDaoImpl) dao).getLastInsertedId();
+        pc.setMaPhong(newId);
+
+        // Tạo ghế
+        insertGheChoPhong(pc);
+
         fillToTable();
         clear();
-        updateButtonStatus();
         XDialog.alert("Thêm thành công!");
 
-        // ✅ Cập nhật panel ghế nếu có
         if (ghePanel != null) {
-            ghePanel.capNhatDanhSachPhong(pc.getMaPhong());
+            ghePanel.capNhatDanhSachPhong(String.valueOf(newId));
         }
     }
 
+    /**
+     * Cập nhật phòng
+     */
     @Override
     public void update() {
         int row = tblPhongChieu.getSelectedRow();
@@ -447,16 +452,11 @@ public class QuanLiPhongChieu extends javax.swing.JPanel implements QuanLyPhongC
             return;
         }
 
-        // Lấy bản gốc từ list để so sánh
-        PhongChieu old = items.get(row);
+        pc.setMaPhong(items.get(row).getMaPhong()); // giữ nguyên ID
 
-        // 🔒 Kiểm tra trùng mã phòng (khác vị trí)
         for (int i = 0; i < items.size(); i++) {
-            if (i == row) {
-                continue; // bỏ qua chính nó
-            }
-            if (items.get(i).getMaPhong().equalsIgnoreCase(pc.getMaPhong())) {
-                XDialog.alert("Mã phòng đã tồn tại ở một phòng khác.");
+            if (i != row && items.get(i).getTenPhong().equalsIgnoreCase(pc.getTenPhong())) {
+                XDialog.alert("Tên phòng đã tồn tại ở một phòng khác.");
                 return;
             }
         }
@@ -466,45 +466,24 @@ public class QuanLiPhongChieu extends javax.swing.JPanel implements QuanLyPhongC
             return;
         }
 
-        // 🔒 Kiểm tra trùng tên phòng (khác vị trí)
-        for (int i = 0; i < items.size(); i++) {
-            if (i == row) {
-                continue; // bỏ qua chính nó
-            }
-            if (items.get(i).getTenPhong().equalsIgnoreCase(pc.getTenPhong())) {
-                XDialog.alert("Tên phòng đã tồn tại ở một phòng khác.");
-                return;
-            }
-        }
+        PhongChieu old = items.get(row);
+        dao.update(pc);
 
-        // 🔍 Kiểm tra có thay đổi không
-        boolean isChanged = !old.getMaPhong().equals(pc.getMaPhong())
-                || !old.getTenPhong().equals(pc.getTenPhong())
-                || old.getSoHang() != pc.getSoHang()
-                || old.getSoCot() != pc.getSoCot();
-
-        if (!isChanged) {
-            XDialog.alert("Bạn chưa thay đổi thông tin nào để cập nhật.");
-            return;
-        }
-
-        dao.update(pc); // ✅ Cập nhật phòng
-
-        // ✅ Nếu thay đổi hàng/cột thì cập nhật lại ghế
+        // Nếu thay đổi số hàng/cột → tạo lại ghế
         if (old.getSoHang() != pc.getSoHang() || old.getSoCot() != pc.getSoCot()) {
             QuanLyGheDao gheDao = new QuanLyGheDaoImpl();
-            gheDao.deleteByMaPhong(pc.getMaPhong()); // Xoá ghế cũ
-            insertGheChoPhong(pc);                   // Tạo ghế mới
+            gheDao.deleteByMaPhong(String.valueOf(pc.getMaPhong()));
+            insertGheChoPhong(pc);
         }
 
         fillToTable();
-        this.clear();
+        clear();
         XDialog.alert("Cập nhật thành công!");
-        if (ghePanel != null) {
-            ghePanel.capNhatDanhSachPhong(pc.getMaPhong());
-        }
     }
 
+    /**
+     * Xóa phòng
+     */
     @Override
     public void delete() {
         int row = tblPhongChieu.getSelectedRow();
@@ -513,38 +492,34 @@ public class QuanLiPhongChieu extends javax.swing.JPanel implements QuanLyPhongC
             return;
         }
 
-        String maPhong = (String) tblPhongChieu.getValueAt(row, 0);
+        int maPhong = (int) tblPhongChieu.getValueAt(row, 0);
 
-        // Xác nhận trước khi xóa
         if (!XDialog.confirm("Bạn có chắc muốn xóa phòng này không?")) {
             return;
         }
 
         try {
-            // Bước 1: Xóa ghế trước
             QuanLyGheDao gheDao = new QuanLyGheDaoImpl();
-            gheDao.deleteByMaPhong(maPhong);
+            gheDao.deleteByMaPhong(String.valueOf(maPhong));
 
-            // Bước 2: Xóa phòng chiếu
-            dao.delete(maPhong); // delete theo mã phòng, phải có hàm này trong QuanLyPhongChieuDao
+            dao.delete(String.valueOf(maPhong));
 
             fillToTable();
             clear();
             XDialog.alert("Xóa thành công!");
         } catch (Exception e) {
             if (e.getMessage().contains("REFERENCE constraint") || e.getMessage().contains("conflicted")) {
-                XDialog.alert("Không thể xóa! Phòng chiếu này đang được sử dụng trong suất chiếu.");
+                XDialog.alert("Không thể xóa! Phòng chiếu này đang được sử dụng.");
             } else {
                 e.printStackTrace();
                 XDialog.alert("Xóa thất bại: " + e.getMessage());
             }
         }
-        if (ghePanel != null) {
-            ghePanel.capNhatDanhSachPhong(maPhong);
-        }
-
     }
 
+    /**
+     * Reset form
+     */
     @Override
     public void clear() {
         txtMaPhong.setText("");
@@ -557,74 +532,49 @@ public class QuanLiPhongChieu extends javax.swing.JPanel implements QuanLyPhongC
 
     @Override
     public void setEditable(boolean editable) {
-        txtMaPhong.setEditable(editable);
         txtTenPhong.setEditable(editable);
         txtSoHang.setEditable(editable);
         txtSoCot.setEditable(editable);
     }
 
     @Override
-    public void moveFirst() {
-        if (items.isEmpty()) {
-            return;
-        }
-        tblPhongChieu.setRowSelectionInterval(0, 0);
-        setForm(items.get(0));
-    }
-
-    @Override
-    public void movePrevious() {
-        int row = tblPhongChieu.getSelectedRow();
-        if (row > 0) {
-            row--;
-            tblPhongChieu.setRowSelectionInterval(row, row);
-            setForm(items.get(row));
-        }
-    }
-
-    @Override
-    public void moveNext() {
-        int row = tblPhongChieu.getSelectedRow();
-        if (row < items.size() - 1) {
-            row++;
-            tblPhongChieu.setRowSelectionInterval(row, row);
-            setForm(items.get(row));
-        }
-    }
-
-    @Override
-    public void moveLast() {
-        int row = items.size() - 1;
-        tblPhongChieu.setRowSelectionInterval(row, row);
-        setForm(items.get(row));
-    }
-
-    @Override
-    public void moveTo(int rowIndex) {
-        if (rowIndex >= 0 && rowIndex < items.size()) {
-            tblPhongChieu.setRowSelectionInterval(rowIndex, rowIndex);
-            setForm(items.get(rowIndex));
-        }
+    public void open() {
+        fillToTable();
+        clear();
     }
 
     @Override
     public void edit() {
-        int row = tblPhongChieu.getSelectedRow();
-        if (row >= 0) {
-            setForm(items.get(row));
-        }
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public void moveFirst() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public void movePrevious() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public void moveNext() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public void moveLast() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public void moveTo(int rowIndex) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
     public void selectTimeRange() {
-        throw new UnsupportedOperationException("Chức năng lọc theo thời gian không áp dụng cho Phòng Chiếu.");
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
-
-    @Override
-    public void open() {
-        fillToTable();
-        clear();
-        updateButtonStatus();
-    }
-
 }

@@ -6,12 +6,10 @@ package poly.cinema.ui.manager;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -20,7 +18,9 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import poly.cinema.dao.LoaiGheDAO;
 import poly.cinema.dao.QuanLyGheDao;
+import poly.cinema.dao.impl.LoaiGheDAOImpl;
 import poly.cinema.dao.impl.QuanLyGheDaoImpl;
 import poly.cinema.entity.QuanLyGhe;
 
@@ -42,6 +42,12 @@ public class QuanLyGheJpanel extends javax.swing.JPanel implements QuanLyGheCont
     public QuanLyGheJpanel() {
         setLayout(new BorderLayout());
         initUI();
+        open();
+    }
+
+    @Override
+    public void open() {
+        loadLoaiGhe();
         loadPhongChieu();
         loadGhe();
     }
@@ -58,7 +64,10 @@ public class QuanLyGheJpanel extends javax.swing.JPanel implements QuanLyGheCont
         add(new JScrollPane(pnlGhe), BorderLayout.CENTER);
 
         JPanel pnlBottom = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        cboLoaiGhe = new JComboBox<>(new String[]{"Thường", "VIP"});
+
+        cboLoaiGhe = new JComboBox<>();
+        loadLoaiGhe(); // 🔹 load từ DB
+
         cboTrangThai = new JComboBox<>(new String[]{"Bình thường", "Hư", "Cho nhân viên"});
         btnCapNhat = new JButton("Cập nhật");
 
@@ -105,6 +114,15 @@ public class QuanLyGheJpanel extends javax.swing.JPanel implements QuanLyGheCont
         pnlBottom.add(cboTrangThai);
         pnlBottom.add(btnCapNhat);
         add(pnlBottom, BorderLayout.SOUTH);
+    }
+
+    private void loadLoaiGhe() {
+        cboLoaiGhe.removeAllItems();
+        LoaiGheDAO loaiGheDao = new LoaiGheDAOImpl();
+        List<String> dsLoaiGhe = loaiGheDao.findAllTenLoaiGhe();
+        for (String ten : dsLoaiGhe) {
+            cboLoaiGhe.addItem(ten);
+        }
     }
 
     void loadPhongChieu() {
@@ -341,10 +359,6 @@ public class QuanLyGheJpanel extends javax.swing.JPanel implements QuanLyGheCont
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel pnlGhe;
     // End of variables declaration//GEN-END:variables
-
-    @Override
-    public void open() {
-    }
 
     @Override
     public void setForm(QuanLyGhe entity) {

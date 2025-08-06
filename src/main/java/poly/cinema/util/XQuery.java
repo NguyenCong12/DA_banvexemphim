@@ -53,22 +53,34 @@ public class XQuery {
      * Ánh xạ 1 dòng trong ResultSet thành đối tượng Java
      */
     private static <B> B readBean(ResultSet resultSet, Class<B> beanClass) throws Exception {
-        B bean = beanClass.getDeclaredConstructor().newInstance();
-        Method[] methods = beanClass.getDeclaredMethods();
-        for (Method method : methods) {
-            String name = method.getName();
-            if (name.startsWith("set") && method.getParameterCount() == 1) {
+    B bean = beanClass.getDeclaredConstructor().newInstance();
+    Method[] methods = beanClass.getDeclaredMethods();
+    for (Method method : methods) {
+        String name = method.getName();
+        if (name.startsWith("set") && method.getParameterCount() == 1) {
+            String columnName = name.substring(3);
+            if (hasColumn(resultSet, columnName)) { // ✅ kiểm tra tồn tại cột
                 try {
-                    Object value = resultSet.getObject(name.substring(3)); // lấy tên cột từ tên phương thức setXxx
+                    Object value = resultSet.getObject(columnName);
                     method.invoke(bean, value);
-                } catch (IllegalAccessException | IllegalArgumentException |
-                         InvocationTargetException | SQLException e) {
-                    System.out.printf("⚠️ Cột '%s' không tìm thấy trong ResultSet.\n", name.substring(3));
+                } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
+                    // bỏ qua lỗi
                 }
             }
         }
-        return bean;
     }
+    return bean;
+}
+
+private static boolean hasColumn(ResultSet rs, String columnName) throws SQLException {
+    var meta = rs.getMetaData();
+    for (int i = 1; i <= meta.getColumnCount(); i++) {
+        if (columnName.equalsIgnoreCase(meta.getColumnLabel(i))) {
+            return true;
+        }
+    }
+    return false;
+}
 
   
     

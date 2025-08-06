@@ -464,8 +464,8 @@ public class QuanLyXuatChieu extends javax.swing.JPanel implements QuanLySuatChi
         cboPhong1.addItem("-- Tất cả --");
 
         for (PhongChieu pc : phongList) {
-            cboPhong.addItem(pc.getMaPhong());
-            cboPhong1.addItem(pc.getMaPhong());
+            cboPhong.addItem(String.valueOf(pc.getMaPhong()));
+            cboPhong1.addItem(String.valueOf(pc.getMaPhong()));
         }
     }
 
